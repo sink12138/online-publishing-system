@@ -15,18 +15,18 @@ import java.sql.Date;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reviewId;
+    private Integer reviewId;
 
-    private int articleId;
-    private int reviewerId;
+    private Integer articleId;
+    private Integer reviewerId;
     private String comments;
-    private boolean pass;
+    private Boolean pass;
     private java.sql.Date reviewingDate;
 
     public Review() {
     }
 
-    public Review(int articleId, int reviewerId, String comments, boolean pass, java.sql.Date reviewingDate) {
+    public Review(Integer articleId, Integer reviewerId, String comments, Boolean pass, java.sql.Date reviewingDate) {
         this.articleId = articleId;
         this.reviewerId = reviewerId;
         this.comments = comments;

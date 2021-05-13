@@ -7,17 +7,20 @@
     </select>
     <select id="selectPublishedArticlesByTitle" resultType="Article">
         select * from Article
-        where title like '%' + #{subtitle} + '%' and status = N'已出版'
+        where status = N'已出版'
+          and title like '%' + #{subtitle} + '%'
     </select>
     <select id="selectPublishedArticlesByAuthor" resultType="Article">
         select * from Article
-        where first_author = #{author}
+        where status = N'已出版'
+          and (first_author = #{author}
            or other_authors like #{author} + ';%'
-           or other_authors like '%;' + #{author} + ';%'
+           or other_authors like '%;' + #{author} + ';%')
     </select>
     <select id="selectPublishedArticlesByKeyword" resultType="Article">
         select * from Article
-        where keywords like #{keyword} + ';%'
-           or keywords like '%;' + #{keyword} + ';%'
+        where status = N'已出版'
+          and (keywords like #{keyword} + ';%'
+           or keywords like '%;' + #{keyword} + ';%')
     </select>
 </mapper>
