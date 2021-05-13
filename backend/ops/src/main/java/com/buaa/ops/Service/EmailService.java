@@ -9,7 +9,7 @@ public interface EmailService {
      * @param email the email address of account
      * @throws Exception the Exceptions of mail sending
      */
-    void SendCheckMail(Integer accountBufferId, String email) throws Exception;
+    void sendCheckMail(Integer accountBufferId, String email) throws Exception;
 
     /**
      * Send an article to the email
@@ -17,5 +17,5 @@ public interface EmailService {
      * @param file File class of file you need to send
      * @throws Exception the Exceptions of mail sending and encoding
      */
-    void SendArticle(String email, File file) throws Exception;
+    void sendArticle(String email, File file) throws Exception;
 }
