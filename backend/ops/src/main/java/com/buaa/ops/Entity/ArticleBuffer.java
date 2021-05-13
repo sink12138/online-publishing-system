@@ -29,7 +29,8 @@ public class ArticleBuffer {
 
     }
 
-    public ArticleBuffer(String title, String keywords, String articleAbstract, String file_path, String first_author, String other_author, int submitterId, int editorId) {
+    public ArticleBuffer(String title, String keywords, String articleAbstract,
+                         String file_path, String first_author, String other_author, int submitterId, int editorId) {
         this.title = title;
         this.keywords = keywords;
         this.articleAbstract = articleAbstract;
