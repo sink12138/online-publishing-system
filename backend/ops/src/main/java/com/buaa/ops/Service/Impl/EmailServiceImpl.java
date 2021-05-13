@@ -58,7 +58,6 @@ public class EmailServiceImpl implements EmailService {
         helper.setSentDate(new Date());
 
         //设置邮件内容
-        Context context = new Context();
         helper.setText("这是您要查阅的文章");
         helper.addAttachment(MimeUtility.encodeWord(file.getName(),"utf-8","B"), file);
         javaMailSender.send(mimeMessage);
