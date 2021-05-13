@@ -14,15 +14,15 @@ import javax.persistence.Id;
 public class Write {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int writeId;
+    private Integer writeId;
 
-    private int authorId;
-    private int articleId;
+    private Integer authorId;
+    private Integer articleId;
 
     public Write() {
     }
 
-    public Write(int authorId, int articleId) {
+    public Write(Integer authorId, Integer articleId) {
         this.authorId = authorId;
         this.articleId = articleId;
     }

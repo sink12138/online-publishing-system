@@ -16,7 +16,7 @@ import java.util.Date;
 public class Check {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int checkId;
+    private Integer checkId;
 
     private String code;
     private String email;

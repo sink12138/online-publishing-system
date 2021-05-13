@@ -14,15 +14,15 @@ import javax.persistence.Id;
 public class Reviewer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reviewerId;
+    private Integer reviewerId;
 
-    private int accountId;
+    private Integer accountId;
     private String organization;
 
     public Reviewer() {
     }
 
-    public Reviewer(int accountId, String organization) {
+    public Reviewer(Integer accountId, String organization) {
         this.accountId = accountId;
         this.organization = organization;
     }

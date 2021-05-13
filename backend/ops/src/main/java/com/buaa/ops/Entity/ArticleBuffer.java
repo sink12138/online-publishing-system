@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class ArticleBuffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int articleBufferId;
+    private Integer articleBufferId;
 
     private String title;
     private String keywords;
@@ -22,15 +22,17 @@ public class ArticleBuffer {
     private String file_path;
     private String first_author;
     private String other_author;
-    private int submitterId;
-    private int editorId;
+    private Integer submitterId;
+    private Integer editorId;
+    private Integer overwrite;
 
     public ArticleBuffer() {
 
     }
 
     public ArticleBuffer(String title, String keywords, String articleAbstract,
-                         String file_path, String first_author, String other_author, int submitterId, int editorId) {
+                         String file_path, String first_author, String other_author,
+                         Integer submitterId, Integer editorId, Integer overwrite) {
         this.title = title;
         this.keywords = keywords;
         this.articleAbstract = articleAbstract;
@@ -39,5 +41,6 @@ public class ArticleBuffer {
         this.other_author = other_author;
         this.submitterId = submitterId;
         this.editorId = editorId;
+        this.overwrite = overwrite;
     }
 }

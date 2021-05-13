@@ -15,7 +15,7 @@ import java.sql.Date;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int articleId;
+    private Integer articleId;
 
     private String title;
     private String identifier;
@@ -24,8 +24,8 @@ public class Article {
     private String file_path;
     private String first_author;
     private String other_author;
-    private int submitterId;
-    private int editorId;
+    private Integer submitterId;
+    private Integer editorId;
     private String status;
     private java.sql.Date publishingDate;
 
@@ -34,7 +34,7 @@ public class Article {
     }
 
     public Article(String title, String identifier, String keywords, String articleAbstract, String file_path,
-                   String first_author, String other_author, int submitterId, int editorId,
+                   String first_author, String other_author, Integer submitterId, Integer editorId,
                    String status, java.sql.Date publishingDate) {
         this.title = title;
         this.identifier = identifier;

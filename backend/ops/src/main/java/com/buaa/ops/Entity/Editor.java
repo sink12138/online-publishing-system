@@ -14,9 +14,9 @@ import javax.persistence.Id;
 public class Editor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int editorId;
+    private Integer editorId;
 
-    private int accountId;
+    private Integer accountId;
 
     public Editor() {
     }

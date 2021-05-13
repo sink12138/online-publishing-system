@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class AccountBuffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int accountBufferId;
+    private Integer accountBufferId;
 
     private String email;
     private String password;
