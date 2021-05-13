@@ -33,7 +33,7 @@ public class Article {
 
     }
 
-    public Article(String title, String identifier, String keywords, String articleAbstract, String file_path, String first_author, String other_author, int submitterId, int editorId, String status, Date publishingDate) {
+    public Article(String title, String identifier, String keywords, String articleAbstract, String file_path, String first_author, String other_author, int submitterId, int editorId, String status, java.sql.Date publishingDate) {
         this.title = title;
         this.identifier = identifier;
         this.keywords = keywords;
