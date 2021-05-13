@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost:1433; DatabaseName=lab
+    url: jdbc:sqlserver://localhost:1433; DatabaseName=OPS_Database
     username: sa
     password: springboot
   jpa:
