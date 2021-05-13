@@ -1,12 +1,12 @@
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost:1433; DatabaseName=lab
+    url: jdbc:sqlserver://localhost:1433; DatabaseName=OPS_Database
     username: sa
-    password: yq123
+    password: springboot
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   servlet:
     multipart:
       enabled: true
