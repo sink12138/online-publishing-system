@@ -6,7 +6,7 @@ spring:
     password: springboot
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   servlet:
     multipart:
       enabled: true
