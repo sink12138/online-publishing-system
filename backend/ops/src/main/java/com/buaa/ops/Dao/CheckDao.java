@@ -10,30 +10,30 @@ public interface CheckDao {
      * @param code the String attribute code of Check
      * @return Check an object of Check
      */
-    public Check SelectCheckByCode(String code);
+    Check SelectCheckByCode(String code);
 
     /**
      * Add a new Check into database
      * @param check an object of Check
      */
-    public void AddCheck(Check check);
+    void AddCheck(Check check);
 
     /**
      * Delete an object of Check by checkId
      * @param checkId the int attribute of Check
      */
-    public void DeleteCheck(Integer checkId);
+    void DeleteCheck(Integer checkId);
 
     /**
      * Select all Checks by email
      * @param email the String email
      * @return Check an object with the email
      */
-    public Check SelectCheckByEmail(String email);
+    Check SelectCheckByEmail(String email);
 
     /**
      * Update the original check with the email to the new one
      * @param newCheck the new check
      */
-    public void UpdateCheck(Check newCheck);
+    void UpdateCheck(Check newCheck);
 }
