@@ -25,11 +25,12 @@ public interface EditorService {
     /**
      * Used by editor to reject claim request by author
      * Delete appropriate Write object
+     * Can't remove if the author is submitter
      * @param articleId Id of article claimed
      * @param authorId Id of author
      * @return Whether success
      */
-    Boolean rejectClaim(Integer articleId, Integer authorId);
+    Boolean removeClaim(Integer articleId, Integer authorId);
 
     /**
      * Used by Admin to add a new editor

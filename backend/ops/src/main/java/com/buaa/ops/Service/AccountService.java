@@ -37,7 +37,7 @@ public interface AccountService {
     AccountBuffer getAccountBuffer(String email);
 
     /**
-     * Delete an account by accountId
+     * Used by Admin to delete zombie account by accountId
      * @param accountId Target id
      * @return Whether success
      */
@@ -52,6 +52,7 @@ public interface AccountService {
 
     /**
      * Move the account from AccountBuffer to Account
+     * Add Account and delete AccountBuffer
      * @param accountBufferId Target id in AccountBuffer
      * @return Whether success
      */
