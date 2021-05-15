@@ -8,7 +8,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Contains services dealing with articles.
+ * The interface ArticleService contains services dealing with only articles,
+ * namely the operations with article files and article records in the database.
  */
 public interface ArticleService {
     /**
@@ -18,7 +19,7 @@ public interface ArticleService {
      *                     substring of a title,
      *                     name of an author
      *                     or one keyword
-     * @return An arrayList containing all fitting articles
+     * @return An ArrayList containing all fitting articles
      */
     ArrayList<Article> searchPublishedArticles(String searchType,
                                                String searchString);
@@ -61,8 +62,10 @@ public interface ArticleService {
      * Submit information of an article into table "ArticleBuffer" after the file is uploaded.
      * @param articleBuffer The articleBuffer carrying title, abstract, keyword, authors, etc.
      *                      (articleBufferId required)
+     * @return The distributed (new submission) or related (revised draft) editorId
+     * to the submitted article
      */
-    void submitArticle(ArticleBuffer articleBuffer);
+    Integer submitArticle(ArticleBuffer articleBuffer);
 
     /**
      * Move a record from table "ArticleBuffer" to table "Article".<br/>
@@ -77,6 +80,48 @@ public interface ArticleService {
      * Change the status to an article in table "Article"
      * @param articleId Determines which record to update
      * @param status The new status to be set to the article
+     * @return True if the update succeeded, or false if not
      */
-    void setArticleStatus(Integer articleId, String status);
+    Boolean setArticleStatus(Integer articleId, String status);
+
+    /**
+     * Remove one article, along with all its related information from the database.
+     * @param Id ArticleId of the article to be deleted
+     * @return True if the deletion succeeded, or false if not
+     */
+    Boolean removeArticle(Integer Id);
+
+    /**
+     * Reject an article in table "ArticleBuffer" whether it is a new article or a revised draft.
+     * @param articleBufferId Determines which article to reject
+     * @return True if the rejection succeeded, or false if not
+     */
+    Boolean rejectArticle(Integer articleBufferId);
+
+    /**
+     * Save the article file the editor uploads after editing,
+     * including replacement of the storage and updates in the database.
+     * @param articleId Determines which article to update
+     * @param file An instance of MultipartFile (uploaded file)
+     * @return True if the file is successfully saved, or false if not
+     */
+    Boolean saveEditedFile(Integer articleId, MultipartFile file);
+
+    /**
+     * Publish an article in the database,
+     * including changing its status and setting its identifier.
+     * @param articleId Determines which article to publish
+     * @param identifier The unique identifier given to the article
+     * @return True if everything succeeded; false if the article cannot be published yet,
+     * or the identifier is duplicate with another
+     */
+    Boolean publishArticle(Integer articleId, String identifier);
+
+    /**
+     * Clean all article garbage from the storage and the database.<br/>
+     * Garbage: (1) files uploaded but never submitted;
+     * (2) records in table "ArticleBuffer" with everything null except id and file path.
+     * @return True if all garbage is successfully cleaned, or false if not
+     */
+    Boolean cleanBuffer();
 }
