@@ -4,7 +4,7 @@
     <select id="selectCheckByCode" resultType="Check">
         select * from [Check] where code = #{code}
     </select>
-    <insert id="addCheck" parameterType="Check">
+    <insert id="addCheck" parameterType="Check" useGeneratedKeys="true" keyProperty="checkId">
         insert into [Check] values (#{code}, #{email}, #{checkingTime})
     </insert>
     <delete id="deleteCheck" parameterType="Integer">
