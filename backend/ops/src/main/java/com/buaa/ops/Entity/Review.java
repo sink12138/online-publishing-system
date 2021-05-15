@@ -26,7 +26,7 @@ public class Review {
     public Review() {
     }
 
-    public Review(Integer articleId, Integer reviewerId, String comments, boolean pass, java.sql.Date reviewingDate) {
+    public Review(Integer articleId, Integer reviewerId, String comments, Boolean pass, java.sql.Date reviewingDate) {
         this.articleId = articleId;
         this.reviewerId = reviewerId;
         this.comments = comments;
