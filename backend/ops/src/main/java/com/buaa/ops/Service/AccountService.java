@@ -71,4 +71,10 @@ public interface AccountService {
      * @return A Map whose key is a String standing for account's role and whose value is role id
      */
     Map<String, Integer> getRoleId(Integer accountId);
+
+    /**
+     * Used by Admin to clean cache of AccountBuffer and Check
+     * @return Whether success
+     */
+    Boolean cleanBuffer();
 }
