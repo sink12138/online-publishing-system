@@ -14,7 +14,7 @@ public interface EditorService {
     ArrayList<Article> getEditingArticles(Integer editorId);
 
     /**
-     * Used by editor to confirm claim request by author
+     * Used by editor to confirm claim request by author,
      * Update appropriate Write object, set confirmed attribute to true
      * @param articleId Id of article claimed
      * @param authorId Id of author
@@ -23,8 +23,8 @@ public interface EditorService {
     Boolean confirmClaim(Integer articleId, Integer authorId);
 
     /**
-     * Used by editor to reject claim request by author
-     * Delete appropriate Write object
+     * Used by editor to reject claim request by author,
+     * Delete appropriate Write object,
      * Can't remove if the author is submitter
      * @param articleId Id of article claimed
      * @param authorId Id of author
@@ -40,8 +40,8 @@ public interface EditorService {
     Boolean addEditor(Editor editor);
 
     /**
-     * Remove appropriate Editor by id, but not delete his/her Account
-     * At the same time assign a new editor to replace
+     * Remove appropriate Editor by id, but not delete his/her Account,
+     * At the same time assign a new editor to replace,
      * Can't remove if he/she is the last editor
      * @param editorId Id of target editor
      * @return Whether success

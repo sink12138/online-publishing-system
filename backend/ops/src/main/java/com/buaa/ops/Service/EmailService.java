@@ -29,4 +29,12 @@ public interface EmailService {
      * @throws Exception The Exceptions of mail sending
      */
     Boolean sendReminderEmail(String email, String type) throws Exception;
+
+    /**
+     * Get email by role id
+     * @param roleType Type of role
+     * @param roleId id of role
+     * @return Email
+     */
+    String getEmailByRole(String roleType, Integer roleId);
 }
