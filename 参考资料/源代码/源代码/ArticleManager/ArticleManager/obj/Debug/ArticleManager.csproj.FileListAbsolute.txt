@@ -1,0 +1,108 @@
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.config
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\bin\Debug\ArticleManager.pdb
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csprojResolveAssemblyReference.cache
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\obj\Debug\ArticleManager.MainPage.resources
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\obj\Debug\ArticleManager.Properties.Resources.resources
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csproj.GenerateResource.Cache
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe
+C:\Users\HUHU\Documents\Visual Studio 2017\Projects\ArticleManager\ArticleManager\obj\Debug\ArticleManager.pdb
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.config
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.manifest
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\ArticleManager.application
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\ArticleManager.pdb
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\Newtonsoft.Json.dll
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\UploadFile.dll
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddArticleForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddAuthorForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddReviewerForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AuthorForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.CheckArticleState.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.CheckReview.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.MainPage.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.Properties.Resources.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.ReciveComment.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.ReviewerForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.SelectAuthor.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.SelectReviewer.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateArticleForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateAuthorForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateReviewerForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingArticleForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingAuthorForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingReviewerForm.resources
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csproj.GenerateResource.Cache
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.TrustInfo.xml
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe.manifest
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.application
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.pdb
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csprojResolveAssemblyReference.cache
+H:\软件工程基础\项目\Project\网上出版系统\项目：重做版\ArticleManager\ArticleManager\bin\Debug\cos api sdk.dll
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.config
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.manifest
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.application
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.pdb
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\cos api sdk.dll
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\Newtonsoft.Json.dll
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\bin\Debug\UploadFile.dll
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csprojResolveAssemblyReference.cache
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddArticleForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddAuthorForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddReviewerForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AuthorForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.CheckArticleState.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.CheckReview.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.MainPage.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.Properties.Resources.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.ReciveComment.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.ReviewerForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.SelectAuthor.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.SelectReviewer.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateArticleForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateAuthorForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateReviewerForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingArticleForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingAuthorForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingReviewerForm.resources
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csproj.GenerateResource.Cache
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.TrustInfo.xml
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe.manifest
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.application
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe
+C:\Users\gao\Desktop\网上出版系统\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.pdb
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.config
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe.manifest
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.application
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.exe
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\ArticleManager.pdb
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\cos api sdk.dll
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\Newtonsoft.Json.dll
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\bin\Debug\UploadFile.dll
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csprojResolveAssemblyReference.cache
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddArticleForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddAuthorForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AddReviewerForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.AuthorForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.CheckArticleState.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.CheckReview.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.MainPage.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.Properties.Resources.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.ReciveComment.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.ReviewerForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.SelectAuthor.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.SelectReviewer.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateArticleForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateAuthorForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdateReviewerForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingArticleForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingAuthorForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.UpdatingReviewerForm.resources
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.csproj.GenerateResource.Cache
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.TrustInfo.xml
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe.manifest
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.application
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.exe
+C:\Users\HUHU\Desktop\源代码\ArticleManager\ArticleManager\obj\Debug\ArticleManager.pdb

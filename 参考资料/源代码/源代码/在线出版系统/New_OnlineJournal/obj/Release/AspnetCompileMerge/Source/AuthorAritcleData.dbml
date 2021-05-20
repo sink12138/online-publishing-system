@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="OnLineJournalDatabase" Class="AuthorAritcleDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=publish.vixerunt.cn,1433\SQLEXPRESS;Initial Catalog=OnLineJournalDatabase;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="OnLineJournalDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Author" Member="OJAuthor">
+    <Type Name="OJAuthor">
+      <Column Name="articleid" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="authorid" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Article_Author" Member="Article" ThisKey="articleid" OtherKey="articleid" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Article" Member="Article">
+    <Type Name="Article">
+      <Column Name="articleid" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="abstract" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="content" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="[article adress]" Member="article_adress" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Article_Author" Member="OJAuthor" ThisKey="articleid" OtherKey="articleid" Type="OJAuthor" />
+      <Association Name="Article_Category" Member="Category" ThisKey="articleid" OtherKey="articleid" Type="Category" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Category">
+    <Type Name="Category">
+      <Column Name="articleid" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="category" Member="category1" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Article_Category" Member="Article" ThisKey="articleid" OtherKey="articleid" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

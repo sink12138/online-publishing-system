@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="ArticleManager.exe" version="1.0.0.17" publicKeyToken="88ef376d57073af7" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="20170529043453417_easyicon_net_256.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="ArticleManager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="ArticleManager.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC 清单选项
+             如果想要更改 Windows 用户帐户控制级别，请使用
+             以下节点之一替换 requestedExecutionLevel 节点。n
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            指定 requestedExecutionLevel 元素将禁用文件和注册表虚拟化。
+            如果你的应用程序需要此虚拟化来实现向后兼容性，则删除此
+            元素。
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ArticleManager.exe" size="338904">
+      <assemblyIdentity name="ArticleManager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>lMHJSOIiiolBzxvAkxSqUrgVt8WUYc+4U4W0iqrEsZ0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="cos api sdk.dll" size="27648">
+      <assemblyIdentity name="cos api sdk" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>/4BWUXrdl7UfWy42kjqwuZpslcXsslEPD16ncqTq2GY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="510976">
+      <assemblyIdentity name="Newtonsoft.Json" version="7.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>NclJIyUJKdXuLE//MP3sZyUmg4+SbSPDpObODyzG9C4=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UploadFile.dll" size="5632">
+      <assemblyIdentity name="UploadFile" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>EHQARvp3flEDzHFhdmIlVfaDxIt0NH24pP9hCG7wnWg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="20170529043453417_easyicon_net_256.ico" size="270398">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>x4mRicVeUizmkK0uLDwr2kxkKts0XQvgZRWrjX19xN4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="ArticleManager.exe.config" size="189">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6N7MliNbVJSIAIPrecIshMbZ7zEoKLr5SQvud4LDUOw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="ArticleManager.pdb" size="138752">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>R4+jfbQKRESffFK/ogw/J1TOsHjIcL57cLr0k/HwQYM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- 设计此应用程序与其一起工作且已针对此应用程序进行测试的
+           Windows 版本的列表。取消评论适当的元素，Windows 将
+           自动选择最兼容的环境。 -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=LAPTOP-CDTME93J\HUHU" issuerKeyHash="f19a1d0f2b5d2b4c64b98051205a85469c1ee0f4" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>6fQ7b/i9vOyVnfVn2zvf/Ap14tMUSqC7xvdXSyIm+BI=</DigestValue></Reference></SignedInfo><SignatureValue>P5FcV3GDWDaqyLvHyUI5XVTlscTzWZ0p0wxlvFc/YcY/vSbZO6NgBDLzwD395Zaup9IX4A2GbgNnzWm9OCwHeQVeTn6qT20a/KmBF8lSDKRrIF6yYmOnBapUuhlwgES+pDju0MfQRd9qcZazbNMS4ENHvC5z8esTqVpyvRRShLY=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>n85U53akhjysmp76SG7XbWY5xw+NeqMtM2wqICie8/YzAWUVzGUjgpDiTqfPGOJYx64p6DcSqb76vRl0p3dDDoG9gts7yamjZEaDrVrZyJQKKvOagHn7GTnJ+Cb/BGO3vAGroiXiJD2fIRmw5Z78EQHL7yfpQTImYez5Gevqn1k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="12f826224b57f7c6bba04a14d3e2750afcdf3bdb67f59d95ecbcbdf86f3bf4e9" Description="" Url=""><as:assemblyIdentity name="ArticleManager.exe" version="1.0.0.17" publicKeyToken="88ef376d57073af7" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=LAPTOP-CDTME93J\HUHU</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>NOOrnXocl9chfp1qWYwmO6ddvGQByAlqkIAcIK4JNRk=</DigestValue></Reference></SignedInfo><SignatureValue>gYLN5twkntbEKHFk2l6QSztCVF/NTmlv75/vg+5+yKbfu+5enYEdGrUt8AVo8iv2/6VlPoF9T89HA1JcUgVZHEU7QVIX64k8fbL4cXvWIZ9Dz2WbM5ujU/ko3TT8VgQqj/uf3C84FQ6rhOCd8xyJgXlLXaIxlfm4RdKrTqzsviE=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>n85U53akhjysmp76SG7XbWY5xw+NeqMtM2wqICie8/YzAWUVzGUjgpDiTqfPGOJYx64p6DcSqb76vRl0p3dDDoG9gts7yamjZEaDrVrZyJQKKvOagHn7GTnJ+Cb/BGO3vAGroiXiJD2fIRmw5Z78EQHL7yfpQTImYez5Gevqn1k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB6TCCAVKgAwIBAgIQfU6UPTaMi5FA5f+kL1kWmjANBgkqhkiG9w0BAQsFADAzMTEwLwYDVQQDHigATABBAFAAVABPAFAALQBDAEQAVABNAEUAOQAzAEoAXABIAFUASABVMB4XDTE3MDUyOTA4Mzk0MVoXDTE4MDUyOTE0Mzk0MVowMzExMC8GA1UEAx4oAEwAQQBQAFQATwBQAC0AQwBEAFQATQBFADkAMwBKAFwASABVAEgAVTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAn85U53akhjysmp76SG7XbWY5xw+NeqMtM2wqICie8/YzAWUVzGUjgpDiTqfPGOJYx64p6DcSqb76vRl0p3dDDoG9gts7yamjZEaDrVrZyJQKKvOagHn7GTnJ+Cb/BGO3vAGroiXiJD2fIRmw5Z78EQHL7yfpQTImYez5Gevqn1kCAwEAATANBgkqhkiG9w0BAQsFAAOBgQCRM9WQxPSWsM+DKWXqfjBZA/i1Zc8rksX2MWHBP6ZBH/McVK5YGFxK4u1+BIavzPTOrxf3owv+nrU7yEhYKkrxgzlUw+YAL37AYtohwKiYjSUNv8Hoy7Fv+pd5ewPDtymo/zVxcSAf6SeQpGzV/wkw/C8hZX3Mmfr876YbGjzP2g==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

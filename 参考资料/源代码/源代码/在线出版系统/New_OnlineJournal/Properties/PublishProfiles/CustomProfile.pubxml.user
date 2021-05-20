@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+此文件由 Web 项目的发布/打包过程使用。可以通过编辑此 MSBuild 文件
+自定义此过程的行为。为了解与此相关的更多内容，请访问 https://go.microsoft.com/fwlink/?LinkID=208121。 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>F:\Code\软件工程\Project\NewVersion\发布3</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="ApplicationInsights.config">
+      <publishTime>04/27/2017 23:55:36</publishTime>
+    </File>
+    <File Include="AuthorAritcleData.dbml">
+      <publishTime>04/28/2017 11:16:59</publishTime>
+    </File>
+    <File Include="AuthorData.dbml">
+      <publishTime>05/17/2017 15:34:49</publishTime>
+    </File>
+    <File Include="bin/ApplicationInsights.config">
+      <publishTime>04/27/2017 23:55:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
+      <publishTime>11/30/2016 16:07:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.DependencyCollector.dll">
+      <publishTime>12/07/2016 11:45:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.PerfCounterCollector.dll">
+      <publishTime>12/07/2016 11:50:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
+      <publishTime>12/06/2016 15:15:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.Web.dll">
+      <publishTime>12/07/2016 11:49:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AI.WindowsServer.dll">
+      <publishTime>12/07/2016 11:50:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ApplicationInsights.dll">
+      <publishTime>12/06/2016 15:09:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>06/15/2015 02:06:24</publishTime>
+    </File>
+    <File Include="bin/New_OnlineJournal.dll">
+      <publishTime>06/10/2017 17:29:40</publishTime>
+    </File>
+    <File Include="bin/New_OnlineJournal.pdb">
+      <publishTime>06/10/2017 17:29:40</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>06/18/2015 20:19:44</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>06/18/2015 20:19:46</publishTime>
+    </File>
+    <File Include="Category.aspx">
+      <publishTime>06/08/2017 13:24:19</publishTime>
+    </File>
+    <File Include="css/bootstrap-select.css">
+      <publishTime>04/19/2017 14:48:42</publishTime>
+    </File>
+    <File Include="css/bootstrap.css">
+      <publishTime>04/10/2017 14:44:34</publishTime>
+    </File>
+    <File Include="css/creditly.css">
+      <publishTime>05/04/2017 10:00:20</publishTime>
+    </File>
+    <File Include="css/easy-responsive-tabs.css">
+      <publishTime>05/04/2017 10:04:38</publishTime>
+    </File>
+    <File Include="css/font-awesome.css">
+      <publishTime>04/10/2017 17:52:36</publishTime>
+    </File>
+    <File Include="css/jquery-ui.css">
+      <publishTime>05/05/2017 12:56:42</publishTime>
+    </File>
+    <File Include="css/jquery.seat-charts.css">
+      <publishTime>05/05/2017 12:56:56</publishTime>
+    </File>
+    <File Include="css/style.css">
+      <publishTime>05/23/2017 22:52:13</publishTime>
+    </File>
+    <File Include="Email.aspx">
+      <publishTime>06/08/2017 13:24:28</publishTime>
+    </File>
+    <File Include="Index.aspx">
+      <publishTime>06/08/2017 13:24:40</publishTime>
+    </File>
+    <File Include="KeyWord.aspx">
+      <publishTime>06/08/2017 13:24:06</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>04/27/2017 23:55:37</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>06/10/2017 17:29:41</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
