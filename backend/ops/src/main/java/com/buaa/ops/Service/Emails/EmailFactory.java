@@ -167,9 +167,9 @@ public class EmailFactory {
 
     private static final ReminderEmail articlePublishedTmpl = new ReminderEmail(
             "文章出版提醒",
-            "恭喜您，您的文章已成功出版！",
+            "恭喜，您的文章已成功出版！",
             "尊敬的作者 %s，您好！",
-            "您的文章《%s》已于 %s 成功出版。您可以登录本网站进行查看。"
+            "您的文章《%s》已于 %s 成功出版。您可以登录网站进行查看。"
     );
 
     public ReminderEmail makeArticlePublishedEmail(String receiverName, String articleTitle) {
@@ -178,6 +178,54 @@ public class EmailFactory {
                 articlePublishedTmpl.getTitle(),
                 String.format(articlePublishedTmpl.getGreetings(), receiverName),
                 String.format(articlePublishedTmpl.getBody(), articleTitle, getDate())
+        );
+    }
+
+    private static final ReminderEmail claimArticleTmpl = new ReminderEmail(
+            "申请认领文章提醒",
+            "您负责的文章有新的认领请求。",
+            "尊敬的编辑 %s，您好！",
+            "作者 %s 申请将您负责的文章《%s》绑定到自己的账号。请您确认对方身份后登录网站接受请求。"
+    );
+
+    public ReminderEmail makeClaimArticleEmail(String receiverName, String operatorName, String articleTitle) {
+        return new ReminderEmail(
+                claimArticleTmpl.getSubject(),
+                claimArticleTmpl.getTitle(),
+                String.format(claimArticleTmpl.getGreetings(), receiverName),
+                String.format(claimArticleTmpl.getBody(), operatorName, articleTitle)
+        );
+    }
+
+    private static final ReminderEmail acceptClaimTmpl = new ReminderEmail(
+            "认领文章成功提醒",
+            "恭喜，您已成功认领了一篇文章。",
+            "尊敬的作者 %s，您好！",
+            "编辑 %s 已接受了您对文章《%s》的认领请求。该文章将公开展示在您的个人主页。"
+    );
+
+    public ReminderEmail makeAcceptClaimEmail(String receiverName, String operatorName, String articleTitle) {
+        return new ReminderEmail(
+                acceptClaimTmpl.getSubject(),
+                acceptClaimTmpl.getTitle(),
+                String.format(acceptClaimTmpl.getGreetings(), receiverName),
+                String.format(acceptClaimTmpl.getBody(), operatorName, articleTitle)
+        );
+    }
+
+    private static final ReminderEmail rejectClaimTmpl = new ReminderEmail(
+            "认领文章失败提醒",
+            "很抱歉，您的认领文章请求已被拒绝。",
+            "尊敬的作者 %s，您好！",
+            "很遗憾，编辑 %s 拒绝了您对文章《%s》的认领请求。若您确认自己是该文章的作者之一，请与该编辑联系并说明身份。"
+    );
+
+    public ReminderEmail makeRejectClaimEmail(String receiverName, String operatorName, String articleTitle) {
+        return new ReminderEmail(
+                rejectClaimTmpl.getSubject(),
+                rejectClaimTmpl.getTitle(),
+                String.format(rejectClaimTmpl.getGreetings(), receiverName),
+                String.format(rejectClaimTmpl.getBody(), operatorName, articleTitle)
         );
     }
 
@@ -197,7 +245,7 @@ public class EmailFactory {
         );
     }
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");
 
     private String getDate() {
         return sdf.format(new Date());
