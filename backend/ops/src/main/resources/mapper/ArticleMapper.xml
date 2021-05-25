@@ -14,8 +14,8 @@
         select * from Article
         where status = N'已出版'
           and (first_author = #{author}
-           or other_authors like #{author} + ';%'
-           or other_authors like '%;' + #{author} + ';%')
+           or other_author like #{author} + ';%'
+           or other_author like '%;' + #{author} + ';%')
     </select>
     <select id="selectPublishedArticlesByKeyword" resultType="Article">
         select * from Article

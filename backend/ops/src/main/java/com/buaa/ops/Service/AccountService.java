@@ -7,7 +7,8 @@ import java.util.Map;
 
 public interface AccountService {
     /**
-     * Add a new account to Table Account
+     * Add a new account to Table Account,
+     * Only after an account has been verified it can be remove from AccountBuffer to Account
      * @param account A new object of Class Account
      * @return Whether success
      */
@@ -21,7 +22,7 @@ public interface AccountService {
     Boolean addAccountBuffer(AccountBuffer accountBuffer);
 
     /**
-     * Select Account by email
+     * Select Account by email,
      * Check whether the email has been used when login and register
      * @param email Target email
      * @return An account with appropriate email
@@ -29,7 +30,7 @@ public interface AccountService {
     Account getAccount(String email);
 
     /**
-     * Select AccountBuffer by email
+     * Select AccountBuffer by email,
      * Check whether the email has been used when register
      * @param email Target email
      * @return An accountBuffer with appropriate email
@@ -51,7 +52,7 @@ public interface AccountService {
     Integer checkCode(String code);
 
     /**
-     * Move the account from AccountBuffer to Account
+     * Move the account from AccountBuffer to Account,
      * Add Account and delete AccountBuffer
      * @param accountBufferId Target id in AccountBuffer
      * @return Whether success
@@ -59,7 +60,7 @@ public interface AccountService {
     Boolean moveToAccount(Integer accountBufferId);
 
     /**
-     * Modify infos of current account
+     * Modify infos of current account,
      * If the attribute is null, just not modify
      * @param newAccountInfos An object of Account with modified infos
      * @return Whether success
