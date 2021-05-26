@@ -52,6 +52,4 @@ public interface AuthorService {
      * @return An ArrayList containing all articles bound to the author
      */
     ArrayList<Article> getMyArticles(Integer authorId);
-
-    Author getAuthorByAccountId(Integer accountId);
 }

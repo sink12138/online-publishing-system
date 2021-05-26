@@ -51,5 +51,12 @@ public interface ReviewerService {
      */
     Boolean removeReviewer(Integer reviewerId);
 
+    /**
+     * Get an author from table "Reviewer" with the given accountId.
+     * This operation includes multi-table queries.
+     * @param accountId Id of the target reviewer's account
+     * @return An instance of Reviewer matching the condition,
+     * or null if the account does not belong to any reviewer
+     */
     Reviewer getReviewerByAccountId(Integer accountId);
 }

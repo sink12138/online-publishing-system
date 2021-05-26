@@ -55,5 +55,12 @@ public interface EditorService {
      */
     ArrayList<Editor> getEditors();
 
+    /**
+     * Get an author from table "Editor" with the given accountId.
+     * This operation includes multi-table queries.
+     * @param accountId Id of the target editor's account
+     * @return An instance of Editor matching the condition,
+     * or null if the account does not belong to any editor
+     */
     Editor getEditorByAccountId(Integer accountId);
 }
