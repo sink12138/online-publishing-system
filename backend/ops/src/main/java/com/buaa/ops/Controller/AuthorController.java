@@ -224,7 +224,7 @@ public class AuthorController {
             Integer editorId = articleService.submitArticle(newArticle);
             // Create a reminder email
             Integer editorAccountId = editorService.getEditorById(editorId).getAccountId();
-            Account editor = accountService.getAccountById(editorAccountId);
+            Account editor = accountService.getAccountByAccountId(editorAccountId);
             ReminderEmail reminderEmail = emailFactory.makeNewArticleEmail(
                     editor.getRealName(),
                     account.getRealName(),
@@ -373,7 +373,7 @@ public class AuthorController {
             Integer editorId = articleService.submitArticle(articleBuffer);
             // Create a reminder email
             Integer editorAccountId = editorService.getEditorById(editorId).getAccountId();
-            Account editor = accountService.getAccountById(editorAccountId);
+            Account editor = accountService.getAccountByAccountId(editorAccountId);
             ReminderEmail reminderEmail = emailFactory.makeRevisedDraftEmail(
                     editor.getRealName(),
                     account.getRealName(),
