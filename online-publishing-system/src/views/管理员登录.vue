@@ -1,5 +1,8 @@
 <template>
     <div class="管理员登录">
+        <div class="admin-bg">
+            <img src="../assets/adminbg.jpg" alt="bg" />
+        </div>
         <div class="admin-wrapper">
                 <div class="admin-login">
                     <div class="login-center">
@@ -35,8 +38,17 @@
 </template>
 
 <style>
+.admin-bg{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
 .admin-wrapper {
-    position: relative;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
 }
 .admin-login {
     display: flex !important;
