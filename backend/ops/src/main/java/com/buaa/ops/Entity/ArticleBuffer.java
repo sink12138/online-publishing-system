@@ -30,6 +30,15 @@ public class ArticleBuffer {
 
     }
 
+    public ArticleBuffer(Integer articleBufferId, String title, String keywords, String articleAbstract, String firstAuthor, String otherAuthor) {
+        this.articleBufferId = articleBufferId;
+        this.title = title;
+        this.keywords = keywords;
+        this.articleAbstract = articleAbstract;
+        this.firstAuthor = firstAuthor;
+        this.otherAuthor = otherAuthor;
+    }
+
     public ArticleBuffer(String title, String keywords, String articleAbstract,
                          String filePath, String firstAuthor, String otherAuthor,
                          Integer submitterId, Integer editorId, Integer overwrite) {

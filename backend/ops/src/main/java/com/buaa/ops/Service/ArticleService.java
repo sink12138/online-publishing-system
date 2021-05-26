@@ -2,6 +2,7 @@ package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.ArticleBuffer;
+import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,17 +27,24 @@ public interface ArticleService {
 
     /**
      * Get an article with the specific articleId.
-     * @param Id The required articleId
+     * @param id The required articleId
      * @return An article with given articleId
      */
-    Article getArticleById(Integer Id);
+    Article getArticleById(Integer id);
+
+    /**
+     * Get an articleBuffer with the specific articleBufferId.
+     * @param id The required articleBufferId
+     * @return An articleBuffer with given articleBufferId
+     */
+    ArticleBuffer getArticleBufferById(Integer id);
 
     /**
      * Get original file of an article with specific articleId.
-     * @param Id The required articleId
+     * @param id The required articleId
      * @return An instance of java.io.File referring to the path of the original article file
      */
-    File getArticleFile(Integer Id);
+    File getArticleFile(Integer id);
 
     /**
      * Save the uploaded article file on the server, including steps as below:<br/>
@@ -86,10 +94,11 @@ public interface ArticleService {
 
     /**
      * Remove one article, along with all its related information from the database.
-     * @param Id ArticleId of the article to be deleted
+     * @param id ArticleId of the article to be deleted
      * @return True if the deletion succeeded, or false if not
+     * @throws ObjectNotFoundException if there is no such article
      */
-    Boolean removeArticle(Integer Id);
+    Boolean removeArticle(Integer id) throws ObjectNotFoundException;
 
     /**
      * Reject an article in table "ArticleBuffer" whether it is a new article or a revised draft.

@@ -7,6 +7,14 @@ import com.buaa.ops.Entity.Editor;
 import java.util.ArrayList;
 
 public interface EditorService {
+
+    /**
+     * Get an editor with the specific editorId.
+     * @param id The required editorId
+     * @return An instance of Editor with given editorId
+     */
+    Editor getEditorById(Integer id);
+
     /**
      * Get all the articles to be processed by current editor
      * @param editorId Id of current editor
