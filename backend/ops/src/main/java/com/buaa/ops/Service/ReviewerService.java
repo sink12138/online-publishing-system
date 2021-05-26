@@ -1,6 +1,7 @@
 package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.Article;
+import com.buaa.ops.Entity.Author;
 import com.buaa.ops.Entity.Review;
 import com.buaa.ops.Entity.Reviewer;
 
@@ -49,4 +50,6 @@ public interface ReviewerService {
      * @return True if the operation succeeded, or false if not
      */
     Boolean removeReviewer(Integer reviewerId);
+
+    Reviewer getReviewerByAccountId(Integer accountId);
 }

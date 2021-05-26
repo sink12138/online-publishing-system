@@ -1,6 +1,7 @@
 package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.Article;
+import com.buaa.ops.Entity.Author;
 import com.buaa.ops.Entity.Editor;
 
 import java.util.ArrayList;
@@ -53,4 +54,6 @@ public interface EditorService {
      * @return All the editors currently
      */
     ArrayList<Editor> getEditors();
+
+    Editor getEditorByAccountId(Integer accountId);
 }

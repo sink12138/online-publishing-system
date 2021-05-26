@@ -39,5 +39,5 @@ public interface EmailService {
      * @param roleId id of role
      * @return Email
      */
-    String getEmailByRole(String roleType, Integer roleId);
+    String getEmailByRole(String roleType, Integer roleId) throws Exception;
 }

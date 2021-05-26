@@ -14,9 +14,9 @@ import javax.persistence.Id;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer author_id;
+    private Integer authorId;
 
-    private Integer account_id;
+    private Integer accountId;
     private String institution;
     private String researchInterests;
 
@@ -24,8 +24,8 @@ public class Author {
 
     }
 
-    public Author(Integer account_id, String institution, String researchInterests) {
-        this.account_id = account_id;
+    public Author(Integer accountId, String institution, String researchInterests) {
+        this.accountId = accountId;
         this.institution = institution;
         this.researchInterests = researchInterests;
     }
