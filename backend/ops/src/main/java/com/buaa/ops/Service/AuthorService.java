@@ -11,6 +11,16 @@ import java.util.ArrayList;
  * and the relationships between authors and articles.
  */
 public interface AuthorService {
+
+    /**
+     * Get an author from table "Author" with the given accountId.
+     * This operation includes multi-table queries.
+     * @param accountId Id of the target author's account
+     * @return An instance of Author matching the condition,
+     * or null if the account does not belong to any author
+     */
+    Author getAuthorByAccountId(Integer accountId);
+
     /**
      * Add an author into table "Author" and return the distributed authorId.
      * @param author An instance of Author carrying all attributes except AuthorId
