@@ -100,7 +100,7 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            Account account = accountService.getAccount(email);
+            Account account = accountService.getAccountByEmail(email);
             if (account == null || !account.getPassword().equals(password)) {
                 throw new LoginVerificationException();
             }

@@ -3,6 +3,7 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Entity.AccountBuffer;
 import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Service.Exc.LoginVerificationException;
+import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -36,7 +37,7 @@ public interface AccountService {
      * @param email Target email
      * @return An account with appropriate email
      */
-    Account getAccount(String email) throws Exception;
+    Account getAccountByEmail(String email) throws Exception;
 
     /**
      * Select AccountBuffer by email,
@@ -51,7 +52,7 @@ public interface AccountService {
      * @param accountId Target id
      * @return Whether success
      */
-    Boolean deleteAccount(Integer accountId) throws Exception;
+    Boolean deleteAccount(Integer accountId) throws ObjectNotFoundException;
 
     /**
      * Check whether the code is valid
