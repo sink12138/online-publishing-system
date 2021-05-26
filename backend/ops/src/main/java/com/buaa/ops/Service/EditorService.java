@@ -1,5 +1,6 @@
 package com.buaa.ops.Service;
 
+import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
 import com.buaa.ops.Entity.Editor;
@@ -63,4 +64,5 @@ public interface EditorService {
      * or null if the account does not belong to any editor
      */
     Editor getEditorByAccountId(Integer accountId);
+
 }

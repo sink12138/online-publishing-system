@@ -1,5 +1,6 @@
 package com.buaa.ops.Service;
 
+import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
 
@@ -11,6 +12,14 @@ import java.util.ArrayList;
  * and the relationships between authors and articles.
  */
 public interface AuthorService {
+
+    /**
+     * Get an author from table "Author" with the given accountId.
+     * @param authorId Id of the target author
+     * @return An instance of Author matching the condition,
+     * or null if the id does not exist
+     */
+    Author getAuthorByAuthorId(Integer authorId);
 
     /**
      * Get an author from table "Author" with the given accountId.
@@ -52,4 +61,19 @@ public interface AuthorService {
      * @return An ArrayList containing all articles bound to the author
      */
     ArrayList<Article> getMyArticles(Integer authorId);
+
+    /**
+     * Modify infos of current author,
+     * If the attribute is null, just not modify
+     * @param newAuthorInfos An object of Author with modified infos
+     * @return Whether success
+     */
+    Boolean modifyInfos(Author newAuthorInfos);
+
+    /**
+     * Get all author objects who is attached with this article in Table Write
+     * @param articleId Target article id
+     * @return An ArrayList contains all relative authors
+     */
+    ArrayList<Author> getAuthorsByArticleId(Integer articleId);
 }

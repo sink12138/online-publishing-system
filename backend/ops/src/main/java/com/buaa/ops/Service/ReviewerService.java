@@ -1,9 +1,6 @@
 package com.buaa.ops.Service;
 
-import com.buaa.ops.Entity.Article;
-import com.buaa.ops.Entity.Author;
-import com.buaa.ops.Entity.Review;
-import com.buaa.ops.Entity.Reviewer;
+import com.buaa.ops.Entity.*;
 
 import java.util.ArrayList;
 
@@ -59,4 +56,13 @@ public interface ReviewerService {
      * or null if the account does not belong to any reviewer
      */
     Reviewer getReviewerByAccountId(Integer accountId);
+
+    /**
+     * Modify infos of current reviewer,
+     * If the attribute is null, just not modify
+     * @param newReviewerInfos An object of Reviewer with modified infos
+     * @return Whether success
+     */
+    Boolean modifyInfos(Reviewer newReviewerInfos);
+
 }

@@ -124,4 +124,6 @@ public interface ArticleService {
      * @return True if all garbage is successfully cleaned, or false if not
      */
     Boolean cleanBuffer();
+
+
 }

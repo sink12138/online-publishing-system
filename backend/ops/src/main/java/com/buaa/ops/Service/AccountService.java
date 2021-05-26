@@ -9,6 +9,13 @@ import java.util.Map;
 
 public interface AccountService {
     /**
+     * Get instance of Account by target id
+     * @param accountId Target id of account
+     * @return Instance of Account with target id
+     */
+    Account getAccountByAccountId(Integer accountId);
+
+    /**
      * Add a new account to Table Account,
      * Only after an account has been verified it can be remove from AccountBuffer to Account
      * @param account A new object of Class Account
@@ -83,4 +90,6 @@ public interface AccountService {
      * @throws LoginVerificationException If account not exists or password is not correct, throw LoginVerificationException
      */
     Account getAccountBySession(HttpSession session) throws LoginVerificationException;
+
+
 }
