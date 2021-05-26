@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   mutations: {
     adminLogin(state) {
-      state.adminLogin = false;
+      state.adminLogin = true;
     }
   },
   actions: {

@@ -4,9 +4,9 @@
                 <div class="admin-login">
                     <div class="login-center">
                         <form action="#!" method="post">
-                            <div class="login-header text-center">
+                            <div class="text-center">
                                 <h1>后台登录系统</h1>
-                                <a href="../"> <img alt="home" src="../assets/logo.jpg"> </a>
+                                <router-link to="/home"> <img alt="home" src="../assets/logo.jpg"> </router-link>
                             </div>
                             <div class="login-text">
                                 <el-input
@@ -30,18 +30,11 @@
                     </div>
                 </div>
         </div>
+        <router-view/>
     </div>
 </template>
 
 <style>
-div{
-    background-image:url("../assets/adminbg.jpg");
-    background-repeat:no-repeat;
-    background-position: center;
-}
-html, body {
-    height: auto;
-}
 .admin-wrapper {
     position: relative;
 }
@@ -68,8 +61,7 @@ html, body {
 </style>
 
 <script>
-  const axios = require('axios');
-  /*var admin = new Map();*/
+  //const axios = require('axios');
   export default {
     data() {
       return {
@@ -81,7 +73,21 @@ html, body {
     },
     methods:{
         adminLogin(){
-            let admindata = JSON.stringify(this.adminMess);
+            this.$store.commit('adminLogin');
+            if (this.$store.state.adminLogin) {
+                window.location.href='../admin';
+            }
+            else {
+                this.$alert('请重试', '密码错误', {
+                    confirmButtonText: '确定',
+                }).then(() => {
+                    this.$message({
+                        type:'info',
+                        message:'请重试'
+                    });
+                });
+            }
+            /*let admindata = JSON.stringify(this.adminMess);
             axios({
                 method:"post",
                 url:"xxx",
@@ -106,7 +112,7 @@ html, body {
                         });
                     });
                 }
-            });
+            });*/
         }
     }
   }

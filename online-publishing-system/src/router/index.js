@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 
 const Admin = () => import("../views/Admin.vue");
 const 管理员登录 = () => import("../views/管理员登录.vue");
+const 查看账号 = () => import("../views/查看账号.vue");
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ const routes = [
     path:"/admin/login",
     name:"管理员登录",
     component:管理员登录,
+  },
+  {
+    path:"/admin/account",
+    name:"查看账号",
+    component:查看账号,
   }
 ]
 
