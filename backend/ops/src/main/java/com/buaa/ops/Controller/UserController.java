@@ -172,12 +172,4 @@ public class UserController {
         return map;
     }
 
-    @PostMapping("/home/modify")
-    public Map<String, Object> modify(@RequestBody Map<String, Object> request) {
-        try {
-
-        } catch (ParameterFormatException | LoginVerificationException exception) {
-
-        }
-    }
 }
