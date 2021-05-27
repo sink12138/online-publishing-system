@@ -139,9 +139,7 @@ public interface ArticleService {
 
     /**
      * Used by admin to check all the articles
-     * @return An instance of ArrayLsit containing all the articles currently
+     * @return An instance of ArrayList containing all the articles currently
      */
     ArrayList<Article> getArticles();
-
-
 }
