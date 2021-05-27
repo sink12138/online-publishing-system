@@ -2,18 +2,19 @@ package com.buaa.ops.Controller;
 
 import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.*;
-import com.buaa.ops.Service.Exc.LoginVerificationException;
-import com.buaa.ops.Service.Exc.ObjectNotFoundException;
-import com.buaa.ops.Service.Exc.ParameterFormatException;
-import com.buaa.ops.Service.Exc.RepetitiveOperationException;
+import com.buaa.ops.Service.Exc.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -84,6 +85,9 @@ public class UserController {
     private HttpServletRequest httpServletRequest;
 
     @Autowired
+    private HttpServletResponse httpServletResponse;
+
+    @Autowired
     private EditorService editorService;
 
     @PostMapping("/login")
@@ -146,6 +150,73 @@ public class UserController {
         return map;
     }
 
+    @GetMapping("/search")
+    public ArrayList<Map<String, Object>> search(@RequestBody Map<String, Object> requestMap) {
+        ArrayList<Map<String, Object>> maps = new ArrayList<>();
+        Map<String, Object> statusMap = new HashMap<>();
+        try {
+            String searchType;
+            String searchString;
+            // Begin parameter format checks
+            try {
+                searchType = (String) requestMap.get("searchType");
+                searchString = (String) requestMap.get("searchString");
+            }
+            catch (ClassCastException cce) {
+                throw new ParameterFormatException();
+            }
+            if (searchType == null || searchString == null)
+                throw new ParameterFormatException();
+            if (!searchType.equals("title") && !searchType.equals("keyword") && !searchType.equals("author"))
+                throw new ParameterFormatException();
+            if (searchString.isEmpty())
+                throw new ParameterFormatException();
+            if (searchString.contains(";"))
+                throw new ParameterFormatException();
+            // End parameter format checks
+            ArrayList<Article> results = articleService.searchPublishedArticles(searchType, searchString);
+            statusMap.put("success", true);
+            if (results == null || results.isEmpty()) {
+                statusMap.put("results", 0);
+                maps.add(statusMap);
+            }
+            else {
+                statusMap.put("results", results.size());
+                maps.add(statusMap);
+                for (Article article: results) {
+                    Map<String, Object> map = new HashMap<>();
+                    Integer articleId = article.getArticleId();
+                    map.put("articleId", articleId);
+                    String title = article.getTitle();
+                    map.put("title", title);
+                    String[] keywords = article.getKeywords().split(";");
+                    map.put("keywords", keywords);
+                    String firstAuthor = article.getFirstAuthor();
+                    map.put("firstAuthor", firstAuthor);
+                    String otherAuthors = article.getOtherAuthors();
+                    if (otherAuthors != null) {
+                        map.put("otherAuthors", otherAuthors.split(";"));
+                    }
+                    maps.add(map);
+                }
+            }
+        }
+        catch (ParameterFormatException pfe) {
+            statusMap.put("success", false);
+            statusMap.put("message", pfe.toString());
+            maps.add(statusMap);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            statusMap.clear();
+            statusMap.put("success", false);
+            statusMap.put("message", "操作失败");
+            maps.clear();
+            maps.add(statusMap);
+        }
+        return maps;
+    }
+
     @Autowired
     ArticleService articleService;
 
@@ -166,11 +237,9 @@ public class UserController {
             map.put("success", true);
             map.put("title", article.getTitle());
             map.put("articleAbstract", article.getArticleAbstract());
-            map.put("keywords", article.getKeywords().split(";"));
+            map.put("keywords", article.getKeywords());
             map.put("firstAuthor", article.getFirstAuthor());
-            if (article.getOtherAuthors() != null) {
-                map.put("otherAuthors", article.getOtherAuthors().split(";"));
-            }
+            map.put("otherAuthor", article.getOtherAuthors().split(";"));
             map.put("identifier", article.getIdentifier());
             ArrayList<Author> authorArrayList = authorService.getAuthorsByArticleId(articleId);
             Map<String, Integer> authors = new HashMap<>();
@@ -191,6 +260,120 @@ public class UserController {
         return map;
     }
 
+    @Value("${admin.username}")
+    private String USERNAME;
+
+    @Value("${admin.password}")
+    private String PASSWORD;
+
+    @GetMapping("/download")
+    public void download(@RequestBody Map<String, Object> requestMap) {
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        try {
+            Account account = accountService.getAccountBySession(httpServletRequest.getSession());
+            Integer articleId;
+            // Begin parameter format checks
+            try {
+                articleId = (Integer) requestMap.get("articleId");
+            }
+            catch (ClassCastException cce) {
+                throw new ParameterFormatException();
+            }
+            if (articleId == null || articleId == 0)
+                throw new ParameterFormatException();
+            // End parameter format checks
+            Article article = null;
+            ArticleBuffer articleBuffer= null;
+            // Begin existence checks
+            if (articleId > 0)
+                article = articleService.getArticleById(articleId);
+            else
+                articleBuffer = articleService.getArticleBufferById(-articleId);
+            if (article == null && articleBuffer == null)
+                throw new ObjectNotFoundException();
+            // End existence checks
+            boolean authority = false;
+            Integer accountId = account.getAccountId();
+            Author author = authorService.getAuthorByAccountId(accountId);
+            Reviewer reviewer = reviewerService.getReviewerByAccountId(accountId);
+            Editor editor = editorService.getEditorByAccountId(accountId);
+            // Begin authority checks
+            // User authority
+            if (article != null && article.getStatus().equals("已出版"))
+                // A published article is available for any user
+                authority = true;
+            else if (author != null) { // Author authority
+                Integer authorId = author.getAuthorId();
+                // An unpublished article is available for its submitter
+                if (article != null && article.getSubmitterId().equals(authorId) && !article.getStatus().equals("编辑中"))
+                    authority = true;
+                else if (articleBuffer != null && articleBuffer.getSubmitterId().equals(authorId))
+                    authority = true;
+            }
+            else if (reviewer != null) { // Reviewer authority
+                Integer reviewerId = reviewer.getReviewerId();
+                if (article != null && !article.getStatus().equals("编辑中")) {
+                    ArrayList<Reviewer> reviewers = reviewerService.getReviewersByArticleId(articleId);
+                    for (Reviewer r : reviewers) {
+                        if (r.getReviewerId().equals(reviewerId)) {
+                            // An unpublished article is available for its reviewers
+                            authority = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (editor != null) { // Editor authority
+                Integer editorId = editor.getEditorId();
+                // An unpublished article is available for its editor
+                if (article != null && article.getEditorId().equals(editorId))
+                    authority = true;
+                else if (articleBuffer != null && articleBuffer.getEditorId().equals(editorId))
+                    authority = true;
+            }
+            else { // Admin authority
+                HttpSession session = httpServletRequest.getSession();
+                if (session.getAttribute("USERNAME").equals(USERNAME) &&
+                        session.getAttribute("PASSWORD").equals(PASSWORD))
+                    // Any article is available for admin
+                    authority = true;
+            }
+            if (!authority)
+                throw new IllegalAuthorityException();
+            // End authority checks
+            File file;
+            if (articleId > 0)
+                file = articleService.getArticleFile(articleId);
+            else
+                file = new File(articleBuffer.getFilePath());
+            String fileName = file.getName();
+            httpServletResponse.setContentType("application/force-download");
+            httpServletResponse.addHeader("Content-Disposition","attachment; filename=\""
+                    + fileName + "\";filename*=utf-8''" + URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20"));
+            byte[] buffer = new byte[1024];
+            fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis);
+            OutputStream os = httpServletResponse.getOutputStream();
+            int i = bis.read(buffer);
+            while (i != -1) {
+                os.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (bis != null) bis.close();
+                if (fis != null) fis.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Autowired
     private AuthorService authorService;
@@ -224,6 +407,7 @@ public class UserController {
                 map.put("organization", reviewer.getOrganization());
             }
         } catch (LoginVerificationException e) {
+            map.clear();
             map.put("success", false);
             map.put("message", e.toString());
         } catch (Exception e) {
@@ -323,9 +507,6 @@ public class UserController {
                 throw new ParameterFormatException();
             }
             Author author = authorService.getAuthorByAuthorId(authorId);
-            if (author == null) {
-                throw new ObjectNotFoundException();
-            }
             Account account = accountService.getAccountByAccountId(author.getAccountId());
             ArrayList<Article> articleArrayList = authorService.getMyArticles(authorId);
             map.put("success", true);
@@ -339,14 +520,14 @@ public class UserController {
                 Map<String, Object> articleInfo= new HashMap<>();
                 articleInfo.put("articleId", article.getArticleId());
                 articleInfo.put("title", article.getTitle());
-                articleInfo.put("keywords", article.getKeywords().split(";"));
+                articleInfo.put("keywords", article.getKeywords());
                 articleInfo.put("firstAuthor", article.getFirstAuthor());
-                if (article.getOtherAuthors() != null) {
-                    articleInfo.put("otherAuthors", article.getOtherAuthors().split(";"));
-                }
+                articleInfo.put("otherAuthor", article.getOtherAuthors());
                 arrayList.add(articleInfo);
             }
-        } catch (ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (ParameterFormatException exception) {
+            arrayList.clear();
+            map.clear();
             map.put("success", false);
             map.put("message", exception.toString());
             arrayList.add(map);

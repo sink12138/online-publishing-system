@@ -3,7 +3,6 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
-import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import java.util.ArrayList;
@@ -45,9 +44,8 @@ public interface AuthorService {
      * binding to the author (whether submitted or claimed).
      * @param Id Determines which author to be removed
      * @return True if this operation succeeded, or false if not
-     * @throws ObjectNotFoundException If the id doesn't exist
      */
-    Boolean removeAuthor(Integer Id) throws ObjectNotFoundException;
+    Boolean removeAuthor(Integer Id);
 
     /**
      * Bind one article to an author's account by inserting a new record into table "Write"
@@ -55,7 +53,7 @@ public interface AuthorService {
      * @param authorId Determines which author is claiming an article
      * @param articleId Determines which article to be claimed
      * @return True if this operation succeeded, or false if not
-     * @throws RepetitiveOperationException If this article has been claimed by this author
+     * @throws RepetitiveOperationException if the article has already been claimed
      */
     Boolean claimArticle(Integer authorId, Integer articleId) throws RepetitiveOperationException;
 
@@ -80,10 +78,4 @@ public interface AuthorService {
      * @return An ArrayList contains all relative authors
      */
     ArrayList<Author> getAuthorsByArticleId(Integer articleId);
-
-    /**
-     * Used by Admin to check all the authors
-     * @return An instance of ArrayLsit containing all the authors currently
-     */
-    ArrayList<Author> getAuthors();
 }

@@ -181,6 +181,54 @@ public class EmailFactory {
         );
     }
 
+    private static final ReminderEmail withdrawArticleTmpl = new ReminderEmail(
+            "申请撤稿提醒",
+            "一名作者正在申请撤稿",
+            "尊敬的编辑 %s，您好！",
+            "作者 %s 于 %s 申请撤除已出版的文章《%s》，请您登录网站进行处理。如有疑问，请与该作者联系"
+    );
+
+    public ReminderEmail makeWithdrawArticleEmail(String receiverName, String operatorName, String articleTitle) {
+        return new ReminderEmail(
+                withdrawArticleTmpl.getSubject(),
+                withdrawArticleTmpl.getTitle(),
+                String.format(withdrawArticleTmpl.getGreetings(), receiverName),
+                String.format(withdrawArticleTmpl.getBody(), operatorName, getDate(), articleTitle)
+        );
+    }
+
+    private static final ReminderEmail acceptWithdrawTmpl = new ReminderEmail(
+            "撤稿成功提醒",
+            "您的撤稿申请已通过。",
+            "尊敬的作者 %s，您好！",
+            "编辑 %s 已接受了您撤除文章《%s》的请求。期待您的下一次投稿。"
+    );
+
+    public ReminderEmail makeAcceptWithdrawEmail(String receiverName, String operatorName, String articleTitle) {
+        return new ReminderEmail(
+                acceptWithdrawTmpl.getSubject(),
+                acceptWithdrawTmpl.getTitle(),
+                String.format(acceptWithdrawTmpl.getGreetings(), receiverName),
+                String.format(acceptWithdrawTmpl.getBody(), operatorName, articleTitle)
+        );
+    }
+
+    private static final ReminderEmail rejectWithdrawTmpl = new ReminderEmail(
+            "撤稿失败提醒",
+            "很抱歉，您的撤稿请求已被拒绝。",
+            "尊敬的作者 %s，您好！",
+            "很抱歉，编辑 %s 拒绝了您撤除文章《%s》的请求。若您仍希望撤稿，请与该编辑联系。"
+    );
+
+    public ReminderEmail makeRejectWithdrawEmail(String receiverName, String operatorName, String articleTitle) {
+        return new ReminderEmail(
+                rejectWithdrawTmpl.getSubject(),
+                rejectWithdrawTmpl.getTitle(),
+                String.format(rejectWithdrawTmpl.getGreetings(), receiverName),
+                String.format(rejectWithdrawTmpl.getBody(), operatorName, articleTitle)
+        );
+    }
+
     private static final ReminderEmail claimArticleTmpl = new ReminderEmail(
             "申请认领文章提醒",
             "您负责的文章有新的认领请求。",
