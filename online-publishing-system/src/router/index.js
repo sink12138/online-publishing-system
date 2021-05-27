@@ -49,11 +49,6 @@ const routes = [
     component: () => import('../views/作者信息.vue')
   },
   {
-    path: '/download',
-    name: '下载',
-    component: () => import('../views/下载.vue')
-  },
-  {
     path: '/author',
     name: '作者主页',
     component: () => import('../views/作者主页.vue')
