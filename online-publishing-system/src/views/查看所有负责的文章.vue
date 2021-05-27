@@ -5,7 +5,7 @@
     border
     style="width: 100%">
     <el-table-column
-      prop="articleid"
+      prop="articleId"
       label="文章编号"
       width="360">
     </el-table-column>

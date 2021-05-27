@@ -5,7 +5,7 @@
     border
     style="width: 100%">
     <el-table-column
-      prop="reviewerid"
+      prop="reviewerId"
       label="审稿人编号"
       width="360">
     </el-table-column>
