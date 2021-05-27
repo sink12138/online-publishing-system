@@ -35,7 +35,7 @@ public interface EmailService {
 
     /**
      * Get email by role id
-     * @param roleType Type of role
+     * @param roleType Type of role (editor, author, )
      * @param roleId id of role
      * @return Email
      */

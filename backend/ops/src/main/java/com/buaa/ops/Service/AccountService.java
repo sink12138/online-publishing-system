@@ -6,6 +6,7 @@ import com.buaa.ops.Service.Exc.LoginVerificationException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Map;
 
 public interface AccountService {
@@ -92,5 +93,9 @@ public interface AccountService {
      */
     Account getAccountBySession(HttpSession session) throws LoginVerificationException;
 
-
+    /**
+     * Used by admin to check all the accounts
+     * @return An instance of ArrayLsit containing all the accounts currently
+     */
+    ArrayList<Account> getAccounts();
 }

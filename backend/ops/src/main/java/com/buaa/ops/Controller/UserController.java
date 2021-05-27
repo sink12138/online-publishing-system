@@ -166,9 +166,11 @@ public class UserController {
             map.put("success", true);
             map.put("title", article.getTitle());
             map.put("articleAbstract", article.getArticleAbstract());
-            map.put("keywords", article.getKeywords());
+            map.put("keywords", article.getKeywords().split(";"));
             map.put("firstAuthor", article.getFirstAuthor());
-            map.put("otherAuthor", article.getOtherAuthor().split(";"));
+            if (article.getOtherAuthors() != null) {
+                map.put("otherAuthors", article.getOtherAuthors().split(";"));
+            }
             map.put("identifier", article.getIdentifier());
             ArrayList<Author> authorArrayList = authorService.getAuthorsByArticleId(articleId);
             Map<String, Integer> authors = new HashMap<>();
@@ -222,7 +224,6 @@ public class UserController {
                 map.put("organization", reviewer.getOrganization());
             }
         } catch (LoginVerificationException e) {
-            map.clear();
             map.put("success", false);
             map.put("message", e.toString());
         } catch (Exception e) {
@@ -322,6 +323,9 @@ public class UserController {
                 throw new ParameterFormatException();
             }
             Author author = authorService.getAuthorByAuthorId(authorId);
+            if (author == null) {
+                throw new ObjectNotFoundException();
+            }
             Account account = accountService.getAccountByAccountId(author.getAccountId());
             ArrayList<Article> articleArrayList = authorService.getMyArticles(authorId);
             map.put("success", true);
@@ -335,14 +339,14 @@ public class UserController {
                 Map<String, Object> articleInfo= new HashMap<>();
                 articleInfo.put("articleId", article.getArticleId());
                 articleInfo.put("title", article.getTitle());
-                articleInfo.put("keywords", article.getKeywords());
+                articleInfo.put("keywords", article.getKeywords().split(";"));
                 articleInfo.put("firstAuthor", article.getFirstAuthor());
-                articleInfo.put("otherAuthor", article.getOtherAuthor());
+                if (article.getOtherAuthors() != null) {
+                    articleInfo.put("otherAuthors", article.getOtherAuthors().split(";"));
+                }
                 arrayList.add(articleInfo);
             }
-        } catch (ParameterFormatException exception) {
-            arrayList.clear();
-            map.clear();
+        } catch (ParameterFormatException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
             arrayList.add(map);

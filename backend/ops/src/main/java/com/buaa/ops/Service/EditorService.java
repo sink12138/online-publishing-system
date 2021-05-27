@@ -4,6 +4,7 @@ import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
 import com.buaa.ops.Entity.Editor;
+import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 
 import java.util.ArrayList;
 
@@ -55,12 +56,13 @@ public interface EditorService {
      * Can't remove if he/she is the last editor
      * @param editorId Id of target editor
      * @return Whether success
+     * @throws ObjectNotFoundException If id doesn't exist
      */
-    Boolean removeEditor(Integer editorId);
+    Boolean removeEditor(Integer editorId) throws ObjectNotFoundException;
 
     /**
      * Used by Admin to check all the editors
-     * @return All the editors currently
+     * @return An instance of ArrayLsit containing all the editors currently
      */
     ArrayList<Editor> getEditors();
 

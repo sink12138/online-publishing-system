@@ -1,21 +1,33 @@
 package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.*;
+import com.buaa.ops.Service.Exc.ObjectNotFoundException;
+import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * The interface ReviewerService contains services related to reviewers,
  * including relations among reviewers, reviews, articles.
  */
 public interface ReviewerService {
+
+    /**
+     * Get reviewer by id
+     * @param reviewerId Target id
+     * @return An instance of Reviewer with this id
+     */
+    Reviewer getReviewerById(Integer reviewerId);
+
     /**
      * Assign reviewers for an article. This will insert several records into table "Review".
      * @param articleId Determines which article to assign to
      * @param reviewerIdList An ArrayList containing all reviewerId of target reviewers
      * @return True if this operation succeeded, or false if not
+     * @throws RepetitiveOperationException If the the reviewer has been assigned for this article
      */
-    Boolean assignReviewers(Integer articleId, ArrayList<Integer> reviewerIdList);
+    Boolean assignReviewers(Integer articleId, ArrayList<Integer> reviewerIdList) throws RepetitiveOperationException;
 
     /**
      * Get all articles one reviewer is reviewing, or has reviewed.
@@ -29,7 +41,7 @@ public interface ReviewerService {
      * @param review An instance of Review carrying all attributes except reviewId
      * @return True if the submission succeeded, or false if not
      */
-    Boolean submitReview(Review review);
+    Boolean submitReview(Review review) throws RepetitiveOperationException;
 
     /**
      * Add a new reviewer into the database,
@@ -45,8 +57,9 @@ public interface ReviewerService {
      * Currently responsible for any article which has not been finalized).
      * @param reviewerId Determines which reviewer to be removed
      * @return True if the operation succeeded, or false if not
+     * @throws ObjectNotFoundException If id doesn't exist
      */
-    Boolean removeReviewer(Integer reviewerId);
+    Boolean removeReviewer(Integer reviewerId) throws ObjectNotFoundException;
 
     /**
      * Get an author from table "Reviewer" with the given accountId.
@@ -64,5 +77,19 @@ public interface ReviewerService {
      * @return Whether success
      */
     Boolean modifyInfos(Reviewer newReviewerInfos);
+
+    /**
+     * Used by Admin to check all the reviewers
+     * @return An instance of ArrayLsit containing all the reviewers currently
+     */
+    ArrayList<Reviewer> getReviewers();
+
+    /**
+     * Used　by Reviewer to judge whether all the reviewers have submitted review to this article
+     * @param articleId Id of target article
+     * @return An instance of Map, the first element(key is "complete") stands for whether complete review, if completed, return true,<br>
+     * and the second (key is "pass") stands for whether pass, if pass, return true<br/>
+     */
+    Map<String, Boolean> completeReview(Integer articleId);
 
 }

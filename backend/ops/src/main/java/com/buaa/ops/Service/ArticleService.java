@@ -3,6 +3,7 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.ArticleBuffer;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
+import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -123,8 +124,9 @@ public interface ArticleService {
      * @param identifier The unique identifier given to the article
      * @return True if everything succeeded; false if the article cannot be published yet,
      * or the identifier is duplicate with another
+     * @throws RepetitiveOperationException If the article has been published
      */
-    Boolean publishArticle(Integer articleId, String identifier);
+    Boolean publishArticle(Integer articleId, String identifier) throws RepetitiveOperationException;
 
     /**
      * Clean all article garbage from the storage and the database.<br/>
@@ -133,6 +135,12 @@ public interface ArticleService {
      * @return True if all garbage is successfully cleaned, or false if not
      */
     Boolean cleanBuffer();
+
+    /**
+     * Used by admin to check all the articles
+     * @return An instance of ArrayLsit containing all the articles currently
+     */
+    ArrayList<Article> getArticles();
 
 
 }
