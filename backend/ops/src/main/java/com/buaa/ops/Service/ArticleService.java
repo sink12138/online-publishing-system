@@ -6,6 +6,7 @@ import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -44,7 +45,7 @@ public interface ArticleService {
      * @param id The required articleId
      * @return An instance of java.io.File referring to the path of the original article file
      */
-    File getArticleFile(Integer id);
+    File getArticleFile(Integer id) throws IOException;
 
     /**
      * Save the uploaded article file on the server, including steps as below:<br/>
@@ -64,7 +65,7 @@ public interface ArticleService {
     Integer saveArticleFile(Integer submitterId,
                             Integer articleBufferId,
                             Integer overwrite,
-                            MultipartFile file);
+                            MultipartFile file) throws IOException;
 
     /**
      * Submit information of an article into table "ArticleBuffer" after the file is uploaded.

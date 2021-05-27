@@ -3,6 +3,7 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
+import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import java.util.ArrayList;
 
@@ -52,8 +53,9 @@ public interface AuthorService {
      * @param authorId Determines which author is claiming an article
      * @param articleId Determines which article to be claimed
      * @return True if this operation succeeded, or false if not
+     * @throws RepetitiveOperationException if the article has already been claimed
      */
-    Boolean claimArticle(Integer authorId, Integer articleId);
+    Boolean claimArticle(Integer authorId, Integer articleId) throws RepetitiveOperationException;
 
     /**
      * Search all articles bound to an author using multi-table queries.

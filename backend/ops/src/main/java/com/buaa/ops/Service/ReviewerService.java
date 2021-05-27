@@ -58,6 +58,13 @@ public interface ReviewerService {
     Reviewer getReviewerByAccountId(Integer accountId);
 
     /**
+     * Get all reviewer objects who is attached with this article in Table Write
+     * @param articleId Target article id
+     * @return An ArrayList contains all relative reviewers
+     */
+    ArrayList<Reviewer> getReviewersByArticleId(Integer articleId);
+
+    /**
      * Modify infos of current reviewer,
      * If the attribute is null, just not modify
      * @param newReviewerInfos An object of Reviewer with modified infos

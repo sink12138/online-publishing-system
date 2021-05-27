@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Date;
 
 @Entity
 @Setter
@@ -23,7 +22,7 @@ public class Article {
     private String articleAbstract;
     private String filePath;
     private String firstAuthor;
-    private String otherAuthor;
+    private String otherAuthors;
     private Integer submitterId;
     private Integer editorId;
     private String status;
@@ -34,7 +33,7 @@ public class Article {
     }
 
     public Article(String title, String identifier, String keywords, String articleAbstract, String filePath,
-                   String firstAuthor, String otherAuthor, Integer submitterId, Integer editorId,
+                   String firstAuthor, String otherAuthors, Integer submitterId, Integer editorId,
                    String status, java.sql.Date publishingDate) {
         this.title = title;
         this.identifier = identifier;
@@ -42,7 +41,7 @@ public class Article {
         this.articleAbstract = articleAbstract;
         this.filePath = filePath;
         this.firstAuthor = firstAuthor;
-        this.otherAuthor = otherAuthor;
+        this.otherAuthors = otherAuthors;
         this.submitterId = submitterId;
         this.editorId = editorId;
         this.status = status;
