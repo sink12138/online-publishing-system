@@ -21,7 +21,7 @@ public class ArticleBuffer {
     private String articleAbstract;
     private String filePath;
     private String firstAuthor;
-    private String otherAuthor;
+    private String otherAuthors;
     private Integer submitterId;
     private Integer editorId;
     private Integer overwrite;
@@ -30,24 +30,24 @@ public class ArticleBuffer {
 
     }
 
-    public ArticleBuffer(Integer articleBufferId, String title, String keywords, String articleAbstract, String firstAuthor, String otherAuthor) {
+    public ArticleBuffer(Integer articleBufferId, String title, String keywords, String articleAbstract, String firstAuthor, String otherAuthors) {
         this.articleBufferId = articleBufferId;
         this.title = title;
         this.keywords = keywords;
         this.articleAbstract = articleAbstract;
         this.firstAuthor = firstAuthor;
-        this.otherAuthor = otherAuthor;
+        this.otherAuthors = otherAuthors;
     }
 
     public ArticleBuffer(String title, String keywords, String articleAbstract,
-                         String filePath, String firstAuthor, String otherAuthor,
+                         String filePath, String firstAuthor, String otherAuthors,
                          Integer submitterId, Integer editorId, Integer overwrite) {
         this.title = title;
         this.keywords = keywords;
         this.articleAbstract = articleAbstract;
         this.filePath = filePath;
         this.firstAuthor = firstAuthor;
-        this.otherAuthor = otherAuthor;
+        this.otherAuthors = otherAuthors;
         this.submitterId = submitterId;
         this.editorId = editorId;
         this.overwrite = overwrite;

@@ -445,13 +445,22 @@ public class EditorController {
                 throw new IllegalAuthorityException();
             }
             map.put("success", true);
+            String title = article.getTitle();
+            Author author = authorService.getAuthorByAuthorId(article.getSubmitterId());
+            Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
+            String authorName = authorAccount.getRealName();
+            String email = authorAccount.getEmail();
+            String editorName = account.getRealName();
+            EmailFactory emailFactory = new EmailFactory();
+            ReminderEmail reminderEmail;
             if (confirm) {
                 articleService.removeArticle(articleId);
-                // TODO send email
+                reminderEmail = emailFactory.makeAcceptWithdrawEmail(authorName, editorName, title);
             } else {
                 article.setStatus("已出版");
-                // TODO send email
+                reminderEmail = emailFactory.makeRejectWithdrawEmail(authorName, editorName, title);
             }
+            emailService.sendReminderEmail(email, reminderEmail);
         } catch (LoginVerificationException | ParameterFormatException |
                 ObjectNotFoundException | IllegalAuthorityException | RepetitiveOperationException exception) {
             map.put("success", false);

@@ -3,6 +3,7 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
+import com.buaa.ops.Entity.Review;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import java.util.ArrayList;
@@ -13,6 +14,12 @@ import java.util.ArrayList;
  * and the relationships between authors and articles.
  */
 public interface AuthorService {
+
+    /**
+     * Used by admin to check all authors
+     * @return An instance of ArrayList containing all authors
+     */
+    ArrayList<Author> getAuthors();
 
     /**
      * Get an author from table "Author" with the given accountId.
@@ -78,4 +85,11 @@ public interface AuthorService {
      * @return An ArrayList contains all relative authors
      */
     ArrayList<Author> getAuthorsByArticleId(Integer articleId);
+
+    /**
+     * Get reviews of an article
+     * @param articleId Id of article whose reviews you want to check
+     * @return An instance of ArrayList containing all reviews of this article
+     */
+    ArrayList<Review> getReviews(Integer articleId);
 }

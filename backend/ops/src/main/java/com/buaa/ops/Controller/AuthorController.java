@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -738,6 +740,53 @@ public class AuthorController {
             maps.add(statusMap);
         }
         return maps;
+    }
+
+    @GetMapping("/reviews")
+    public ArrayList<Map<String, Object>> reviews(@RequestBody Map<String, Object> requestMap) {
+        Map<String, Object> map = new HashMap<>();
+        ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
+        HttpSession session = request.getSession();
+        try {
+            Account account = accountService.getAccountBySession(session);
+            Author author = authorService.getAuthorByAccountId(account.getAccountId());
+            if (author == null) {
+                throw new IllegalAuthorityException();
+            }
+            Integer articleId;
+            try {
+                articleId = (Integer) requestMap.get("articleId");
+            } catch (Exception e) {
+                throw new ParameterFormatException();
+            }
+            Article article = articleService.getArticleById(articleId);
+            if (article == null || !article.getStatus().equals("审核通过") || !article.getStatus().equals("审核未通过")) {
+                throw new ObjectNotFoundException();
+            }
+            map.put("success", true);
+            ArrayList<Review> reviews = authorService.getReviews(articleId);
+            map.put("results", reviews.size());
+            arrayList.add(map);
+            for (Review review : reviews) {
+                Map<String, Object> infos = new HashMap<>();
+                infos.put("comments", review.getComments());
+                infos.put("pass", review.getPass());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+                infos.put("date", simpleDateFormat.format(review.getReviewingDate()));
+                arrayList.add(infos);
+            }
+        } catch (LoginVerificationException | IllegalAuthorityException | ParameterFormatException | ObjectNotFoundException exception) {
+            map.put("success", false);
+            map.put("message", exception.toString());
+            arrayList.add(map);
+        } catch (Exception e) {
+            map.clear();
+            arrayList.clear();
+            map.put("success", false);
+            map.put("message", "操作失败");
+            arrayList.add(map);
+        }
+        return arrayList;
     }
 
     private String buildArrayToString(String[] array) {

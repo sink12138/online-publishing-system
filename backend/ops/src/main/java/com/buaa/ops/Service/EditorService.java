@@ -1,9 +1,6 @@
 package com.buaa.ops.Service;
 
-import com.buaa.ops.Entity.Account;
-import com.buaa.ops.Entity.Article;
-import com.buaa.ops.Entity.Author;
-import com.buaa.ops.Entity.Editor;
+import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 
 import java.util.ArrayList;
@@ -23,6 +20,13 @@ public interface EditorService {
      * @return An object of ArrayList contains all the articles to be processed
      */
     ArrayList<Article> getEditingArticles(Integer editorId);
+
+    /**
+     * Get all the articleBuffers to be processed by current editor
+     * @param editorId Id of current editor
+     * @return An object of ArrayList contains all the articleBuffers to be processed
+     */
+    ArrayList<ArticleBuffer> getEditingArticleBuffers(Integer editorId);
 
     /**
      * Used by editor to confirm claim request by author,
