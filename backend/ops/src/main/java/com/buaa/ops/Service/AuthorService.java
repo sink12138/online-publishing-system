@@ -59,6 +59,11 @@ public interface AuthorService {
 
     /**
      * Search all articles bound to an author using multi-table queries.
+     * The result includes parts as below:<br/>
+     * (1) Articles in table "Article" that the author has submitted or claimed,
+     * except those being overwritten in table "ArticleBuffer";<br/>
+     * (2) Articles in table "ArticleBuffer" that the author as submitted,
+     * with a negative articleId as difference.
      * @param authorId Determines whose articles to be queried
      * @return An ArrayList containing all articles bound to the author
      */
