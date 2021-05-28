@@ -85,6 +85,15 @@
     },
     methods:{
         adminLogin(){
+            let admindata = JSON.stringify(this.adminMess);
+            this.$axios({
+                method:"post",
+                url:'xxx',
+                data:admindata,
+            })
+            .then((res)=>{
+                console.log(res);
+            })
             this.$store.commit('adminLogin');
             if (this.$store.state.adminLogin) {
                 window.location.href='../admin';

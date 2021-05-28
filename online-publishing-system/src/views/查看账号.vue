@@ -61,14 +61,41 @@
             <el-breadcrumb-item :to="{ path: '/admin' }">后台首页</el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: '/admin/account' }">查看账号</el-breadcrumb-item>
           </el-breadcrumb>
+          <el-table
+            :data="accountData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+            stripe
+            style="height: 100%;width: 100%;padding-top:10px">
+            <el-table-column
+              prop="accountId"
+              label="账号编号"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="email"
+              label="账号邮箱"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="password"
+              label="账号密码"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="realName"
+              label="真实姓名"
+              width="180">
+            </el-table-column>
+          </el-table>
           <router-view></router-view>
         </el-main>
         <el-footer>
           <el-pagination
-            style="text-align:center"
             background
             layout="prev, pager, next, jumper"
-            :total="1000">
+            :total="total"
+            :page-size="3"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage">
           </el-pagination>
         </el-footer>
       </el-container>
@@ -109,6 +136,58 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+      }
+    },
+    data() {
+      return {
+        pagesize:3,
+        currentPage:1,
+        accountData: [{
+          accountId:'00001',
+          email:'123@163.com',
+          password:'123456',
+          realName:'张三'
+        },
+        {
+          accountId:'00002',
+          email:'1234@163.com',
+          password:'123456',
+          realName:'李四'
+        },
+        {
+          accountId:'00002',
+          email:'1234@163.com',
+          password:'123456',
+          realName:'李四'
+        },
+        {
+          accountId:'00002',
+          email:'1234@163.com',
+          password:'123456',
+          realName:'李四'
+        },
+        {
+          accountId:'00002',
+          email:'1234@163.com',
+          password:'123456',
+          realName:'李四'
+        },
+        {
+          accountId:'00002',
+          email:'1234@163.com',
+          password:'123456',
+          realName:'李四'
+        },
+        {
+          accountId:'00002',
+          email:'1234@163.com',
+          password:'123456',
+          realName:'李四'
+        }],
+        total:7
       }
     }
   }

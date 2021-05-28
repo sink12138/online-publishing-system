@@ -61,6 +61,9 @@
           <el-breadcrumb-item :to="{ path: '/admin/documents' }">资源管理</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/admin/documents/view' }">查看文章</el-breadcrumb-item>
         </el-breadcrumb>
+        <el-button v-on:click=printjson type="success" round icon="el-icon-right">
+          登录
+        </el-button>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -89,12 +92,21 @@
 
 <script>
   export default {
+    
     methods: {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      printjson(){
+        this.$axios({
+          method:'get',
+          url: '/1.json',
+        }).then(res =>{
+          console.log(res.data)
+        })
       }
     }
   }
