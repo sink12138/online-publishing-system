@@ -7,10 +7,13 @@ import com.buaa.ops.Service.Emails.ReminderEmail;
 import com.buaa.ops.Service.Exc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,8 +140,6 @@ public class EditorController {
         return map;
     }
 
-
-
     @GetMapping("/authors")
     public ArrayList<Map<String, Object>> authors() {
         Map<String, Object> map = new HashMap<>();
@@ -258,6 +259,150 @@ public class EditorController {
         return arrayList;
     }
 
+    @PostMapping("/accept")
+    public Map<String, Object> accept(@RequestBody Map<String, Object> requestMap) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Account account = accountService.getAccountBySession(httpServletRequest.getSession());
+            Integer articleBufferId;
+            // Begin parameter format checks
+            try {
+                articleBufferId = (Integer) requestMap.get("articleBufferId");
+            }
+            catch (ClassCastException cce) {
+                throw new ParameterFormatException();
+            }
+            if (articleBufferId == null || articleBufferId <= 0)
+                throw new ParameterFormatException();
+            // End parameter format checks
+            ArticleBuffer articleBuffer = articleService.getArticleBufferById(articleBufferId);
+            if (articleBuffer == null) // Article not found
+                throw new ObjectNotFoundException();
+            Editor editor = editorService.getEditorByAccountId(account.getAccountId());
+            // Begin authority checks
+            if (editor == null) // Poster is not an editor
+                throw new IllegalAuthorityException();
+            Integer editorId = editor.getEditorId();
+            Integer articleEditorId = articleBuffer.getEditorId();
+            if (articleEditorId == null) // Article has not been submitted
+                throw new IllegalAuthorityException();
+            if (!articleEditorId.equals(editorId))
+                // Poster is not editor of the article
+                throw new IllegalAuthorityException();
+            // End authority checks
+            // Move the article from buffer to formal table
+            Integer articleId = articleService.moveToArticle(articleBufferId);
+            Article article = articleService.getArticleById(articleId);
+            File file = new File(article.getFilePath());
+            Integer overwrite = articleBuffer.getOverwrite();
+            if (overwrite == null) { // New submission
+                // Set article status
+                articleService.setArticleStatus(articleId, "待审核");
+            }
+            else { // Revised draft
+                // Set article status
+                articleService.setArticleStatus(articleId, "审核中");
+                ArrayList<Reviewer> reviewers = reviewerService.getReviewersByArticleId(articleId);
+                // Make and send emails to reviewers of the article
+                EmailFactory emailFactory = new EmailFactory();
+                for (Reviewer reviewer : reviewers) {
+                    Account reviewerAccount = accountService.getAccountByAccountId(reviewer.getAccountId());
+                    // Make
+                    ReminderEmail reminderEmail = emailFactory.makeReviewAssignmentEmail(
+                            reviewerAccount.getRealName(),
+                            account.getRealName(),
+                            article.getTitle()
+                    );
+                    // Send
+                    emailService.sendAttachmentEmail(reviewerAccount.getEmail(), file, reminderEmail);
+                }
+            }
+            map.put("success", true);
+        }
+        catch (LoginVerificationException | ParameterFormatException |
+                ObjectNotFoundException | IllegalAuthorityException exc) {
+            map.put("success", false);
+            map.put("message", exc.toString());
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("success", false);
+            map.put("message", "操作失败");
+        }
+        return map;
+    }
+
+    @PostMapping("/reject")
+    public Map<String, Object> reject(@RequestBody Map<String, Object> requestMap) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Account account = accountService.getAccountBySession(httpServletRequest.getSession());
+            // Begin parameter format checks
+            Integer articleBufferId;
+            try {
+                articleBufferId = (Integer) requestMap.get("articleBufferId");
+            }
+            catch (ClassCastException cce) {
+                throw new ParameterFormatException();
+            }
+            if (articleBufferId == null || articleBufferId <= 0)
+                throw new ParameterFormatException();
+            // End parameter format checks
+            ArticleBuffer articleBuffer = articleService.getArticleBufferById(articleBufferId);
+            if (articleBuffer == null) // Article not found
+                throw new ObjectNotFoundException();
+            Editor editor = editorService.getEditorByAccountId(account.getAccountId());
+            // Begin authority checks
+            if (editor == null) // Poster is not an editor
+                throw new IllegalAuthorityException();
+            Integer editorId = editor.getEditorId();
+            Integer articleEditorId = articleBuffer.getEditorId();
+            if (articleEditorId == null) // Article has not been submitted
+                throw new IllegalAuthorityException();
+            if (!articleEditorId.equals(editorId))
+                // Poster is not editor of the article
+                throw new IllegalAuthorityException();
+            // End authority checks
+            // Remove the article from buffer
+            articleService.rejectArticle(articleBufferId);
+            // Get author of the article
+            Author author = authorService.getAuthorByAuthorId(articleBuffer.getSubmitterId());
+            Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
+            // Make and send an email to the author
+            EmailFactory emailFactory = new EmailFactory();
+            Integer overwrite = articleBuffer.getOverwrite();
+            if (overwrite == null) { // New submission
+                ReminderEmail reminderEmail = emailFactory.makeRejectArticleEmail(
+                        authorAccount.getRealName(),
+                        account.getRealName(),
+                        articleBuffer.getTitle()
+                );
+                emailService.sendReminderEmail(authorAccount.getEmail(), reminderEmail);
+            }
+            else { // Revised draft
+                Article article = articleService.getArticleById(overwrite);
+                ReminderEmail reminderEmail = emailFactory.makeRejectDraftEmail(
+                        authorAccount.getRealName(),
+                        account.getRealName(),
+                        article.getTitle()
+                );
+                emailService.sendReminderEmail(authorAccount.getEmail(), reminderEmail);
+            }
+            map.put("success", true);
+        }
+        catch (LoginVerificationException | ParameterFormatException |
+                ObjectNotFoundException | IllegalAuthorityException exc) {
+            map.put("success", false);
+            map.put("message", exc.toString());
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("success", false);
+            map.put("message", "操作失败");
+        }
+        return map;
+    }
+
     @Autowired
     ArticleService articleService;
 
@@ -275,7 +420,8 @@ public class EditorController {
             ArrayList<Integer> reviewerIds;
             try {
                 articleId = (Integer) request.get("articleId");
-                reviewerIds = (ArrayList<Integer>) request.get("reviewerId");
+                Integer[] ids = (Integer[]) request.get("reviewerId");
+                reviewerIds = new ArrayList<>(Arrays.asList(ids));
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
@@ -313,6 +459,59 @@ public class EditorController {
             map.put("success", false);
             map.put("message", "操作失败");
             e.printStackTrace();
+        }
+        return map;
+    }
+
+    @PostMapping("/upload")
+    public Map<String, Object> upload(@RequestParam(value = "file", required = false) Object objectFile,
+                                      @RequestParam(value = "articleId", required = false) Object objectId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Account account = accountService.getAccountBySession(httpServletRequest.getSession());
+            MultipartFile file;
+            Integer articleId;
+            // Begin parameter format checks
+            try {
+                file = (MultipartFile) objectFile;
+                articleId = (Integer) objectId;
+            }
+            catch (ClassCastException cce) {
+                throw new ParameterFormatException();
+            }
+            if (file == null)
+                throw new ParameterFormatException();
+            if (articleId == null || articleId <= 0)
+                throw new ParameterFormatException();
+            // End parameter format checks
+            Article article = articleService.getArticleById(articleId);
+            if (article == null) // Article not found
+                throw new ObjectNotFoundException();
+            Editor editor = editorService.getEditorByAccountId(account.getAccountId());
+            // Begin authority checks
+            if (editor == null) // Poster is not an editor
+                throw new IllegalAuthorityException();
+            Integer editorId = editor.getEditorId();
+            if (!article.getEditorId().equals(editorId))
+                // Poster is not editor of the article
+                throw new IllegalAuthorityException();
+            if (!article.getStatus().equals("编辑中"))
+                // Not the editor's turn to upload
+                throw new IllegalAuthorityException();
+            // End authority checks
+            // Save the uploaded file into the storage
+            articleService.saveEditedFile(articleId, file);
+            map.put("success", true);
+        }
+        catch (LoginVerificationException | ParameterFormatException |
+                ObjectNotFoundException | IllegalAuthorityException exc) {
+            map.put("success", false);
+            map.put("message", exc.toString());
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("success", false);
+            map.put("message", "操作失败");
         }
         return map;
     }

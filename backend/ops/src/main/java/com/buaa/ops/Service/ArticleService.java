@@ -142,4 +142,11 @@ public interface ArticleService {
      * @return An instance of ArrayList containing all the articles currently
      */
     ArrayList<Article> getArticles();
+
+    /**
+     * Remove all reviews of an article from table "Review".
+     * @param articleId Determines whose reviews to be removed
+     * @return True if this operation succeeded, or false if not
+     */
+    Boolean removeReviews(Integer articleId);
 }
