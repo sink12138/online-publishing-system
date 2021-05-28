@@ -15,7 +15,12 @@ public interface EditorService {
     Editor getEditorById(Integer id);
 
     /**
-     * Get all the articles to be processed by current editor
+     * Get all the articles to be processed by current editor.
+     * The results includes parts as below:<br/>
+     * (1) Articles in table "Article" related to the editor,
+     * except those being overwritten in table "ArticleBuffer";<br/>
+     * (2) Articles in table "ArticleBuffer" related to the editor,
+     * with a negative articleId as difference.
      * @param editorId Id of current editor
      * @return An object of ArrayList contains all the articles to be processed
      */
