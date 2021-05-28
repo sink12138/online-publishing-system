@@ -677,7 +677,7 @@ public class EditorController {
     public ArrayList<Map<String, Object>> reviews(@RequestBody Map<String, Object> requestMap) {
         Map<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
-        HttpSession session = request.getSession();
+        HttpSession session = httpServletRequest.getSession();
         try {
             Account account = accountService.getAccountBySession(session);
             Editor editor = editorService.getEditorByAccountId(account.getAccountId());
