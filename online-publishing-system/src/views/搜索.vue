@@ -1,5 +1,10 @@
 <template>
-  <div class="hello">
+  <div class="Search">
+    <div>
+      <input type="text" style="height:21.5px;width:400px">
+      <router-link to="/search"><el-button type="primary" icon="el-icon-search" size="mini">搜索</el-button></router-link>
+      <router-view />
+    </div>
     <div class="table">
       <el-card class="box-card">
         <el-table
@@ -67,21 +72,13 @@
         </el-row>
       </el-card>
     </div>
-    <h1>{{ msg }}</h1>
-    <p>
-      如果您想使用网上出版系统的更多功能,请您先<a href="/login">登录</a>.<br />
-      如果您还未注册，请点击<a href="/register">此处</a>。
-    </p>
   </div>
 </template>
 
 <script>
 const axios = require("axios");
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
+  name: "Search",
   data() {
     return {
       currentPage: 1, //当前页数
@@ -104,9 +101,6 @@ export default {
 </script>
 
 <style scoped>
-a {
-  color: #42b983;
-}
 .table {
   padding: 50px 250px 100px 250px;
 }
