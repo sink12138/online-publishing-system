@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/main',
     name: 'Home',
     component: Home
   },
@@ -47,11 +47,6 @@ const routes = [
     path: '/infos',
     name: '作者信息',
     component: () => import('../views/作者信息.vue')
-  },
-  {
-    path: '/download',
-    name: '下载',
-    component: () => import('../views/下载.vue')
   },
   {
     path: '/author',
