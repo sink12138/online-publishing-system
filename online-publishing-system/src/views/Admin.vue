@@ -2,9 +2,18 @@
   <div class="admin" style="height: 100%">
     <el-container style="height: 100%">
       <el-aside width="200px" style="height: 100%">
-        <div class="demo-type" align="center">
+        <div style="line-height: 40px;padding:10px" class="demo-type" align="center">
           <div>
             <el-avatar icon="el-icon-user-solid"></el-avatar>
+          </div>
+          <div>
+            <el-popconfirm
+              @confirm="handleConfirm" 
+              confirm-button-text='确认'
+              cancel-button-text='取消'
+              title="确认登出？">
+              <el-button slot="reference">登出</el-button>
+            </el-popconfirm>
           </div>
         </div>
         <el-row class="tac">
@@ -15,6 +24,7 @@
               @open="handleOpen"
               @close="handleClose"
               background-color="#D3DCE6"
+              unique-opened
               text-color="#000"
               active-text-color="#a4a5cf"
               router
@@ -57,6 +67,9 @@
       </el-aside>
       <el-main>
         <router-view></router-view>
+        <div style="width:400px;height=1600px">
+          <canvas id="myChart"></canvas>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -66,6 +79,7 @@
   .admin {
     position: fixed;
     height: 100%;
+    width: 100%
   }
   .el-aside {
     background-color: #D3DCE6;
@@ -77,20 +91,53 @@
     background-color: #fff;
     color: #333;
     text-align: center;
-    line-height: 160px;
   }
 </style>
 
-
 <script>
-  export default {
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
+import Chart from 'chart.js/auto';
+
+export default {
+  mounted() {
+    var ctx = document.getElementById("myChart");
+    // eslint-disable-next-line no-unused-vars
+    var myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+                {
+                    label: "test1",
+                    backgroundColor: "rgba(225,10,10,0.3)",
+                    borderColor: "rgba(225,103,110,1)",
+                    borderWidth: 1,
+                    pointStrokeColor: "#fff",
+                    pointStyle: "crossRot",
+                    data: [65, 59, 0, 81, 56, 10, 40, 22, 32, 54, 10, 30],
+                    cubicInterpolationMode: "monotone",
+                    spanGaps: "false",
+                    fill: "false"
+                }
+            ]
+        },
+        options: {
+            
+        }
+
+    });
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(this.$store.state.adminLogin)
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleConfirm() {
+      this.$store.commit("adminLogout");
+      location.reload();
     }
   }
+}
 </script>

@@ -37,78 +37,135 @@ const routes = [
     path:"/admin",
     name:"Admin",
     component:Admin,
+    meta: {
+      adminLoginRequest: true
+    },
+    children: [
+      {
+        path:"account",
+        name:"查看账号",
+        component:查看账号,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"writer",
+        name:"查看作者账号",
+        component:查看作者账号,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"referee",
+        name:"查看审稿人账号",
+        component:查看审稿人账号,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"editor",
+        name:"查看编辑账号",
+        component:查看编辑账号,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"documents",
+        name:"资源管理",
+        component:资源管理,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"account/add",
+        name:"增加账号",
+        component:增加账号,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"account/change",
+        name:"修改身份",
+        component:修改身份,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"documents/view",
+        name:"查看文章",
+        component:查看文章,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"/admin/documents/number-search",
+        name:"编号查找",
+        component:编号查找,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"/admin/documents/key-search",
+        name:"关键字查找",
+        component:关键字查找,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"/admin/clean",
+        name:"清除无效信息",
+        component:清除无效信息,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"/admin/settings",
+        name:"网站设置",
+        component:网站设置,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+    ]
   },
   {
     path:"/admin/login",
     name:"管理员登录",
     component:管理员登录,
-  },
-  {
-    path:"/admin/account",
-    name:"查看账号",
-    component:查看账号,
-  },
-  {
-    path:"/admin/writer",
-    name:"查看作者账号",
-    component:查看作者账号,
-  },
-  {
-    path:"/admin/referee",
-    name:"查看审稿人账号",
-    component:查看审稿人账号,
-  },
-  {
-    path:"/admin/editor",
-    name:"查看编辑账号",
-    component:查看编辑账号,
-  },
-  {
-    path:"/admin/documents",
-    name:"资源管理",
-    component:资源管理,
-  },
-  {
-    path:"/admin/account/add",
-    name:"增加账号",
-    component:增加账号,
-  },
-  {
-    path:"/admin/account/change",
-    name:"修改身份",
-    component:修改身份,
-  },
-  {
-    path:"/admin/documents/view",
-    name:"查看文章",
-    component:查看文章,
-  },
-  {
-    path:"/admin/documents/number-search",
-    name:"编号查找",
-    component:编号查找,
-  },
-  {
-    path:"/admin/documents/key-search",
-    name:"关键字查找",
-    component:关键字查找,
-  },
-  {
-    path:"/admin/clean",
-    name:"清除无效信息",
-    component:清除无效信息,
-  },
-  {
-    path:"/admin/settings",
-    name:"网站设置",
-    component:网站设置,
-  },
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if ((to.meta.adminLoginRequest == true)){
+    var admin = sessionStorage.getItem("admin");
+    console.log(admin)
+    if (admin != "login") {
+      next({
+        path : '/admin/login'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

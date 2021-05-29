@@ -1,14 +1,11 @@
 <template>
     <div class="管理员登录">
-        <div class="admin-bg">
-            <img src="../assets/adminbg.jpg" alt="bg" />
-        </div>
         <div class="admin-wrapper">
                 <div class="admin-login">
                     <div class="login-center">
                         <form action="#!" method="post">
                             <div class="text-center">
-                                <h1>后台登录系统</h1>
+                                <h1 style="margin:0">后台登录系统</h1>
                                 <router-link to="/home"> <img alt="home" src="../assets/logo.jpg"> </router-link>
                             </div>
                             <div class="login-text">
@@ -38,22 +35,21 @@
 </template>
 
 <style>
-.admin-bg{
-    position: absolute;
+html,body {
     height: 100%;
     width: 100%;
-    z-index: -1;
+    margin: 0;
+    background:url('../assets/Canva - Green Leafed Plant.jpg') no-repeat;
+    background-size:cover;
 }
 .admin-wrapper {
-    position: absolute;
     height: 100%;
     width: 100%;
-    z-index: 0;
 }
 .admin-login {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .login-center {
     background: #fff;
@@ -94,8 +90,9 @@
             .then((res)=>{
                 console.log(res);
             })
-            this.$store.commit('adminLogin');
-            if (this.$store.state.adminLogin) {
+            if ((this.adminMess.username == '123')&&(this.adminMess.password = '1234')) this.$store.commit('adminLogin');
+            else this.$store.commit('adminLogout');
+            if (sessionStorage.getItem("admin")) { 
                 window.location.href='../admin';
             }
             else {
