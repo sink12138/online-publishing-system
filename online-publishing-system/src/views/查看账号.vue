@@ -32,7 +32,7 @@
           label="真实姓名"
           width="180">
         </el-table-column>
-      </el-table>
+      </el-table>-
       <div class="pagination">
         <el-pagination
         background
