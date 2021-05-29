@@ -24,20 +24,27 @@
         <el-table-column width="180" prop="amount2"></el-table-column>
         <el-table-column prop="amount3"></el-table-column>
       </el-table>
-    </div><br>
+    </div>
+    <br />
     <div class="download">
-      <el-button type="primary" @click="downloadarticle">点击下载本篇文章<i class="el-icon-download el-icon--right"></i></el-button>
+      <el-button type="primary" @click="downloadarticle"
+        >点击下载本篇文章<i class="el-icon-download el-icon--right"></i
+      ></el-button>
     </div>
   </div>
 </template>
 
 <script>
+const axios = require("axios");
 export default {
   name: "article",
   data() {
     return {
       dataForm: {},
     };
+  },
+  created() {
+    this.convert();
   },
   computed: {
     tableData() {
@@ -60,8 +67,8 @@ export default {
           id: this.dataForm.headImg,
           name: "其他作者",
           amount1: this.dataForm.otherAuthors,
-          amount2: "会员等级",
-          amount3: this.dataForm.gradeCode,
+          amount2: "作者编号",
+          amount3: "",
         },
         {
           id: this.dataForm.headImg,
@@ -74,10 +81,16 @@ export default {
     },
   },
   methods: {
-    downloadarticle(){
-      alert('下载中');
+    convert() {
+      axios.get("/test.json").then((res) => {
+        console.log(JSON.stringify(res));
+        this.dataForm = res.data;
+      });
     },
-    columnStyle({columnIndex }) {
+    downloadarticle() {
+      alert("下载中");
+    },
+    columnStyle({ columnIndex }) {
       if (columnIndex == 1 || columnIndex == 3) {
         return "background:#f3f6fc;";
       } else {
