@@ -18,12 +18,14 @@ public class Write {
 
     private Integer authorId;
     private Integer articleId;
+    private Boolean confirmed;
 
     public Write() {
     }
 
-    public Write(Integer authorId, Integer articleId) {
+    public Write(Integer authorId, Integer articleId, Boolean confirmed) {
         this.authorId = authorId;
         this.articleId = articleId;
+        this.confirmed = confirmed;
     }
 }

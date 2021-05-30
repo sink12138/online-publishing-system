@@ -87,7 +87,7 @@ public interface ReviewerService {
 
     /**
      * Used by Admin to check all the reviewers
-     * @return An instance of ArrayLsit containing all the reviewers currently
+     * @return An instance of ArrayList containing all the reviewers currently
      */
     ArrayList<Reviewer> getReviewers();
 

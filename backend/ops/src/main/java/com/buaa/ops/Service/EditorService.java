@@ -34,6 +34,18 @@ public interface EditorService {
     ArrayList<ArticleBuffer> getEditingArticleBuffers(Integer editorId);
 
     /**
+     * Get all claims of articles related to a specific editor.
+     * This operation includes multi-table queries, and returns records from table "Write"
+     * which satisfy conditions below:<br/>
+     * (1) The articleId refers to an article whose editor matches the given editorId;<br/>
+     * (2) The authorId refers to an author who is not the submitter of the article
+     * (since submitters do not need to claim their articles by themselves)
+     * @param editorId Determines a specific editor
+     * @return Results of the query, or null if nothing is selected
+     */
+    ArrayList<Write> getClaims(Integer editorId);
+
+    /**
      * Used by editor to confirm claim request by author,
      * Update appropriate Write object, set confirmed attribute to true
      * @param articleId Id of article claimed

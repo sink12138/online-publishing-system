@@ -593,7 +593,8 @@ public class AuthorController {
             Author author = authorService.getAuthorByAccountId(account.getAccountId());
             if (author == null) // Getter is not an author
                 throw new IllegalAuthorityException();
-            ArrayList<Article> results = authorService.getMyArticles(author.getAuthorId());
+            Integer authorId = author.getAuthorId();
+            ArrayList<Article> results = authorService.getMyArticles(authorId);
             statusMap.put("success", true);
             if (results == null || results.isEmpty()) {
                 statusMap.put("results", 0);
@@ -613,11 +614,12 @@ public class AuthorController {
                     String firstAuthor = article.getFirstAuthor();
                     map.put("firstAuthor", firstAuthor);
                     String otherAuthors = article.getOtherAuthors();
-                    if (otherAuthors != null) {
+                    if (otherAuthors != null)
                         map.put("otherAuthors", otherAuthors.split(";"));
-                    }
                     String status = article.getStatus();
                     map.put("status", status);
+                    Boolean authorized = article.getSubmitterId().equals(authorId);
+                    map.put("authorized", authorized);
                     maps.add(map);
                 }
             }
