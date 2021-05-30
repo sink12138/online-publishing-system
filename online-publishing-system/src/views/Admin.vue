@@ -68,7 +68,7 @@
       <el-main>
         <router-view></router-view>
         <div style="width:400px;height=1600px">
-          <canvas id="myChart"></canvas>
+          <!--<canvas id="myChart"></canvas>-->
         </div>
       </el-main>
     </el-container>

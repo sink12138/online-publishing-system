@@ -6,7 +6,7 @@
                         <form action="#!" method="post">
                             <div class="text-center">
                                 <h1 style="margin:0">后台登录系统</h1>
-                                <router-link to="/home"> <img alt="home" src="../assets/logo.jpg"> </router-link>
+                                <router-link to="/"> <img alt="home" src="../assets/logo.jpg"> </router-link>
                             </div>
                             <div class="login-text">
                                 <el-input
@@ -35,12 +35,18 @@
 </template>
 
 <style>
-html,body {
+html, body {
     height: 100%;
     width: 100%;
     margin: 0;
-    background:url('../assets/Canva - Green Leafed Plant.jpg') no-repeat;
+}
+.管理员登录 {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background:url('../assets/Canva - Green Leafed Plant.jpg');
     background-size:cover;
+    background-position: top center;
 }
 .admin-wrapper {
     height: 100%;
