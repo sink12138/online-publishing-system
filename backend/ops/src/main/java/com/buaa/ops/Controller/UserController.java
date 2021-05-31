@@ -234,6 +234,8 @@ public class UserController {
             if (article == null) {
                 throw new ObjectNotFoundException();
             }
+            if (!article.getStatus().equals("已出版"))
+                throw new IllegalAuthorityException();
             map.put("success", true);
             map.put("title", article.getTitle());
             map.put("articleAbstract", article.getArticleAbstract());
@@ -249,7 +251,7 @@ public class UserController {
             map.put("authorMap", authors);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
             map.put("publishingDate", sdf.format(article.getPublishingDate()));
-        } catch (ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
