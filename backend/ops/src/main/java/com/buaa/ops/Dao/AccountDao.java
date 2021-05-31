@@ -1,47 +1,29 @@
 package com.buaa.ops.Dao;
 
 import com.buaa.ops.Entity.Account;
-import com.buaa.ops.Entity.AccountBuffer;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.ArrayList;
 
 @Mapper
 public interface AccountDao {
-    /**
-     * Add a new account
-     * @param account target object of Account
-     */
-    void addAccount(Account account);
+
+    ArrayList<Account> selectAll();
+
+    Account selectById(Integer id);
+
+    Account selectByEmail(String email);
+
+    Integer insert(Account account);
+
+    Integer deleteById(Integer id);
 
     /**
-     * Delete an account
-     * @param accountId target id
+     * Password can't be null,
+     * attribute realName will be update to null if param realName is null
      */
-    void deleteAccount(Integer accountId);
+    Integer update(Account newAccountInfos);
 
-    /**
-     * Select an account by his/her Email
-     * @param email target email
-     * @return an object with this email
-     */
-    Account selectAccountByEmail(String email);
-    
-    /**
-     * Delete accountBuffer by id
-     * @param accountBufferId target id
-     */
-    void deleteAccountBuffer(Integer accountBufferId);
 
-    /**
-     * Add a new AccountBuffer into database
-     * @param accountBuffer a new object of AccountBuffer
-     */
-    void addAccountBuffer(AccountBuffer accountBuffer);
-
-    /**
-     * Select AccountBuffer by id
-     * @param accountBufferId target id
-     * @return a object of AccountBuffer with the id
-     */
-    AccountBuffer selectAccountBuffer(Integer accountBufferId);
 
 }
