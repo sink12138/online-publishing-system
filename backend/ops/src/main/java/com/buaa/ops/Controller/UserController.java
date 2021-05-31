@@ -70,7 +70,7 @@ public class UserController {
             Integer accountBufferId = accountService.checkCode(code);
             accountService.moveToAccount(accountBufferId);
             map.put("success", true);
-        } catch (ObjectNotFoundException | ParameterFormatException e) {
+        } catch (ObjectNotFoundException | ParameterFormatException | RepetitiveOperationException e) {
             map.put("success", false);
             map.put("message", e.toString());
         } catch (Exception otherException) {
@@ -461,7 +461,7 @@ public class UserController {
                 reviewerService.modifyInfos(newReviewerInfos);
             }
             map.put("success", true);
-        } catch (ParameterFormatException | LoginVerificationException exception) {
+        } catch (ParameterFormatException | LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {

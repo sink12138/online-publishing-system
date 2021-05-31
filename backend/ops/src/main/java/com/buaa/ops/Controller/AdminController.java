@@ -5,6 +5,7 @@ import com.buaa.ops.Service.*;
 import com.buaa.ops.Service.Exc.LoginVerificationException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.ParameterFormatException;
+import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -105,7 +106,7 @@ public class AdminController {
             Account newAccount = new Account(email, password, realName);
             accountService.addAccount(newAccount);
             map.put("success", true);
-        } catch (LoginVerificationException | ParameterFormatException exception) {
+        } catch (LoginVerificationException | ParameterFormatException | RepetitiveOperationException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
@@ -139,7 +140,7 @@ public class AdminController {
             Editor newEditor = new Editor(account.getAccountId());
             editorService.addEditor(newEditor);
             map.put("success", true);
-        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | RepetitiveOperationException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {

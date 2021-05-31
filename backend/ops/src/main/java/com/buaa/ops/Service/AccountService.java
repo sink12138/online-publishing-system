@@ -4,6 +4,7 @@ import com.buaa.ops.Entity.AccountBuffer;
 import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Service.Exc.LoginVerificationException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
+import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -21,16 +22,14 @@ public interface AccountService {
      * Add a new account to Table Account,
      * Only after an account has been verified it can be remove from AccountBuffer to Account
      * @param account A new object of Class Account
-     * @return Whether success
      */
-    Boolean addAccount(Account account) throws Exception;
+    void addAccount(Account account) throws RepetitiveOperationException;
 
     /**
      * Add a new accountBuffer to Table AccountBuffer before register checking
      * @param accountBuffer A new object of Class AccountBuffer
-     * @return Whether success
      */
-    Boolean addAccountBuffer(AccountBuffer accountBuffer) throws Exception;
+    void addAccountBuffer(AccountBuffer accountBuffer) throws RepetitiveOperationException;
 
     /**
      * Select Account by email,
@@ -41,48 +40,37 @@ public interface AccountService {
     Account getAccountByEmail(String email) throws Exception;
 
     /**
-     * Select AccountBuffer by email,
-     * Check whether the email has been used when register
-     * @param email Target email
-     * @return An accountBuffer with appropriate email
-     */
-    AccountBuffer getAccountBuffer(String email) throws Exception;
-
-    /**
      * Used by Admin to delete zombie account by accountId
      * @param accountId Target id
-     * @return Whether success
      */
-    Boolean deleteAccount(Integer accountId) throws ObjectNotFoundException;
+    void deleteAccount(Integer accountId) throws ObjectNotFoundException;
 
     /**
      * Check whether the code is valid
      * @param code The check code
      * @return The accountBufferId with this code
      */
-    Integer checkCode(String code) throws Exception;
+    Integer checkCode(String code) throws ObjectNotFoundException;
 
     /**
      * Move the account from AccountBuffer to Account,
      * Add Account and delete AccountBuffer
      * @param accountBufferId Target id in AccountBuffer
-     * @return Whether success
      */
-    Boolean moveToAccount(Integer accountBufferId) throws Exception;
+    void moveToAccount(Integer accountBufferId) throws RepetitiveOperationException;
 
     /**
      * Modify infos of current account,
      * If the attribute is null, just not modify
      * @param newAccountInfos An object of Account with modified infos
-     * @return Whether success
      */
-    Boolean modifyInfos(Account newAccountInfos) throws Exception;
+    void modifyInfos(Account newAccountInfos) throws ObjectNotFoundException;
 
     /**
      * Used by Admin to clean cache of AccountBuffer and Check
      * @return Whether success
      */
-    Boolean cleanBuffer() throws Exception;
+    Boolean cleanBuffer();
 
     /**
      * Used to verify identity and get information of account,
@@ -95,7 +83,7 @@ public interface AccountService {
 
     /**
      * Used by admin to check all the accounts
-     * @return An instance of ArrayLsit containing all the accounts currently
+     * @return An instance of ArrayList containing all the accounts currently
      */
     ArrayList<Account> getAccounts();
 }
