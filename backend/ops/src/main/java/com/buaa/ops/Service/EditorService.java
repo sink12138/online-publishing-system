@@ -24,14 +24,7 @@ public interface EditorService {
      * @param editorId Id of current editor
      * @return An object of ArrayList contains all the articles to be processed
      */
-    ArrayList<Article> getEditingArticles(Integer editorId);
-
-    /**
-     * Get all the articleBuffers to be processed by current editor
-     * @param editorId Id of current editor
-     * @return An object of ArrayList contains all the articleBuffers to be processed
-     */
-    ArrayList<ArticleBuffer> getEditingArticleBuffers(Integer editorId);
+    ArrayList<Article> getEditingArticles(Integer editorId) throws ObjectNotFoundException;
 
     /**
      * Get all claims of articles related to a specific editor.
@@ -43,16 +36,15 @@ public interface EditorService {
      * @param editorId Determines a specific editor
      * @return Results of the query, or null if nothing is selected
      */
-    ArrayList<Write> getClaims(Integer editorId);
+    ArrayList<Write> getClaims(Integer editorId) throws ObjectNotFoundException;
 
     /**
      * Used by editor to confirm claim request by author,
      * Update appropriate Write object, set confirmed attribute to true
      * @param articleId Id of article claimed
      * @param authorId Id of author
-     * @return Whether success
      */
-    Boolean confirmClaim(Integer articleId, Integer authorId);
+    void confirmClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException;
 
     /**
      * Used by editor to reject claim request by author,
@@ -60,16 +52,14 @@ public interface EditorService {
      * Can't remove if the author is submitter
      * @param articleId Id of article claimed
      * @param authorId Id of author
-     * @return Whether success
      */
-    Boolean removeClaim(Integer articleId, Integer authorId);
+    void removeClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException;
 
     /**
      * Used by Admin to add a new editor
      * @param editor A new object of Editor
-     * @return Whether success
      */
-    Boolean addEditor(Editor editor);
+    void addEditor(Editor editor);
 
     /**
      * Remove appropriate Editor by id, but not delete his/her Account,
@@ -83,7 +73,7 @@ public interface EditorService {
 
     /**
      * Used by Admin to check all the editors
-     * @return An instance of ArrayLsit containing all the editors currently
+     * @return An instance of ArrayList containing all the editors currently
      */
     ArrayList<Editor> getEditors();
 

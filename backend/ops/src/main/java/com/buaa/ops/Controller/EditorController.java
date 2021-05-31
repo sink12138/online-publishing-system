@@ -165,7 +165,7 @@ public class EditorController {
                 authorInfos.put("articleCount", authorService.getMyArticles(author.getAuthorId()).size());
                 arrayList.add(authorInfos);
             }
-        } catch (LoginVerificationException exception) {
+        } catch (LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
             arrayList.add(map);
@@ -245,7 +245,7 @@ public class EditorController {
                 articleInfos.put("status", article.getStatus());
                 arrayList.add(articleInfos);
             }
-        } catch (LoginVerificationException exception) {
+        } catch (LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
             arrayList.add(map);
@@ -303,7 +303,10 @@ public class EditorController {
             else { // Revised draft
                 // Set article status
                 articleService.setArticleStatus(articleId, "审核中");
+                // Get all reviewers of this article
                 ArrayList<Reviewer> reviewers = reviewerService.getReviewersByArticleId(articleId);
+                // Clear all reviews of this article
+                articleService.clearReviews(articleId);
                 // Make and send emails to reviewers of the article
                 EmailFactory emailFactory = new EmailFactory();
                 for (Reviewer reviewer : reviewers) {
@@ -609,7 +612,7 @@ public class EditorController {
         return map;
     }
 
-    @GetMapping("claims")
+    @GetMapping("/claims")
     public ArrayList<Map<String, Object>> claims() {
         ArrayList<Map<String, Object>> maps = new ArrayList<>();
         Map<String, Object> statusMap = new HashMap<>();
@@ -649,7 +652,7 @@ public class EditorController {
                 }
             }
         }
-        catch (LoginVerificationException | IllegalAuthorityException exc) {
+        catch (LoginVerificationException | ObjectNotFoundException | IllegalAuthorityException exc) {
             statusMap.put("success", false);
             statusMap.put("message", exc.toString());
             maps.add(statusMap);
@@ -703,7 +706,7 @@ public class EditorController {
             String email = authorAccount.getEmail();
             ReminderEmail reminderEmail;
             if (confirm) {
-                authorService.claimArticle(authorId, articleId);
+                editorService.confirmClaim(articleId, authorId);
                 reminderEmail = emailFactory.makeAcceptClaimEmail(authorName, editorName, title);
             } else {
                 reminderEmail = emailFactory.makeRejectClaimEmail(authorName, editorName, title);

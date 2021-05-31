@@ -46,7 +46,7 @@ public interface ArticleService {
      * @param id The required articleId
      * @return An instance of java.io.File referring to the path of the original article file
      */
-    File getArticleFile(Integer id) throws IOException;
+    File getArticleFile(Integer id) throws IOException, ObjectNotFoundException;
 
     /**
      * Save the uploaded article file on the server, including steps as below:<br/>
@@ -75,7 +75,7 @@ public interface ArticleService {
      * @return The distributed (new submission) or related (revised draft) editorId
      * to the submitted article
      */
-    Integer submitArticle(ArticleBuffer articleBuffer);
+    Integer submitArticle(ArticleBuffer articleBuffer) throws ObjectNotFoundException;
 
     /**
      * Move a record from table "ArticleBuffer" to table "Article".<br/>
@@ -90,44 +90,38 @@ public interface ArticleService {
      * Change the status to an article in table "Article"
      * @param articleId Determines which record to update
      * @param status The new status to be set to the article
-     * @return True if the update succeeded, or false if not
      */
-    Boolean setArticleStatus(Integer articleId, String status);
+    void setArticleStatus(Integer articleId, String status) throws ObjectNotFoundException;
 
     /**
      * Remove one article, along with all its related information from the database.
      * @param id ArticleId of the article to be deleted
-     * @return True if the deletion succeeded, or false if not
      * @throws ObjectNotFoundException if there is no such article
      */
-    Boolean removeArticle(Integer id) throws ObjectNotFoundException;
+    void removeArticle(Integer id) throws ObjectNotFoundException;
 
     /**
      * Reject an article in table "ArticleBuffer" whether it is a new article or a revised draft.
      * @param articleBufferId Determines which article to reject
-     * @return True if the rejection succeeded, or false if not
      */
-    Boolean rejectArticle(Integer articleBufferId);
+    void rejectArticle(Integer articleBufferId);
 
     /**
      * Save the article file the editor uploads after editing,
      * including replacement of the storage and updates in the database.
      * @param articleId Determines which article to update
      * @param file An instance of MultipartFile (uploaded file)
-     * @return True if the file is successfully saved, or false if not
      */
-    Boolean saveEditedFile(Integer articleId, MultipartFile file);
+    void saveEditedFile(Integer articleId, MultipartFile file) throws IOException, ObjectNotFoundException;
 
     /**
      * Publish an article in the database,
      * including changing its status and setting its identifier.
      * @param articleId Determines which article to publish
      * @param identifier The unique identifier given to the article
-     * @return True if everything succeeded; false if the article cannot be published yet,
-     * or the identifier is duplicate with another
      * @throws RepetitiveOperationException If the article has been published
      */
-    Boolean publishArticle(Integer articleId, String identifier) throws RepetitiveOperationException;
+    void publishArticle(Integer articleId, String identifier) throws ObjectNotFoundException, RepetitiveOperationException;
 
     /**
      * Clean all article garbage from the storage and the database.<br/>
@@ -144,9 +138,15 @@ public interface ArticleService {
     ArrayList<Article> getArticles();
 
     /**
+     * Clear all reviews of an article from table "Review".
+     * @param articleId Determines whose reviews to be cleared
+     */
+    void clearReviews(Integer articleId) throws ObjectNotFoundException;
+
+    /**
      * Remove all reviews of an article from table "Review".
      * @param articleId Determines whose reviews to be removed
-     * @return True if this operation succeeded, or false if not
      */
-    Boolean removeReviews(Integer articleId);
+    void removeReviews(Integer articleId) throws ObjectNotFoundException;
+
 }

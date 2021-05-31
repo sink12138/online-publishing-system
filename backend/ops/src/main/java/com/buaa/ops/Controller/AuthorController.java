@@ -106,7 +106,7 @@ public class AuthorController {
             authorService.removeAuthor(author.getAuthorId());
             map.put("success", true);
         }
-        catch (LoginVerificationException | IllegalAuthorityException exc) {
+        catch (LoginVerificationException | ObjectNotFoundException | IllegalAuthorityException exc) {
             map.put("success", false);
             map.put("message", exc.toString());
         }
@@ -438,6 +438,8 @@ public class AuthorController {
             // End repetition checks
             // Update the status of the article
             articleService.setArticleStatus(articleId, "编辑中");
+            // Remove all reviews of the article
+            articleService.removeReviews(articleId);
             // Create a reminder email
             Integer editorId = article.getEditorId();
             Integer editorAccountId = editorService.getEditorById(editorId).getAccountId();
@@ -624,7 +626,7 @@ public class AuthorController {
                 }
             }
         }
-        catch (LoginVerificationException | IllegalAuthorityException exc) {
+        catch (LoginVerificationException | ObjectNotFoundException | IllegalAuthorityException exc) {
             statusMap.put("success", false);
             statusMap.put("message", exc.toString());
             maps.add(statusMap);

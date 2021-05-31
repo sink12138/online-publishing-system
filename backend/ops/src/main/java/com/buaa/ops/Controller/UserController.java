@@ -409,7 +409,6 @@ public class UserController {
                 map.put("organization", reviewer.getOrganization());
             }
         } catch (LoginVerificationException e) {
-            map.clear();
             map.put("success", false);
             map.put("message", e.toString());
         } catch (Exception e) {
@@ -527,9 +526,7 @@ public class UserController {
                 articleInfo.put("otherAuthor", article.getOtherAuthors());
                 arrayList.add(articleInfo);
             }
-        } catch (ParameterFormatException exception) {
-            arrayList.clear();
-            map.clear();
+        } catch (ParameterFormatException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
             arrayList.add(map);
