@@ -763,7 +763,7 @@ public class EditorController {
                 articleService.removeArticle(articleId);
                 reminderEmail = emailFactory.makeAcceptWithdrawEmail(authorName, editorName, title);
             } else {
-                article.setStatus("已出版");
+                articleService.setArticleStatus(articleId, "已出版");
                 reminderEmail = emailFactory.makeRejectWithdrawEmail(authorName, editorName, title);
             }
             emailService.sendReminderEmail(email, reminderEmail);
