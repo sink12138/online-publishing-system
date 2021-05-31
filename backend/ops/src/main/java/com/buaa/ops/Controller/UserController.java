@@ -429,15 +429,20 @@ public class UserController {
             Account account = accountService.getAccountBySession(session);
             Author author = authorService.getAuthorByAccountId(account.getAccountId());
             Reviewer reviewer = reviewerService.getReviewerByAccountId(account.getAccountId());
+            Editor editor = editorService.getEditorByAccountId(account.getAccountId());
             try {
                 password = (String) request.get("password");
                 realName = (String) request.get("realName");
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            Account newAccountInfos = new Account(account.getEmail(), password, realName);
-            accountService.modifyInfos(newAccountInfos);
+            if (password == null || !isPasswordValid(password)) {
+                throw new ParameterFormatException();
+            }
             if (author != null) {
+                if (realName == null) {
+                    throw new ParameterFormatException();
+                }
                 String institution;
                 String researchInterests;
                 try {
@@ -450,6 +455,9 @@ public class UserController {
                 authorService.modifyInfos(newAuthorInfos);
             }
             if (reviewer != null) {
+                if (realName == null) {
+                    throw new ParameterFormatException();
+                }
                 String organization;
                 try {
                     organization = (String) request.get("organization");
@@ -459,6 +467,11 @@ public class UserController {
                 Reviewer newReviewerInfos = new Reviewer(account.getAccountId(), organization);
                 reviewerService.modifyInfos(newReviewerInfos);
             }
+            if (editor != null && realName == null) {
+                throw new ParameterFormatException();
+            }
+            Account newAccountInfos = new Account(account.getEmail(), password, realName);
+            accountService.modifyInfos(newAccountInfos);
             map.put("success", true);
         } catch (ParameterFormatException | LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);
@@ -540,4 +553,10 @@ public class UserController {
         }
         return arrayList;
     }
+
+    // todo
+    private Boolean isPasswordValid(String password) {
+        return password.length() > 5;
+    }
+
 }

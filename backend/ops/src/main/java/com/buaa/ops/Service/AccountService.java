@@ -8,7 +8,6 @@ import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Map;
 
 public interface AccountService {
     /**
