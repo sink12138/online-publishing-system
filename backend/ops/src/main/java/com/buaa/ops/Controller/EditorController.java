@@ -768,7 +768,7 @@ public class EditorController {
             }
             emailService.sendReminderEmail(email, reminderEmail);
         } catch (LoginVerificationException | ParameterFormatException |
-                ObjectNotFoundException | IllegalAuthorityException | RepetitiveOperationException exception) {
+                ObjectNotFoundException | IllegalAuthorityException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {

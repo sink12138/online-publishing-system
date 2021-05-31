@@ -2,6 +2,7 @@ package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
+import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public interface EditorService {
      * @param articleId Id of article claimed
      * @param authorId Id of author
      */
-    void confirmClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException;
+    void confirmClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException, RepetitiveOperationException;
 
     /**
      * Used by editor to reject claim request by author,
