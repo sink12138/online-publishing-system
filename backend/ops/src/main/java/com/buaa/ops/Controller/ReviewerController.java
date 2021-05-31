@@ -53,7 +53,7 @@ public class ReviewerController {
                 articleInfos.put("status", article.getStatus());
                 arrayList.add(articleInfos);
             }
-        } catch (LoginVerificationException exception) {
+        } catch (LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
             arrayList.add(map);
