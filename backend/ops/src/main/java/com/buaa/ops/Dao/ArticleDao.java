@@ -1,7 +1,6 @@
 package com.buaa.ops.Dao;
 
 import com.buaa.ops.Entity.Article;
-import com.buaa.ops.Entity.ArticleBuffer;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -17,35 +16,36 @@ public interface ArticleDao {
      * @param Id The primary key "article_id"
      * @return An Article which has the given Id
      */
-    Article selectArticleById(Integer Id);
+    Article selectById(Integer Id);
 
-    /**
-     * Select one articleBuffer from table "ArticleBuffer".
-     * @param Id The primary key "article_buffer_id"
-     * @return An ArticleBuffer which has the given Id
-     */
-    ArticleBuffer selectArticleBufferById(Integer Id);
+    ArrayList<Article> selectByAuthorId(Integer authorId);
+
+    ArrayList<Article> selectByReviewerId(Integer reviewerId);
+
+    ArrayList<Article> selectByEditorId(Integer editorId);
 
     /**
      * Select all published articles from the database whose titles contain given subtitle.
      * @param subtitle A String given to select articles
      * @return An ArrayList which contains all articles selected
      */
-    ArrayList<Article> selectPublishedArticlesByTitle(String subtitle);
+    ArrayList<Article> selectPublishedByTitle(String subtitle);
 
     /**
      * Select all published articles from the database which have the given author.
      * @param author A String given as the target author
      * @return An ArrayList which contains all articles selected
      */
-    ArrayList<Article> selectPublishedArticlesByAuthor(String author);
+    ArrayList<Article> selectPublishedByAuthor(String author);
 
     /**
      * Select all published articles from the database which have the given keyword.
      * @param keyword A String given as the target keyword
      * @return An ArrayList which contains all articles selected
      */
-    ArrayList<Article> selectArticlesByKeyword(String keyword);
+    ArrayList<Article> selectPublishedByKeyword(String keyword);
+
+    ArrayList<Article> selectAll();
 
     /**
      * Insert a record into table "Article".
@@ -54,40 +54,19 @@ public interface ArticleDao {
      * @param article An instance of Article carrying needed attributes except "id"
      * @return True if the insertion succeeded, or false if not.
      */
-    Boolean insertArticle(Article article);
-
-    /**
-     * Insert a record into table "ArticleBuffer".
-     * The "id" attribute of the parameter ArticleBuffer should be null,
-     * and will be set to the new primary key after the insertion.
-     * @param articleBuffer An instance of ArticleBuffer carrying needed attributes except "id"
-     */
-    void insertArticleBuffer(ArticleBuffer articleBuffer);
-
-    /**
-     * Delete the article having given Id from table "Article".
-     * @param Id The primary key "article_id"
-     */
-    void deleteArticle(Integer Id);
-
-    /**
-     * Delete the articleBuffer having given Id from table "ArticleBuffer".
-     * @param Id The primary key "article_buffer_id"
-     */
-    void deleteArticleBuffer(Integer Id);
+    Boolean insert(Article article);
 
     /**
      * Update the article having given Id in table "Article".
      * Each value got updated only if the related attribute is not null.
      * @param article An instance of Article carrying a positive Id
      */
-    void updateArticle(Article article);
+    Integer update(Article article);
 
     /**
-     * Update the articleBuffer having given Id in table "ArticleBuffer".
-     * Each value got updated only if the related attribute is not null.
-     * @param articleBuffer An instance of ArticleBuffer carrying a positive Id
+     * Delete the article having given Id from table "Article".
+     * @param id The primary key "article_id"
      */
-    void updateArticleBuffer(ArticleBuffer articleBuffer);
+    Integer deleteById(Integer id);
 
 }

@@ -2,7 +2,9 @@ package com.buaa.ops.Dao;
 
 import com.buaa.ops.Entity.Account;
 import com.buaa.ops.Entity.AccountBuffer;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface AccountDao {
     /**
      * Add a new account
