@@ -5,14 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
 
-/**
- * Contains selections, insertions, deletions and updates
- * ONLY related to table "Article" and "ArticleBuffer" in the database.
- */
 @Mapper
 public interface ArticleDao {
 
-    Article selectById(Integer Id);
+    Article selectById(Integer id);
 
     ArrayList<Article> selectByAuthorId(Integer authorId);
 

@@ -3,7 +3,43 @@
 <mapper namespace="com.buaa.ops.Dao.ArticleDao">
     <select id="selectById" resultType="Article">
         select * from Article
-        where article_id = #{Id}
+        where article_id = #{id}
+    </select>
+    <select id="selectByAuthorId" resultType="Article">
+        (
+            select -article_buffer_id as article_id, title, article_abstract, keywords, first_author, other_authors,
+                   iif(overwrite is null, N'待接收', N'修改稿待接收') as status
+            from ArticleBuffer
+            where submitter_id = #{authorId}
+        )
+        union
+        (
+            select Article.article_id, title, article_abstract, keywords, first_author, other_authors, status
+            from Article join Write W on Article.article_id = W.article_id
+            where  (submitter_id &lt;&gt; #{authorId} and W.author_id = #{authorId})
+               or (submitter_id = #{authorId} and
+                   Article.article_id not in (select overwrite from ArticleBuffer))
+        )
+    </select>
+    <select id="selectByReviewerId" resultType="Article">
+        select Article.article_id, title, keywords, status
+        from Article join Review R on Article.article_id = R.article_id
+        where reviewer_id = #{reviewerId}
+    </select>
+    <select id="selectByEditorId" resultType="Article">
+        (
+            select -article_buffer_id as article_id, title, article_abstract, keywords, first_author, other_authors,
+                   iif(overwrite is null, N'待接收', N'修改稿待接收') as status
+            from ArticleBuffer
+            where editor_id = #{editorId}
+        )
+        union
+        (
+            select article_id, title, article_abstract, keywords, first_author, other_authors, status
+            from Article
+            where editor_id = #{editorId} and
+                  article_id not in (select overwrite from ArticleBuffer)
+        )
     </select>
     <select id="selectPublishedByTitle" resultType="Article">
         select * from Article
@@ -26,6 +62,52 @@
     <select id="selectAll" resultType="Article">
         select * from Article
     </select>
+    <insert id="insert" parameterType="Article" useGeneratedKeys="true" keyProperty="articleId">
+        insert into Article(title, article_abstract, keywords, first_author, other_authors, file_path,
+                            submitter_id, editor_id, identifier, status, publishing_date)
+        values (#{title}, #{articleAbstract}, #{keywords}, #{firstAuthor}, #{otherAuthors}, #{filePath},
+                #{submitterId}, #{editorId}, #{identifier}, #{status}, #{publishingDate})
+    </insert>
+    <update id="update" parameterType="Article">
+        update Article
+        set
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="articleAbstract != null">
+                article_abstract = #{articleAbstract},
+            </if>
+            <if test="keywords != null">
+                keywords = #{keywords},
+            </if>
+            <if test="firstAuthor != null">
+                first_author = #{firstAuthor},
+            </if>
+            <if test="otherAuthors != null">
+                other_authors = #{otherAuthors},
+            </if>
+            <if test="filePath != null">
+                file_path = #{filePath},
+            </if>
+            <if test="submitterId != null">
+                submitter_id = #{submitterId},
+            </if>
+            <if test="editorId != null">
+                editor_id = #{editorId},
+            </if>
+            <if test="identifier != null">
+                identifier = #{identifier},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="publishingDate != null">
+                publishing_date = #{publishingDate}
+            </if>
+        </set>
+        where article_id = #{articleId}
+    </update>
     <delete id="deleteById" parameterType="Integer">
         delete from Article
         where article_id = #{articleId}
