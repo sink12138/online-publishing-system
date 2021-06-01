@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buaa.ops.Dao.EditorDao">
+    <select id="selectById" resultType="Editor">
+        select *
+        from Editor
+        where editor_id = #{id}
+    </select>
+    <select id="selectByAccountId" resultType="Editor">
+        select *
+        from Editor
+        where account_id = #{accountId}
+    </select>
+    <select id="selectLeastBusy" resultType="Editor">
+        select top 1 E.editor_id, account_id
+        from (
+             (
+                 select editor_id, -article_buffer_id as article_id
+                 from ArticleBuffer
+             )
+             union
+             (
+                 select editor_id, article_id
+                 from Article
+                 where article_id not in (select overwrite from ArticleBuffer)
+             )
+        ) A join Editor E on A.editor_id = E.editor_id
+        group by E.editor_id, account_id
+        order by count(A.article_id), editor_id
+    </select>
+    <select id="selectAll" resultType="Editor">
+        select * from Editor
+    </select>
+    <insert id="insert" parameterType="Editor" useGeneratedKeys="true" keyProperty="editorId">
+        insert into Editor(account_id)
+        values (#{accountId})
+    </insert>
+    <delete id="deleteById">
+        delete from Editor
+        where editor_id = #{id}
+    </delete>
+</mapper>

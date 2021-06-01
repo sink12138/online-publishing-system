@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buaa.ops.Dao.ArticleBufferDao">
+    <select id="selectById" resultType="ArticleBuffer">
+        select *
+        from ArticleBuffer
+        where article_buffer_id = #{id}
+    </select>
+    <select id="selectNeverSubmitted" resultType="ArticleBuffer">
+        select *
+        from ArticleBuffer
+        where title is null
+    </select>
+    <insert id="insert" parameterType="ArticleBuffer" useGeneratedKeys="true" keyProperty="articleBufferId">
+        insert into ArticleBuffer(title, article_abstract, keywords, first_author,
+                                  other_authors, file_path, submitter_id, editor_id, overwrite)
+        values (#{title}, #{articleAbstract}, #{keywords}, #{firstAuthor},
+                #{otherAuthors}, #{filePath}, #{submitterId}, #{editorId}, #{overwrite})
+    </insert>
+    <update id="update" parameterType="ArticleBuffer">
+        update ArticleBuffer
+        set
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="articleAbstract != null">
+                article_abstract = #{articleAbstract},
+            </if>
+            <if test="keywords != null">
+                keywords = #{keywords},
+            </if>
+            <if test="firstAuthor != null">
+                first_author = #{firstAuthor},
+            </if>
+            <if test="otherAuthors != null">
+                other_authors = #{otherAuthors},
+            </if>
+            <if test="filePath != null">
+                file_path = #{filePath},
+            </if>
+            <if test="submitterId != null">
+                submitter_id = #{submitterId},
+            </if>
+            <if test="editorId != null">
+                editor_id = #{editorId},
+            </if>
+            <if test="overwrite != null">
+                overwrite = #{overwrite}
+            </if>
+        </set>
+        where article_buffer_id = #{articleBufferId}
+    </update>
+    <delete id="deleteById">
+        delete from ArticleBuffer
+        where article_buffer_id = #{id}
+    </delete>
+</mapper>

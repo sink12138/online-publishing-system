@@ -19,6 +19,6 @@ public interface ArticleBufferDao {
      */
     Integer update(ArticleBuffer articleBuffer);
 
-    Integer deleteById(Integer Id);
+    Integer deleteById(Integer id);
 
 }

@@ -19,6 +19,8 @@ public interface EditorDao {
 
     ArrayList<Editor> selectAll();
 
+    Integer insert(Editor editor);
+
     Integer deleteById(Integer id);
 
 }

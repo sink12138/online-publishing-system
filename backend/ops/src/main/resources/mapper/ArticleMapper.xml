@@ -16,7 +16,7 @@
         (
             select Article.article_id, title, article_abstract, keywords, first_author, other_authors, status
             from Article join Write W on Article.article_id = W.article_id
-            where  (submitter_id &lt;&gt; #{authorId} and W.author_id = #{authorId})
+            where  (submitter_id &lt;&gt; #{authorId} and W.author_id = #{authorId} and confirmed = true)
                or (submitter_id = #{authorId} and
                    Article.article_id not in (select overwrite from ArticleBuffer))
         )
@@ -108,7 +108,7 @@
         </set>
         where article_id = #{articleId}
     </update>
-    <delete id="deleteById" parameterType="Integer">
+    <delete id="deleteById">
         delete from Article
         where article_id = #{articleId}
     </delete>
