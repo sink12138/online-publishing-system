@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buaa.ops.Dao.ArticleBufferDao">
+    <select id="selectByArticleId" resultType="Review">
+        select *
+        from Review
+        where article_id = #{articleId}
+    </select>
+    <insert id="insert" parameterType="Review">
+        insert into Review(article_id, reviewer_id, comments, pass, reviewing_date)
+        values (#{articleId}, #{reviewerId}, #{comments}, #{pass}, #{reviewingDate})
+    </insert>
+    <update id="updateBySelf" parameterType="Review">
+        update Review
+        set comments = #{comments}, pass = #{pass}, reviewing_date = #{reviewingDate}
+        where article_id = #{articleId} and reviewer_id = #{reviewerId}
+    </update>
+</mapper>

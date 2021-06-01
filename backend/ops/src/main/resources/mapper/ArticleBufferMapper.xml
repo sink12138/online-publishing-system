@@ -17,7 +17,7 @@
         values (#{title}, #{articleAbstract}, #{keywords}, #{firstAuthor},
                 #{otherAuthors}, #{filePath}, #{submitterId}, #{editorId}, #{overwrite})
     </insert>
-    <update id="update" parameterType="ArticleBuffer">
+    <update id="updateById" parameterType="ArticleBuffer">
         update ArticleBuffer
         set
         <set>

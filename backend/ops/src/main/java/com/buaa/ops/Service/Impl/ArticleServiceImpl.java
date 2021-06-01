@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 
 @Service
@@ -74,7 +73,7 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = new Article();
         article.setArticleId(articleId);
         article.setStatus(status);
-        if (articleDao.update(article) == 0)
+        if (articleDao.updateById(article) == 0)
             throw new ObjectNotFoundException();
     }
 
@@ -106,7 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
         updateArticle.setIdentifier(identifier);
         updateArticle.setStatus("已出版");
         updateArticle.setPublishingDate(new java.sql.Date(new java.util.Date().getTime()));
-        if (articleDao.update(updateArticle) == 0)
+        if (articleDao.updateById(updateArticle) == 0)
             throw new ObjectNotFoundException();
     }
 

@@ -53,7 +53,7 @@ public interface ArticleService {
      * (1) Save the original file to the storage,
      * or replace the former file if it exists;<br/>
      * (2) Insert a new record into table "ArticleBuffer",
-     * or update the old record if it exists;<br/>
+     * or updateById the old record if it exists;<br/>
      * (3) Return the newly generated articleBufferId if it is a new upload,
      * or return the given articleBufferId if it is a replacement.
      * @param submitterId The authorId of the submitter (uploader) of the file
@@ -80,7 +80,7 @@ public interface ArticleService {
     /**
      * Move a record from table "ArticleBuffer" to table "Article".<br/>
      * Insert new record if it is a new article,
-     * or update the old record if it is a revised draft.
+     * or updateById the old record if it is a revised draft.
      * @param articleBufferId Id of the ArticleBuffer to be moved to table "Article"
      * @return The articleId related (or distributed) to this operation
      */
@@ -88,7 +88,7 @@ public interface ArticleService {
 
     /**
      * Change the status to an article in table "Article"
-     * @param articleId Determines which record to update
+     * @param articleId Determines which record to updateById
      * @param status The new status to be set to the article
      */
     void setArticleStatus(Integer articleId, String status) throws ObjectNotFoundException;
@@ -109,7 +109,7 @@ public interface ArticleService {
     /**
      * Save the article file the editor uploads after editing,
      * including replacement of the storage and updates in the database.
-     * @param articleId Determines which article to update
+     * @param articleId Determines which article to updateById
      * @param file An instance of MultipartFile (uploaded file)
      */
     void saveEditedFile(Integer articleId, MultipartFile file) throws IOException, ObjectNotFoundException;

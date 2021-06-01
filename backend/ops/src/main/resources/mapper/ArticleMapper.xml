@@ -68,7 +68,7 @@
         values (#{title}, #{articleAbstract}, #{keywords}, #{firstAuthor}, #{otherAuthors}, #{filePath},
                 #{submitterId}, #{editorId}, #{identifier}, #{status}, #{publishingDate})
     </insert>
-    <update id="update" parameterType="Article">
+    <update id="updateById" parameterType="Article">
         update Article
         set
         <set>

@@ -15,7 +15,7 @@ public interface ReviewDao {
     /**
      * Null attribute = clear
      */
-    Integer update(Review review);
+    Integer updateBySelf(Review review);
 
     Integer deleteByArticleId(Integer articleId);
 

@@ -27,9 +27,9 @@ public interface ArticleDao {
     Integer insert(Article article);
 
     /**
-     * Null attribute = do not update
+     * Null attribute = do not updateById
      */
-    Integer update(Article article);
+    Integer updateById(Article article);
 
     Integer deleteById(Integer id);
 

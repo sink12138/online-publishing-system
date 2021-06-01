@@ -13,7 +13,7 @@ public interface WriteDao {
     Integer insert(Write write);
 
     /**
-     * Null attribute = do not update
+     * Null attribute = do not updateById
      */
     Integer update(Write write);
 
