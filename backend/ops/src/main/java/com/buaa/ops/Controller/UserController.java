@@ -70,7 +70,7 @@ public class UserController {
             Integer accountBufferId = accountService.checkCode(code);
             accountService.moveToAccount(accountBufferId);
             map.put("success", true);
-        } catch (ObjectNotFoundException | ParameterFormatException | RepetitiveOperationException e) {
+        } catch (ObjectNotFoundException | ParameterFormatException e) {
             map.put("success", false);
             map.put("message", e.toString());
         } catch (Exception otherException) {

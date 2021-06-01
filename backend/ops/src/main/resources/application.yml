@@ -38,4 +38,7 @@ server:
 admin:
   username: lbh
   password: 114514
+check:
+  validTime: 600000
+  codeBits: 8
 

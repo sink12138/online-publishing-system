@@ -19,7 +19,7 @@ public interface AccountService {
 
     /**
      * Add a new account to Table Account,
-     * Only after an account has been verified it can be remove from AccountBuffer to Account
+     * Used by Admin to add new Account
      * @param account A new object of Class Account
      */
     void addAccount(Account account) throws RepetitiveOperationException;
@@ -36,7 +36,7 @@ public interface AccountService {
      * @param email Target email
      * @return An account with appropriate email
      */
-    Account getAccountByEmail(String email) throws Exception;
+    Account getAccountByEmail(String email);
 
     /**
      * Used by Admin to delete zombie account by accountId
@@ -56,7 +56,7 @@ public interface AccountService {
      * Add Account and delete AccountBuffer
      * @param accountBufferId Target id in AccountBuffer
      */
-    void moveToAccount(Integer accountBufferId) throws RepetitiveOperationException;
+    void moveToAccount(Integer accountBufferId);
 
     /**
      * Modify infos of current account,

@@ -60,7 +60,7 @@ public interface EditorService {
      * Used by Admin to add a new editor
      * @param editor A new object of Editor
      */
-    void addEditor(Editor editor);
+    void addEditor(Editor editor) ;
 
     /**
      * Remove appropriate Editor by id, but not delete his/her Account,
