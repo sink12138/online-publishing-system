@@ -38,7 +38,11 @@ server:
 admin:
   username: lbh
   password: 114514
+
 check:
   valid-time: 600000
   code-bits: 8
+
+file:
+  root-path: D:\\ops_articles\\
 

@@ -12,6 +12,7 @@ import com.buaa.ops.Service.ArticleService;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +34,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ReviewDao reviewDao;
+
+    @Value("${file.root-path}")
+    private String rootPath;
 
     @Override
     public ArrayList<Article> searchPublishedArticles(String searchType, String searchString) {
