@@ -39,6 +39,6 @@ admin:
   username: lbh
   password: 114514
 check:
-  validTime: 600000
-  codeBits: 8
+  valid-time: 600000
+  code-bits: 8
 
