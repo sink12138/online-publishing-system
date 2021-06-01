@@ -99,11 +99,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void moveToAccount(Integer accountBufferId) {
-        AccountBuffer accountBuffer = accountBufferDao.selectById(accountBufferId);
-        Account account = new Account(accountBuffer.getEmail(), accountBuffer.getPassword(), null);
-        accountDao.insert(account);
-        accountBufferDao.deleteById(accountBufferId);
+    public void deleteAccountBufferById(Integer id) {
+        accountBufferDao.deleteById(id);
     }
 
     @Override
