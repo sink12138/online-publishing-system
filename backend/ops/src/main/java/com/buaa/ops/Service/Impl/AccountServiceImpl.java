@@ -65,17 +65,17 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     CheckDao checkDao;
 
-    @Value("${check.validTime}")
+    @Value("${check.valid-time}")
     private Integer VALID_TIME;
 
-    @Value("${check.codeBits}")
+    @Value("${check.code-bits}")
     private Integer CODE_BITS;
 
     @Override
     public Integer checkCode(String code) throws ObjectNotFoundException {
         Check check = checkDao.selectByCode(code);
-        Date beforeDate = new Date(new Date().getTime() - VALID_TIME);
-        if (check == null || check.getCheckingTime().getTime() < beforeDate.getTime()) {
+        Date deadline = new Date(new Date().getTime() - VALID_TIME);
+        if (check == null || check.getCheckingTime().getTime() < deadline.getTime()) {
             throw new ObjectNotFoundException();
         }
         Integer len = check.getCode().length();
@@ -93,21 +93,39 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void modifyInfos(Account newAccountInfos) throws ObjectNotFoundException {
-
+        if (accountDao.updateById(newAccountInfos) == 0) {
+            throw new ObjectNotFoundException();
+        }
     }
 
     @Override
     public Boolean cleanBuffer() {
-        return null;
+        Date deadline = new Date(new Date().getTime() - VALID_TIME);
+        java.sql.Timestamp deadlineSQL = new java.sql.Timestamp(deadline.getTime());
+        ArrayList<Check> invalidChecks = checkDao.selectInvalid(deadlineSQL);
+        for (Check check : invalidChecks) {
+            Integer len = check.getCode().length();
+            Integer accountBufferId = Integer.parseInt(check.getCode().substring(0, len - CODE_BITS));
+            if (accountBufferDao.deleteById(accountBufferId) == 0 || checkDao.deleteById(check.getCheckId()) == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public Account getAccountBySession(HttpSession session) throws LoginVerificationException {
-        return null;
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
+        Account account = accountDao.selectByEmail(email);
+        if (account == null || !account.getPassword().equals(password)) {
+            throw new LoginVerificationException();
+        }
+        return account;
     }
 
     @Override
     public ArrayList<Account> getAccounts() {
-        return null;
+        return accountDao.selectAll();
     }
 }

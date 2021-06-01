@@ -3,6 +3,7 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Service.Emails.ReminderEmail;
 import org.springframework.mail.MailException;
 
+import javax.mail.MessagingException;
 import java.io.File;
 
 public interface EmailService {
@@ -12,7 +13,7 @@ public interface EmailService {
      * @param email The email address of account
      * @throws MailException The Exceptions of mail sending
      */
-    void sendCheckEmail(Integer accountId, String email, Boolean newAccount) throws MailException;
+    void sendCheckEmail(Integer accountId, String email, Boolean newAccount) throws MailException, MessagingException;
 
     /**
      * Send an article to reviewer's Email
@@ -21,7 +22,7 @@ public interface EmailService {
      * @param reminderEmail Object of ReminderEmail contains the information of email
      * @throws MailException The Exceptions of mail sending and encoding
      */
-    void sendAttachmentEmail(String email, File file, ReminderEmail reminderEmail) throws MailException;
+    void sendAttachmentEmail(String email, File file, ReminderEmail reminderEmail) throws MailException, MessagingException;
 
     /**
      * Send a reminder Email to Account's Email
@@ -29,6 +30,6 @@ public interface EmailService {
      * @param reminderEmail Object of ReminderEmail contains the information of email
      * @throws MailException The Exceptions of mail sending
      */
-    void sendReminderEmail(String email, ReminderEmail reminderEmail) throws MailException;
+    void sendReminderEmail(String email, ReminderEmail reminderEmail) throws MailException, MessagingException;
 
 }

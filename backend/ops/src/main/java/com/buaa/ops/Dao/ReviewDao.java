@@ -10,6 +10,8 @@ public interface ReviewDao {
 
     ArrayList<Review> selectByArticleId(Integer articleId);
 
+    Review selectBySelf(Review review);
+
     Integer insert(Review review);
 
     /**

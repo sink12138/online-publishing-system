@@ -6,6 +6,11 @@
         from Review
         where article_id = #{articleId}
     </select>
+    <select id="selectBySelf" parameterType="Review" resultType="Review">
+        select *
+        from Review
+        where article_id = #{articleId} and reviewer_id = #{reviewerId}
+    </select>
     <insert id="insert" parameterType="Review">
         insert into Review(article_id, reviewer_id, comments, pass, reviewing_date)
         values (#{articleId}, #{reviewerId}, #{comments}, #{pass}, #{reviewingDate})
