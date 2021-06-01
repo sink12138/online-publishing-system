@@ -6,8 +6,13 @@
         from Write W join Article A on W.article_id = A.article_id
         where editor_id = #{editorId}
     </select>
+    <select id="selectBySelf" parameterType="Write" resultType="Write">
+        select *
+        from Write
+        where article_id = #{articleId} and author_id = #{authorId}
+    </select>
     <insert id="insert" parameterType="Write" useGeneratedKeys="true" keyProperty="writeId">
-        insert into Write values (#{authorId}, #{articleId}, #{confirmed})
+        insert into Write(author_id, article_id) values (#{authorId}, #{articleId})
     </insert>
     <update id="updateBySelf" parameterType="Write">
         update Write

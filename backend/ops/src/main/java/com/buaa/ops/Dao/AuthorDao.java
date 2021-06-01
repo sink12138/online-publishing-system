@@ -14,7 +14,7 @@ public interface AuthorDao {
 
     Author selectByAccountId(Integer accountId);
 
-    Author selectByArticleId(Integer articleId);
+    ArrayList<Author> selectByArticleId(Integer articleId);
 
     Integer insert(Author author);
 

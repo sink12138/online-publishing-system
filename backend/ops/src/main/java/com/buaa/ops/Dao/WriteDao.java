@@ -10,6 +10,8 @@ public interface WriteDao {
 
     ArrayList<Write> selectByEditorId(Integer editorId);
 
+    Write selectBySelf(Write write);
+
     Integer insert(Write write);
 
     /**

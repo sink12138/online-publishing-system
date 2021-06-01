@@ -15,4 +15,8 @@
         set comments = #{comments}, pass = #{pass}, reviewing_date = #{reviewingDate}
         where article_id = #{articleId} and reviewer_id = #{reviewerId}
     </update>
+    <delete id="deleteByArticleId">
+        delete from Review
+        where article_id = #{articleId}
+    </delete>
 </mapper>
