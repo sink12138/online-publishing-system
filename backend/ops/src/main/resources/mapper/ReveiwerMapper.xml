@@ -13,10 +13,10 @@
     <insert id="insert" parameterType="Reviewer" useGeneratedKeys="true" keyProperty="reviewerId">
         insert into Reviewer values (#{accountId}, #{organization})
     </insert>
-    <update id="update" parameterType="Reviewer">
+    <update id="updateByAccountId" parameterType="Reviewer">
         update Reviewer
         set organization = #{organization}
-        where reviewer_id = #{reviewerId}
+        where account_id = #{accountId}
     </update>
     <delete id="deleteById" parameterType="Integer">
         delete from Reviewer where reviewer_id = #{id}

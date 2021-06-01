@@ -21,9 +21,9 @@
     <delete id="deleteById" parameterType="Integer">
         delete from Author where author_id = #{authorId}
     </delete>
-    <update id="update" parameterType="Author">
+    <update id="updateByAccountId" parameterType="Author">
         update Author
-        set account_id = #{accountId}, institution = #{institution}, research_interests = #{researchInterests}
-        where author_id = #{authorId}
+        set institution = #{institution}, research_interests = #{researchInterests}
+        where account_id = #{accountId}
     </update>
 </mapper>
