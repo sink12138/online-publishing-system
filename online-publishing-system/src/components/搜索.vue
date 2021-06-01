@@ -1,14 +1,9 @@
 <template>
   <div class="Search">
-    <div>
-      <input type="text" style="height:21.5px;width:400px">
-      <router-link to="/search"><el-button type="primary" icon="el-icon-search" size="mini">搜索</el-button></router-link>
-      <router-view />
-    </div>
     <div class="table">
       <el-card class="box-card">
         <el-table
-          :data="tableData"
+          :data="table"
           border
           stripe
           style="width: 100%"
@@ -77,23 +72,47 @@
 
 <script>
 const axios = require("axios");
+var i = 0;
 export default {
   name: "Search",
   data() {
     return {
+      search:{
+        searchType: "title",
+        searchString: ""
+      },
+      success: false,
+      message: "",
+      results: 0,
       currentPage: 1, //当前页数
       pageSize: 10, //每页获取条数（页面大小）
       tableData: [], //存放从后端传来的数据
     };
   },
+  props:['table'],
   mounted() {
     this.fetchdata();
   },
   methods: {
     //获取后端数据
     fetchdata() {
-      axios.get("url").then((response) => {
-        this.tableData = response.data;
+      axios({
+        methods: 'get',
+        url: "/search",
+        params:{
+          searchType: this.search.searchType,
+          searchString: this.search.searchString
+        }
+      }).then((response) => {
+        this.success = response.success;
+        if(this.success == true){
+          this.results = response.results;
+          for(i=0;i<this.results;i++){
+            this.tableData = response.data;
+          }
+        }
+      },(err) => {
+        alert(err);
       });
     },
   },

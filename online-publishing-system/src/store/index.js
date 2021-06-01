@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state:  {
-    role: 'N',
+    role: 0,
     isLogin: false,
   },
   mutations: {
@@ -17,20 +17,20 @@ export default new Vuex.Store({
       sessionStorage.setItem("admin","logout");
     },
     setWriter(state){
-      state.role = 'W';
+      state.role += 4;
     },
     setReviewer(state){
-      state.role = 'R';
+      state.role += 2;
     },
     setEditor(state){
-      state.role = 'X';
+      state.role += 1;
     },
     login(state){
       state.isLogin = true;
     },
     logout(state){
       state.isLogin = false;
-      state.role = 'N';
+      state.role = 0;
     },
   },
   actions: {

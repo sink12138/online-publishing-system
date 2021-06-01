@@ -1,5 +1,9 @@
 <template>
   <div class="Login">
+    <div class="head">
+      <h1>登录页面</h1>
+      <br />
+    </div>
     <div id="login">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="Email">
@@ -13,18 +17,32 @@
         </el-form-item>
         <div v-if="$store.state.isLogin">
           <el-form-item>
-            <router-link to="/main"
+            <router-link to="/"
               ><el-button type="info" @click="Logout"
                 >退出登录</el-button
               ></router-link
             >
           </el-form-item>
+          <el-form-item>
+            <router-linkF to="/"
+              ><el-button type="info"
+                >返回主页</el-button
+              ></router-linkF
+            >
+          </el-form-item>
         </div>
         <div v-else>
           <el-form-item>
-            <router-link to="/main"
+            <router-link to="/"
               ><el-button type="primary" @click="Login"
                 >登录</el-button
+              ></router-link
+            >
+          </el-form-item>
+          <el-form-item>
+            <router-link to="/"
+              ><el-button type="info"
+                >返回主页</el-button
               ></router-link
             >
           </el-form-item>
@@ -35,7 +53,6 @@
 </template>
 
 <script>
-import Qs from "qs";
 
 const axios = require("axios");
 export default {
@@ -45,7 +62,8 @@ export default {
         email: "",
         password: "",
       },
-      resdata: {},
+      success: false,
+      role: 0,
     };
   },
   methods: {
@@ -56,8 +74,12 @@ export default {
         },
         method: "post",
         url: "/logout",
-        data: Qs.stringify(this.formInline),
+        data: this.formInline,
       }).then((res) => {
+        this.role=res.role;
+        if(this.role % 2 == 1) this.$store.commit('setEditor');
+        if(this.role == 2 || this.role == 3 || this.role == 6 || this.role == 7) this.$store.commit('setReviewer');
+        if(this.role >= 4) this.$store.commit('setWriter');
         console.log(res);
       });
       console.log(this.formInline);

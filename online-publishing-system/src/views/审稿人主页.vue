@@ -2,6 +2,7 @@
   <div class="reviewer">
     <div>
       <h1>您待审阅的文章如下</h1>
+      <router-link to="/">返回主页</router-link>
     </div>
     <div class="articles">
       <el-table :data="tableData" style="width: 100%">
@@ -34,7 +35,16 @@
         <el-table-column label="文章状态" prop="state"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope"
-            ><el-button type="text" size="small" @click="downloadarticle"
+            ><el-select v-model="value" placeholder="是否通过">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+            <el-button type="text" size="small" @click="downloadarticle"
               >下载<i class="el-icon-download el-icon--right"></i
             ></el-button>
             <el-button @click="open(scope.row)" type="text" size="small"
@@ -69,14 +79,22 @@ export default {
     return {
       tableData: [
         {
-          ID: "",
-          Name: "",
-          keyword: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          state: "",
+          ID: 12345,
+          Name: "test",
+          keyword: "test,abstract",
+          firstAuthor: "abc",
+          otherAuthors: "123,456",
+          state: "审核中",
         },
       ],
+      options: [{
+          value: '选项1',
+          label: '通过'
+        }, {
+          value: '选项2',
+          label: '不通过'
+        }],
+        value: ''
     };
   },
   created() {
@@ -96,6 +114,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         inputPattern: "",
+        showclose: true,
       })
         .then(({ value }) => {
           this.$message({
