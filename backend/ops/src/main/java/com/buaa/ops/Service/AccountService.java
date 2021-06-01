@@ -60,11 +60,10 @@ public interface AccountService {
     Map<String, Integer> checkCode(String code) throws ObjectNotFoundException;
 
     /**
-     * Move the account from AccountBuffer to Account,
-     * Add Account and delete AccountBuffer
-     * @param accountBufferId Target id in AccountBuffer
+     * Delete accountBuffer with this id that has been verify
+     * @param id Target Id
      */
-    void moveToAccount(Integer accountBufferId);
+    void deleteAccountBufferById(Integer id);
 
     /**
      * Modify infos of current account,

@@ -1,5 +1,7 @@
 package com.buaa.ops.Service.Impl;
 
+import com.buaa.ops.Dao.CheckDao;
+import com.buaa.ops.Entity.Check;
 import com.buaa.ops.Service.EmailService;
 import com.buaa.ops.Service.Emails.ReminderEmail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     TemplateEngine templateEngine;
 
+    @Autowired
+    CheckDao checkDao;
+
     @Override
     public void sendCheckEmail(Integer accountId, Integer accountBufferId, String email) throws MailException, MessagingException{
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -44,9 +49,12 @@ public class EmailServiceImpl implements EmailService {
             subject = "更改OPS邮箱验证";
             action = "更改";
         }
+        String code = generateCode(accountId, accountBufferId);
+        Check check = new Check(code, email, new Date());
+        checkDao.insert(check);
         Context context = new Context();
         context.setVariable("action", action);
-        context.setVariable("code", generateCode(accountId, accountBufferId));
+        context.setVariable("checkLink", "http://localhost:8090/verify?code=" + code);
         context.setVariable("email", email);
         context.setVariable("createTime", formatDate());
         String process = templateEngine.process("CheckEmail.html", context);

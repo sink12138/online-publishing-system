@@ -42,6 +42,9 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            if (!isPasswordValid(password)) {
+                throw new ParameterFormatException();
+            }
             AccountBuffer accountBuffer = new AccountBuffer(email, password);
             accountService.addAccountBuffer(accountBuffer);
             emailService.sendCheckEmail(null, accountBuffer.getAccountBufferId(), email);
@@ -71,7 +74,9 @@ public class UserController {
             Integer accountBufferId = Id.get("accountBufferId");
             Integer accountId = Id.get("accountId");
             if (accountId == null) {
-                accountService.moveToAccount(accountBufferId);
+                AccountBuffer accountBuffer = accountService.getAccountBufferById(accountBufferId);
+                Account account = new Account(accountBuffer.getEmail(), accountBuffer.getPassword(), null);
+                accountService.addAccount(account);
             } else {
                 AccountBuffer accountBuffer = accountService.getAccountBufferById(accountBufferId);
                 Account newInfo = accountService.getAccountByAccountId(accountId);
@@ -81,6 +86,7 @@ public class UserController {
                 newInfo.setEmail(accountBuffer.getEmail());
                 accountService.modifyInfos(newInfo);
             }
+            accountService.deleteAccountBufferById(accountBufferId);
             map.put("success", true);
         } catch (ObjectNotFoundException | ParameterFormatException e) {
             map.put("success", false);
@@ -509,11 +515,14 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            if (account.getEmail().equals(newEmail)) {
+                throw new RepetitiveOperationException();
+            }
             AccountBuffer newInfo = new AccountBuffer(newEmail, account.getPassword());
             accountService.addAccountBuffer(newInfo);
             emailService.sendCheckEmail(account.getAccountId(), newInfo.getAccountBufferId(), newEmail);
             map.put("success", true);
-        } catch (ParameterFormatException | LoginVerificationException exception) {
+        } catch (ParameterFormatException | LoginVerificationException | RepetitiveOperationException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
