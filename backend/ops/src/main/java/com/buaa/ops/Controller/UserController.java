@@ -496,6 +496,8 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            Account newInfo = new Account(newEmail, account.getPassword(), account.getRealName());
+            accountService.modifyInfos(newInfo);
             emailService.sendCheckEmail(account.getAccountId(), newEmail, false);
             map.put("success", true);
         } catch (ParameterFormatException | LoginVerificationException exception) {
@@ -531,13 +533,15 @@ public class UserController {
             map.put("articleCount", articleArrayList.size());
             arrayList.add(map);
             for (Article article : articleArrayList) {
-                Map<String, Object> articleInfo= new HashMap<>();
-                articleInfo.put("articleId", article.getArticleId());
-                articleInfo.put("title", article.getTitle());
-                articleInfo.put("keywords", article.getKeywords());
-                articleInfo.put("firstAuthor", article.getFirstAuthor());
-                articleInfo.put("otherAuthor", article.getOtherAuthors());
-                arrayList.add(articleInfo);
+                if (article.getStatus().equals("已出版")) {
+                    Map<String, Object> articleInfo = new HashMap<>();
+                    articleInfo.put("articleId", article.getArticleId());
+                    articleInfo.put("title", article.getTitle());
+                    articleInfo.put("keywords", article.getKeywords());
+                    articleInfo.put("firstAuthor", article.getFirstAuthor());
+                    articleInfo.put("otherAuthor", article.getOtherAuthors());
+                    arrayList.add(articleInfo);
+                }
             }
         } catch (ParameterFormatException | ObjectNotFoundException exception) {
             map.put("success", false);

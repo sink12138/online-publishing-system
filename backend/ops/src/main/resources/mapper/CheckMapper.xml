@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.buaa.ops.Dao.CheckDao">
-    <select id="selectCheckByCode" resultType="Check">
+    <select id="selectByCode" resultType="Check">
         select * from [Check] where code = #{code}
     </select>
-    <insert id="addCheck" parameterType="Check" useGeneratedKeys="true" keyProperty="checkId">
+    <select id="selectInvalid" parameterType="java.sql.Timestamp" resultType="Check">
+        select * from [Check] where checking_time &lt; #{date}
+    </select>
+    <delete id="deleteById" parameterType="Integer">
+        delete from [Check] where check_id = #{id}
+    </delete>
+    <insert id="insert" parameterType="Check" useGeneratedKeys="true" keyProperty="checkId">
         insert into [Check] values (#{code}, #{email}, #{checkingTime})
     </insert>
-    <delete id="deleteCheck" parameterType="Integer">
-        delete from [Check] where check_id = #{checkId}
-    </delete>
-    <select id="selectCheckByEmail" parameterType="String" resultType="Check">
-        select * from [Check] where email = #{email}
-    </select>
-    <update id="updateCheck" parameterType="Check">
-        update [Check]
-        <set>
-            code = #{code},
-            checking_time = #{checkingTime}
-        </set>
-        where email = #{email}
-    </update>
 </mapper>

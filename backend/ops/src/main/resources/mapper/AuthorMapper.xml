@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buaa.ops.Dao.AuthorDao">
+    <select id="selectAll" resultType="Author">
+        select * from Author
+    </select>
+    <select id="selectById" parameterType="Integer" resultType="Author">
+        select * from Author where author_id = #{authorId}
+    </select>
+    <select id="selectByAccountId" parameterType="Integer" resultType="Author">
+        select * from Author where account_id = #{accountId}
+    </select>
+    <select id="selectByArticleId" parameterType="Integer" resultType="Author">
+        select Author.author_id, account_id, institution, research_interests
+        from Author join Write W on Author.author_id = W.author_id
+        where article_id = #{articleId}
+    </select>
+    <insert id="insert" parameterType="Author" useGeneratedKeys="true" keyProperty="authorId">
+        insert into Author values (#{accountId}, #{institution}, #{researchInterests})
+    </insert>
+    <delete id="deleteById" parameterType="Integer">
+        delete from Author where author_id = #{authorId}
+    </delete>
+    <update id="update" parameterType="Author">
+        update Author
+        set account_id = #{accountId}, institution = #{institution}, research_interests = #{researchInterests}
+        where author_id = #{authorId}
+    </update>
+</mapper>
