@@ -126,19 +126,30 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void removeArticle(Integer id) throws ObjectNotFoundException {
+    public void removeArticle(Integer id) throws IOException, ObjectNotFoundException {
+        Article article = articleDao.selectById(id);
         if (articleDao.deleteById(id) == 0)
             throw new ObjectNotFoundException();
+        fileDelete(article.getFilePath());
     }
 
     @Override
-    public void rejectArticle(Integer articleBufferId) {
+    public void rejectArticle(Integer articleBufferId) throws IOException {
+        ArticleBuffer articleBuffer = articleBufferDao.selectById(articleBufferId);
         articleBufferDao.deleteById(articleBufferId);
+        fileDelete(articleBuffer.getFilePath());
     }
 
     @Override
     public void saveEditedFile(Integer articleId, MultipartFile file) throws IOException, ObjectNotFoundException {
-        // TODO: 2021/6/1 Replace the old file with the new file
+        Article article = articleDao.selectById(articleId);
+        if (article == null)
+            throw new ObjectNotFoundException();
+        String filePath = fileSave(file, article.getFilePath());
+        Article updateArticle = new Article();
+        updateArticle.setFilePath(filePath);
+        if (articleDao.updateById(updateArticle) == 0)
+            throw new ObjectNotFoundException();
     }
 
     @Override
@@ -159,7 +170,22 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Boolean cleanBuffer() {
-        return null;
+        ArrayList<ArticleBuffer> garbage = articleBufferDao.selectNeverSubmitted();
+        if (garbage.isEmpty())
+            return true;
+        int success = 0;
+        int deleted;
+        for (ArticleBuffer buffer : garbage) {
+            deleted = articleBufferDao.deleteById(buffer.getArticleBufferId());
+            try {
+                fileDelete(buffer.getFilePath());
+                success += deleted;
+            }
+            catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
+        return success == garbage.size();
     }
 
     @Override
@@ -189,4 +215,81 @@ public class ArticleServiceImpl implements ArticleService {
         if (reviewDao.deleteByArticleId(articleId) < reviews.size())
             throw new ObjectNotFoundException();
     }
+
+    /**
+     * Save a multipart file into the storage.<br/>
+     * If path of the old file is given, this will delete the old file
+     * and transfer the multipart file to the same directory;
+     * otherwise, this will transfer the multipart file into
+     * a new directory created in path <code>#{rootPath}/buffers</code>.
+     * Name of the directory is based on the current timestamp.
+     * @param file The uploaded multipart file
+     * @param oldPath A path referring to the old file in storage; null if there is not
+     * @return New path of the saved file
+     */
+    private String fileSave(MultipartFile file, String oldPath) throws IOException {
+        String newPath;
+        String fileName = file.getName();
+        String path;
+        if (oldPath == null) {
+            path = String.format("%s/buffers/%d", rootPath, System.currentTimeMillis());
+            File dir = new File(path);
+            if (!dir.mkdirs())
+                throw new IOException();
+        }
+        else {
+            path = oldPath.substring(0, oldPath.lastIndexOf('/'));
+            File dst = new File(oldPath);
+            if (!dst.delete())
+                throw new IOException();
+        }
+        newPath = String.format("%s/%s", path, fileName);
+        file.transferTo(new File(newPath));
+        return newPath;
+    }
+
+    /**
+     * Move a file from the buffer folder to the formal article folder.<br/>
+     * If the target path is given, this will delete the target file,
+     * and move the source file to the same directory;
+     * otherwise, this will move the source file into
+     * a new directory created in path <code>#{rootPath}/articles</code>.
+     * Name of the directory is based on the current timestamp.
+     * @param src Source file to be moved
+     * @param destPath A path referring to the target file in storage; null if there is not
+     * @return New path of the saved file
+     */
+    private String fileMove(File src, String destPath) throws IOException {
+        String newPath;
+        String fileName = src.getName();
+        String path;
+        if (destPath == null) {
+            path = String.format("%s/articles/%d", rootPath, System.currentTimeMillis());
+            File dir = new File(path);
+            if (!dir.mkdirs())
+                throw new IOException();
+        }
+        else {
+            path = destPath.substring(0, destPath.lastIndexOf('/'));
+            File dst = new File(destPath);
+            if (!dst.delete())
+                throw new IOException();
+        }
+        newPath = String.format("%s/%s", path, fileName);
+        if (!src.renameTo(new File(newPath)))
+            throw new IOException();
+        return newPath;
+    }
+
+    /**
+     * Delete a file and its parent directory from the storage.
+     * @param targetPath A path referring to the target file to be deleted
+     */
+    private void fileDelete(String targetPath) throws IOException {
+        File target = new File(targetPath);
+        File dir = target.getParentFile();
+        if (!target.delete() || !dir.delete())
+            throw new IOException();
+    }
+
 }

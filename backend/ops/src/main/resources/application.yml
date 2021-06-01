@@ -44,5 +44,4 @@ check:
   code-bits: 8
 
 file:
-  root-path: D:\\ops_articles\\
-
+  root-path: D:/ops_articles

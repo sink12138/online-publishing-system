@@ -98,13 +98,13 @@ public interface ArticleService {
      * @param id ArticleId of the article to be deleted
      * @throws ObjectNotFoundException if there is no such article
      */
-    void removeArticle(Integer id) throws ObjectNotFoundException;
+    void removeArticle(Integer id) throws IOException, ObjectNotFoundException;
 
     /**
      * Reject an article in table "ArticleBuffer" whether it is a new article or a revised draft.
      * @param articleBufferId Determines which article to reject
      */
-    void rejectArticle(Integer articleBufferId);
+    void rejectArticle(Integer articleBufferId) throws IOException;
 
     /**
      * Save the article file the editor uploads after editing,
