@@ -67,15 +67,20 @@
 <body>
 <div class="container">
     <div class="header">
-        <h2>欢迎加入OPS! （历史学会文章出版网站）</h2>
+        <h2>OPS<span th:text="${action}"></span>邮箱验证 </h2>
     </div>
     <div class="content">
-        <b><span th:text="${context}"><span/><b/>
+        <h2>亲爱的用户您好</h2>
+        <p>您的邮箱：<b><span th:text="${email}"></span></b></p>
+        <p>您的激活链接：<b><span th:text="${code}"></span></b></p>
+        <p>您注册时的日期：<b><span th:text="${createTime}"></span></b></p>
+        <p>当您在使用本网站时，务必要遵守法律法规</p>
+        <p>如果您有什么疑问可以联系管理员，Email: <b>3488997405@qq.com</b></p>
     </div>
     <div class="footer">
         <p>此为系统邮件，请勿回复</p>
         <p>请保管好您的信息，避免被他人盗用</p>
-        <p>©BUAA SE Team</p>
+        <p>©OPS 历史学会线上文章出版系统</p>
     </div>
 </div>
 </body>

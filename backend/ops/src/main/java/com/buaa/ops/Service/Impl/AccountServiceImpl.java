@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -27,6 +29,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account getAccountByAccountId(Integer accountId) {
         return accountDao.selectById(accountId);
+    }
+
+    @Override
+    public AccountBuffer getAccountBufferById(Integer accountBufferId) {
+        return accountBufferDao.selectById(accountBufferId);
     }
 
     @Autowired
@@ -72,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
     private Integer CODE_BITS;
 
     @Override
-    public Integer checkCode(String code) throws ObjectNotFoundException {
+    public Map<String, Integer> checkCode(String code) throws ObjectNotFoundException {
         Check check = checkDao.selectByCode(code);
         Date deadline = new Date(new Date().getTime() - VALID_TIME);
         if (check == null || check.getCheckingTime().getTime() < deadline.getTime()) {
@@ -80,7 +87,15 @@ public class AccountServiceImpl implements AccountService {
         }
         Integer len = check.getCode().length();
         checkDao.deleteById(check.getCheckId());
-        return Integer.parseInt(check.getCode().substring(0, len - CODE_BITS));
+        Map<String, Integer> id = new HashMap<>();
+        if (code.contains("_")) {
+            int pos = code.indexOf('_');
+            id.put("accountBufferId", Integer.parseInt(code.substring(CODE_BITS, pos)));
+            id.put("accountId", Integer.parseInt(code.substring(pos + 1)));
+        } else {
+            id.put("accountBufferId", Integer.parseInt(code.substring(CODE_BITS)));
+        }
+        return id;
     }
 
     @Override

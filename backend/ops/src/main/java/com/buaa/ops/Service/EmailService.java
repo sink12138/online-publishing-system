@@ -9,11 +9,12 @@ import java.io.File;
 public interface EmailService {
     /**
      * Send a check email to the account Email
-     * @param accountId The id of account in buffer field
+     * @param accountId The id of account, if the param is null = new account register
+     * @param accountBufferId id of accountBuffer
      * @param email The email address of account
      * @throws MailException The Exceptions of mail sending
      */
-    void sendCheckEmail(Integer accountId, String email, Boolean newAccount) throws MailException, MessagingException;
+    void sendCheckEmail(Integer accountId, Integer accountBufferId, String email) throws MailException, MessagingException;
 
     /**
      * Send an article to reviewer's Email
