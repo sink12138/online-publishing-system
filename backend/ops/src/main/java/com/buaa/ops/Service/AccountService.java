@@ -8,6 +8,7 @@ import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface AccountService {
     /**
@@ -16,6 +17,13 @@ public interface AccountService {
      * @return Instance of Account with target id
      */
     Account getAccountByAccountId(Integer accountId);
+
+    /**
+     * Get instance of AccountBuffer by target id
+     * @param accountBufferId Target id of account
+     * @return Instance of Account with target id
+     */
+    AccountBuffer getAccountBufferById(Integer accountBufferId);
 
     /**
      * Add a new account to Table Account,
@@ -47,9 +55,9 @@ public interface AccountService {
     /**
      * Check whether the code is valid
      * @param code The check code
-     * @return The accountBufferId with this code
+     * @return The accountBufferId and accountId
      */
-    Integer checkCode(String code) throws ObjectNotFoundException;
+    Map<String, Integer> checkCode(String code) throws ObjectNotFoundException;
 
     /**
      * Move the account from AccountBuffer to Account,
