@@ -13,9 +13,12 @@ public interface CheckDao {
     Check selectByCode(String code);
 
     /**
+     * @param date Deadline of time
      * @return All the invalid instances of Check
      */
-    ArrayList<Check> selectInvalid();
+    ArrayList<Check> selectInvalid(java.sql.Timestamp date);
 
     Integer deleteById(Integer id);
+
+    Integer insert(Check check);
 }

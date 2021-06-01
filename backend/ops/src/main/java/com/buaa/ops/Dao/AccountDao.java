@@ -23,7 +23,4 @@ public interface AccountDao {
      * attribute realName will be update to null if param realName is null
      */
     Integer update(Account newAccountInfos);
-
-
-
 }

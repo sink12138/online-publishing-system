@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buaa.ops.Dao.WriteDao">
+    <select id="selectByEditorId" parameterType="Integer" resultType="Write">
+        select W.author_id, W.article_id, W.confirmed
+        from Write W join Article A on W.article_id = A.article_id
+        where editor_id = #{editorId}
+    </select>
+    <insert id="insert" parameterType="Write" useGeneratedKeys="true" keyProperty="writeId">
+        insert into Write values (#{authorId}, #{articleId}, #{confirmed})
+    </insert>
+    <update id="update" parameterType="Write">
+        if #{authorId} is not NUll
+        begin
+            update Write set author_id = #{authorId} where write_id = #{writeId}
+        end
+        if #{articleId} is not NULL
+        begin
+            update Write set article_id = #{articleId} where write_id = #{writeId}
+        end
+        if #{confirmed} is  not NULL
+        begin
+            update Write set confirmed = #{confirmed} where write_id = #{writeId}
+        end
+    </update>
+    <delete id="deleteBySelf" parameterType="Write">
+        delete from Write where article_id = #{articleId} and author_id = #{authorId}
+    </delete>
+</mapper>

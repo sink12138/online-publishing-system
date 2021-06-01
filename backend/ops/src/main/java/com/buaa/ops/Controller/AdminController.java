@@ -103,6 +103,7 @@ public class AdminController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            // todo judge password
             Account newAccount = new Account(email, password, realName);
             accountService.addAccount(newAccount);
             map.put("success", true);
@@ -136,6 +137,10 @@ public class AdminController {
             Account account = accountService.getAccountByEmail(email);
             if (account == null) {
                 throw new ObjectNotFoundException();
+            }
+            Editor another =  editorService.getEditorByAccountId(account.getAccountId());
+            if (another != null) {
+                throw new RepetitiveOperationException();
             }
             Editor newEditor = new Editor(account.getAccountId());
             editorService.addEditor(newEditor);
