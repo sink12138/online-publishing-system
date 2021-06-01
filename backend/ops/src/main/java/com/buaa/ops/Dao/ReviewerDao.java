@@ -16,7 +16,7 @@ public interface ReviewerDao {
 
     Integer insert(Reviewer reviewer);
 
-    Integer update(Reviewer reviewer);
+    Integer updateByAccountId(Reviewer reviewer);
 
     Integer deleteById(Integer id);
 }

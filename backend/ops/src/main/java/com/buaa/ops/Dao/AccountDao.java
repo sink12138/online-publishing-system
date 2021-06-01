@@ -22,5 +22,5 @@ public interface AccountDao {
      * Password can't be null,
      * attribute realName will be updateById to null if param realName is null
      */
-    Integer update(Account newAccountInfos);
+    Integer updateById(Account newAccountInfos);
 }

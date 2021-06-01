@@ -23,7 +23,7 @@ public interface AuthorDao {
     /**
      * Null attribute means clearing
      */
-    Integer update(Author author);
+    Integer updateByAccountId(Author author);
 
 
 }

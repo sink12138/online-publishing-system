@@ -471,6 +471,7 @@ public class UserController {
                 throw new ParameterFormatException();
             }
             Account newAccountInfos = new Account(account.getEmail(), password, realName);
+            newAccountInfos.setAccountId(account.getAccountId());
             accountService.modifyInfos(newAccountInfos);
             map.put("success", true);
         } catch (ParameterFormatException | LoginVerificationException | ObjectNotFoundException exception) {

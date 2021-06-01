@@ -16,7 +16,7 @@
     <delete id="deleteById" parameterType="Integer">
         delete from Account where account_id = #{id}
     </delete>
-    <update id="update" parameterType="Account">
+    <update id="updateById" parameterType="Account">
         update Account set password = #{password}, email = #{email}, real_name = #{realName} where account_id = #{accountId}
     </update>
 </mapper>

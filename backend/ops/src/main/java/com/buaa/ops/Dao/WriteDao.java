@@ -15,7 +15,7 @@ public interface WriteDao {
     /**
      * Null attribute = do not updateById
      */
-    Integer update(Write write);
+    Integer updateBySelf(Write write);
 
     Integer deleteBySelf(Write write);
 
