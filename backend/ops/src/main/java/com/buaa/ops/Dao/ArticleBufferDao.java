@@ -15,7 +15,7 @@ public interface ArticleBufferDao {
     Integer insert(ArticleBuffer articleBuffer);
 
     /**
-     * Null attribute = do not updateById
+     * Null attribute = do not update
      */
     Integer updateById(ArticleBuffer articleBuffer);
 

@@ -83,8 +83,27 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Integer saveArticleFile(Integer submitterId, Integer articleBufferId, Integer overwrite, MultipartFile file) throws IOException {
-        // TODO: 2021/6/1 Save the file and insert a new record into database; or replace old file and update records in database
-        return null;
+        String path;
+        ArticleBuffer newArticle = new ArticleBuffer();
+        if (articleBufferId == null) { // New upload
+            // Save the file
+            path = fileSave(file, null);
+            // Insert new record
+            newArticle.setSubmitterId(submitterId);
+            newArticle.setOverwrite(overwrite);
+            newArticle.setFilePath(path);
+            articleBufferDao.insert(newArticle);
+        }
+        else { // Replacement
+            ArticleBuffer articleBuffer = articleBufferDao.selectById(articleBufferId);
+            // Replace the file
+            path = fileSave(file, articleBuffer.getFilePath());
+            // Update old record
+            newArticle.setArticleBufferId(articleBufferId);
+            newArticle.setFilePath(path);
+            articleBufferDao.updateById(newArticle);
+        }
+        return newArticle.getArticleBufferId();
     }
 
     @Override
@@ -110,10 +129,35 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Integer moveToArticle(Integer articleBufferId) {
+    public Integer moveToArticle(Integer articleBufferId) throws IOException {
         ArticleBuffer articleBuffer = articleBufferDao.selectById(articleBufferId);
-        // TODO: 2021/6/1 File copy and record immigration
-        return null;
+        File file = new File(articleBuffer.getFilePath());
+        String path;
+        Article article = new Article();
+        Integer overwrite = articleBuffer.getOverwrite();
+        if (overwrite == null) { // New submission
+            path = fileMove(file, null);
+            article.setTitle(articleBuffer.getTitle());
+            article.setArticleAbstract(articleBuffer.getArticleAbstract());
+            article.setKeywords(articleBuffer.getKeywords());
+            article.setFirstAuthor(articleBuffer.getFirstAuthor());
+            article.setOtherAuthors(articleBuffer.getOtherAuthors());
+            article.setFilePath(path);
+            article.setSubmitterId(articleBuffer.getSubmitterId());
+            article.setEditorId(articleBuffer.getEditorId());
+            articleDao.insert(article);
+        }
+        else { // Revised draft
+            Article overwrittenArticle = articleDao.selectById(overwrite);
+            path = fileMove(file, overwrittenArticle.getFilePath());
+            article.setArticleId(overwrite);
+            article.setTitle(articleBuffer.getTitle());
+            article.setArticleAbstract(articleBuffer.getArticleAbstract());
+            article.setKeywords(articleBuffer.getKeywords());
+            article.setFilePath(path);
+            articleDao.updateById(article);
+        }
+        return article.getArticleId();
     }
 
     @Override
@@ -276,7 +320,10 @@ public class ArticleServiceImpl implements ArticleService {
                 throw new IOException();
         }
         newPath = String.format("%s/%s", path, fileName);
+        File parent = src.getParentFile();
         if (!src.renameTo(new File(newPath)))
+            throw new IOException();
+        if (!parent.delete())
             throw new IOException();
         return newPath;
     }

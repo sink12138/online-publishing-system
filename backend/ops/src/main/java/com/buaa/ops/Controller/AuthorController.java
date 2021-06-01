@@ -45,22 +45,6 @@ public class AuthorController {
     public Map<String, Object> certify(@RequestBody Map<String, Object> requestMap) {
         Map<String, Object> map = new HashMap<>();
         try {
-/*
-            String email;
-            String password;
-            Account account;
-            try {
-                HttpSession session = request.getSession();
-                email = (String) session.getAttribute("email");
-                password = (String) session.getAttribute("password");
-                account = accountService.getAccount(email);
-                if (!password.equals(account.getPassword()))
-                    throw new Exception();
-            }
-            catch (Exception e) {
-                throw new LoginVerificationException();
-            }
-*/
             Account account = accountService.getAccountBySession(request.getSession());
             String institution;
             String researchInterests;
@@ -73,7 +57,7 @@ public class AuthorController {
             }
             String realName = account.getRealName();
             if (realName == null || realName.isEmpty())
-                // Cannot certify with no real name
+                // Cannot certify without real name
                 throw new IllegalAuthorityException();
             Integer accountId = account.getAccountId();
             if (authorService.getAuthorByAccountId(accountId) != null)

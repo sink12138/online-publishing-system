@@ -53,7 +53,7 @@ public interface ArticleService {
      * (1) Save the original file to the storage,
      * or replace the former file if it exists;<br/>
      * (2) Insert a new record into table "ArticleBuffer",
-     * or updateById the old record if it exists;<br/>
+     * or update the old record if it exists;<br/>
      * (3) Return the newly generated articleBufferId if it is a new upload,
      * or return the given articleBufferId if it is a replacement.
      * @param submitterId The authorId of the submitter (uploader) of the file
@@ -80,11 +80,11 @@ public interface ArticleService {
     /**
      * Move a record from table "ArticleBuffer" to table "Article".<br/>
      * Insert new record if it is a new article,
-     * or updateById the old record if it is a revised draft.
+     * or update the old record if it is a revised draft.
      * @param articleBufferId Id of the ArticleBuffer to be moved to table "Article"
      * @return The articleId related (or distributed) to this operation
      */
-    Integer moveToArticle(Integer articleBufferId);
+    Integer moveToArticle(Integer articleBufferId) throws IOException;
 
     /**
      * Change the status to an article in table "Article"
