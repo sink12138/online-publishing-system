@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -306,6 +305,10 @@ public class EditorController {
             if (overwrite == null) { // New submission
                 // Set article status
                 articleService.setArticleStatus(articleId, "待审核");
+                // Claim the article for the author
+                Integer submitterId = article.getSubmitterId();
+                authorService.claimArticle(submitterId, articleId);
+                editorService.confirmClaim(articleId, submitterId);
             }
             else { // Revised draft
                 // Set article status

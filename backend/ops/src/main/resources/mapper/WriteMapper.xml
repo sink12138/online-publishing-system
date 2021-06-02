@@ -21,7 +21,7 @@
                 confirmed = #{confirmed}
             </if>
         </set>
-        where author_id = #{authorId} and article_id = #{articleid}
+        where author_id = #{authorId} and article_id = #{articleId}
     </update>
     <delete id="deleteBySelf" parameterType="Write">
         delete from Write where article_id = #{articleId} and author_id = #{authorId}

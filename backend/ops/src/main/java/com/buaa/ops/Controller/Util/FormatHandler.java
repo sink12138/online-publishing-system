@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class FormatHandler {
 
     public ArrayList<String> castToStringList(Object object) throws ClassCastException {
+        if (object == null)
+            return null;
         if (!(object instanceof ArrayList))
             throw new ClassCastException();
         @SuppressWarnings("unchecked")
@@ -16,6 +18,8 @@ public class FormatHandler {
     }
 
     public ArrayList<Integer> castToIntegerList(Object object) throws ClassCastException, NumberFormatException {
+        if (object == null)
+            return null;
         if (!(object instanceof ArrayList))
             throw new ClassCastException();
         @SuppressWarnings("unchecked")
