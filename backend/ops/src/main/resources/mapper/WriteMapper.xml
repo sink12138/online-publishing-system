@@ -16,7 +16,6 @@
     </insert>
     <update id="updateBySelf" parameterType="Write">
         update Write
-        set
         <set>
             <if test="confirmed != null">
                 confirmed = #{confirmed}

@@ -32,7 +32,9 @@ public class AdminController {
 
     private Boolean checkAuthority() {
         HttpSession session = httpServletRequest.getSession();
-        return session.getAttribute("USERNAME").equals(USERNAME) && session.getAttribute("PASSWORD").equals(PASSWORD);
+        String username = (String) session.getAttribute("USERNAME");
+        String password = (String) session.getAttribute("PASSWORD");
+        return username != null && password != null && username.equals(USERNAME) && password.equals(PASSWORD);
     }
 
     @PostMapping("/login")
@@ -48,7 +50,7 @@ public class AdminController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            if (!username.equals(USERNAME) || !password.equals(PASSWORD)) {
+            if (username == null || password == null || !username.equals(USERNAME) || !password.equals(PASSWORD)) {
                 throw new LoginVerificationException();
             }
             map.put("success", true);
@@ -241,7 +243,7 @@ public class AdminController {
         return map;
     }
 
-    @GetMapping("/selectArticles")
+    @GetMapping("/select/articles")
     public  ArrayList<Map<String, Object>> selectArticle() {
         Map<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
@@ -252,21 +254,24 @@ public class AdminController {
             ArrayList<Article> articleArrayList = articleService.getArticles();
             map.put("success", true);
             arrayList.add(map);
-            for (Article article : articleArrayList) {
-                Map<String, Object> articleInfo = new HashMap<>();
-                articleInfo.put("articleId", article.getArticleId());
-                articleInfo .put("title", article.getTitle());
-                articleInfo .put("articleAbstract", article.getArticleAbstract());
-                articleInfo .put("keywords", article.getKeywords().split(";"));
-                articleInfo .put("firstAuthor", article.getFirstAuthor());
-                if (article.getOtherAuthors() != null) {
-                    articleInfo.put("otherAuthors", article.getOtherAuthors().split(";"));
+            map.put("results", articleArrayList.size());
+            if (articleArrayList.size() > 0) {
+                for (Article article : articleArrayList) {
+                    Map<String, Object> articleInfo = new HashMap<>();
+                    articleInfo.put("articleId", article.getArticleId());
+                    articleInfo.put("title", article.getTitle());
+                    articleInfo.put("articleAbstract", article.getArticleAbstract());
+                    articleInfo.put("keywords", article.getKeywords().split(";"));
+                    articleInfo.put("firstAuthor", article.getFirstAuthor());
+                    if (article.getOtherAuthors() != null) {
+                        articleInfo.put("otherAuthors", article.getOtherAuthors().split(";"));
+                    }
+                    articleInfo.put("identifier", article.getIdentifier());
+                    articleInfo.put("status", article.getStatus());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+                    articleInfo.put("publishingDate", sdf.format(article.getPublishingDate()));
+                    arrayList.add(articleInfo);
                 }
-                articleInfo .put("identifier", article.getIdentifier());
-                articleInfo.put("status", article.getStatus());
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-                articleInfo .put("publishingDate", sdf.format(article.getPublishingDate()));
-                arrayList.add(articleInfo);
             }
         } catch (LoginVerificationException exception) {
             map.put("success", false);
@@ -294,13 +299,16 @@ public class AdminController {
             ArrayList<Account> accountArrayList = accountService.getAccounts();
             map.put("success", true);
             arrayList.add(map);
-            for (Account account : accountArrayList) {
-                Map<String, Object> accountInfos = new HashMap<>();
-                accountInfos.put("accountId", account.getAccountId());
-                accountInfos.put("email", account.getEmail());
-                accountInfos.put("password", account.getPassword());
-                accountInfos.put("realName", account.getRealName());
-                arrayList.add(accountInfos);
+            map.put("results", accountArrayList.size());
+            if (accountArrayList.size() > 0) {
+                for (Account account : accountArrayList) {
+                    Map<String, Object> accountInfos = new HashMap<>();
+                    accountInfos.put("accountId", account.getAccountId());
+                    accountInfos.put("email", account.getEmail());
+                    accountInfos.put("password", account.getPassword());
+                    accountInfos.put("realName", account.getRealName());
+                    arrayList.add(accountInfos);
+                }
             }
         } catch (LoginVerificationException exception) {
             map.put("success", false);
@@ -320,7 +328,7 @@ public class AdminController {
     @Autowired
     private AuthorService authorService;
 
-    @GetMapping("/selectAuthor")
+    @GetMapping("/select/authors")
     public ArrayList<Map<String, Object>> selectAuthor() {
         Map<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
@@ -331,17 +339,20 @@ public class AdminController {
             ArrayList<Author> authorArrayList = authorService.getAuthors();
             map.put("success", true);
             arrayList.add(map);
-            for (Author author : authorArrayList) {
-                Map<String, Object> authorInfos = new HashMap<>();
-                Account account = accountService.getAccountByAccountId(author.getAuthorId());
-                authorInfos.put("authorId", author.getAuthorId());
-                authorInfos.put("accountId", author.getAccountId());
-                authorInfos.put("email", account.getEmail());
-                authorInfos.put("password", account.getPassword());
-                authorInfos.put("realName", account.getRealName());
-                authorInfos.put("institution", author.getInstitution());
-                authorInfos.put("researchInterests", author.getResearchInterests());
-                arrayList.add(authorInfos);
+            map.put("results", authorArrayList.size());
+            if (authorArrayList.size() > 0) {
+                for (Author author : authorArrayList) {
+                    Map<String, Object> authorInfos = new HashMap<>();
+                    Account account = accountService.getAccountByAccountId(author.getAuthorId());
+                    authorInfos.put("authorId", author.getAuthorId());
+                    authorInfos.put("accountId", author.getAccountId());
+                    authorInfos.put("email", account.getEmail());
+                    authorInfos.put("password", account.getPassword());
+                    authorInfos.put("realName", account.getRealName());
+                    authorInfos.put("institution", author.getInstitution());
+                    authorInfos.put("researchInterests", author.getResearchInterests());
+                    arrayList.add(authorInfos);
+                }
             }
         } catch (LoginVerificationException exception) {
             map.put("success", false);
@@ -361,7 +372,7 @@ public class AdminController {
     @Autowired
     private ReviewerService reviewerService;
 
-    @GetMapping("/select/reviewer")
+    @GetMapping("/select/reviewers")
     public ArrayList<Map<String, Object>> selectReviewer() {
         Map<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
@@ -372,16 +383,19 @@ public class AdminController {
             ArrayList<Reviewer> reviewerArrayList = reviewerService.getReviewers();
             map.put("success", true);
             arrayList.add(map);
-            for (Reviewer reviewer : reviewerArrayList) {
-                Map<String, Object> reviewerInfos = new HashMap<>();
-                Account account = accountService.getAccountByAccountId(reviewer.getAccountId());
-                reviewerInfos.put("reviewerId", reviewer.getReviewerId());
-                reviewerInfos.put("accountId", reviewer.getAccountId());
-                reviewerInfos.put("email", account.getEmail());
-                reviewerInfos.put("password", account.getPassword());
-                reviewerInfos.put("realName", account.getRealName());
-                reviewerInfos.put("organization", reviewer.getOrganization());
-                arrayList.add(reviewerInfos);
+            map.put("results", reviewerArrayList.size());
+            if (reviewerArrayList.size() > 0) {
+                for (Reviewer reviewer : reviewerArrayList) {
+                    Map<String, Object> reviewerInfos = new HashMap<>();
+                    Account account = accountService.getAccountByAccountId(reviewer.getAccountId());
+                    reviewerInfos.put("reviewerId", reviewer.getReviewerId());
+                    reviewerInfos.put("accountId", reviewer.getAccountId());
+                    reviewerInfos.put("email", account.getEmail());
+                    reviewerInfos.put("password", account.getPassword());
+                    reviewerInfos.put("realName", account.getRealName());
+                    reviewerInfos.put("organization", reviewer.getOrganization());
+                    arrayList.add(reviewerInfos);
+                }
             }
         } catch (LoginVerificationException exception) {
             map.put("success", false);
@@ -398,7 +412,7 @@ public class AdminController {
         return arrayList;
     }
 
-    @GetMapping("/select/editor")
+    @GetMapping("/select/editors")
     public ArrayList<Map<String, Object>> selectEditor() {
         Map<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
@@ -409,15 +423,18 @@ public class AdminController {
             ArrayList<Editor> editorArrayList = editorService.getEditors();
             map.put("success", true);
             arrayList.add(map);
-            for (Editor editor : editorArrayList) {
-                Map<String, Object> editorInfos = new HashMap<>();
-                Account account = accountService.getAccountByAccountId(editor.getAccountId());
-                editorInfos.put("editorId", editor.getEditorId());
-                editorInfos.put("accountId", editor.getAccountId());
-                editorInfos.put("email", account.getEmail());
-                editorInfos.put("password", account.getPassword());
-                editorInfos.put("realName", account.getRealName());
-                arrayList.add(editorInfos);
+            map.put("results", editorArrayList.size());
+            if (editorArrayList.size() > 0) {
+                for (Editor editor : editorArrayList) {
+                    Map<String, Object> editorInfos = new HashMap<>();
+                    Account account = accountService.getAccountByAccountId(editor.getAccountId());
+                    editorInfos.put("editorId", editor.getEditorId());
+                    editorInfos.put("accountId", editor.getAccountId());
+                    editorInfos.put("email", account.getEmail());
+                    editorInfos.put("password", account.getPassword());
+                    editorInfos.put("realName", account.getRealName());
+                    arrayList.add(editorInfos);
+                }
             }
         } catch (LoginVerificationException exception) {
             map.put("success", false);
