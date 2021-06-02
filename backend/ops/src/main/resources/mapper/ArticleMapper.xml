@@ -10,15 +10,15 @@
             select -article_buffer_id as article_id, title, article_abstract, keywords, first_author, other_authors,
                    iif(overwrite is null, N'待接收', N'修改稿待接收') as status
             from ArticleBuffer
-            where submitter_id = #{authorId}
+            where submitter_id = #{authorId} and title is not null
         )
         union
         (
             select Article.article_id, title, article_abstract, keywords, first_author, other_authors, status
             from Article join Write W on Article.article_id = W.article_id
-            where  (submitter_id &lt;&gt; #{authorId} and W.author_id = #{authorId} and confirmed = true)
+            where  (submitter_id &lt;&gt; #{authorId} and W.author_id = #{authorId} and confirmed = 1)
                or (submitter_id = #{authorId} and
-                   Article.article_id not in (select overwrite from ArticleBuffer))
+                   Article.article_id not in (select overwrite from ArticleBuffer where title is not null))
         )
     </select>
     <select id="selectByReviewerId" resultType="Article">
