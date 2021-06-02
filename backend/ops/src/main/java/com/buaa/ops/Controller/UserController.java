@@ -42,7 +42,7 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            if (!isPasswordValid(password)) {
+            if (password == null || !isPasswordValid(password)) {
                 throw new ParameterFormatException();
             }
             AccountBuffer accountBuffer = new AccountBuffer(email, password);
@@ -60,16 +60,10 @@ public class UserController {
         return map;
     }
 
-    @PostMapping("/verify")
-    public Map<String, Object> verify(@RequestBody Map<String, Object> request){
+    @GetMapping("/verify")
+    public Map<String, Object> verify(String code){
         Map<String, Object> map = new HashMap<>();
         try {
-            String code;
-            try {
-                code = (String) request.get("code");
-            } catch (Exception e) {
-                throw new ParameterFormatException();
-            }
             Map<String, Integer> Id = accountService.checkCode(code);
             Integer accountBufferId = Id.get("accountBufferId");
             Integer accountId = Id.get("accountId");
@@ -88,7 +82,7 @@ public class UserController {
             }
             accountService.deleteAccountBufferById(accountBufferId);
             map.put("success", true);
-        } catch (ObjectNotFoundException | ParameterFormatException e) {
+        } catch (ObjectNotFoundException | RepetitiveOperationException e) {
             map.put("success", false);
             map.put("message", e.toString());
         } catch (Exception otherException) {
@@ -130,10 +124,10 @@ public class UserController {
             session.setAttribute("email", email);
             session.setAttribute("password", password);
             if (authorService.getAuthorByAccountId(account.getAccountId()) != null) {
-                authority |= 7;
+                authority |= 4;
             }
             if (reviewerService.getReviewerByAccountId(account.getAccountId()) != null) {
-                authority |= 3;
+                authority |= 2;
             }
             if (editorService.getEditorByAccountId(account.getAccountId()) != null) {
                 authority |= 1;

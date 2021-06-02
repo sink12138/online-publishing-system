@@ -50,9 +50,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void addAccountBuffer(AccountBuffer accountBuffer) throws RepetitiveOperationException {
+        Account account = accountDao.selectByEmail(accountBuffer.getEmail());
+        if (account != null) {
+            throw new RepetitiveOperationException();
+        }
         AccountBuffer another = accountBufferDao.selectByEmail(accountBuffer.getEmail());
         if (another != null) {
-            throw new RepetitiveOperationException();
+            accountBufferDao.deleteById(another.getAccountBufferId());
         }
         accountBufferDao.insert(accountBuffer);
     }
@@ -116,9 +120,15 @@ public class AccountServiceImpl implements AccountService {
         java.sql.Timestamp deadlineSQL = new java.sql.Timestamp(deadline.getTime());
         ArrayList<Check> invalidChecks = checkDao.selectInvalid(deadlineSQL);
         for (Check check : invalidChecks) {
-            Integer len = check.getCode().length();
-            Integer accountBufferId = Integer.parseInt(check.getCode().substring(0, len - CODE_BITS));
-            if (accountBufferDao.deleteById(accountBufferId) == 0 || checkDao.deleteById(check.getCheckId()) == 0) {
+            String code = check.getCode();
+            int accountBufferId;
+            if (code.contains("_")) {
+                int pos = code.indexOf('_');
+                accountBufferId = Integer.parseInt(code.substring(CODE_BITS, pos));
+            } else {
+                accountBufferId = Integer.parseInt(check.getCode().substring(CODE_BITS));
+            }
+            if ((accountBufferDao.selectById(accountBufferId) != null && accountBufferDao.deleteById(accountBufferId) == 0) || checkDao.deleteById(check.getCheckId()) == 0) {
                 return false;
             }
         }
