@@ -13,11 +13,11 @@
     </select>
     <insert id="insert" parameterType="Review">
         insert into Review(article_id, reviewer_id, comments, pass, reviewing_date)
-        values (#{articleId}, #{reviewerId}, #{comments}, #{pass}, #{reviewingDate})
+        values (#{articleId}, #{reviewerId}, #{comments}, #{pass}, #{reviewingDate, jdbcType=DATE})
     </insert>
     <update id="updateBySelf" parameterType="Review">
         update Review
-        set comments = #{comments}, pass = #{pass}, reviewing_date = #{reviewingDate}
+        set comments = #{comments}, pass = #{pass}, reviewing_date = #{reviewingDate, jdbcType=DATE}
         where article_id = #{articleId} and reviewer_id = #{reviewerId}
     </update>
     <delete id="deleteByArticleId">

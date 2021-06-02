@@ -1,5 +1,6 @@
 package com.buaa.ops.Controller;
 
+import com.buaa.ops.Controller.Util.FormatHandler;
 import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.*;
 import com.buaa.ops.Service.Emails.EmailFactory;
@@ -158,7 +159,7 @@ public class EditorController {
             arrayList.add(map);
             for (Author author : authorArrayList) {
                 Map<String, Object> authorInfos = new HashMap<>();
-                Account authorAccount = accountService.getAccountByAccountId(author.getAuthorId());
+                Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
                 authorInfos.put("authorId", author.getAuthorId());
                 authorInfos.put("realName", authorAccount.getRealName());
                 authorInfos.put("institution", author.getInstitution());
@@ -420,6 +421,7 @@ public class EditorController {
     public Map<String, Object> assign(@RequestBody Map<String, Object> request) {
         Map<String, Object> map = new HashMap<>();
         HttpSession session = httpServletRequest.getSession();
+        FormatHandler formatHandler = new FormatHandler();
         try {
             Account account = accountService.getAccountBySession(session);
             Editor editor = editorService.getEditorByAccountId(account.getAccountId());
@@ -430,8 +432,8 @@ public class EditorController {
             ArrayList<Integer> reviewerIds;
             try {
                 articleId = (Integer) request.get("articleId");
-                Integer[] ids = (Integer[]) request.get("reviewerId");
-                reviewerIds = new ArrayList<>(Arrays.asList(ids));
+                Object ids = request.get("reviewerId");
+                reviewerIds = formatHandler.castToIntegerList(ids);
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
