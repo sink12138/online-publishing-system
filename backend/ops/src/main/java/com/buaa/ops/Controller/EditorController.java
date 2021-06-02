@@ -440,6 +440,9 @@ public class EditorController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            if (reviewerIds.isEmpty()) {
+                throw new ParameterFormatException();
+            }
             Article article = articleService.getArticleById(articleId);
             if (article == null) {
                 throw new ObjectNotFoundException();
@@ -460,11 +463,13 @@ public class EditorController {
             EmailFactory emailFactory = new EmailFactory();
             String title = article.getTitle();
             String editorName = account.getRealName();
+            File file = new File(article.getFilePath());
+            articleService.setArticleStatus(articleId, "审核中");
             for (Integer reviewerId : reviewerIds) {
                 Reviewer reviewer = reviewerService.getReviewerById(reviewerId);
                 Account reviewerAccount = accountService.getAccountByAccountId(reviewer.getAccountId());
                 ReminderEmail reminderEmail = emailFactory.makeReviewAssignmentEmail(reviewerAccount.getRealName(), editorName, title);
-                emailService.sendReminderEmail(reviewerAccount.getEmail(), reminderEmail);
+                emailService.sendAttachmentEmail(reviewerAccount.getEmail(), file, reminderEmail);
             }
         } catch (LoginVerificationException | ParameterFormatException |
                 ObjectNotFoundException | IllegalAuthorityException | RepetitiveOperationException exception) {

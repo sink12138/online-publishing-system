@@ -128,6 +128,7 @@ public class ReviewerController {
                 ReminderEmail reminderEmailToSubmitter = reviewingResult.get("pass") ?
                         emailFactory.makeReviewPassEmail(submitterRealName, articleTitle) : emailFactory.makeReviewFailEmail(submitterRealName, articleTitle);
                 emailService.sendReminderEmail(submitterEmail, reminderEmailToSubmitter);
+                articleService.setArticleStatus(articleId, reviewingResult.get("pass") ? "审核通过" : "审核未通过");
             }
         } catch (ParameterFormatException | LoginVerificationException |
                 ObjectNotFoundException | RepetitiveOperationException exception) {
