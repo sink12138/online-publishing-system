@@ -53,9 +53,9 @@ public class EditorController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            authorService.removeAuthor(authorId);
             Author author = authorService.getAuthorByAuthorId(authorId);
             Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
+            authorService.removeAuthor(authorId);
             map.put("success", true);
             // send email
             String authorName = authorAccount.getRealName();
@@ -162,7 +162,13 @@ public class EditorController {
                 authorInfos.put("authorId", author.getAuthorId());
                 authorInfos.put("realName", authorAccount.getRealName());
                 authorInfos.put("institution", author.getInstitution());
-                authorInfos.put("articleCount", authorService.getMyArticles(author.getAuthorId()).size());
+                ArrayList<Article> publishedArticles = new ArrayList<>();
+                for (Article article : authorService.getMyArticles(author.getAuthorId())) {
+                    if (article.getStatus().equals("已出版")) {
+                        publishedArticles.add(article);
+                    }
+                }
+                authorInfos.put("articleCount", publishedArticles.size());
                 arrayList.add(authorInfos);
             }
         } catch (LoginVerificationException | ObjectNotFoundException exception) {
