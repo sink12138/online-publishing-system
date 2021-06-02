@@ -157,6 +157,7 @@ public class ArticleServiceImpl implements ArticleService {
             article.setFilePath(path);
             articleDao.updateById(article);
         }
+        articleBufferDao.deleteById(articleBufferId);
         return article.getArticleId();
     }
 

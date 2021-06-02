@@ -66,7 +66,7 @@
         insert into Article(title, article_abstract, keywords, first_author, other_authors, file_path,
                             submitter_id, editor_id, identifier, status, publishing_date)
         values (#{title}, #{articleAbstract}, #{keywords}, #{firstAuthor}, #{otherAuthors}, #{filePath},
-                #{submitterId}, #{editorId}, #{identifier}, #{status}, #{publishingDate})
+                #{submitterId}, #{editorId}, #{identifier}, #{status}, #{publishingDate,jdbcType=DATE})
     </insert>
     <update id="updateById" parameterType="Article">
         update Article
@@ -102,7 +102,7 @@
                 status = #{status},
             </if>
             <if test="publishingDate != null">
-                publishing_date = #{publishingDate}
+                publishing_date = #{publishingDate,jdbcType=DATE}
             </if>
         </set>
         where article_id = #{articleId}
