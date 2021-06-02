@@ -22,7 +22,7 @@
                or (submitter_id = #{authorId} and not exists(
                    select overwrite
                    from ArticleBuffer
-                   where overwrite = article_id and title is not null
+                   where overwrite = Article.article_id and title is not null
                 ))
         )
     </select>
@@ -45,7 +45,7 @@
             where editor_id = #{editorId} and not exists(
                 select overwrite
                 from ArticleBuffer
-                where overwrite = article_id and title is not null
+                where overwrite = Article.article_id and title is not null
             )
         )
     </select>

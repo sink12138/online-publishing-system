@@ -21,4 +21,6 @@ public interface WriteDao {
 
     Integer deleteBySelf(Write write);
 
+    Integer deleteByArticleId(Integer articleId);
+
 }

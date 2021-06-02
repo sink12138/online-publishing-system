@@ -26,4 +26,8 @@
     <delete id="deleteBySelf" parameterType="Write">
         delete from Write where article_id = #{articleId} and author_id = #{authorId}
     </delete>
+    <delete id="deleteByArticleId">
+        delete from Write
+        where article_id = #{articleId}
+    </delete>
 </mapper>

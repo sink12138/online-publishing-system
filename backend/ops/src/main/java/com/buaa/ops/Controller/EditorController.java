@@ -606,6 +606,8 @@ public class EditorController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            if (articleId == null || identifier == null)
+                throw new ParameterFormatException();
             Article article = articleService.getArticleById(articleId);
             if (article == null || !article.getStatus().equals("编辑中")) {
                 throw new ObjectNotFoundException();

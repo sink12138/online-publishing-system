@@ -54,4 +54,8 @@
         delete from ArticleBuffer
         where article_buffer_id = #{id}
     </delete>
+    <delete id="deleteByAuthorId">
+        delete from ArticleBuffer
+        where submitter_id = #{authorId}
+    </delete>
 </mapper>

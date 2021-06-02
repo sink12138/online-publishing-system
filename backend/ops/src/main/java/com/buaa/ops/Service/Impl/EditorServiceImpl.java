@@ -1,9 +1,11 @@
 package com.buaa.ops.Service.Impl;
 
+import com.buaa.ops.Dao.ArticleBufferDao;
 import com.buaa.ops.Dao.ArticleDao;
 import com.buaa.ops.Dao.EditorDao;
 import com.buaa.ops.Dao.WriteDao;
 import com.buaa.ops.Entity.Article;
+import com.buaa.ops.Entity.ArticleBuffer;
 import com.buaa.ops.Entity.Editor;
 import com.buaa.ops.Entity.Write;
 import com.buaa.ops.Service.EditorService;
@@ -19,6 +21,9 @@ public class EditorServiceImpl implements EditorService {
 
     @Autowired
     private ArticleDao articleDao;
+
+    @Autowired
+    private ArticleBufferDao articleBufferDao;
 
     @Autowired
     private EditorDao editorDao;
@@ -77,9 +82,36 @@ public class EditorServiceImpl implements EditorService {
 
     @Override
     public Boolean removeEditor(Integer editorId) throws ObjectNotFoundException {
-        ArrayList<Editor> editors = editorDao.selectAll();
-        if (editors.size() == 1)
+        ArrayList<Editor> twoEditors = editorDao.selectTwoLeastBusy();
+        if (twoEditors.size() == 1)
             return false;
+        Integer alternateId;
+        Integer leastBusyId = twoEditors.get(0).getEditorId();
+        if (leastBusyId.equals(editorId))
+            // The editor to be removed is the least busy editor
+            alternateId = twoEditors.get(1).getEditorId();
+        else {
+            alternateId = leastBusyId;
+        }
+        ArrayList<Article> articles = articleDao.selectByEditorId(editorId);
+        int success = 0;
+        for (Article a : articles) {
+            Integer articleId = a.getArticleId();
+            if (articleId < 0) {
+                ArticleBuffer articleBuffer = new ArticleBuffer();
+                articleBuffer.setArticleBufferId(articleId);
+                articleBuffer.setEditorId(alternateId);
+                success += articleBufferDao.updateById(articleBuffer);
+            }
+            else {
+                Article article = new Article();
+                article.setArticleId(articleId);
+                article.setEditorId(alternateId);
+                success += articleDao.updateById(article);
+            }
+            if (success < articles.size())
+                return false;
+        }
         if (editorDao.deleteById(editorId) == 0)
             throw new ObjectNotFoundException();
         return true;
