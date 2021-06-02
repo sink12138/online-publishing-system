@@ -4,12 +4,26 @@ import java.util.ArrayList;
 
 public class FormatHandler {
 
-    public ArrayList<String> castToArrayList(Object object) throws ClassCastException {
+    public ArrayList<String> castToStringList(Object object) throws ClassCastException {
         if (!(object instanceof ArrayList))
             throw new ClassCastException();
         @SuppressWarnings("unchecked")
-        ArrayList<String> arrayList = (ArrayList<String>) object;
-        return arrayList;
+        ArrayList<Object> objectList = (ArrayList<Object>) object;
+        ArrayList<String> stringList = new ArrayList<>();
+        for (Object obj : objectList)
+            stringList.add(obj.toString());
+        return stringList;
+    }
+
+    public ArrayList<Integer> castToIntegerList(Object object) throws ClassCastException, NumberFormatException {
+        if (!(object instanceof ArrayList))
+            throw new ClassCastException();
+        @SuppressWarnings("unchecked")
+        ArrayList<Object> objectList = (ArrayList<Object>) object;
+        ArrayList<Integer> integerList = new ArrayList<>();
+        for (Object obj : objectList)
+            integerList.add(Integer.parseInt(obj.toString()));
+        return integerList;
     }
 
     public String buildArrayListToString(ArrayList<String> arrayList) {

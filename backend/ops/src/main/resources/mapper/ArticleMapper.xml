@@ -38,7 +38,7 @@
             select article_id, title, article_abstract, keywords, first_author, other_authors, status
             from Article
             where editor_id = #{editorId} and
-                  article_id not in (select overwrite from ArticleBuffer)
+                  article_id not in (select overwrite from ArticleBuffer where title is not null)
         )
     </select>
     <select id="selectPublishedByTitle" resultType="Article">

@@ -170,9 +170,9 @@ public class AuthorController {
                 articleBufferId = (Integer) requestMap.get("articleBufferId");
                 title = (String) requestMap.get("title");
                 articleAbstract = (String) requestMap.get("abstract");
-                keywords = handler.castToArrayList(requestMap.get("keywords"));
+                keywords = handler.castToStringList(requestMap.get("keywords"));
                 firstAuthor = (String) requestMap.get("firstAuthor");
-                otherAuthors = handler.castToArrayList(requestMap.get("otherAuthors"));
+                otherAuthors = handler.castToStringList(requestMap.get("otherAuthors"));
             }
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
@@ -317,7 +317,7 @@ public class AuthorController {
                 articleBufferId = (Integer) requestMap.get("articleBufferId");
                 title = (String) requestMap.get("title");
                 articleAbstract = (String) requestMap.get("abstract");
-                keywords = handler.castToArrayList(requestMap.get("keywords"));
+                keywords = handler.castToStringList(requestMap.get("keywords"));
             }
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
