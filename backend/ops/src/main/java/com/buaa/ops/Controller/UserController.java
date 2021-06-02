@@ -238,7 +238,7 @@ public class UserController {
         Integer articleId;
         try {
             try {
-                articleId = (Integer) request.get("article");
+                articleId = (Integer) request.get("articleId");
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
@@ -251,9 +251,11 @@ public class UserController {
             map.put("success", true);
             map.put("title", article.getTitle());
             map.put("articleAbstract", article.getArticleAbstract());
-            map.put("keywords", article.getKeywords());
+            map.put("keywords", article.getKeywords().split(";"));
             map.put("firstAuthor", article.getFirstAuthor());
-            map.put("otherAuthor", article.getOtherAuthors().split(";"));
+            String otherAuthors = article.getOtherAuthors();
+            if (otherAuthors != null)
+                map.put("otherAuthor", otherAuthors.split(";"));
             map.put("identifier", article.getIdentifier());
             ArrayList<Author> authorArrayList = authorService.getAuthorsByArticleId(articleId);
             Map<String, Integer> authors = new HashMap<>();
@@ -264,6 +266,7 @@ public class UserController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
             map.put("publishingDate", sdf.format(article.getPublishingDate()));
         } catch (ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exception) {
+            map.clear();
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {

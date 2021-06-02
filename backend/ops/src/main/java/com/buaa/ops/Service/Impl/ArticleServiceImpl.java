@@ -1,9 +1,6 @@
 package com.buaa.ops.Service.Impl;
 
-import com.buaa.ops.Dao.ArticleBufferDao;
-import com.buaa.ops.Dao.ArticleDao;
-import com.buaa.ops.Dao.EditorDao;
-import com.buaa.ops.Dao.ReviewDao;
+import com.buaa.ops.Dao.*;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.ArticleBuffer;
 import com.buaa.ops.Entity.Editor;
@@ -34,6 +31,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ReviewDao reviewDao;
+
+    @Autowired
+    private WriteDao writeDao;
 
     @Value("${file.root-path}")
     private String rootPath;
@@ -111,7 +111,8 @@ public class ArticleServiceImpl implements ArticleService {
         Integer overwrite = articleBuffer.getOverwrite();
         Integer editorId;
         if (overwrite == null) { // New submission
-            Editor targetEditor = editorDao.selectLeastBusy();
+            ArrayList<Editor> twoEditors = editorDao.selectTwoLeastBusy();
+            Editor targetEditor = twoEditors.get(1);
             if (targetEditor == null)
                 throw new ObjectNotFoundException();
             editorId = targetEditor.getEditorId();
@@ -172,6 +173,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void removeArticle(Integer id) throws IOException, ObjectNotFoundException {
+        reviewDao.deleteByArticleId(id);
+        writeDao.deleteByArticleId(id);
         Article article = articleDao.selectById(id);
         if (articleDao.deleteById(id) == 0)
             throw new ObjectNotFoundException();
@@ -192,6 +195,7 @@ public class ArticleServiceImpl implements ArticleService {
             throw new ObjectNotFoundException();
         String filePath = fileSave(file, article.getFilePath());
         Article updateArticle = new Article();
+        updateArticle.setArticleId(articleId);
         updateArticle.setFilePath(filePath);
         if (articleDao.updateById(updateArticle) == 0)
             throw new ObjectNotFoundException();
@@ -247,7 +251,7 @@ public class ArticleServiceImpl implements ArticleService {
         for (Review r : reviews) {
             Review review = new Review();
             review.setArticleId(r.getArticleId());
-            review.setArticleId(r.getArticleId());
+            review.setReviewerId(r.getReviewerId());
             success += reviewDao.updateBySelf(review);
         }
         if (success != reviews.size())

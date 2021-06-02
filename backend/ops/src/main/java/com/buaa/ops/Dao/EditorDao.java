@@ -15,7 +15,7 @@ public interface EditorDao {
     /**
      * Select the editor who are responsible for the least articles.
      */
-    Editor selectLeastBusy();
+    ArrayList<Editor> selectTwoLeastBusy();
 
     ArrayList<Editor> selectAll();
 

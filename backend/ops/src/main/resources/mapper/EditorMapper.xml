@@ -11,8 +11,8 @@
         from Editor
         where account_id = #{accountId}
     </select>
-    <select id="selectLeastBusy" resultType="Editor">
-        select top 1 *
+    <select id="selectTwoLeastBusy" resultType="Editor">
+        select top 2 *
         from Editor E
         order by (
                      select count(*)

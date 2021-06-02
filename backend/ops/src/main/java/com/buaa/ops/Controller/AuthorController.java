@@ -275,7 +275,7 @@ public class AuthorController {
             if (articleBufferId > 0 && !authorId.equals(articleBuffer.getSubmitterId()))
                 // Poster is not submitter of the article
                 throw new IllegalAuthorityException();
-            if (!authorId.equals(overwrittenArticle.getArticleId()))
+            if (!authorId.equals(overwrittenArticle.getSubmitterId()))
                 // Poster is not submitter of the overwritten article
                 throw new IllegalAuthorityException();
             String status = overwrittenArticle.getStatus();
@@ -365,7 +365,7 @@ public class AuthorController {
             ReminderEmail reminderEmail = emailFactory.makeRevisedDraftEmail(
                     editor.getRealName(),
                     account.getRealName(),
-                    title
+                    overwrittenArticle.getTitle()
             );
             // Send the email to the editor
             emailService.sendReminderEmail(editor.getEmail(), reminderEmail);
