@@ -1,5 +1,6 @@
 package com.buaa.ops.Controller;
 
+import com.buaa.ops.Controller.Util.FormatHandler;
 import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.*;
 import com.buaa.ops.Service.Emails.EmailFactory;
@@ -103,24 +104,22 @@ public class AuthorController {
     }
 
     @PostMapping("/new/upload")
-    public Map<String, Object> newUpload(@RequestParam(value = "file", required = false) Object file,
-                                         @RequestParam(value = "bufferId", required = false) Object bufferId) {
+    public Map<String, Object> newUpload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+                                         @RequestParam(value = "articleBufferId", required = false) Object bufferId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Account account = accountService.getAccountBySession(request.getSession());
-            MultipartFile multipartFile;
             Integer articleBufferId;
             // Begin parameter format checks
             try {
-                multipartFile = (MultipartFile) file;
-                articleBufferId = (Integer) bufferId;
+                articleBufferId = Integer.parseInt(bufferId.toString());
             }
-            catch (ClassCastException cce) {
+            catch (NumberFormatException | NullPointerException e) {
                 throw new ParameterFormatException();
             }
             if (multipartFile == null)
                 throw new ParameterFormatException();
-            if (articleBufferId == null || articleBufferId < 0)
+            if (articleBufferId < 0)
                 throw new ParameterFormatException();
             // End parameter format checks
             ArticleBuffer articleBuffer = articleService.getArticleBufferById(articleBufferId);
@@ -162,17 +161,18 @@ public class AuthorController {
             Integer articleBufferId;
             String title;
             String articleAbstract;
-            String[] keywords;
+            ArrayList<String> keywords;
             String firstAuthor;
-            String[] otherAuthors;
+            ArrayList<String> otherAuthors;
+            FormatHandler handler = new FormatHandler();
             // Begin parameter format checks
             try {
                 articleBufferId = (Integer) requestMap.get("articleBufferId");
                 title = (String) requestMap.get("title");
                 articleAbstract = (String) requestMap.get("abstract");
-                keywords = (String[]) requestMap.get("keywords");
+                keywords = handler.castToArrayList(requestMap.get("keywords"));
                 firstAuthor = (String) requestMap.get("firstAuthor");
-                otherAuthors = (String[]) requestMap.get("otherAuthors");
+                otherAuthors = handler.castToArrayList(requestMap.get("otherAuthors"));
             }
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
@@ -183,7 +183,7 @@ public class AuthorController {
                 throw new ParameterFormatException();
             if (articleAbstract == null || articleAbstract.isEmpty())
                 throw new ParameterFormatException();
-            if (keywords == null || keywords.length == 0)
+            if (keywords == null || keywords.isEmpty())
                 throw new ParameterFormatException();
             if (firstAuthor == null || firstAuthor.isEmpty())
                 throw new ParameterFormatException();
@@ -204,10 +204,10 @@ public class AuthorController {
             ArticleBuffer newArticle = new ArticleBuffer(
                     articleBufferId,
                     title,
-                    buildArrayToString(keywords),
+                    handler.buildArrayListToString(keywords),
                     articleAbstract,
                     firstAuthor,
-                    buildArrayToString(otherAuthors)
+                    handler.buildArrayListToString(otherAuthors)
             );
             // Submit the article into database
             Integer editorId = articleService.submitArticle(newArticle);
@@ -236,29 +236,27 @@ public class AuthorController {
     }
 
     @PostMapping("/revise/upload")
-    public Map<String, Object> revisedUpload(@RequestParam(value = "file", required = false) Object file,
-                                             @RequestParam(value = "bufferId", required = false) Object bufferId,
+    public Map<String, Object> revisedUpload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+                                             @RequestParam(value = "articleBufferId", required = false) Object bufferId,
                                              @RequestParam(value = "overwrite", required = false) Object overwrite) {
         Map<String, Object> map = new HashMap<>();
         try {
             Account account = accountService.getAccountBySession(request.getSession());
-            MultipartFile multipartFile;
             Integer articleBufferId;
-            Integer overwriteId;
+            int overwriteId;
             // Begin parameter format checks
             try {
-                multipartFile = (MultipartFile) file;
-                articleBufferId = (Integer) bufferId;
-                overwriteId = (Integer) overwrite;
+                articleBufferId = Integer.parseInt(bufferId.toString());
+                overwriteId = Integer.parseInt(overwrite.toString());
             }
-            catch (ClassCastException cce) {
+            catch (ClassCastException | NullPointerException e) {
                 throw new ParameterFormatException();
             }
             if (multipartFile == null)
                 throw new ParameterFormatException();
-            if (articleBufferId == null || articleBufferId < 0)
+            if (articleBufferId < 0)
                 throw new ParameterFormatException();
-            if (overwriteId == null || overwriteId <= 0)
+            if (overwriteId <= 0)
                 throw new ParameterFormatException();
             // End parameter format checks
             // Begin existence checks
@@ -312,13 +310,14 @@ public class AuthorController {
             Integer articleBufferId;
             String title;
             String articleAbstract;
-            String[] keywords;
+            ArrayList<String> keywords;
+            FormatHandler handler = new FormatHandler();
             // Begin parameter format checks
             try {
                 articleBufferId = (Integer) requestMap.get("articleBufferId");
                 title = (String) requestMap.get("title");
                 articleAbstract = (String) requestMap.get("abstract");
-                keywords = (String[]) requestMap.get("keywords");
+                keywords = handler.castToArrayList(requestMap.get("keywords"));
             }
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
@@ -329,7 +328,7 @@ public class AuthorController {
                 throw new ParameterFormatException();
             if (articleAbstract == null || articleAbstract.isEmpty())
                 throw new ParameterFormatException();
-            if (keywords == null || keywords.length == 0)
+            if (keywords == null || keywords.isEmpty())
                 throw new ParameterFormatException();
             // End parameter format checks
             // Begin existence checks
@@ -357,7 +356,7 @@ public class AuthorController {
             // Modify the article
             articleBuffer.setTitle(title);
             articleBuffer.setArticleAbstract(articleAbstract);
-            articleBuffer.setKeywords(buildArrayToString(keywords));
+            articleBuffer.setKeywords(handler.buildArrayListToString(keywords));
             // Submit the article into database
             Integer editorId = articleService.submitArticle(articleBuffer);
             // Create a reminder email
@@ -777,14 +776,4 @@ public class AuthorController {
         return arrayList;
     }
 
-    private String buildArrayToString(String[] array) {
-        if (array == null || array.length == 0)
-            return null;
-        StringBuilder sb = new StringBuilder();
-        for (String element : array) {
-            sb.append(element);
-            sb.append(";");
-        }
-        return sb.toString();
-    }
 }

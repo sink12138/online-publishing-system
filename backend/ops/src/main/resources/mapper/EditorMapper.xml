@@ -12,21 +12,18 @@
         where account_id = #{accountId}
     </select>
     <select id="selectLeastBusy" resultType="Editor">
-        select top 1 E.editor_id, account_id
-        from (
-             (
-                 select editor_id, -article_buffer_id as article_id
-                 from ArticleBuffer
-             )
-             union
-             (
-                 select editor_id, article_id
-                 from Article
-                 where article_id not in (select overwrite from ArticleBuffer)
-             )
-        ) A join Editor E on A.editor_id = E.editor_id
-        group by E.editor_id, account_id
-        order by count(A.article_id), editor_id
+        select top 1 *
+        from Editor E
+        order by (
+                     select count(*)
+                     from ArticleBuffer
+                     where ArticleBuffer.editor_id = E.editor_id
+                 ) + (
+                     select count(*)
+                     from Article
+                     where article_id not in (select overwrite from ArticleBuffer)
+                       and Article.editor_id = E.editor_id
+                 ), editor_id
     </select>
     <select id="selectAll" resultType="Editor">
         select * from Editor

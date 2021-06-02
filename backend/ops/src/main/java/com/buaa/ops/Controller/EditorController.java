@@ -521,24 +521,22 @@ public class EditorController {
     }
 
     @PostMapping("/upload")
-    public Map<String, Object> upload(@RequestParam(value = "file", required = false) Object objectFile,
+    public Map<String, Object> upload(@RequestParam(value = "file", required = false) MultipartFile file,
                                       @RequestParam(value = "articleId", required = false) Object objectId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Account account = accountService.getAccountBySession(httpServletRequest.getSession());
-            MultipartFile file;
-            Integer articleId;
+            int articleId;
             // Begin parameter format checks
             try {
-                file = (MultipartFile) objectFile;
-                articleId = (Integer) objectId;
+                articleId = Integer.parseInt(objectId.toString());
             }
-            catch (ClassCastException cce) {
+            catch (ClassCastException | NullPointerException e) {
                 throw new ParameterFormatException();
             }
             if (file == null)
                 throw new ParameterFormatException();
-            if (articleId == null || articleId <= 0)
+            if (articleId <= 0)
                 throw new ParameterFormatException();
             // End parameter format checks
             Article article = articleService.getArticleById(articleId);

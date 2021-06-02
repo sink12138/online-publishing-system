@@ -19,7 +19,6 @@
     </insert>
     <update id="updateById" parameterType="ArticleBuffer">
         update ArticleBuffer
-        set
         <set>
             <if test="title != null">
                 title = #{title},

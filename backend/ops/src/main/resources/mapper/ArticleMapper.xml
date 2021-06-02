@@ -70,7 +70,6 @@
     </insert>
     <update id="updateById" parameterType="Article">
         update Article
-        set
         <set>
             <if test="title != null">
                 title = #{title},

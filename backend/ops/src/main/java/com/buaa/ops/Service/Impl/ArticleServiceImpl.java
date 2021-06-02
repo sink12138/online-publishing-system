@@ -273,7 +273,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     private String fileSave(MultipartFile file, String oldPath) throws IOException {
         String newPath;
-        String fileName = file.getName();
+        String fileName = file.getOriginalFilename();
         String path;
         if (oldPath == null) {
             path = String.format("%s/buffers/%d", rootPath, System.currentTimeMillis());
