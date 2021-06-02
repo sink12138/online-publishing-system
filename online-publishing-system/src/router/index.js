@@ -199,19 +199,14 @@ const routes = [
     component: () => import('../views/注销作者.vue')
   },
   {
-    path: '/author/new/upload',
+    path: '/author/upload',
     name: '上传文章',
     component: () => import('../views/上传文章.vue')
   },
   {
-    path: '/author/new/submit',
+    path: '/author/submit',
     name: '提交文章',
     component: () => import('../views/提交文章.vue')
-  },
-  {
-    path: '/author/confirm/draft',
-    name: '确认终稿',
-    component: () => import('../views/确认终稿.vue')
   },
   {
     path: '/author/claim',
