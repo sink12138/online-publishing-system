@@ -719,6 +719,9 @@ public class EditorController {
             if (!article.getEditorId().equals(editor.getEditorId())) {
                 throw new IllegalAuthorityException();
             }
+            if (confirm == null) {
+                throw new ParameterFormatException();
+            }
             map.put("success", true);
             // send email
             EmailFactory emailFactory = new EmailFactory();

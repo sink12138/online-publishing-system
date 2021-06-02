@@ -534,10 +534,13 @@ public class AuthorController {
             if (!status.equals("已出版")) // Unpublished articles cannot be claimed
                 throw new IllegalAuthorityException();
             String firstAuthor = article.getFirstAuthor();
-            String[] otherAuthors = article.getOtherAuthors().split(";");
+            String[] otherAuthors = null;
+            if (article.getOtherAuthors() != null) {
+                otherAuthors = article.getOtherAuthors().split(";");
+            }
             String realName = account.getRealName();
             if (!firstAuthor.equals(realName) &&
-                    !Arrays.asList(otherAuthors).contains(realName))
+                (otherAuthors == null || !Arrays.asList(otherAuthors).contains(realName)))
                 // Name of poster does not match any authors of the article
                 throw new IllegalAuthorityException();
             // End authority checks

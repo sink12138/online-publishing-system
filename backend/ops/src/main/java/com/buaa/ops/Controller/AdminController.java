@@ -344,7 +344,7 @@ public class AdminController {
             if (authorArrayList.size() > 0) {
                 for (Author author : authorArrayList) {
                     Map<String, Object> authorInfos = new HashMap<>();
-                    Account account = accountService.getAccountByAccountId(author.getAuthorId());
+                    Account account = accountService.getAccountByAccountId(author.getAccountId());
                     authorInfos.put("authorId", author.getAuthorId());
                     authorInfos.put("accountId", author.getAccountId());
                     authorInfos.put("email", account.getEmail());
