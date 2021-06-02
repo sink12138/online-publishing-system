@@ -21,4 +21,6 @@ public interface ArticleBufferDao {
 
     Integer deleteById(Integer id);
 
+    Integer deleteByAuthorId(Integer authorId);
+
 }

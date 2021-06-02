@@ -63,7 +63,7 @@ public class EditorController {
             EmailFactory emailFactory = new EmailFactory();
             ReminderEmail reminderEmail = emailFactory.makeAuthorCancelledEmail(authorName, account.getRealName());
             emailService.sendReminderEmail(authorEmail, reminderEmail);
-        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
@@ -130,7 +130,7 @@ public class EditorController {
             }
             reviewerService.removeReviewer(reviewerId);
             map.put("success", true);
-        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
@@ -161,7 +161,12 @@ public class EditorController {
                 Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
                 authorInfos.put("authorId", author.getAuthorId());
                 authorInfos.put("realName", authorAccount.getRealName());
-                authorInfos.put("institution", author.getInstitution());
+                if (author.getInstitution() != null) {
+                    authorInfos.put("institution", author.getInstitution());
+                }
+                if (author.getResearchInterests() != null) {
+                    authorInfos.put("researchInterests", author.getResearchInterests());
+                }
                 ArrayList<Article> publishedArticles = new ArrayList<>();
                 for (Article article : authorService.getMyArticles(author.getAuthorId())) {
                     if (article.getStatus().equals("已出版")) {
@@ -206,7 +211,9 @@ public class EditorController {
                 Account reviewerAccount = accountService.getAccountByAccountId(reviewer.getAccountId());
                 reviewerInfos.put("reviewerId", reviewer.getReviewerId());
                 reviewerInfos.put("realName", reviewerAccount.getRealName());
-                reviewerInfos.put("organization", reviewer.getOrganization());
+                if (reviewer.getOrganization() != null) {
+                    reviewerInfos.put("organization", reviewer.getOrganization());
+                }
                 arrayList.add(reviewerInfos);
             }
         } catch (LoginVerificationException exception) {
@@ -757,8 +764,11 @@ public class EditorController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            if (confirm == null) {
+                throw new ParameterFormatException();
+            }
             Article article = articleService.getArticleById(articleId);
-            if (article == null || !article.getStatus().equals("已出版")) {
+            if (article == null || !article.getStatus().equals("待撤稿")) {
                 throw new ObjectNotFoundException();
             }
             if (!article.getEditorId().equals(editor.getEditorId())) {

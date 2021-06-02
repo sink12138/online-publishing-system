@@ -2,10 +2,7 @@ package com.buaa.ops.Controller;
 
 import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.*;
-import com.buaa.ops.Service.Exc.LoginVerificationException;
-import com.buaa.ops.Service.Exc.ObjectNotFoundException;
-import com.buaa.ops.Service.Exc.ParameterFormatException;
-import com.buaa.ops.Service.Exc.RepetitiveOperationException;
+import com.buaa.ops.Service.Exc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -202,7 +199,7 @@ public class AdminController {
             }
             accountService.deleteAccount(accountId);
             map.put("success", true);
-        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
@@ -266,7 +263,9 @@ public class AdminController {
                     if (article.getOtherAuthors() != null) {
                         articleInfo.put("otherAuthors", article.getOtherAuthors().split(";"));
                     }
-                    articleInfo.put("identifier", article.getIdentifier());
+                    if (article.getIdentifier() != null) {
+                        articleInfo.put("identifier", article.getIdentifier());
+                    }
                     articleInfo.put("status", article.getStatus());
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
                     articleInfo.put("publishingDate", sdf.format(article.getPublishingDate()));
@@ -306,7 +305,9 @@ public class AdminController {
                     accountInfos.put("accountId", account.getAccountId());
                     accountInfos.put("email", account.getEmail());
                     accountInfos.put("password", account.getPassword());
-                    accountInfos.put("realName", account.getRealName());
+                    if (account.getRealName() != null) {
+                        accountInfos.put("realName", account.getRealName());
+                    }
                     arrayList.add(accountInfos);
                 }
             }
@@ -349,8 +350,12 @@ public class AdminController {
                     authorInfos.put("email", account.getEmail());
                     authorInfos.put("password", account.getPassword());
                     authorInfos.put("realName", account.getRealName());
-                    authorInfos.put("institution", author.getInstitution());
-                    authorInfos.put("researchInterests", author.getResearchInterests());
+                    if (author.getInstitution() != null) {
+                        authorInfos.put("institution", author.getInstitution());
+                    }
+                    if (author.getResearchInterests() != null) {
+                        authorInfos.put("researchInterests", author.getResearchInterests());
+                    }
                     arrayList.add(authorInfos);
                 }
             }
@@ -393,7 +398,9 @@ public class AdminController {
                     reviewerInfos.put("email", account.getEmail());
                     reviewerInfos.put("password", account.getPassword());
                     reviewerInfos.put("realName", account.getRealName());
-                    reviewerInfos.put("organization", reviewer.getOrganization());
+                    if (reviewer.getOrganization() != null) {
+                        reviewerInfos.put("organization", reviewer.getOrganization());
+                    }
                     arrayList.add(reviewerInfos);
                 }
             }

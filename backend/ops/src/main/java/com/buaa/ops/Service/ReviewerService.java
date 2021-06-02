@@ -1,6 +1,7 @@
 package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.*;
+import com.buaa.ops.Service.Exc.IllegalAuthorityException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
@@ -55,7 +56,7 @@ public interface ReviewerService {
      * @param reviewerId Determines which reviewer to be removed
      * @throws ObjectNotFoundException If id doesn't exist
      */
-    void removeReviewer(Integer reviewerId) throws ObjectNotFoundException;
+    void removeReviewer(Integer reviewerId) throws ObjectNotFoundException, IllegalAuthorityException;
 
     /**
      * Get an author from table "Reviewer" with the given accountId.

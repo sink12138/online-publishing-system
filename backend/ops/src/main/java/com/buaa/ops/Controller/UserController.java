@@ -544,8 +544,12 @@ public class UserController {
             map.put("success", true);
             map.put("email", account.getEmail());
             map.put("realName", account.getRealName());
-            map.put("institution", author.getInstitution());
-            map.put("researchInterests", author.getResearchInterests());
+            if (author.getInstitution() != null) {
+                map.put("institution", author.getInstitution());
+            }
+            if (author.getResearchInterests() != null) {
+                map.put("researchInterests", author.getResearchInterests());
+            }
             map.put("articleCount", articleArrayList.size());
             arrayList.add(map);
             for (Article article : articleArrayList) {
@@ -553,9 +557,11 @@ public class UserController {
                     Map<String, Object> articleInfo = new HashMap<>();
                     articleInfo.put("articleId", article.getArticleId());
                     articleInfo.put("title", article.getTitle());
-                    articleInfo.put("keywords", article.getKeywords());
+                    articleInfo.put("keywords", article.getKeywords().split(";"));
                     articleInfo.put("firstAuthor", article.getFirstAuthor());
-                    articleInfo.put("otherAuthor", article.getOtherAuthors());
+                    if (article.getOtherAuthors() != null) {
+                        articleInfo.put("otherAuthors", article.getOtherAuthors().split(";"));
+                    }
                     arrayList.add(articleInfo);
                 }
             }
@@ -574,7 +580,7 @@ public class UserController {
         return arrayList;
     }
 
-    // todo
+    // todo 具体密码判断
     private Boolean isPasswordValid(String password) {
         return password.length() > 5;
     }

@@ -1,14 +1,12 @@
 package com.buaa.ops.Service.Impl;
 
-import com.buaa.ops.Dao.ArticleDao;
-import com.buaa.ops.Dao.AuthorDao;
-import com.buaa.ops.Dao.ReviewDao;
-import com.buaa.ops.Dao.WriteDao;
+import com.buaa.ops.Dao.*;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
 import com.buaa.ops.Entity.Review;
 import com.buaa.ops.Entity.Write;
 import com.buaa.ops.Service.AuthorService;
+import com.buaa.ops.Service.Exc.IllegalAuthorityException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +49,20 @@ public class AuthorServiceImpl implements AuthorService {
         authorDao.insert(author);
     }
 
+    @Autowired
+    ArticleBufferDao articleBufferDao;
+
     @Override
-    public void removeAuthor(Integer Id) throws ObjectNotFoundException {
+    public void removeAuthor(Integer Id) throws ObjectNotFoundException, IllegalAuthorityException {
+        ArrayList<Article> articleArrayList = articleDao.selectByAuthorId(Id);
+        for (Article article : articleArrayList) {
+            if (article.getSubmitterId().equals(Id)) {
+                throw new IllegalAuthorityException();
+            }
+        }
+        if (articleBufferDao.deleteByAuthorId(Id) == 0) {
+            throw new ObjectNotFoundException();
+        }
         if (authorDao.deleteById(Id) == 0)
             throw new ObjectNotFoundException();
     }

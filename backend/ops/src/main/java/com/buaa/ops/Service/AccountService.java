@@ -2,6 +2,7 @@ package com.buaa.ops.Service;
 
 import com.buaa.ops.Entity.AccountBuffer;
 import com.buaa.ops.Entity.Account;
+import com.buaa.ops.Service.Exc.IllegalAuthorityException;
 import com.buaa.ops.Service.Exc.LoginVerificationException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
@@ -50,7 +51,7 @@ public interface AccountService {
      * Used by Admin to delete zombie account by accountId
      * @param accountId Target id
      */
-    void deleteAccount(Integer accountId) throws ObjectNotFoundException;
+    void deleteAccount(Integer accountId) throws ObjectNotFoundException, IllegalAuthorityException;
 
     /**
      * Check whether the code is valid

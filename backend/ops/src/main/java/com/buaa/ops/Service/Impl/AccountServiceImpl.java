@@ -1,12 +1,9 @@
 package com.buaa.ops.Service.Impl;
 
-import com.buaa.ops.Dao.AccountBufferDao;
-import com.buaa.ops.Dao.AccountDao;
-import com.buaa.ops.Dao.CheckDao;
-import com.buaa.ops.Entity.Account;
-import com.buaa.ops.Entity.AccountBuffer;
-import com.buaa.ops.Entity.Check;
+import com.buaa.ops.Dao.*;
+import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.AccountService;
+import com.buaa.ops.Service.Exc.IllegalAuthorityException;
 import com.buaa.ops.Service.Exc.LoginVerificationException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
@@ -66,8 +63,23 @@ public class AccountServiceImpl implements AccountService {
         return accountDao.selectByEmail(email);
     }
 
+    @Autowired
+    AuthorDao authorDao;
+
+    @Autowired
+    EditorDao editorDao;
+
+    @Autowired
+    ReviewerDao reviewerDao;
+
     @Override
-    public void deleteAccount(Integer accountId) throws ObjectNotFoundException {
+    public void deleteAccount(Integer accountId) throws ObjectNotFoundException, IllegalAuthorityException {
+        Author author = authorDao.selectByAccountId(accountId);
+        Editor editor = editorDao.selectByAccountId(accountId);
+        Reviewer reviewer = reviewerDao.selectByAccountId(accountId);
+        if (author != null || editor != null || reviewer != null) {
+            throw new IllegalAuthorityException();
+        }
         if (accountDao.deleteById(accountId) == 0) {
             throw new ObjectNotFoundException();
         }

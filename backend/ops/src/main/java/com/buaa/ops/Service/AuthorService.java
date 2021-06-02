@@ -3,6 +3,7 @@ package com.buaa.ops.Service;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Author;
 import com.buaa.ops.Entity.Review;
+import com.buaa.ops.Service.Exc.IllegalAuthorityException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 
@@ -50,7 +51,7 @@ public interface AuthorService {
      * binding to the author (whether submitted or claimed).
      * @param Id Determines which author to be removed
      */
-    void removeAuthor(Integer Id) throws ObjectNotFoundException;
+    void removeAuthor(Integer Id) throws ObjectNotFoundException, IllegalAuthorityException;
 
     /**
      * Bind one article to an author's account by inserting a new record into table "Write"

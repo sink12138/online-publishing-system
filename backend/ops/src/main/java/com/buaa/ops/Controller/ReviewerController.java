@@ -4,10 +4,7 @@ import com.buaa.ops.Entity.*;
 import com.buaa.ops.Service.*;
 import com.buaa.ops.Service.Emails.EmailFactory;
 import com.buaa.ops.Service.Emails.ReminderEmail;
-import com.buaa.ops.Service.Exc.LoginVerificationException;
-import com.buaa.ops.Service.Exc.ObjectNotFoundException;
-import com.buaa.ops.Service.Exc.ParameterFormatException;
-import com.buaa.ops.Service.Exc.RepetitiveOperationException;
+import com.buaa.ops.Service.Exc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -152,9 +149,14 @@ public class ReviewerController {
             if (reviewer == null) {
                 throw new LoginVerificationException();
             }
-            reviewerService.removeReviewer(reviewer.getReviewerId());
-            map.put("success", true);
-        } catch (LoginVerificationException | ObjectNotFoundException exception) {
+            ArrayList<Article> articleArrayList = reviewerService.getReviewingArticles(reviewer.getReviewerId());
+            if (articleArrayList.isEmpty()) {
+                reviewerService.removeReviewer(reviewer.getReviewerId());
+                map.put("success", true);
+            } else {
+                throw new IllegalAuthorityException();
+            }
+        } catch (LoginVerificationException | ObjectNotFoundException | IllegalAuthorityException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {

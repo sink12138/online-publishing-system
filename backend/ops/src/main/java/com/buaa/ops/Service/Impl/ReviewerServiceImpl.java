@@ -6,6 +6,7 @@ import com.buaa.ops.Dao.ReviewerDao;
 import com.buaa.ops.Entity.Article;
 import com.buaa.ops.Entity.Review;
 import com.buaa.ops.Entity.Reviewer;
+import com.buaa.ops.Service.Exc.IllegalAuthorityException;
 import com.buaa.ops.Service.Exc.ObjectNotFoundException;
 import com.buaa.ops.Service.Exc.RepetitiveOperationException;
 import com.buaa.ops.Service.ReviewerService;
@@ -72,7 +73,11 @@ public class ReviewerServiceImpl implements ReviewerService {
     }
 
     @Override
-    public void removeReviewer(Integer reviewerId) throws ObjectNotFoundException {
+    public void removeReviewer(Integer reviewerId) throws ObjectNotFoundException, IllegalAuthorityException {
+        ArrayList<Article> articleArrayList = articleDao.selectByReviewerId(reviewerId);
+        if (!articleArrayList.isEmpty()) {
+            throw new IllegalAuthorityException();
+        }
         if (reviewerDao.deleteById(reviewerId) == 0) {
             throw new ObjectNotFoundException();
         }

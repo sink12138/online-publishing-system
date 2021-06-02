@@ -747,7 +747,7 @@ public class AuthorController {
                 throw new ParameterFormatException();
             }
             Article article = articleService.getArticleById(articleId);
-            if (article == null || !article.getStatus().equals("审核通过") || !article.getStatus().equals("审核未通过")) {
+            if (article == null || (!article.getStatus().equals("审核通过") && !article.getStatus().equals("审核未通过"))) {
                 throw new ObjectNotFoundException();
             }
             map.put("success", true);
