@@ -9,12 +9,13 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "chart.js": "^3.3.0",
+    "chart.js": "^3.3.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.1",
     "qs": "^6.10.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
     "vuex-persistedstate": "^4.0.0-beta.3"
@@ -44,7 +45,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",

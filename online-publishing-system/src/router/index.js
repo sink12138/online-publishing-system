@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 
 const Admin = () => import("../views/Admin.vue");
 const 管理员登录 = () => import("../views/管理员登录.vue");
+const 管理员主页 = () => import("../views/管理员主页.vue");
 const 查看账号 = () => import("../views/查看账号.vue");
 const 查看作者账号 = () => import("../views/查看作者账号.vue");
 const 查看审稿人账号 = () => import("../views/查看审稿人账号.vue");
@@ -42,7 +43,15 @@ const routes = [
     },
     children: [
       {
-        path:"account",
+        path:"home",
+        name:"管理员主页",
+        component:管理员主页,
+        meta: {
+          adminLoginRequest: true
+        }
+      },
+      {
+        path:"accounts",
         name:"查看账号",
         component:查看账号,
         meta: {
@@ -50,7 +59,7 @@ const routes = [
         }
       },
       {
-        path:"writer",
+        path:"authors",
         name:"查看作者账号",
         component:查看作者账号,
         meta: {
@@ -58,7 +67,7 @@ const routes = [
         }
       },
       {
-        path:"referee",
+        path:"reviewers",
         name:"查看审稿人账号",
         component:查看审稿人账号,
         meta: {
@@ -66,7 +75,7 @@ const routes = [
         }
       },
       {
-        path:"editor",
+        path:"editors",
         name:"查看编辑账号",
         component:查看编辑账号,
         meta: {
@@ -82,7 +91,7 @@ const routes = [
         }
       },
       {
-        path:"account/add",
+        path:"accounts/add",
         name:"增加账号",
         component:增加账号,
         meta: {
@@ -90,7 +99,7 @@ const routes = [
         }
       },
       {
-        path:"account/change",
+        path:"accounts/change",
         name:"修改身份",
         component:修改身份,
         meta: {

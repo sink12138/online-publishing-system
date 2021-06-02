@@ -23,10 +23,10 @@
               class="el-menu-vertical-demo"
               @open="handleOpen"
               @close="handleClose"
-              background-color="#D3DCE6"
+              background-color="#A3D0C3"
               unique-opened
               text-color="#000"
-              active-text-color="#a4a5cf"
+              active-text-color="#FFF"
               router
               style="height: 100%">
               <el-submenu index="1">
@@ -35,10 +35,10 @@
                   <span>账号管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="/admin/account" >查看账号</el-menu-item>
-                  <el-menu-item index="/admin/writer">查看作者</el-menu-item>
-                  <el-menu-item index="/admin/referee">查看审稿人</el-menu-item>
-                  <el-menu-item index="/admin/editor">查看编辑</el-menu-item>
+                  <el-menu-item index="/admin/accounts" >查看账号</el-menu-item>
+                  <el-menu-item index="/admin/authors">查看作者</el-menu-item>
+                  <el-menu-item index="/admin/reviewers">查看审稿人</el-menu-item>
+                  <el-menu-item index="/admin/editors">查看编辑</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="2">
@@ -67,68 +67,50 @@
       </el-aside>
       <el-main>
         <router-view></router-view>
-        <div style="width:400px;height=1600px">
-          <!--<canvas id="myChart"></canvas>-->
-        </div>
       </el-main>
     </el-container>
   </div>
 </template>
 
-<style>
-  .admin {
-    position: fixed;
-    height: 100%;
-    width: 100%
-  }
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: left;
-    line-height: 100px;
-  }
-  .el-main {
-    background-color: #fff;
-    color: #333;
-    text-align: center;
-  }
+<style scoped>
+body {
+  font-weight: 600;
+  font-family: "Microsoft YaHei";
+}
+.admin {
+  background-image:url("../assets/Canva - Majestic Landscape.jpg");
+  background-size: cover;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+.el-aside {
+  background-color: #A3D0C3;
+  color: #333;
+  text-align: left;
+  line-height: 100px;
+  font-weight: 400 !important;
+  font-family: "Microsoft YaHei";
+  opacity: 0.85;
+}
+.el-aside button {
+  background-color: #d5f6ee;
+  height: 40px;
+  width: 80px;
+}
+.el-main {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  font-family: "Microsoft YaHei";
+  opacity: 0.7;
+}
 </style>
 
 <script>
-import Chart from 'chart.js/auto';
-
 export default {
-  mounted() {
-    var ctx = document.getElementById("myChart");
-    // eslint-disable-next-line no-unused-vars
-    var myChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            datasets: [
-                {
-                    label: "test1",
-                    backgroundColor: "rgba(225,10,10,0.3)",
-                    borderColor: "rgba(225,103,110,1)",
-                    borderWidth: 1,
-                    pointStrokeColor: "#fff",
-                    pointStyle: "crossRot",
-                    data: [65, 59, 0, 81, 56, 10, 40, 22, 32, 54, 10, 30],
-                    cubicInterpolationMode: "monotone",
-                    spanGaps: "false",
-                    fill: "false"
-                }
-            ]
-        },
-        options: {
-            
-        }
-
-    });
-  },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(this.$store.state.adminLogin)
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
