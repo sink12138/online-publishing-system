@@ -1,31 +1,16 @@
 <template>
   <div id="app">
-    <div id="head">
-      <router-link to="/main"><h1>欢迎使用网上出版系统</h1></router-link>
-      <router-view />
+    <div id="head" >
     </div>
+    <router-view/>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#app{
   text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 </style>
