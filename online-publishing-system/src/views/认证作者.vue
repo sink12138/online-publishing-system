@@ -30,7 +30,7 @@
     },
     methods: {
       onSubmit() {
-        console.log('submit!');
+        alert('认证成功！');
       }
     }
   }

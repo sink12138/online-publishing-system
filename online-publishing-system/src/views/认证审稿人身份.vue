@@ -27,10 +27,10 @@
     },
     methods: {
       CertifySuccess() {
-        console.log('认证成功');
+        alert('认证成功！');
       },
       Cancel() {
-          console.log('认证取消');
+        alert('认证取消！');
       }
     }
   }
