@@ -24,7 +24,14 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    children:[
+      {
+        path: 'search',
+        name: '搜索',
+        component: () => import('../components/搜索.vue')
+      },
+    ]
   },
   {
     path: '/about',
@@ -169,11 +176,6 @@ const routes = [
     component: () => import('../views/个人信息.vue')
   },
   {
-    path: '/search',
-    name: '搜索',
-    component: () => import('../views/搜索.vue')
-  },
-  {
     path: '/article',
     name: '文章信息',
     component: () => import('../views/文章信息.vue')
@@ -186,7 +188,14 @@ const routes = [
   {
     path: '/author',
     name: '作者主页',
-    component: () => import('../views/作者主页.vue')
+    component: () => import('../views/作者主页.vue'),
+    children:[
+      {
+        path: 'articles',
+        name: '我的文章',
+        component: () => import('../components/我的文章.vue')
+      },
+    ]
   },
   {
     path: '/author/certify',
@@ -199,29 +208,19 @@ const routes = [
     component: () => import('../views/注销作者.vue')
   },
   {
-    path: '/author/new/upload',
+    path: '/author/upload',
     name: '上传文章',
     component: () => import('../views/上传文章.vue')
   },
   {
-    path: '/author/new/submit',
+    path: '/author/submit',
     name: '提交文章',
     component: () => import('../views/提交文章.vue')
-  },
-  {
-    path: '/author/confirm/draft',
-    name: '确认终稿',
-    component: () => import('../views/确认终稿.vue')
   },
   {
     path: '/author/claim',
     name: '认领文章',
     component: () => import('../views/认领文章.vue')
-  },
-  {
-    path: '/author/articles',
-    name: '我的文章',
-    component: () => import('../views/我的文章.vue')
   },
   {
     path: '/reviewer',

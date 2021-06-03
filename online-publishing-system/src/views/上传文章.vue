@@ -1,23 +1,17 @@
 <template>
   <div class="upload">
     <h1>上传文章</h1>
+    <input type="file" class="file" />
     <div class="file">
       <el-upload
-        class="upload-demo"
-        action="/author/new/upload/post/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="3"
-        :on-exceed="handleExceed"
+        class="upload"
+        action=url
+        :on-change="handleChange"
         :file-list="fileList"
-        accept=".doc,.docx,.pdf,.zip"
       >
-        <el-button size="small" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i
-      ></el-button>
+        <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">
-          只能上传doc,docx,pdf,zip文件，且不超过20mb
+          只能上传jpg/png文件，且不超过500kb
         </div>
       </el-upload>
     </div>
@@ -25,24 +19,33 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        fileList: []
-      };
+export default {
+  data() {
+    return {
+      url:"/author/upload/post",
+      articleBufferId: 0,
+      fileList: [
+        {
+          name: "food.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+        },
+        {
+          name: "food2.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+        },
+      ],
+    };
+  },
+  created: function () {
+    this.articleBufferId = this.$route.query.ID;
+    if (this.articleBufferId == undefined) this.articleBufferId = 0;
+    alert(this.articleBufferId);
+  },
+  methods: {
+    handleChange(file, fileList) {
+      this.fileList = fileList.slice(-3);
     },
-    methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      }
-    }
-  }
+  },
+};
