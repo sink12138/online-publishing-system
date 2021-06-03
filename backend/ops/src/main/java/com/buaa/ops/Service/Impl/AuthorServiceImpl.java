@@ -59,10 +59,12 @@ public class AuthorServiceImpl implements AuthorService {
             if (article.getSubmitterId().equals(Id)) {
                 throw new IllegalAuthorityException();
             }
+            Write write = new Write(Id, article.getArticleId(), null);
+            if (writeDao.deleteBySelf(write) == 0) {
+                throw new ObjectNotFoundException();
+            }
         }
-        if (articleBufferDao.deleteByAuthorId(Id) == 0) {
-            throw new ObjectNotFoundException();
-        }
+        articleBufferDao.deleteByAuthorId(Id);
         if (authorDao.deleteById(Id) == 0)
             throw new ObjectNotFoundException();
     }

@@ -67,10 +67,14 @@ public class EditorServiceImpl implements EditorService {
     }
 
     @Override
-    public void removeClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException {
+    public void removeClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException, RepetitiveOperationException {
         Write write = new Write();
         write.setArticleId(articleId);
         write.setAuthorId(authorId);
+        Write other = writeDao.selectBySelf(write);
+        if (other.getConfirmed()) {
+            throw new RepetitiveOperationException();
+        }
         if (writeDao.deleteBySelf(write) == 0)
             throw new ObjectNotFoundException();
     }
