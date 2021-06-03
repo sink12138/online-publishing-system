@@ -40,7 +40,7 @@ admin:
   password: 114514
 
 check:
-  ip-adress : http://82.156.190.251:8090
+  ip-address : http://82.156.190.251:8090
   valid-time: 600000
   code-bits: 8
 
