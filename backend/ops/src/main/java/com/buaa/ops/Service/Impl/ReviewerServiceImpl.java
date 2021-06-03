@@ -61,7 +61,7 @@ public class ReviewerServiceImpl implements ReviewerService {
     @Override
     public void submitReview(Review review) throws RepetitiveOperationException {
         Review another = new Review(review.getArticleId(), review.getReviewerId(), null, null, null);
-        if (reviewDao.selectBySelf(another).getComments() != null) {
+        if (reviewDao.selectBySelf(another).getComments() != null && reviewDao.selectBySelf(another).getPass() != null) {
             throw new RepetitiveOperationException();
         }
         reviewDao.updateBySelf(review);

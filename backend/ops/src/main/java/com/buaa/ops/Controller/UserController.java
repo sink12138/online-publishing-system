@@ -556,10 +556,11 @@ public class UserController {
             if (author.getResearchInterests() != null) {
                 map.put("researchInterests", author.getResearchInterests());
             }
-            map.put("articleCount", articleArrayList.size());
+            int count = 0;
             arrayList.add(map);
             for (Article article : articleArrayList) {
                 if (article.getStatus().equals("已出版")) {
+                    count ++;
                     Map<String, Object> articleInfo = new HashMap<>();
                     articleInfo.put("articleId", article.getArticleId());
                     articleInfo.put("title", article.getTitle());
@@ -571,6 +572,7 @@ public class UserController {
                     arrayList.add(articleInfo);
                 }
             }
+            map.put("articleCount", count);
         } catch (ParameterFormatException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());

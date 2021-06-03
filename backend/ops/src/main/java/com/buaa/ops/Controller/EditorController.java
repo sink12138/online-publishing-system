@@ -508,7 +508,7 @@ public class EditorController {
                 throw new ParameterFormatException();
             }
             Article article = articleService.getArticleById(articleId);
-            if (article == null || !article.getStatus().equals("审核通过") || !article.getStatus().equals("审核未通过") || !article.getStatus().equals("审核中")) {
+            if (article == null || (!article.getStatus().equals("审核通过") && !article.getStatus().equals("审核未通过") && !article.getStatus().equals("审核中"))) {
                 throw new ObjectNotFoundException();
             }
             map.put("success", true);
@@ -530,6 +530,7 @@ public class EditorController {
         } catch (Exception e) {
             map.clear();
             arrayList.clear();
+            e.printStackTrace();
             map.put("success", false);
             map.put("message", "操作失败");
             arrayList.add(map);

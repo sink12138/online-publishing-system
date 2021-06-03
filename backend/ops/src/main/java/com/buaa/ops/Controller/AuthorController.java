@@ -753,6 +753,9 @@ public class AuthorController {
             if (article == null || (!article.getStatus().equals("审核通过") && !article.getStatus().equals("审核未通过"))) {
                 throw new ObjectNotFoundException();
             }
+            if (!article.getSubmitterId().equals(author.getAuthorId())) {
+                throw new IllegalAuthorityException();
+            }
             map.put("success", true);
             ArrayList<Review> reviews = authorService.getReviews(articleId);
             map.put("results", reviews.size());

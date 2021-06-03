@@ -101,6 +101,9 @@ public class ReviewerController {
             if (article == null) {
                 throw new ObjectNotFoundException();
             }
+            if (comments == null || pass == null) {
+                throw new ObjectNotFoundException();
+            }
             java.sql.Date date = new java.sql.Date(new Date().getTime());
             Review review = new Review(articleId, reviewer.getReviewerId(), comments, pass, date);
             reviewerService.submitReview(review);
