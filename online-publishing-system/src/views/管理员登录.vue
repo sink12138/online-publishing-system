@@ -48,6 +48,10 @@ html, body {
     background-size:cover;
     background-position: top center;
 }
+.管理员登录 button {
+    width: 100px;
+    background: #A3D0C3;
+}
 .admin-wrapper {
     height: 100%;
     width: 100%;
@@ -75,7 +79,6 @@ html, body {
 </style>
 
 <script>
-  //const axios = require('axios');
   export default {
     data() {
       return {
@@ -88,43 +91,23 @@ html, body {
     methods:{
         adminLogin(){
             let admindata = JSON.stringify(this.adminMess);
+            console.log(admindata);
+            /*this.$store.commit('adminLogin');
+            sessionStorage.setItem("adminPassword",this.adminMess.password);
+            window.location.href='../admin/home'*/
             this.$axios({
-                method:"post",
-                url:'xxx',
+                method:'post',
+                url:'http://82.156.190.251:80/apis/admin/login',
                 data:admindata,
             })
             .then((res)=>{
                 console.log(res);
-            })
-            if ((this.adminMess.username == '123')&&(this.adminMess.password = '1234')) this.$store.commit('adminLogin');
-            else this.$store.commit('adminLogout');
-            if (sessionStorage.getItem("admin")) { 
-                window.location.href='../admin';
-            }
-            else {
-                this.$alert('请重试', '密码错误', {
-                    confirmButtonText: '确定',
-                }).then(() => {
-                    this.$message({
-                        type:'info',
-                        message:'请重试'
-                    });
-                });
-            }
-            /*let admindata = JSON.stringify(this.adminMess);
-            axios({
-                method:"post",
-                url:"xxx",
-                data:admindata
-            })
-            .then((res)=>{
-                console.log(res);
-                var result = true;
-                if (result) {
-                    this.$store.commit('adminLogin');
-                    if (this.$store.state.adminLogin) {
-                        window.location.href='../admin';
-                    }
+                if (res.success == true) 
+                    this.$store.commit('adminLogin')
+                else this.$store.commit('adminLogout');
+                if (sessionStorage.getItem("admin") == 'login') { 
+                    sessionStorage.setItem("adminPassword",this.adminMess.password);
+                    window.location.href='../admin/home'
                 }
                 else {
                     this.$alert('请重试', '密码错误', {
@@ -136,7 +119,8 @@ html, body {
                         });
                     });
                 }
-            });*/
+            })
+            .catch(error => console.log(error))
         }
     }
   }
