@@ -112,7 +112,7 @@ public class ArticleServiceImpl implements ArticleService {
         Integer editorId;
         if (overwrite == null) { // New submission
             ArrayList<Editor> twoEditors = editorDao.selectTwoLeastBusy();
-            Editor targetEditor = twoEditors.get(1);
+            Editor targetEditor = twoEditors.get(0);
             if (targetEditor == null)
                 throw new ObjectNotFoundException();
             editorId = targetEditor.getEditorId();
