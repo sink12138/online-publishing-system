@@ -118,6 +118,10 @@ export default {
     },
     handleConfirm() {
       this.$store.commit("adminLogout");
+      this.$axios({
+        method:"post",
+        url:'http://82.156.190.251:8090/admin/logout',
+      })
       location.reload();
     }
   }

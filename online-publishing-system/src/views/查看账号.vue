@@ -75,16 +75,17 @@
 }
 .accounts-add .el-button{
   position: fixed;
-  right: 120px;
-  top: 120px;
-  height: 90px;
-  width: 90px;
-  font-size: 60px;
+  left: 240px;
+  bottom: 40px;
+  height: 60px;
+  width: 60px;
+  font-size: 40px;
   background-color: #A3D0C3;
 }
 .accounts-add .el-button i{
   position: relative;
-  left: -5px;
+  left: -11px;
+  top: -3px;
 }
 .table {
   position: fixed;
