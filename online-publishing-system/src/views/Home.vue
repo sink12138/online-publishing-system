@@ -162,7 +162,7 @@ export default {
     searchArticle() {
       axios({
         methods: "get",
-        url: "/search",
+        url: "http://82.156.190.251:80/apis/search",
         params: {
           searchType: this.search.searchType,
           searchString: this.search.searchString,

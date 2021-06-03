@@ -73,7 +73,7 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         method: "post",
-        url: "/logout",
+        url: "http://82.156.190.251:80/apis/login",
         data: JSON.stringify(this.formInline),
       }).then((res) => {
         this.role=res.role;

@@ -91,7 +91,7 @@ export default {
       if(this.status == '审核通过' || this.status == '审核未通过'){
         axios({
           methods: "post",
-          url: "/author/revise/upload",
+          url: "http://82.156.190.251:80/apis/author/revise/upload",
           params: JSON.stringify({
             articleBufferId: 0,
             file: this.fileList[0],
@@ -108,7 +108,7 @@ export default {
         );
         axios({
           methods: "post",
-          url: "/author/revise/submit",
+          url: "http://82.156.190.251:80/apis/author/revise/submit",
           params: JSON.stringify({
             articleBufferId: this.articleBufferId,
             title: this.formInline.title,
@@ -127,7 +127,7 @@ export default {
       else {
         axios({
           methods: "post",
-          url: "/author/new/upload",
+          url: "http://82.156.190.251:80/apis/author/new/upload",
           params: JSON.stringify({
             articleBufferId: 0,
             file: this.fileList[0],
@@ -143,7 +143,7 @@ export default {
         );
         axios({
           methods: "post",
-          url: "/author/new/submit",
+          url: "http://82.156.190.251:80/apis/author/new/submit",
           params: JSON.stringify({
             articleBufferId: this.articleBufferId,
             title: this.formInline.title,

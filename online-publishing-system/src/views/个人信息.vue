@@ -89,7 +89,7 @@ export default {
     submit() {
       axios({
         method: "post",
-        url: "/home/modify/email",
+        url: "http://82.156.190.251:80/apis/home/modify/email",
         data: JSON.stringify({
           email: this.formInline.email,
         }),
@@ -99,7 +99,7 @@ export default {
       console.log("submit!");
     },
     convert: function () {
-      axios.get("/home").then((res) => {
+      axios.get("http://82.156.190.251:80/apis/home").then((res) => {
         this.dataForm = res.data;
       });
     },

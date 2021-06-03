@@ -18,7 +18,7 @@ export default {
         }).then(() => {
           axios({
             method:"post",
-            url:"/author/cancel",
+            url:"http://82.156.190.251:80/apis/author/cancel",
           })
           .then((res)=>{
             console.log(res);

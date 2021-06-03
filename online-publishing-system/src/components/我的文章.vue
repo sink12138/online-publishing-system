@@ -116,27 +116,27 @@ export default {
       this.article = row.articleID;
       this.status = row.status;
       this.$router.push(
-        "/author/submit?articleID=" + this.article + "&status=" + this.status
+        "http://82.156.190.251:80/apis/author/submit?articleID=" + this.article + "&status=" + this.status
       );
       console.log(row.articleID);
     },
     convert: function () {
-      axios.get("/author/articles").then((res) => {
+      axios.get("http://82.156.190.251:80/apis/author/articles").then((res) => {
         var arraylist = new Array();
         arraylist = res.data;
         this.tableData = arraylist.slice(0);
       });
     },
     withdraw(row) {
-      axios.post("/author/withdraw", row.ID);
+      axios.post("http://82.156.190.251:80/apis/author/withdraw", row.articleID);
       console.log(row);
     },
     confirmDraft(row) {
-      axios.post("/author/confirm/draft", row.ID);
+      axios.post("http://82.156.190.251:80/apis/author/confirm/draft", row.articleID);
       console.log(row);
     },
     abort(row) {
-      axios.post("/author/abort", row.ID);
+      axios.post("http://82.156.190.251:80/apis/author/abort", row.articleID);
       console.log(row);
     },
   },

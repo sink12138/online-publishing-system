@@ -111,7 +111,7 @@ export default {
     downloadarticle(row) {
       axios({
         method: "get",
-        url: "/download",
+        url: "http://82.156.190.251:80/apis/download",
         params: JSON.stringify({ articleID: row.articleID }),
       }).then(
         (response) => {
@@ -124,7 +124,7 @@ export default {
       alert("下载中");
     },
     convert: function () {
-      axios.get("/reviewer/articles").then((res) => {
+      axios.get("http://82.156.190.251:80/apis/reviewer/articles").then((res) => {
         this.tableData = res.data;
       });
     },
@@ -151,7 +151,7 @@ export default {
       console.log(row);
       axios({
         method: "post",
-        url: "/reviewer/review/submit",
+        url: "http://82.156.190.251:80/apis/reviewer/review/submit",
         params: JSON.stringify({
           articleID: row.articleID,
           pass: this.value,

@@ -106,7 +106,7 @@ export default {
     claim(articleId) {
       axios({
         method: "post",
-        url: "/author/claim",
+        url: "http://82.156.190.251:80/apis/author/claim",
         data: JSON.stringify({
           articleId: articleId,
         }),
@@ -118,7 +118,7 @@ export default {
     fetchdata() {
       axios({
         methods: "get",
-        url: "/search",
+        url: "http://82.156.190.251:80/apis/search",
         params: JSON.stringify({
           searchType: this.search.searchType,
           searchString: this.search.searchString,

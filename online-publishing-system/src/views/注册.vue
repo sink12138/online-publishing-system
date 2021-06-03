@@ -92,7 +92,7 @@ export default {
           var data = JSON.stringify(registerdata);
           axios({
             method: "post",
-            url: "/register",
+            url: "http://82.156.190.251:80/apis/register",
             data: data,
           })
             .then((res) => {

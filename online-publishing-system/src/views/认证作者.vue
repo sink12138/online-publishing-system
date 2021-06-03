@@ -44,7 +44,7 @@ export default {
       console.log("submit!");
       axios({
         method: "post",
-        url: "/author/certify",
+        url: "http://82.156.190.251:80/apis/author/certify",
         params: JSON.stringify(this.formInline),
       }).then(
         (response) => {

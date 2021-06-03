@@ -70,7 +70,7 @@ export default {
     submit() {
       axios({
         method: "post",
-        url: "/author/claim",
+        url: "http://82.156.190.251:80/apis/author/claim",
         data: {
           articleId: this.formInline.articleId,
         },
@@ -82,7 +82,7 @@ export default {
     searchArticle() {
       axios({
         methods: "get",
-        url: "/search",
+        url: "http://82.156.190.251:80/apis/search",
         params: JSON.stringify({
           searchType: this.search.searchType,
           searchString: this.search.searchString,

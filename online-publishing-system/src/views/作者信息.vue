@@ -71,7 +71,7 @@ export default {
     convert: function () {
       axios({
         method: "get",
-        url: "/infos",
+        url: "http://82.156.190.251:80/apis/infos",
         data: {
           authorId: JSON.stringify(this.authorId),
         },
