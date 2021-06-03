@@ -512,6 +512,9 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
+            if (newEmail == null) {
+                throw new ObjectNotFoundException();
+            }
             if (account.getEmail().equals(newEmail)) {
                 throw new RepetitiveOperationException();
             }
@@ -519,7 +522,7 @@ public class UserController {
             accountService.addAccountBuffer(newInfo);
             emailService.sendCheckEmail(account.getAccountId(), newInfo.getAccountBufferId(), newEmail);
             map.put("success", true);
-        } catch (ParameterFormatException | LoginVerificationException | RepetitiveOperationException exception) {
+        } catch (ParameterFormatException | LoginVerificationException | RepetitiveOperationException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {
