@@ -54,7 +54,7 @@ public interface EditorService {
      * @param articleId Id of article claimed
      * @param authorId Id of author
      */
-    void removeClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException;
+    void removeClaim(Integer articleId, Integer authorId) throws ObjectNotFoundException, RepetitiveOperationException;
 
     /**
      * Used by Admin to add a new editor
