@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -26,6 +28,9 @@ public class AdminController {
 
     @Autowired
     private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    private HttpServletResponse httpServletResponse;
 
     private Boolean checkAuthority() {
         HttpSession session = httpServletRequest.getSession();
@@ -481,4 +486,43 @@ public class AdminController {
         }
         return map;
     }
+
+    @GetMapping("/logs")
+    public void logs() {
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        try {
+            if (!checkAuthority())
+                throw new LoginVerificationException();
+            String jarPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            File jarFile = new File(jarPath);
+            File logFile = new File(jarFile.getParent() + "/log.txt");
+            if (!logFile.exists() && !logFile.createNewFile())
+                return;
+            httpServletResponse.setContentType("application/force-download");
+            httpServletResponse.addHeader("Content-Disposition","attachment; filename=\"log.txt\"");
+            byte[] buffer = new byte[1024];
+            fis = new FileInputStream(logFile);
+            bis = new BufferedInputStream(fis);
+            OutputStream os = httpServletResponse.getOutputStream();
+            int i = bis.read(buffer);
+            while (i != -1) {
+                os.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (bis != null) bis.close();
+                if (fis != null) fis.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

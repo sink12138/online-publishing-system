@@ -320,7 +320,7 @@ public class UserController {
             if (article != null && article.getStatus().equals("已出版"))
                 // A published article is available for any user
                 authority = true;
-            else if (author != null) { // Author authority
+            if (!authority && author != null) { // Author authority
                 Integer authorId = author.getAuthorId();
                 // An unpublished article is available for its submitter
                 if (article != null && article.getSubmitterId().equals(authorId) && !article.getStatus().equals("编辑中"))
@@ -328,7 +328,7 @@ public class UserController {
                 else if (articleBuffer != null && articleBuffer.getSubmitterId().equals(authorId))
                     authority = true;
             }
-            else if (reviewer != null) { // Reviewer authority
+            if (!authority && reviewer != null) { // Reviewer authority
                 Integer reviewerId = reviewer.getReviewerId();
                 if (article != null && !article.getStatus().equals("编辑中")) {
                     ArrayList<Reviewer> reviewers = reviewerService.getReviewersByArticleId(articleId);
@@ -341,7 +341,7 @@ public class UserController {
                     }
                 }
             }
-            else if (editor != null) { // Editor authority
+            if (!authority && editor != null) { // Editor authority
                 Integer editorId = editor.getEditorId();
                 // An unpublished article is available for its editor
                 if (article != null && article.getEditorId().equals(editorId))
@@ -349,7 +349,7 @@ public class UserController {
                 else if (articleBuffer != null && articleBuffer.getEditorId().equals(editorId))
                     authority = true;
             }
-            else { // Admin authority
+            if (!authority) { // Admin authority
                 HttpSession session = httpServletRequest.getSession();
                 if (session.getAttribute("USERNAME").equals(USERNAME) &&
                         session.getAttribute("PASSWORD").equals(PASSWORD))
