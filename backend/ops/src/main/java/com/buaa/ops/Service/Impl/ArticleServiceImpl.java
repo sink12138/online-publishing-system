@@ -174,7 +174,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void removeArticle(Integer id) throws IOException, ObjectNotFoundException {
         reviewDao.deleteByArticleId(id);
-        writeDao.deleteByArticleId(id);
+        if (writeDao.deleteByArticleId(id) == 0)
+            throw new ObjectNotFoundException();
         Article article = articleDao.selectById(id);
         if (articleDao.deleteById(id) == 0)
             throw new ObjectNotFoundException();

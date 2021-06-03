@@ -494,10 +494,10 @@ public class AdminController {
     public void logs() {
         FileInputStream fis = null;
         BufferedInputStream bis = null;
+        File logFile = new File(logsPath + "/log.txt");
         try {
             if (!checkAuthority())
                 throw new LoginVerificationException();
-            File logFile = new File(logsPath + "/log.txt");
             httpServletResponse.setContentType("application/force-download");
             httpServletResponse.addHeader("Content-Disposition","attachment; filename=\"log.txt\"");
             byte[] buffer = new byte[1024];
@@ -517,6 +517,13 @@ public class AdminController {
             try {
                 if (bis != null) bis.close();
                 if (fis != null) fis.close();
+                FileWriter fw = new FileWriter(logFile);
+                fw.write("");
+                fw.flush();
+                fw.close();
+                System.err.close();
+                PrintStream ps = new PrintStream(new FileOutputStream(logsPath + "/log.txt"));
+                System.setErr(ps);
             }
             catch (Exception e) {
                 e.printStackTrace();
