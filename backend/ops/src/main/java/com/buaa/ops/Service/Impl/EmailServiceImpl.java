@@ -37,6 +37,9 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     CheckDao checkDao;
 
+    @Value("${check.ip-address}")
+    private String IP_ADDRESS;
+
     @Override
     public void sendCheckEmail(Integer accountId, Integer accountBufferId, String email) throws MailException, MessagingException{
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -54,7 +57,7 @@ public class EmailServiceImpl implements EmailService {
         checkDao.insert(check);
         Context context = new Context();
         context.setVariable("action", action);
-        context.setVariable("checkLink", "http://localhost:8090/verify?code=" + code);
+        context.setVariable("checkLink",  IP_ADDRESS +"/verify?code=" + code);
         context.setVariable("email", email);
         context.setVariable("createTime", formatDate());
         String process = templateEngine.process("CheckEmail.html", context);
