@@ -35,8 +35,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private WriteDao writeDao;
 
-    @Value("${file.root-path}")
-    private String rootPath;
+    @Value("${file.articles-path}")
+    private String articlesPath;
 
     @Override
     public ArrayList<Article> searchPublishedArticles(String searchType, String searchString) {
@@ -281,7 +281,7 @@ public class ArticleServiceImpl implements ArticleService {
         String fileName = file.getOriginalFilename();
         String path;
         if (oldPath == null) {
-            path = String.format("%s/buffers/%d", rootPath, System.currentTimeMillis());
+            path = String.format("%s/buffers/%d", articlesPath, System.currentTimeMillis());
             File dir = new File(path);
             if (!dir.mkdirs())
                 throw new IOException();
@@ -313,7 +313,7 @@ public class ArticleServiceImpl implements ArticleService {
         String fileName = src.getName();
         String path;
         if (destPath == null) {
-            path = String.format("%s/articles/%d", rootPath, System.currentTimeMillis());
+            path = String.format("%s/articles/%d", articlesPath, System.currentTimeMillis());
             File dir = new File(path);
             if (!dir.mkdirs())
                 throw new IOException();

@@ -45,4 +45,5 @@ check:
   code-bits: 8
 
 file:
-  root-path: C:/ops/backend/storage
+  articles-path: C:/ops/backend/storage
+  logs-path: C:/ops/backend

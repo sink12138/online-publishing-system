@@ -487,6 +487,9 @@ public class AdminController {
         return map;
     }
 
+    @Value("${file.logs-path}")
+    private String logsPath;
+
     @GetMapping("/logs")
     public void logs() {
         FileInputStream fis = null;
@@ -494,11 +497,7 @@ public class AdminController {
         try {
             if (!checkAuthority())
                 throw new LoginVerificationException();
-            String jarPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-            File jarFile = new File(jarPath);
-            File logFile = new File(jarFile.getParent() + "/log.txt");
-            if (!logFile.exists() && !logFile.createNewFile())
-                return;
+            File logFile = new File(logsPath + "/log.txt");
             httpServletResponse.setContentType("application/force-download");
             httpServletResponse.addHeader("Content-Disposition","attachment; filename=\"log.txt\"");
             byte[] buffer = new byte[1024];
