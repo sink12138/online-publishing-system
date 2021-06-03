@@ -73,7 +73,7 @@ export default {
         method: "get",
         url: "/infos",
         data: {
-          authorId: this.authorId,
+          authorId: JSON.stringify(this.authorId),
         },
       }).then((res) => {
         var array = new Array();

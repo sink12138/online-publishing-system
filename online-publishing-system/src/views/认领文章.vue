@@ -30,13 +30,14 @@
     <div class="claimArticle">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="认领文章ID">
-          <el-input v-model="formInline.articleId" placeholder="articleId"></el-input>
+          <el-input
+            v-model="formInline.articleId"
+            placeholder="articleId"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-        <el-button type="primary" @click="submit()"
-          >提交申请</el-button
-        >
-      </el-form-item>
+          <el-button type="primary" @click="submit()">提交申请</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -68,24 +69,24 @@ export default {
   methods: {
     submit() {
       axios({
-            method: "post",
-            url: "/author/claim",
-            data: {
-              articleId:this.formInline.articleId,
-            },
-          }).then((res) => {
-            console.log(res);
-          });
-          console.log("submit!");
+        method: "post",
+        url: "/author/claim",
+        data: {
+          articleId: this.formInline.articleId,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+      console.log("submit!");
     },
     searchArticle() {
       axios({
         methods: "get",
         url: "/search",
-        params: {
+        params: JSON.stringify({
           searchType: this.search.searchType,
           searchString: this.search.searchString,
-        },
+        }),
       }).then(
         (response) => {
           var arraylist = new Array();
@@ -93,7 +94,7 @@ export default {
           this.success = arraylist[0].success;
           if (this.success == true) {
             this.results = arraylist[0].results;
-            this.table = arraylist.slice(1);
+            this.table = arraylist.slice(0);
           }
         },
         (err) => {

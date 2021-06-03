@@ -74,7 +74,7 @@ export default {
         },
         method: "post",
         url: "/logout",
-        data: this.formInline,
+        data: JSON.stringify(this.formInline),
       }).then((res) => {
         this.role=res.role;
         if(this.role % 2 == 1) this.$store.commit('setEditor');

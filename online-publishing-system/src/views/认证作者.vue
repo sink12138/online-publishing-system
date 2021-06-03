@@ -29,6 +29,7 @@
 </template>
 
 <script>
+const axios = require('axios');
 export default {
   data() {
     return {
@@ -41,6 +42,18 @@ export default {
   methods: {
     onSubmit() {
       console.log("submit!");
+      axios({
+        method: "post",
+        url: "/author/certify",
+        params: JSON.stringify(this.formInline),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
     },
   },
 };

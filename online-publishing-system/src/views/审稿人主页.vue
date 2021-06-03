@@ -10,13 +10,13 @@
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="文章ID">
-                <span>{{ props.row.ID }}</span>
+                <span>{{ props.row.articleID }}</span>
               </el-form-item>
               <el-form-item label="文章标题">
-                <span>{{ props.row.Name }}</span>
+                <span>{{ props.row.title }}</span>
               </el-form-item>
               <el-form-item label="关键字">
-                <span>{{ props.row.keyword }}</span>
+                <span>{{ props.row.keywords }}</span>
               </el-form-item>
               <el-form-item label="第一作者">
                 <span>{{ props.row.firstAuthor }}</span>
@@ -25,14 +25,14 @@
                 <span>{{ props.row.otherAuthors }}</span>
               </el-form-item>
               <el-form-item label="处理状态">
-                <span>{{ props.row.state }}</span>
+                <span>{{ props.row.status }}</span>
               </el-form-item>
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="文章 ID" prop="ID"> </el-table-column>
-        <el-table-column label="文章标题" prop="Name"> </el-table-column>
-        <el-table-column label="文章状态" prop="state"> </el-table-column>
+        <el-table-column label="文章 ID" prop="articleID"> </el-table-column>
+        <el-table-column label="文章标题" prop="title"> </el-table-column>
+        <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope"
             ><el-select v-model="value" placeholder="是否通过">
@@ -44,7 +44,10 @@
               >
               </el-option>
             </el-select>
-            <el-button type="text" size="small" @click="downloadarticle"
+            <el-button
+              type="text"
+              size="small"
+              @click="downloadarticle(scope.row)"
               >下载<i class="el-icon-download el-icon--right"></i
             ></el-button>
             <el-button @click="open(scope.row)" type="text" size="small"
@@ -87,21 +90,37 @@ export default {
           state: "审核中",
         },
       ],
-      options: [{
-          value: '选项1',
-          label: '通过'
-        }, {
-          value: '选项2',
-          label: '不通过'
-        }],
-        value: ''
+      options: [
+        {
+          value: true,
+          label: "通过",
+        },
+        {
+          value: false,
+          label: "不通过",
+        },
+      ],
+      value: false,
+      comments: "",
     };
   },
   created() {
     this.convert();
   },
   methods: {
-    downloadarticle() {
+    downloadarticle(row) {
+      axios({
+        method: "get",
+        url: "/download",
+        params: JSON.stringify({ articleID: row.articleID }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
       alert("下载中");
     },
     convert: function () {
@@ -119,8 +138,9 @@ export default {
         .then(({ value }) => {
           this.$message({
             type: "success",
-            message: "你的评论是: " + value,
+            message: "通过意见:" + this.value + ",你的评论是: " + value,
           });
+          this.comments = value;
         })
         .catch(() => {
           this.$message({
@@ -129,6 +149,22 @@ export default {
           });
         });
       console.log(row);
+      axios({
+        method: "post",
+        url: "/reviewer/review/submit",
+        params: JSON.stringify({
+          articleID: row.articleID,
+          pass: this.value,
+          comments: this.comments,
+        }).then(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            alert(err);
+          }
+        ),
+      });
     },
   },
 };

@@ -36,10 +36,8 @@
           <el-input v-model="formInline.email" placeholder="Email"></el-input>
         </el-form-item>
         <el-form-item>
-        <el-button type="primary" @click="submit()"
-          >提交修改</el-button
-        >
-      </el-form-item>
+          <el-button type="primary" @click="submit()">提交修改</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -90,15 +88,15 @@ export default {
   methods: {
     submit() {
       axios({
-            method: "post",
-            url: "/home/modify/email",
-            data: {
-              email:this.formInline.email,
-            },
-          }).then((res) => {
-            console.log(res);
-          });
-          console.log("submit!");
+        method: "post",
+        url: "/home/modify/email",
+        data: JSON.stringify({
+          email: this.formInline.email,
+        }),
+      }).then((res) => {
+        console.log(res);
+      });
+      console.log("submit!");
     },
     convert: function () {
       axios.get("/home").then((res) => {

@@ -31,8 +31,7 @@
         <el-button type="primary" @click="submitForm('ruleForm')"
           >提交</el-button
         >
-        <el-button @click="resetForm('ruleForm')">重置</el-button
-        >     
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
         <router-link to="/"
           ><el-button type="primary">返回主页</el-button></router-link
         >
@@ -86,16 +85,22 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          var registerdata = {
+            email: this.ruleForm.email,
+            password: this.ruleForm.password,
+          };
+          var data = JSON.stringify(registerdata);
           axios({
             method: "post",
             url: "/register",
-            data: {
-              email:this.ruleForm.email,
-              password:this.ruleForm.password,
-            },
-          }).then((res) => {
-            console.log(res);
-          });
+            data: data,
+          })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
           console.log("submit!");
         } else {
           console.log("error submit!!");

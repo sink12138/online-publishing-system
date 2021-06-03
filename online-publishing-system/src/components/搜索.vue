@@ -3,50 +3,51 @@
     <div class="table">
       <el-card class="box-card">
         <el-table
-          :data="table"
+          :data="tableData"
           border
           stripe
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
           <el-table-column
-            type="selection"
-            width="55"
-            align="center"
-          ></el-table-column>
-          <el-table-column
-            prop="id"
+            prop="articleId"
             label="文章ID"
             align="center"
           ></el-table-column>
           <el-table-column
-            prop="name"
+            prop="title"
             label="标题"
             align="center"
           ></el-table-column>
           <el-table-column
-            prop="sex"
+            prop="keywords"
             label="关键词"
             align="center"
           ></el-table-column>
           <el-table-column
-            prop="college"
+            prop="firstAuthor"
             label="第一作者"
             align="center"
           ></el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope" class="active">
               <el-button
-                @click="editData(scope.row)"
-                type="primary"
-                icon="el-icon-edit"
-                circle
+                @click="download(scope.row)"
+                type="text"
+                icon="el-icon-download"
               ></el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="认领"
+            align="center"
+            v-if="$store.state.role >= 4"
+          >
+            <template slot-scope="scope" class="active">
               <el-button
-                @click="removeData(scope.row.id)"
-                type="danger"
-                icon="el-icon-delete"
-                circle
+                @click="claim(scope.row.articleId)"
+                type="text"
+                icon="el-icon-success"
               ></el-button>
             </template>
           </el-table-column>
@@ -58,7 +59,7 @@
                 background
                 @current-change="handleCurrentChange"
                 :current-page.sync="currentPage"
-                :page-size="pageSize"
+                :page-size=8
                 layout="total, prev, next, jumper, pager"
                 :total="total"
               ></el-pagination>
@@ -72,48 +73,69 @@
 
 <script>
 const axios = require("axios");
-var i = 0;
 export default {
   name: "Search",
   data() {
     return {
-      search:{
+      search: {
         searchType: "title",
-        searchString: ""
+        searchString: "",
       },
       success: false,
       message: "",
       results: 0,
       currentPage: 1, //当前页数
       pageSize: 10, //每页获取条数（页面大小）
-      tableData: [], //存放从后端传来的数据
+      tableData: [{
+        articleId: "",
+        title: "",
+        keywords: "",
+        firstAuthor: "",
+      }], //存放从后端传来的数据
     };
   },
-  props:['table'],
+  props: ["table"],
   mounted() {
     this.fetchdata();
   },
   methods: {
-    //获取后端数据
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
+    claim(articleId) {
+      axios({
+        method: "post",
+        url: "/author/claim",
+        data: JSON.stringify({
+          articleId: articleId,
+        }),
+      }).then((res) => {
+        console.log(res);
+      });
+      console.log("submit!");
+    },
     fetchdata() {
       axios({
-        methods: 'get',
+        methods: "get",
         url: "/search",
-        params:{
+        params: JSON.stringify({
           searchType: this.search.searchType,
-          searchString: this.search.searchString
-        }
-      }).then((response) => {
-        this.success = response.success;
-        if(this.success == true){
-          this.results = response.results;
-          for(i=0;i<this.results;i++){
-            this.tableData = response.data;
+          searchString: this.search.searchString,
+        }),
+      }).then(
+        (response) => {
+          var arraylist = new Array();
+          arraylist = response.data;
+          this.success = response.success;
+          if (this.success == true) {
+            this.tableData = arraylist.slice(0);
           }
+        },
+        (err) => {
+          alert(err);
         }
-      },(err) => {
-        alert(err);
-      });
+      );
     },
   },
 };
