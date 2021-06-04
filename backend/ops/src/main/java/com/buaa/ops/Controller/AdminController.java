@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -272,8 +273,11 @@ public class AdminController {
                         articleInfo.put("identifier", article.getIdentifier());
                     }
                     articleInfo.put("status", article.getStatus());
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-                    articleInfo.put("publishingDate", sdf.format(article.getPublishingDate()));
+                    Date publishingDate = article.getPublishingDate();
+                    if (publishingDate != null) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+                        articleInfo.put("publishingDate", sdf.format(article.getPublishingDate()));
+                    }
                     arrayList.add(articleInfo);
                 }
             }
