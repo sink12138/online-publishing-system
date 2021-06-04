@@ -74,10 +74,11 @@
     mounted:function() {
       this.$axios({
           method:'get',
-          url: '/1.json',
+          url: 'http://82.156.190.251:80/apis/admin/select/editors',
         }).then(res =>{
           console.log(res.data)
-          this.accountData = res.data
+          this.total = res.data[0].results
+          this.accountData = res.data.slice(1)
         })
     },
     methods: {
@@ -90,7 +91,7 @@
         pagesize:10,
         currentPage:1,
         accountData:'',
-        total:7
+        total:0
       }
     }
   }
