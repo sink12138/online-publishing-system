@@ -20,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/author")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthorController {
 
     @Autowired
