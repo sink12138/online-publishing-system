@@ -18,7 +18,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
 
     @Value("${admin.username}")

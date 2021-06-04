@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/reviewer")
 public class ReviewerController {
 
