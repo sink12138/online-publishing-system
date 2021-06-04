@@ -129,7 +129,7 @@ export default {
           arraylist = response.data;
           this.success = response.success;
           if (this.success == true) {
-            this.tableData = arraylist.slice(0);
+            this.tableData = arraylist.slice(1);
           }
         },
         (err) => {

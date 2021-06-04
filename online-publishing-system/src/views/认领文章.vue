@@ -94,7 +94,7 @@ export default {
           this.success = arraylist[0].success;
           if (this.success == true) {
             this.results = arraylist[0].results;
-            this.table = arraylist.slice(0);
+            this.table = arraylist.slice(1);
           }
         },
         (err) => {

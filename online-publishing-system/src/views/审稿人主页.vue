@@ -125,7 +125,7 @@ export default {
     },
     convert: function () {
       axios.get("http://82.156.190.251:80/apis/reviewer/articles").then((res) => {
-        this.tableData = res.data;
+        this.tableData = res.data.slice(1);
       });
     },
     open(row) {

@@ -100,7 +100,7 @@ export default {
     },
     convert: function () {
       axios.get("http://82.156.190.251:80/apis/home").then((res) => {
-        this.dataForm = res.data;
+        this.dataForm = res.data.slice(1);
       });
     },
     columnStyle({ columnIndex }) {

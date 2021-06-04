@@ -124,7 +124,7 @@ export default {
       axios.get("http://82.156.190.251:80/apis/author/articles").then((res) => {
         var arraylist = new Array();
         arraylist = res.data;
-        this.tableData = arraylist.slice(0);
+        this.tableData = arraylist.slice(1);
       });
     },
     withdraw(row) {
