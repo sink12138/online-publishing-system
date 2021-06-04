@@ -27,7 +27,7 @@
     </div>
     <br />
     <div class="download">
-      <el-button type="primary" @click="downloadarticle"
+      <el-button type="primary" @click="downloadarticle(scope.row)"
         >点击下载本篇文章<i class="el-icon-download el-icon--right"></i
       ></el-button>
     </div>
@@ -87,7 +87,19 @@ export default {
         this.dataForm = res.data;
       });
     },
-    downloadarticle() {
+    downloadarticle(row) {
+      axios({
+        method: "get",
+        url: "http://82.156.190.251:80/apis/download",
+        params: JSON.stringify({ articleID: row.articleID }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
       alert("下载中");
     },
     columnStyle({ columnIndex }) {

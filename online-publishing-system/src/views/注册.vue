@@ -8,7 +8,7 @@
       :rules="rules"
       ref="ruleForm"
       label-width="100px"
-      class="demo-ruleForm"
+      class="ruleForm"
     >
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="ruleForm.email"></el-input>
@@ -90,6 +90,7 @@ export default {
             password: this.ruleForm.password,
           };
           var data = JSON.stringify(registerdata);
+          console.log(data);
           axios({
             method: "post",
             url: "http://82.156.190.251:80/apis/register",
@@ -97,6 +98,7 @@ export default {
           })
             .then((res) => {
               console.log(res);
+              if(res.success == true) alert("注册成功!");
             })
             .catch((error) => {
               console.log(error);
