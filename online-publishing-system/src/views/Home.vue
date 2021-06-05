@@ -1,5 +1,6 @@
 <template>
-  <div class="home">
+  <div class="home" style="height: 100%">
+    <el-container style="height: 100%">
       <!--<div id="nav">
         <el-menu
           :default-active="activeIndex"
@@ -42,88 +43,94 @@
         </div>
       </div>
       <router-view/>-->
-    <div class="head">
-      <h1>OPS</h1>
-    </div>
-    <div id="nav">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-        router
-        background-color="#d5f6ee"
-        text-color="#000"
-        active-text-color="#ffd04b"
-        style="text-align: center">
-        <el-menu-item index="/home">个人信息</el-menu-item>
-        <el-menu-item index="/author" v-if="$store.state.role >= 4">作者主页</el-menu-item>
-        <el-menu-item index="/reviewer" v-if="$store.state.role == 2 || $store.state.role == 3 || $store.state.role == 6 || $store.state.role == 7">审稿人主页</el-menu-item>
-        <el-menu-item index="/editor" v-if="$store.state.role % 2 == 1">编辑主页</el-menu-item>
-        <el-menu-item index="/register">Register</el-menu-item>
-        <el-menu-item index="/login">Login</el-menu-item>
-        <el-menu-item index="/admin/home">Go to Admin</el-menu-item>
-      </el-menu>
-      <div class="search">
-        <el-input v-model="search.searchString" size="large">
-          <el-select v-model="search.searchType" slot="prepend" placeholder="搜索类型">
-            <el-option label="标题" value="title"></el-option>
-            <el-option label="关键词" value="keyword"></el-option>
-            <el-option label="作者" value="author"></el-option>
-          </el-select>
-          <el-button
-          slot="append"
-          icon="el-icon-search"
-          size="mini"
-          @click="searchArticle">
-          </el-button>
-        </el-input>
-      </div>
-      <router-view />
-      <child title="搜索结果" :parent-fun="parentFun" :parent="this"></child>
-    </div>
+      <el-header>
+        <div class="link1">
+          <router-link to="/">
+            <el-button type="info" plain>返回首页</el-button>
+          </router-link>
+          <router-link to="/home">
+            <el-button type="info" plain>个人信息</el-button>
+          </router-link>
+          <router-link to="/author">
+            <el-button type="info" plain v-if="$store.state.role >= 4">作者主页</el-button>
+          </router-link >
+          <router-link to="/reviewer">
+            <el-button type="info" plain
+              v-if="$store.state.role == 2 
+              || $store.state.role == 3 
+              || $store.state.role == 6 
+              || $store.state.role == 7">审稿人主页
+            </el-button>
+          </router-link>
+          <router-link to="/editor">
+            <el-button  type="info" plain v-if="$store.state.role % 2 == 1">编辑主页</el-button>
+          </router-link>
+        </div>
+        <div class="link2">
+          <router-link to="/login">
+            <el-button type="info" plain>登录</el-button>
+          </router-link>
+          <router-link to="/register">
+            <el-button type="info" plain>注册</el-button>
+          </router-link>
+          <router-link to="/admin">
+            <el-button type="info" plain>Admin</el-button>
+          </router-link>
+        </div>
+      </el-header>
+      <el-main>
+        <router-view></router-view>
+        <div class="search" v-show="this.$route.path=='/'">
+          <el-input v-model="search.searchString" size="large">
+            <el-select v-model="search.searchType" slot="prepend" placeholder="搜索类型">
+              <el-option label="标题" value="title"></el-option>
+              <el-option label="关键词" value="keyword"></el-option>
+              <el-option label="作者" value="author"></el-option>
+            </el-select>
+            <el-button
+            slot="append"
+            icon="el-icon-search"
+            size="mini"
+            @click="searchArticle">
+            </el-button>
+          </el-input>
+          <child title="搜索结果" :parent-fun="parentFun" :parent="this"></child>
+        </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
-<style>
-body {
-  text-align: center;
-  margin: 0;
-  padding: 0;
+<style scoped>
+.home {
+  position: fixed;
+  height: 100%;
+  width: 100%;
   background-image:url("../assets/Canva - Water Mill Near Body of Water.jpg");
   background-size: cover;
-  font-weight: 600;
-  font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
 }
-.home .el-menu {
-  display: flex;
-  padding: 0;
-  font-weight: 800;
-  font-family: "Microsoft YaHei","Operator Mono";
-  padding-left: 120px !important;
-  opacity: 0.8;
+.el-header {
+  background-color: #909090;
+  opacity: 0.85;
 }
-.home .el-menu-item {
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-}
-.search {
-  background: #A3D0C3;
-  position: relative;
-  padding: 30px 0;
-  opacity: 0.8;
-}
-.search input {
-  font-size: 20px;
-}
-.search .el-input {
-  width: 600px;
-}
-.el-select .el-input {
-  width: 120px;
-}
-.input-with-select .el-input-group__prepend {
+.el-main {
   background-color: #fff;
+  opacity: 0.9;
+}
+.el-button {
+  border-radius: 0 0 0 0;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #cccccc;
+}
+.link1 {
+  display: inline;
+  float: left;
+}
+.link2 {
+  display: inline;
+  float: right;
 }
 </style>
 

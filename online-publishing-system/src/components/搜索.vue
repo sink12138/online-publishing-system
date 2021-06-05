@@ -112,7 +112,7 @@ export default {
           }
         }
       },(err) => {
-        alert(err);
+        console.log(err);
       });
     },
   },
@@ -120,7 +120,4 @@ export default {
 </script>
 
 <style scoped>
-.table {
-  padding: 50px 250px 100px 250px;
-}
 </style>
