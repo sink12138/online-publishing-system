@@ -93,7 +93,7 @@ export default {
         formData.append("articleBufferId",0);
         formData.append("overwrite",this.articleBufferId);
         this.$axios({
-          methods: "post",
+          method: "post",
           url: "http://82.156.190.251:80/apis/author/revise/upload",
           data: formData,
         }).then(
@@ -106,7 +106,7 @@ export default {
           }
         );
         this.$axios({
-          methods: "post",
+          method: "post",
           url: "http://82.156.190.251:80/apis/author/revise/submit",
           data: JSON.stringify({
             articleBufferId: Number(this.articleBufferId),
@@ -128,7 +128,7 @@ export default {
         formData.append("file",this.fileList[0]);
         formData.append("articleBufferId",0);
         this.$axios({
-          methods: "post",
+          method: "post",
           url: "http://82.156.190.251:80/apis/author/new/upload",
           data: formData,
         }).then(
@@ -141,7 +141,7 @@ export default {
           }
         );
         this.$axios({
-          methods: "post",
+          method: "post",
           url: "http://82.156.190.251:80/apis/author/new/submit",
           data: JSON.stringify({
             articleBufferId: Number(this.articleBufferId),

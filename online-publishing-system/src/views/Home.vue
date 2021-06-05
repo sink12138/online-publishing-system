@@ -180,7 +180,7 @@ export default {
   methods: {
     searchArticle() {
       this.$axios({
-        methods: "get",
+        method: "get",
         url: "http://82.156.190.251:80/apis/search",
         params:JSON.stringify(this.search),
       }).then(
