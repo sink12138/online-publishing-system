@@ -93,4 +93,12 @@ public interface AccountService {
      * @return An instance of ArrayList containing all the accounts currently
      */
     ArrayList<Account> getAccounts();
+
+    /**
+     * Judge whether password is valid,
+     * the password must contain character and number at the mean time, the length must be in range [6, 20]
+     * @param password The password needed to judge
+     * @return Ture if valid or false
+     */
+    Boolean isPasswordValid(String password);
 }

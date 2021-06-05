@@ -162,4 +162,23 @@ public class AccountServiceImpl implements AccountService {
     public ArrayList<Account> getAccounts() {
         return accountDao.selectAll();
     }
+
+    @Override
+    public Boolean isPasswordValid(String password) {
+        if (password.length() > 20 || password.length() < 6) {
+            return false;
+        }
+        boolean containCharacter = false;
+        boolean containNumber = false;
+        for (char character : password.toCharArray()) {
+            if (character >= '0' && character <= '9') {
+                containNumber = true;
+            } else if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') ) {
+                containCharacter = true;
+            } else {
+                return false;
+            }
+        }
+        return containCharacter && containNumber;
+    }
 }
