@@ -54,7 +54,6 @@
 
 <script>
 
-const axios = require("axios");
 export default {
   data() {
     return {
@@ -68,10 +67,7 @@ export default {
   },
   methods: {
     Login() {
-      axios({
-        Headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+      this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/login",
         data: JSON.stringify(this.formInline),
@@ -91,7 +87,7 @@ export default {
       });
     },
     Logout() {
-      axios({
+      this.$axios({
         Headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
