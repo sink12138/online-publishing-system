@@ -447,7 +447,7 @@ public class EditorController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            if (reviewerIds.isEmpty()) {
+            if (reviewerIds == null || reviewerIds.isEmpty()) {
                 throw new ParameterFormatException();
             }
             Article article = articleService.getArticleById(articleId);
