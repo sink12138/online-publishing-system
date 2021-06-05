@@ -28,7 +28,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
+        <el-button type="primary" @click="submitForm()"
           >提交</el-button
         >
         <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     var checkEmail = (rule, value, callback) => {
@@ -82,19 +81,19 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitForm() {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           var registerdata = {
-            email: this.ruleForm.email,
-            password: this.ruleForm.password,
+            "email": this.$refs.ruleForm.email,
+            "password": this.$refs.ruleForm.pass,
           };
-          var data = JSON.stringify(registerdata);
-          console.log(data);
-          axios({
+          var data1 = JSON.stringify(registerdata);
+          console.log(data1);
+          this.$axios({
             method: "post",
             url: "http://82.156.190.251:80/apis/register",
-            data: data,
+            data: data1,
           })
             .then((res) => {
               console.log(res);

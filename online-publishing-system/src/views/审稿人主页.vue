@@ -61,6 +61,10 @@
 </template>
 
 <style>
+.Reviewer {
+  background-color: #fff;
+  opacity: 80%;
+}
 .demo-table-expand {
   font-size: 0;
 }
@@ -76,7 +80,6 @@
 </style>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     return {
@@ -109,22 +112,22 @@ export default {
   },
   methods: {
     downloadarticle(row) {
-      axios({
+      this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
         params: JSON.stringify({ articleID: row.articleID }),
       }).then(
         (response) => {
           console.log(response);
+          console.log("下载中");
         },
         (err) => {
           alert(err);
         }
       );
-      alert("下载中");
     },
     convert: function () {
-      axios.get("http://82.156.190.251:80/apis/reviewer/articles").then((res) => {
+      this.$axios.get("http://82.156.190.251:80/apis/reviewer/articles").then((res) => {
         this.tableData = res.data.slice(1);
       });
     },
@@ -149,7 +152,7 @@ export default {
           });
         });
       console.log(row);
-      axios({
+      this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/reviewer/review/submit",
         params: JSON.stringify({

@@ -35,7 +35,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   name: "article",
   data() {
@@ -82,16 +81,16 @@ export default {
   },
   methods: {
     convert() {
-      axios.get("/test.json").then((res) => {
+      this.$axios.get("/test.json").then((res) => {
         console.log(JSON.stringify(res));
         this.dataForm = res.data;
       });
     },
     downloadarticle(row) {
-      axios({
+      this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
-        params: JSON.stringify({ articleID: row.articleID }),
+        data: {"articleID":row.articleID},
       }).then(
         (response) => {
           console.log(response);
@@ -100,7 +99,7 @@ export default {
           alert(err);
         }
       );
-      alert("下载中");
+      console.log("下载中");
     },
     columnStyle({ columnIndex }) {
       if (columnIndex == 1 || columnIndex == 3) {

@@ -29,20 +29,20 @@
 </template>
 
 <script>
-const axios = require('axios');
 export default {
   data() {
     return {
       formInline: {
-        institution: "",
-        researchInterests: "",
+        "institution":"",
+        "researchInterests":"",
       },
     };
   },
   methods: {
     onSubmit() {
       console.log("submit!");
-      axios({
+      console.log(JSON.stringify(this.formInline));
+      this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/certify",
         params: JSON.stringify(this.formInline),

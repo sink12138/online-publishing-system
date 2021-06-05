@@ -51,7 +51,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     return {
@@ -72,8 +71,8 @@ export default {
     this.articleBufferId = this.$route.query.articleID;
     this.status = this.$route.query.status;
     if (this.articleBufferId == undefined) this.articleBufferId = 0;
-    alert(this.articleBufferId);
-    alert(this.status);
+    console.log(this.articleBufferId);
+    console.log(this.status);
   },
   methods: {
     getfile() {
@@ -89,7 +88,7 @@ export default {
     onSubmit() {
       alert("submit!");
       if(this.status == '审核通过' || this.status == '审核未通过'){
-        axios({
+        this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/revise/upload",
           params: JSON.stringify({
@@ -106,7 +105,7 @@ export default {
             alert(err);
           }
         );
-        axios({
+        this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/revise/submit",
           params: JSON.stringify({
@@ -125,7 +124,7 @@ export default {
         );
       }
       else {
-        axios({
+        this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/new/upload",
           params: JSON.stringify({
@@ -141,7 +140,7 @@ export default {
             alert(err);
           }
         );
-        axios({
+        this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/new/submit",
           params: JSON.stringify({

@@ -28,7 +28,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   name: "authorinfo",
   data() {
@@ -69,7 +68,7 @@ export default {
   },
   methods: {
     convert: function () {
-      axios({
+      this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/infos",
         data: {

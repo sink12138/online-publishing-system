@@ -62,7 +62,6 @@
 </style>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     return {
@@ -121,22 +120,22 @@ export default {
       console.log(row.articleID);
     },
     convert: function () {
-      axios.get("http://82.156.190.251:80/apis/author/articles").then((res) => {
+      this.$axios.get("http://82.156.190.251:80/apis/author/articles").then((res) => {
         var arraylist = new Array();
         arraylist = res.data;
         this.tableData = arraylist.slice(1);
       });
     },
     withdraw(row) {
-      axios.post("http://82.156.190.251:80/apis/author/withdraw", row.articleID);
+      this.$axios.post("http://82.156.190.251:80/apis/author/withdraw", row.articleID);
       console.log(row);
     },
     confirmDraft(row) {
-      axios.post("http://82.156.190.251:80/apis/author/confirm/draft", row.articleID);
+      this.$axios.post("http://82.156.190.251:80/apis/author/confirm/draft", row.articleID);
       console.log(row);
     },
     abort(row) {
-      axios.post("http://82.156.190.251:80/apis/author/abort", row.articleID);
+      this.$axios.post("http://82.156.190.251:80/apis/author/abort", row.articleID);
       console.log(row);
     },
   },

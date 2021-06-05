@@ -2,8 +2,8 @@
   <div class="myinfo">
     <h1>个人信息页面</h1>
     <div class="author">
-      <router-link to="/author/certify">认证作者</router-link> |
-      <router-link to="/author/cancel">注销作者</router-link> |
+      <router-link to="/author/certify" v-if="$store.state.role<4">认证作者</router-link> |
+      <router-link to="/author/cancel" v-if="$store.state.role>=4">注销作者</router-link> |
       <router-link to="/">返回主页</router-link>
     </div>
     <div class="articleinfo">
@@ -44,7 +44,6 @@
 </template>
  
 <script>
-const axios = require("axios");
 export default {
   name: "myinfo",
   data() {
@@ -87,7 +86,7 @@ export default {
   },
   methods: {
     submit() {
-      axios({
+      this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/home/modify/email",
         data: JSON.stringify({
@@ -99,8 +98,9 @@ export default {
       console.log("submit!");
     },
     convert: function () {
-      axios.get("http://82.156.190.251:80/apis/home").then((res) => {
-        this.dataForm = res.data.slice(1);
+      this.$axios.get("http://82.156.190.251:80/apis/home").then((res) => {
+        console.log(res);
+        this.dataForm = res.data;
       });
     },
     columnStyle({ columnIndex }) {

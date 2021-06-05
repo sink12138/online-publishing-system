@@ -25,9 +25,7 @@
           </el-form-item>
           <el-form-item>
             <router-linkF to="/"
-              ><el-button type="info"
-                >返回主页</el-button
-              ></router-linkF
+              ><el-button type="info">返回主页</el-button></router-linkF
             >
           </el-form-item>
         </div>
@@ -41,9 +39,7 @@
           </el-form-item>
           <el-form-item>
             <router-link to="/"
-              ><el-button type="info"
-                >返回主页</el-button
-              ></router-link
+              ><el-button type="info">返回主页</el-button></router-link
             >
           </el-form-item>
         </div>
@@ -52,8 +48,14 @@
   </div>
 </template>
 
-<script>
+<style>
+.Login {
+  background-color: #fff;
+  opacity: 80%;
+}
+</style>
 
+<script>
 export default {
   data() {
     return {
@@ -72,27 +74,35 @@ export default {
         url: "http://82.156.190.251:80/apis/login",
         data: JSON.stringify(this.formInline),
       }).then((res) => {
-        this.role=res.role;
-        if(this.role % 2 == 1) this.$store.commit('setEditor');
-        if(this.role == 2 || this.role == 3 || this.role == 6 || this.role == 7) this.$store.commit('setReviewer');
-        if(this.role >= 4) this.$store.commit('setWriter');
+        if (res.data.success == true) {
+          this.role = res.role;
+          if (this.role % 2 == 1) this.$store.commit("setEditor");
+          if (
+            this.role == 2 ||
+            this.role == 3 ||
+            this.role == 6 ||
+            this.role == 7
+          )
+            this.$store.commit("setReviewer");
+          if (this.role >= 4) this.$store.commit("setWriter");
+          console.log(this.formInline);
+          console.log("submit!");
+          this.$store.commit("login");
+          this.$message({
+            message: "登录成功！",
+            type: "success",
+          });
+        }
+        else{
+          alert(res.data.message);
+        }
         console.log(res);
-      });
-      console.log(this.formInline);
-      console.log("submit!");
-      this.$store.commit("login");
-      this.$message({
-        message: "登录成功！",
-        type: "success",
       });
     },
     Logout() {
       this.$axios({
-        Headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
         method: "post",
-        url: "/logout",
+        url: "http://82.156.190.251:80/apis/logout",
       }).then((res) => {
         console.log(res);
       });

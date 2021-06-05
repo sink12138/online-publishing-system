@@ -72,14 +72,13 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   name: "Search",
   data() {
     return {
       search: {
-        searchType: "title",
-        searchString: "",
+        "searchType": "title",
+        "searchString": "",
       },
       success: false,
       message: "",
@@ -104,27 +103,23 @@ export default {
       this.currentPage = val;
     },
     claim(articleId) {
-      axios({
+      this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/claim",
-        data: JSON.stringify({
-          articleId: articleId,
-        }),
+        data: {"articleId": articleId},
       }).then((res) => {
         console.log(res);
       });
       console.log("submit!");
     },
     fetchdata() {
-      axios({
+      this.$axios({
         methods: "get",
         url: "http://82.156.190.251:80/apis/search",
-        params: JSON.stringify({
-          searchType: this.search.searchType,
-          searchString: this.search.searchString,
-        }),
+        data: JSON.stringify(this.search),
       }).then(
         (response) => {
+          console.log(response);
           var arraylist = new Array();
           arraylist = response.data;
           this.success = response.success;
@@ -133,7 +128,7 @@ export default {
           }
         },
         (err) => {
-          alert(err);
+          console.log(err);
         }
       );
     },

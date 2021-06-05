@@ -56,7 +56,7 @@
         text-color="#000"
         active-text-color="#ffd04b"
         style="text-align: center">
-        <el-menu-item index="/home">个人信息</el-menu-item>
+        <el-menu-item index="/home" v-if="$store.state.isLogin">个人信息</el-menu-item>
         <el-menu-item index="/author" v-if="$store.state.role >= 4">作者主页</el-menu-item>
         <el-menu-item index="/reviewer" v-if="$store.state.role == 2 || $store.state.role == 3 || $store.state.role == 6 || $store.state.role == 7">审稿人主页</el-menu-item>
         <el-menu-item index="/editor" v-if="$store.state.role % 2 == 1">编辑主页</el-menu-item>
@@ -139,7 +139,6 @@ body {
       }
     }
   })*/
-const axios = require("axios");
 import child from "../components/搜索.vue";
 export default {
   name: "Search",
@@ -160,7 +159,7 @@ export default {
   mounted() {},
   methods: {
     searchArticle() {
-      axios({
+      this.$axios({
         methods: "get",
         url: "http://82.156.190.251:80/apis/search",
         params: {

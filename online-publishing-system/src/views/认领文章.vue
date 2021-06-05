@@ -44,7 +44,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 import child from "../components/搜索.vue";
 export default {
   name: "Search",
@@ -57,8 +56,8 @@ export default {
         articleId: 0,
       },
       search: {
-        searchType: "",
-        searchString: "",
+        "searchType": "",
+        "searchString": "",
       },
       currentPage: 1, //当前页数
       pageSize: 10, //每页获取条数（页面大小）
@@ -68,27 +67,26 @@ export default {
   mounted() {},
   methods: {
     submit() {
-      axios({
+      this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/claim",
-        data: {
-          articleId: this.formInline.articleId,
-        },
+        data: {"articleId":this.formInline.articleId},
       }).then((res) => {
         console.log(res);
       });
       console.log("submit!");
     },
     searchArticle() {
-      axios({
+      this.$axios({
         methods: "get",
         url: "http://82.156.190.251:80/apis/search",
-        params: JSON.stringify({
-          searchType: this.search.searchType,
-          searchString: this.search.searchString,
+        data: JSON.stringify({
+          "searchType": this.search.searchType,
+          "searchString": this.search.searchString,
         }),
       }).then(
         (response) => {
+          console.log(response);
           var arraylist = new Array();
           arraylist = response.data;
           this.success = arraylist[0].success;
