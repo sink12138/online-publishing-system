@@ -48,7 +48,6 @@
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="/admin/documents" >资源管理</el-menu-item>
-                  <el-menu-item index="/admin/documents/view" >查看文章</el-menu-item>
                   <el-menu-item index="/admin/documents/number-search">编号查找</el-menu-item>
                   <el-menu-item index="/admin/documents/key-search">关键字查找</el-menu-item>
                 </el-menu-item-group>

@@ -90,19 +90,20 @@ html, body {
     },
     methods:{
         adminLogin(){
-            let admindata = JSON.stringify(this.adminMess);
-            console.log(admindata);
+            let JsonAdmin = JSON.stringify(this.adminMess);
+            console.log(JsonAdmin);
             /*this.$store.commit('adminLogin');
             sessionStorage.setItem("adminPassword",this.adminMess.password);
-            window.location.href='../admin/home'*/
+            window.location.href='../admin/home';*/
             this.$axios({
                 method:'post',
                 url:'http://82.156.190.251:80/apis/admin/login',
-                data:admindata,
+                data:JsonAdmin,
             })
             .then((res)=>{
                 console.log(res);
-                if (res.success == true) 
+                console.log(res.data.success);
+                if (res.data.success == true) 
                     this.$store.commit('adminLogin')
                 else this.$store.commit('adminLogout');
                 if (sessionStorage.getItem("admin") == 'login') { 

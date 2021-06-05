@@ -94,7 +94,6 @@
 .table .el-button {
   height: 30px;
   width: 45px;
-  opacity: 40%;
 }
 .table .el-button i{
   position: relative;
@@ -115,11 +114,12 @@
     mounted:function() {
       this.$axios({
           method:'get',
-          url: '/1.json',
+          url: 'http://82.156.190.251:80/apis/admin/select/accounts',
         }).then(res =>{
           console.log(res.data)
-          this.accountData = res.data
-        })
+          this.total = res.data[0].results
+          this.accountData = res.data.slice(1)
+        }).catch(error => console.log(error))
     },
     methods: {
       handleCurrentChange(val) {
@@ -133,12 +133,25 @@
           center: true
         }).then(({ value }) => {
           if (value == sessionStorage.getItem("adminPassword")) {
-            this.$message({
-              type: 'success',
-              message: '删除账号成功',
+            var JsonAccount = {"accountId":accountId};
+            this.$axios({
+              method:'post',
+              url:'http://82.156.190.251:80/apis/admin/delete/account',
+              data:JsonAccount,
+            }).then(res =>{
+              console.log(res)
+              if (res.data.success == true) {
+                this.$message({
+                  type: 'success',
+                  message: '删除账号成功',
+                })
+                rows.splice(index,1);
+                console.log(accountId);
+              } else {
+                this.$message.error(res.data.message)
+              }
             })
-            rows.splice(index,1);
-            console.log(accountId);
+            .catch(error => console.log(error))
           }
           else this.$message.error('密码错误');
         }).catch(() => {
@@ -154,7 +167,7 @@
         pagesize:8,
         currentPage:1,
         accountData:'',
-        total:7
+        total:0,
       }
     }
   }
