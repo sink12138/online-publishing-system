@@ -42,7 +42,7 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            if (password == null || !isPasswordValid(password)) {
+            if (password == null || !accountService.isPasswordValid(password)) {
                 throw new ParameterFormatException();
             }
             AccountBuffer accountBuffer = new AccountBuffer(email, password);
@@ -451,7 +451,7 @@ public class UserController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            if (password == null || !isPasswordValid(password)) {
+            if (password == null || !accountService.isPasswordValid(password)) {
                 throw new ParameterFormatException();
             }
             if (author != null) {
@@ -489,6 +489,7 @@ public class UserController {
             newAccountInfos.setAccountId(account.getAccountId());
             accountService.modifyInfos(newAccountInfos);
             map.put("success", true);
+            session.setAttribute("password", password);
         } catch (ParameterFormatException | LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
@@ -586,11 +587,6 @@ public class UserController {
             e.printStackTrace();
         }
         return arrayList;
-    }
-
-    // todo 具体密码判断
-    private Boolean isPasswordValid(String password) {
-        return password.length() > 5;
     }
 
 }

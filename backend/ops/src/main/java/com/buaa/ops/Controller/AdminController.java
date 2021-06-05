@@ -108,7 +108,9 @@ public class AdminController {
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            // todo judge password
+            if (!accountService.isPasswordValid(password)) {
+                throw new ParameterFormatException();
+            }
             Account newAccount = new Account(email, password, realName);
             accountService.addAccount(newAccount);
             map.put("success", true);
