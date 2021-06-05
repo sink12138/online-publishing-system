@@ -5,12 +5,12 @@
         <el-row>
             <el-button type="primary">作者身份管理</el-button>
         </el-row>
-    </router-link> 
+    </router-link>
     <router-link to="/editor/reviewers">
         <el-row>
             <el-button type="primary">审稿人身份管理</el-button>
         </el-row>
-    </router-link> 
+    </router-link>
     <router-link to="/editor/articles">
         <el-row>
             <el-button type="primary">文章管理</el-button>

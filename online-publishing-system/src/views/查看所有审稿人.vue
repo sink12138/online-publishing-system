@@ -1,31 +1,26 @@
 <template>
-  <el-table
-    :data="tableData3"
-    height="500"
-    border
-    style="width: 100%">
-    <el-table-column
-      prop="reviewerId"
-      label="审稿人编号"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="真实姓名"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="authors"
-      label="所属组织"
-      width="360">
-    </el-table-column>
-  </el-table>
+  <div class="reviewer">
+    <div>
+      <h1>所有审稿人名单</h1>
+    </div>
+    <div class="reviewers">
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column label="审稿人 ID" prop="reviewerId"> </el-table-column>
+        <el-table-column label="真实姓名" prop="realName"> </el-table-column>
+        <el-table-column label="所属组织" prop="institution"></el-table-column>
+      </el-table>
+    </div>
+  </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        tableData: []
+        tableData: [{
+          reviewerId:"",
+          realName:"",
+          institution:""
+        }]
       }
     }
   }

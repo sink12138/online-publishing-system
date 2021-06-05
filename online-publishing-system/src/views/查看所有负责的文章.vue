@@ -1,36 +1,42 @@
 <template>
-  <el-table
-    :data="tableData3"
-    height="500"
-    border
-    style="width: 100%">
-    <el-table-column
-      prop="articleId"
-      label="文章编号"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="文章名称"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="authors"
-      label="作者"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="state"
-      label="文章状态"
-      width="360">
-    </el-table-column>
-  </el-table>
+  <div class="reviewer">
+    <div>
+      <h1>负责的文章如下</h1>
+    </div>
+    <div class="articles">
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
+        <el-table-column label="文章名称" prop="title"> </el-table-column>
+        <el-table-column label="关键词" prop="keywords"></el-table-column>
+        <el-table-column label="作者" prop="authors"> </el-table-column>
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="第一作者">
+                <span>{{ props.row.firstAuthor }}</span>
+              </el-form-item>
+              <el-form-item label="其他作者">
+                <span>{{ props.row.otherAuthors }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column label="文章状态" prop="status"> </el-table-column>
+      </el-table>
+    </div>
+  </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        tableData: []
+        tableData: [{
+          articleId:" ",
+          title:"",
+          keywords:" ",
+          authors:" ",
+          status:" "
+        }]
       }
     }
   }

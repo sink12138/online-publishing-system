@@ -1,41 +1,30 @@
 <template>
-  <el-table
-    :data="tableData3"
-    height="500"
-    border
-    style="width: 100%">
-    <el-table-column
-      prop="authorId"
-      label="作者编号"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="realName"
-      label="真实姓名"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="Institution"
-      label="所属机构"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="researchInterests"
-      label="研究方向"
-      width="360">
-    </el-table-column>
-    <el-table-column
-      prop="articleCount"
-      label="绑定的文章数量"
-      width="360">
-    </el-table-column>
-  </el-table>
+  <div class="reviewer">
+    <div>
+      <h1>所有审稿人名单</h1>
+    </div>
+    <div class="authors">
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column label="作者 ID" prop="authorId"> </el-table-column>
+        <el-table-column label="真实姓名" prop="realName"> </el-table-column>
+        <el-table-column label="所属机构" prop="institution"></el-table-column>
+        <el-table-column label="研究方向" prop="researchInterests"></el-table-column>
+        <el-table-column label="绑定的文章数量" prop="articleCount"></el-table-column>
+      </el-table>
+    </div>
+  </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        tableData: []
+        tableData: [{
+          authorId:"",
+          realName:"",
+          institution:"",
+          researchInterests:"",
+          articleCount:""
+        }]
       }
     }
   }
