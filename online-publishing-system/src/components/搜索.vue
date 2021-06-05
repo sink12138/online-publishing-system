@@ -59,7 +59,7 @@
                 background
                 @current-change="handleCurrentChange"
                 :current-page.sync="currentPage"
-                :page-size=8
+                :page-size="8"
                 layout="total, prev, next, jumper, pager"
                 :total="total"
               ></el-pagination>
@@ -137,7 +137,4 @@ export default {
 </script>
 
 <style scoped>
-.table {
-  padding: 50px 250px 100px 250px;
-}
 </style>

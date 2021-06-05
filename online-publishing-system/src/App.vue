@@ -7,6 +7,11 @@
 </template>
 
 <style>
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
 #app{
   text-align: center;
   height: 100%;
