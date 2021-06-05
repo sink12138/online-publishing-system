@@ -29,16 +29,16 @@
     <el-table-column label="文章状态" prop="status"> </el-table-column>
     <el-table-column fixed="right" label="操作" width="400">
       <template slot-scope="scope">
-        <el-button type="text" size="small" :disabled="scope.row.status=='审核通过'||scope.row.status=='审核未通过'?false:true" @click="submit(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="submit(scope.row)"
           >提交文章</el-button
         >
-        <el-button type="text" size="small" :disabled="scope.row.status=='审核通过'?false:true" @click="confirmDraft(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过')&&scope.row.authorized?false:true" @click="confirmDraft(scope.row)"
           >确认终稿</el-button
         >
-        <el-button type="text" size="small" :disabled="scope.row.status=='审核通过'||scope.row.status=='审核未通过'?false:true" @click="abort(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="abort(scope.row)"
           >中止出版</el-button
         >
-        <el-button type="text" size="small" :disabled="scope.row.status=='已出版'?false:true" @click="withdraw(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='已出版')&&scope.row.authorized?false:true" @click="withdraw(scope.row)"
           >撤稿</el-button
         >
       </template>
@@ -127,15 +127,15 @@ export default {
       });
     },
     withdraw(row) {
-      this.$axios.post("http://82.156.190.251:80/apis/author/withdraw", row.articleID);
+      this.$axios.post("http://82.156.190.251:80/apis/author/withdraw", Number(row.articleID));
       console.log(row);
     },
     confirmDraft(row) {
-      this.$axios.post("http://82.156.190.251:80/apis/author/confirm/draft", row.articleID);
+      this.$axios.post("http://82.156.190.251:80/apis/author/confirm/draft", Number(row.articleID));
       console.log(row);
     },
     abort(row) {
-      this.$axios.post("http://82.156.190.251:80/apis/author/abort", row.articleID);
+      this.$axios.post("http://82.156.190.251:80/apis/author/abort", Number(row.articleID));
       console.log(row);
     },
   },

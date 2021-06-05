@@ -67,10 +67,12 @@ export default {
   mounted() {},
   methods: {
     submit() {
+      var Js = {"articleId":Number(this.formInline.articleId)};
+      console.log(Js);
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/claim",
-        data: {"articleId":this.formInline.articleId},
+        data: Js
       }).then((res) => {
         console.log(res);
       });

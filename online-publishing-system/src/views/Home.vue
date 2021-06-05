@@ -49,7 +49,7 @@
             <el-button type="info" plain>返回首页</el-button>
           </router-link>
           <router-link to="/home">
-            <el-button type="info" plain>个人信息</el-button>
+            <el-button type="info" plain v-if="$store.state.isLogin">个人信息</el-button>
           </router-link>
           <router-link to="/author">
             <el-button type="info" plain v-if="$store.state.role >= 4">作者主页</el-button>
@@ -106,7 +106,7 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background-image:url("../assets/Canva - Water Mill Near Body of Water.jpg");
+  background-image: url("../assets/Canva - Water Mill Near Body of Water.jpg");
   background-size: cover;
 }
 .el-header {
@@ -135,7 +135,7 @@
 </style>
 
 <script>
-  /*new Vue({
+/*new Vue({
     id:"#article-shows",
     data: {
       Object: {
@@ -155,13 +155,26 @@ export default {
   data() {
     return {
       search: {
-        searchType: "",
-        searchString: "",
+        "searchType": "",
+        "searchString": "",
       },
       currentPage: 1, //当前页数
       pageSize: 10, //每页获取条数（页面大小）
       table: [], //存放从后端传来的数据
     };
+  },
+  created:function(){
+    if(sessionStorage.getItem('isLogin') == true)    this.$store.commit('login');
+    else if(sessionStorage.getItem('isLogin') == false)    this.$store.commit('logout');
+    if (sessionStorage.getItem("role") % 2 == 1) this.$store.commit("setEditor");
+          if (
+            sessionStorage.getItem("role") == 2 ||
+            sessionStorage.getItem("role") == 3 ||
+            sessionStorage.getItem("role") == 6 ||
+            sessionStorage.getItem("role") == 7
+          )
+            this.$store.commit("setReviewer");
+          if (sessionStorage.getItem("role") >= 4) this.$store.commit("setWriter");
   },
   mounted() {},
   methods: {
@@ -169,12 +182,10 @@ export default {
       this.$axios({
         methods: "get",
         url: "http://82.156.190.251:80/apis/search",
-        params: {
-          searchType: this.search.searchType,
-          searchString: this.search.searchString,
-        },
+        params:JSON.stringify(this.search),
       }).then(
         (response) => {
+          console.log(response);
           var arraylist = new Array();
           arraylist = response.data;
           this.success = arraylist[0].success;
@@ -183,10 +194,7 @@ export default {
             this.table = arraylist.slice(1);
           }
         },
-        (err) => {
-          alert(err);
-        }
-      );
+      ).catch(err => console.log(err))
     },
     parentFun() {
       console.log("搜索");

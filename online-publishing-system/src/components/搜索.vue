@@ -2,13 +2,7 @@
   <div class="Search">
     <div class="table">
       <el-card class="box-card">
-        <el-table
-          :data="tableData"
-          border
-          stripe
-          style="width: 100%"
-          @selection-change="handleSelectionChange"
-        >
+        <el-table :data="tableData" border stripe style="width: 100%">
           <el-table-column
             prop="articleId"
             label="文章ID"
@@ -61,7 +55,7 @@
                 :current-page.sync="currentPage"
                 :page-size="8"
                 layout="total, prev, next, jumper, pager"
-                :total="total"
+                :total="tableData.size - 1"
               ></el-pagination>
             </div>
           </el-col>
@@ -77,20 +71,22 @@ export default {
   data() {
     return {
       search: {
-        "searchType": "title",
-        "searchString": "",
+        searchType: "title",
+        searchString: "",
       },
       success: false,
       message: "",
       results: 0,
       currentPage: 1, //当前页数
       pageSize: 10, //每页获取条数（页面大小）
-      tableData: [{
-        articleId: "",
-        title: "",
-        keywords: "",
-        firstAuthor: "",
-      }], //存放从后端传来的数据
+      tableData: [
+        {
+          articleId: "",
+          title: "",
+          keywords: "",
+          firstAuthor: "",
+        },
+      ], //存放从后端传来的数据
     };
   },
   props: ["table"],
@@ -106,7 +102,7 @@ export default {
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/claim",
-        data: {"articleId": articleId},
+        data: { articleId: articleId },
       }).then((res) => {
         console.log(res);
       });
@@ -116,7 +112,7 @@ export default {
       this.$axios({
         methods: "get",
         url: "http://82.156.190.251:80/apis/search",
-        data: JSON.stringify(this.search),
+        params: JSON.stringify(this.search),
       }).then(
         (response) => {
           console.log(response);

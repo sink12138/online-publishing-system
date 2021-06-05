@@ -28,9 +28,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm()"
-          >提交</el-button
-        >
+        <el-button type="primary" @click="submitForm()">提交</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
         <router-link to="/"
           ><el-button type="primary">返回主页</el-button></router-link
@@ -46,12 +44,21 @@ export default {
     var checkEmail = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("邮箱不能为空"));
+      } else {
+        callback();
       }
     };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
+        if (value.length < 6 || value.length > 20) {
+          callback(new Error("请输入六至二十位"));
+        }
+        var regx = /^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,20}$/;
+        if (!this.ruleForm.pass.match(regx)) {
+          callback(new Error("请同时包含字母数字"));
+        }
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
         }
@@ -85,8 +92,8 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           var registerdata = {
-            "email": this.$refs.ruleForm.email,
-            "password": this.$refs.ruleForm.pass,
+            email: this.ruleForm.email,
+            password: this.ruleForm.pass,
           };
           var data1 = JSON.stringify(registerdata);
           console.log(data1);
@@ -97,7 +104,7 @@ export default {
           })
             .then((res) => {
               console.log(res);
-              if(res.success == true) alert("注册成功!");
+              if (res.success == true) alert("注册成功!");
             })
             .catch((error) => {
               console.log(error);

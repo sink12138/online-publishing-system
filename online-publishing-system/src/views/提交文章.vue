@@ -88,14 +88,14 @@ export default {
     onSubmit() {
       alert("submit!");
       if(this.status == '审核通过' || this.status == '审核未通过'){
+        let formData = new FormData();
+        formData.append("file",this.fileList[0]);
+        formData.append("articleBufferId",0);
+        formData.append("overwrite",this.articleBufferId);
         this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/revise/upload",
-          params: JSON.stringify({
-            articleBufferId: 0,
-            file: this.fileList[0],
-            overwrite: this.articleBufferId,
-          }),
+          data: formData,
         }).then(
           (response) => {
             this.articleBufferId = response.articleBufferId;
@@ -108,8 +108,8 @@ export default {
         this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/revise/submit",
-          params: JSON.stringify({
-            articleBufferId: this.articleBufferId,
+          data: JSON.stringify({
+            articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
             keywords: this.formInline.keywords,
@@ -124,13 +124,13 @@ export default {
         );
       }
       else {
+        let formData = new FormData();
+        formData.append("file",this.fileList[0]);
+        formData.append("articleBufferId",0);
         this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/new/upload",
-          params: JSON.stringify({
-            articleBufferId: 0,
-            file: this.fileList[0],
-          }),
+          data: formData,
         }).then(
           (response) => {
             console.log(response);
@@ -143,8 +143,8 @@ export default {
         this.$axios({
           methods: "post",
           url: "http://82.156.190.251:80/apis/author/new/submit",
-          params: JSON.stringify({
-            articleBufferId: this.articleBufferId,
+          data: JSON.stringify({
+            articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
             keywords: this.formInline.keywords,

@@ -51,7 +51,6 @@
 <style>
 .Login {
   background-color: #fff;
-  opacity: 80%;
 }
 </style>
 
@@ -75,8 +74,10 @@ export default {
         data: JSON.stringify(this.formInline),
       }).then((res) => {
         if (res.data.success == true) {
-          this.role = res.role;
-          if (this.role % 2 == 1) this.$store.commit("setEditor");
+          this.role = res.data.role;
+          sessionStorage.setItem("role", this.role);
+          sessionStorage.setItem("isLogin", true);
+          /*if (this.role % 2 == 1) this.$store.commit("setEditor");
           if (
             this.role == 2 ||
             this.role == 3 ||
@@ -84,22 +85,24 @@ export default {
             this.role == 7
           )
             this.$store.commit("setReviewer");
-          if (this.role >= 4) this.$store.commit("setWriter");
+          if (this.role >= 4) this.$store.commit("setWriter");*/
           console.log(this.formInline);
+          console.log(this.$store.state.role);
           console.log("submit!");
           this.$store.commit("login");
           this.$message({
             message: "登录成功！",
             type: "success",
           });
-        }
-        else{
+        } else {
           alert(res.data.message);
         }
         console.log(res);
       });
     },
     Logout() {
+      sessionStorage.setItem("role", 0);
+      sessionStorage.setItem("isLogin", false);
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/logout",
