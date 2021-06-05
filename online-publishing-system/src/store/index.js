@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state:  {
-    role: 7,
+    role: 0,
     isLogin: false,
   },
   mutations: {
