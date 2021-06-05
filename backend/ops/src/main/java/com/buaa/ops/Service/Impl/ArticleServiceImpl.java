@@ -81,6 +81,28 @@ public class ArticleServiceImpl implements ArticleService {
         return file;
     }
 
+    @Value("${file.allow-types}")
+    private String allowTypes;
+
+    @Override
+    public Boolean checkFileType(MultipartFile file) {
+        if (file == null)
+            return false;
+        String fileName = file.getOriginalFilename();
+        if (fileName == null)
+            return false;
+        int lastIndex = fileName.lastIndexOf('.');
+        if (lastIndex == -1)
+            return false;
+        String fileType = fileName.substring(lastIndex + 1);
+        String[] types = allowTypes.split("[\\s,]+");
+        for (String type : types) {
+            if (fileType.equals(type))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public Integer saveArticleFile(Integer submitterId, Integer articleBufferId, Integer overwrite, MultipartFile file) throws IOException {
         String path;

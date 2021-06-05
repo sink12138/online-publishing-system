@@ -47,3 +47,4 @@ check:
 file:
   articles-path: C:/ops/backend/storage
   logs-path: C:/ops/backend
+  allow-types: pdf, doc, docx, zip

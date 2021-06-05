@@ -119,6 +119,8 @@ public class AuthorController {
             }
             if (multipartFile == null)
                 throw new ParameterFormatException();
+            if (!articleService.checkFileType(multipartFile))
+                throw new ParameterFormatException();
             if (articleBufferId < 0)
                 throw new ParameterFormatException();
             // End parameter format checks
@@ -253,6 +255,8 @@ public class AuthorController {
                 throw new ParameterFormatException();
             }
             if (multipartFile == null)
+                throw new ParameterFormatException();
+            if (!articleService.checkFileType(multipartFile))
                 throw new ParameterFormatException();
             if (articleBufferId < 0)
                 throw new ParameterFormatException();

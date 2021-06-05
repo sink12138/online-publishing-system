@@ -554,6 +554,8 @@ public class EditorController {
             }
             if (file == null)
                 throw new ParameterFormatException();
+            if (!articleService.checkFileType(file))
+                throw new ParameterFormatException();
             if (articleId <= 0)
                 throw new ParameterFormatException();
             // End parameter format checks

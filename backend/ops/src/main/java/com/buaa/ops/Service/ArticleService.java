@@ -49,6 +49,13 @@ public interface ArticleService {
     File getArticleFile(Integer id) throws IOException, ObjectNotFoundException;
 
     /**
+     * Check if an uploaded file is of a valid type. All file types allowed shall be defined in application.yml.
+     * @param file The uploaded MultipartFile
+     * @return True if the file is of a valid type, or false if not
+     */
+    Boolean checkFileType(MultipartFile file);
+
+    /**
      * Save the uploaded article file on the server, including steps as below:<br/>
      * (1) Save the original file to the storage,
      * or replace the former file if it exists;<br/>
