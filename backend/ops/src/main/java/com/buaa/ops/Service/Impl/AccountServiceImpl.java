@@ -101,7 +101,6 @@ public class AccountServiceImpl implements AccountService {
         if (check == null || check.getCheckingTime().getTime() < deadline.getTime()) {
             throw new ObjectNotFoundException();
         }
-        Integer len = check.getCode().length();
         checkDao.deleteById(check.getCheckId());
         Map<String, Integer> id = new HashMap<>();
         if (code.contains("_")) {
