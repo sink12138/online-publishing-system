@@ -1,6 +1,7 @@
 <template>
   <div class="about">
     <h1>注销作者页面</h1>
+    <router-link to='/'>返回主页</router-link> 
     <el-button type="warning" plain @click="cancel">注销作者身份</el-button>
   </div>
 </template>

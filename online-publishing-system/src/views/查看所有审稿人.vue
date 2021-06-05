@@ -10,18 +10,28 @@
         <el-table-column label="所属组织" prop="institution"></el-table-column>
       </el-table>
     </div>
+    <el-row>
+      <el-button type="primary" @click="returnEditor">返回主页</el-button>
+    </el-row>
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [{
-          reviewerId:"",
-          realName:"",
-          institution:""
-        }]
-      }
-    }
-  }
+export default {
+  data() {
+    return {
+      tableData: [
+        {
+          reviewerId: "",
+          realName: "",
+          institution: "",
+        },
+      ],
+    };
+  },
+  methods: {
+    returnEditor() {
+      window.location.href = "../";
+    },
+  },
+};
 </script>

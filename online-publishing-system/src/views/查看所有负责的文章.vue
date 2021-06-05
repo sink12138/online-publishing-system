@@ -23,21 +23,31 @@
         </el-table-column>
         <el-table-column label="文章状态" prop="status"> </el-table-column>
       </el-table>
+      <el-row>
+        <el-button type="primary" @click="returnEditor">返回主页</el-button>
+      </el-row>
     </div>
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [{
-          articleId:" ",
-          title:"",
-          keywords:" ",
-          authors:" ",
-          status:" "
-        }]
-      }
-    }
-  }
+export default {
+  data() {
+    return {
+      tableData: [
+        {
+          articleId: " ",
+          title: "",
+          keywords: " ",
+          authors: " ",
+          status: " ",
+        },
+      ],
+    };
+  },
+  methods: {
+    returnEditor() {
+      window.location.href = "../";
+    },
+  },
+};
 </script>

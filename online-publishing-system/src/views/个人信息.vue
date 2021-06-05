@@ -1,8 +1,10 @@
 <template>
   <div class="myinfo">
+    <h1>个人信息页面</h1>
     <div class="author">
       <router-link to="/author/certify">认证作者</router-link> |
-      <router-link to="/author/cancel">注销作者</router-link>
+      <router-link to="/author/cancel">注销作者</router-link> |
+      <router-link to="/">返回主页</router-link>
     </div>
     <div class="articleinfo">
       <el-table
@@ -28,6 +30,18 @@
     </div>
     <br />
     <hr />
+    <div class="modifyEmail">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="Email">
+          <el-input v-model="formInline.email" placeholder="Email"></el-input>
+        </el-form-item>
+        <el-form-item>
+        <el-button type="primary" @click="submit()"
+          >提交修改</el-button
+        >
+      </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
  
@@ -37,6 +51,9 @@ export default {
   name: "myinfo",
   data() {
     return {
+      formInline: {
+        email: "",
+      },
       dataForm: {},
     };
   },
@@ -61,8 +78,8 @@ export default {
           id: this.dataForm.headImg,
           name: "学术组织",
           amount1: this.dataForm.organization,
-          amount2: '',
-          amount3: '',
+          amount2: "",
+          amount3: "",
         },
       ];
     },
@@ -71,6 +88,18 @@ export default {
     this.convert();
   },
   methods: {
+    submit() {
+      axios({
+            method: "post",
+            url: "/home/modify/email",
+            data: {
+              email:this.formInline.email,
+            },
+          }).then((res) => {
+            console.log(res);
+          });
+          console.log("submit!");
+    },
     convert: function () {
       axios.get("/home").then((res) => {
         this.dataForm = res.data;

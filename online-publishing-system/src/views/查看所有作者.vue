@@ -8,24 +8,40 @@
         <el-table-column label="作者 ID" prop="authorId"> </el-table-column>
         <el-table-column label="真实姓名" prop="realName"> </el-table-column>
         <el-table-column label="所属机构" prop="institution"></el-table-column>
-        <el-table-column label="研究方向" prop="researchInterests"></el-table-column>
-        <el-table-column label="绑定的文章数量" prop="articleCount"></el-table-column>
+        <el-table-column
+          label="研究方向"
+          prop="researchInterests"
+        ></el-table-column>
+        <el-table-column
+          label="绑定的文章数量"
+          prop="articleCount"
+        ></el-table-column>
       </el-table>
     </div>
+    <el-row>
+      <el-button type="primary" @click="returnEditor">返回主页</el-button>
+    </el-row>
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [{
-          authorId:"",
-          realName:"",
-          institution:"",
-          researchInterests:"",
-          articleCount:""
-        }]
-      }
-    }
-  }
+export default {
+  data() {
+    return {
+      tableData: [
+        {
+          authorId: "",
+          realName: "",
+          institution: "",
+          researchInterests: "",
+          articleCount: "",
+        },
+      ],
+    };
+  },
+  methods: {
+    returnEditor() {
+      window.location.href = "../";
+    },
+  },
+};
 </script>

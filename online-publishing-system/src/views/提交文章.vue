@@ -30,6 +30,7 @@
   export default {
     data() {
       return {
+        articleBufferId: 0,
         formInline: {
           title: '',
           abstract: '',
@@ -38,6 +39,11 @@
           otherAuthors: ''
         }
       }
+    },
+    created:function(){
+      this.articleBufferId=this.$route.query.ID;
+      if(this.articleBufferId==undefined) this.articleBufferId=0;
+      alert(this.articleBufferId);
     },
     methods: {
       onSubmit() {
