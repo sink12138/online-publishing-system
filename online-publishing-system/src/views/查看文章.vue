@@ -12,13 +12,14 @@
         <div slot="header" class="clearfix">
           <span>文章信息</span>
           <el-button
-            @click="handleDelete(aritcleData.articleId)" 
+            @click="handleDelete(aritcleData.articleId)"
             plain
             icon="el-icon-delete"
             style="float:right;padding:5px 8px">
           </el-button>
         </div>
         <div class="info-text">
+<<<<<<< HEAD
           <p>文章编号：{{this.articleData.articleId}}</p>
           <p>文章标题：{{this.articleData.title}}</p>
           <p>摘要：{{this.articleData.articleAbstract}}</p>
@@ -30,6 +31,19 @@
           <p>文章出版状态：{{this.articleData.status}}</p>
           <p>出版编号：{{this.articleData.identifier}}</p>
           <p>出版日期: {{this.articleData.publishingDate}}</p>
+=======
+          <p>文章编号：{{this.articleData[0].articleId}}</p>
+          <p>文章标题：{{this.articleData[0].title}}</p>
+          <p>摘要：{{this.articleData[0].articleAbstract}}</p>
+          <p>关键字：{{this.articleData[0].keywords}}</p>
+          <p>第一作者：{{this.articleData[0].firstAuthor}}</p>
+          <p>其他作者：{{this.articleData[0].otherAuthors}}</p>
+          <p>提交者作者编号：{{this.articleData[0].submitterId}}</p>
+          <p>责任编辑编号：{{this.articleData[0].editorId}}</p>
+          <p>文章出版状态：{{this.articleData[0].status}}</p>
+          <p>出版编号：{{this.articleData[0].identifier}}</p>
+          <p>出版日期: {{this.articleData[0].publishingDate}}</p>
+>>>>>>> origin/frontend
         </div>
       </el-card>
     </div>
@@ -64,7 +78,8 @@
           url: 'http://82.156.190.251:80/apis/admin/select/articles',
         }).then(res =>{
           console.log(res.data)
-          this.articleData = res.data[(sessionStorage.getItem("adminDocIndex"))+1];
+          var index = Number(sessionStorage.getItem("adminDocIndex"));
+          this.articleData = res.data.slice(index+1,index+2);
           console.log(this.articleData)
         })
     },
@@ -100,7 +115,7 @@
           this.$message({
             type: 'info',
             message: '取消删除'
-          });       
+          });
         });
       }
     },

@@ -27,7 +27,7 @@
     </div>
     <br />
     <div class="download">
-      <el-button type="primary" @click="downloadarticle"
+      <el-button type="primary" @click="downloadarticle()"
         >点击下载本篇文章<i class="el-icon-download el-icon--right"></i
       ></el-button>
     </div>
@@ -35,16 +35,12 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   name: "article",
   data() {
     return {
       dataForm: {},
     };
-  },
-  created() {
-    this.convert();
   },
   computed: {
     tableData() {
@@ -80,15 +76,60 @@ export default {
       ];
     },
   },
+  created() {
+    this.convert();
+  },
   methods: {
     convert() {
-      axios.get("/test.json").then((res) => {
+      this.articleId = this.$route.query.articleIds;
+      console.log(this.articleId);
+      this.$axios({
+        method: "get",
+        url: "http://82.156.190.251:80/apis/article",
+        params: {
+          articleId: this.articleId,
+        },
+      }).then((res) => {
         console.log(JSON.stringify(res));
         this.dataForm = res.data;
       });
     },
     downloadarticle() {
-      alert("下载中");
+      this.$axios({
+        method: "get",
+        url: "http://82.156.190.251:80/apis/download",
+        params: { articleId: this.articleId },
+        responseTpe: "blob",
+      }).then(
+        (response) => {
+          console.log(response);
+          const filename = decodeURIComponent(
+            response.headers["content-disposition"].split(";")[1].split("=")[1]
+          );
+          console.log(filename);
+          this.load(response.data, filename);
+          console.log("下载中");
+        },
+        (err) => {
+          alert(err);
+        }
+      );
+    },
+    load(data, filename) {
+      if (!data) {
+        return;
+      }
+      let url = window.URL.createObjectURL(
+        new Blob([data], { type: "application/force-download;charset=utf-8" })
+      );
+      let link = document.createElement("a");
+      link.style.display = "none";
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     },
     columnStyle({ columnIndex }) {
       if (columnIndex == 1 || columnIndex == 3) {

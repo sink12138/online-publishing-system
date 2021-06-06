@@ -2,8 +2,19 @@
   <div class="myinfo">
     <h1>个人信息页面</h1>
     <div class="author">
+<<<<<<< HEAD
       <router-link to="/author/certify">认证作者</router-link> |
       <router-link to="/author/cancel">注销作者</router-link> |
+=======
+      <router-link to="/author/certify" v-if="$store.state.role < 4"
+        >认证作者</router-link
+      >
+      |
+      <router-link to="/author/cancel" v-if="$store.state.role >= 4"
+        >注销作者</router-link
+      >
+      |
+>>>>>>> origin/frontend
       <router-link to="/">返回主页</router-link>
     </div>
     <div class="articleinfo">
@@ -36,23 +47,62 @@
           <el-input v-model="formInline.email" placeholder="Email"></el-input>
         </el-form-item>
         <el-form-item>
-        <el-button type="primary" @click="submit()"
-          >提交修改</el-button
-        >
-      </el-form-item>
+          <el-button type="primary" @click="submit()">提交修改</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="modify">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="password">
+          <el-input
+            v-model="formInline.password"
+            placeholder="Email"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="realName">
+          <el-input
+            v-model="formInline.realName"
+            placeholder="Email"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="institution">
+          <el-input
+            v-model="formInline.institution"
+            placeholder="Email"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="researchInterests">
+          <el-input
+            v-model="formInline.researchInterests"
+            placeholder="Email"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="organization">
+          <el-input
+            v-model="formInline.organization"
+            placeholder="Email"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submit2()">提交修改</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
- 
+
 <script>
-const axios = require("axios");
 export default {
   name: "myinfo",
   data() {
     return {
       formInline: {
         email: "",
+        password: "",
+        realName: "",
+        institution: "",
+        researchInterests: "",
+        organization: "",
       },
       dataForm: {},
     };
@@ -89,20 +139,59 @@ export default {
   },
   methods: {
     submit() {
-      axios({
-            method: "post",
-            url: "/home/modify/email",
-            data: {
-              email:this.formInline.email,
-            },
-          }).then((res) => {
-            console.log(res);
-          });
-          console.log("submit!");
+      console.log(JSON.stringify({ email: this.formInline.email }));
+      if (this.formInline.email !== "") {
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/home/modify/email",
+          data: JSON.stringify({
+            email: this.formInline.email,
+          }),
+        }).then((res) => {
+          console.log(res);
+        });
+        console.log("submit!");
+      } else {
+        console.log("email cant be void!");
+      }
+    },
+    submit2() {
+      console.log(
+        JSON.stringify({
+          password: this.formInline.password,
+          realName: this.formInline.realName,
+          institution: this.formInline.institution,
+          researchInterests: this.formInline.researchInterests,
+          organization: this.formInline.organization,
+        })
+      );
+      if (this.formInline.password !== "") {
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/home/modify",
+          data: JSON.stringify({
+            password: this.formInline.password,
+            realName: this.formInline.realName,
+            institution: this.formInline.institution,
+            researchInterests: this.formInline.researchInterests,
+            organization: this.formInline.organization,
+          }),
+        }).then((res) => {
+          console.log(res);
+        });
+        console.log("submit!");
+      } else {
+        console.log("password cant be void!");
+      }
     },
     convert: function () {
-      axios.get("/home").then((res) => {
+      this.$axios.get("http://82.156.190.251:80/apis/home").then((res) => {
+        console.log(res);
         this.dataForm = res.data;
+        this.formInline.realName = res.data.realName;
+        this.formInline.institution = res.data.institution;
+        this.formInline.researchInterests = res.data.researchInterests;
+        this.formInline.organization = res.data.organization;
       });
     },
     columnStyle({ columnIndex }) {

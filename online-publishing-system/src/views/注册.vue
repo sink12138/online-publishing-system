@@ -8,7 +8,7 @@
       :rules="rules"
       ref="ruleForm"
       label-width="100px"
-      class="demo-ruleForm"
+      class="ruleForm"
     >
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="ruleForm.email"></el-input>
@@ -28,11 +28,8 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >提交</el-button
-        >
-        <el-button @click="resetForm('ruleForm')">重置</el-button
-        >     
+        <el-button type="primary" @click="submitForm()">提交</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
         <router-link to="/"
           ><el-button type="primary">返回主页</el-button></router-link
         >
@@ -42,18 +39,26 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     var checkEmail = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("邮箱不能为空"));
+      } else {
+        callback();
       }
     };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
+        if (value.length < 6 || value.length > 20) {
+          callback(new Error("请输入六至二十位"));
+        }
+        var regx = /^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,20}$/;
+        if (!this.ruleForm.pass.match(regx)) {
+          callback(new Error("请同时包含字母数字"));
+        }
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
         }
@@ -83,19 +88,27 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitForm() {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          axios({
+          var registerdata = {
+            email: this.ruleForm.email,
+            password: this.ruleForm.pass,
+          };
+          var data1 = JSON.stringify(registerdata);
+          console.log(data1);
+          this.$axios({
             method: "post",
-            url: "/register",
-            data: {
-              email:this.ruleForm.email,
-              password:this.ruleForm.password,
-            },
-          }).then((res) => {
-            console.log(res);
-          });
+            url: "http://82.156.190.251:80/apis/register",
+            data: data1,
+          })
+            .then((res) => {
+              console.log(res);
+              if (res.success == true) alert("注册成功!");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
           console.log("submit!");
         } else {
           console.log("error submit!!");

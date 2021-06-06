@@ -38,10 +38,89 @@ export default {
       },
     };
   },
-    methods: {
-      onSubmit() {
-        alert('认证成功！');
+  methods: {
+    onSubmit() {
+      console.log("submit!");
+      if (
+        this.formInline.institution === "" &&
+        this.formInline.researchInterests === ""
+      ) {
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/author/certify",
+        }).then(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            alert(err);
+          }
+        );
+      } else if (
+        this.formInline.institution === "" &&
+        this.formInline.researchInterests !== ""
+      ) {
+        console.log(
+          JSON.stringify({
+            researchInterests: this.formInline.researchInterests,
+          })
+        );
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/author/certify",
+          data: JSON.stringify({
+            researchInterests: this.formInline.researchInterests,
+          }),
+        }).then(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            alert(err);
+          }
+        );
+      } else if (
+        this.formInline.institution !== "" &&
+        this.formInline.researchInterests === ""
+      ) {
+        console.log(
+          JSON.stringify({
+            institution: this.formInline.institution,
+          })
+        );
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/author/certify",
+          data: JSON.stringify({
+            institution: this.formInline.institution,
+          }),
+        }).then(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            alert(err);
+          }
+        );
+      } else if (
+        this.formInline.institution !== "" &&
+        this.formInline.researchInterests !== ""
+      ) {
+        console.log(JSON.stringify(this.formInline));
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/author/certify",
+          data: JSON.stringify(this.formInline),
+        }).then(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            alert(err);
+          }
+        );
       }
-    }
-  }
+    },
+  },
+};
 </script>
