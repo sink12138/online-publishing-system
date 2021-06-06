@@ -33,12 +33,39 @@ export default {
   },
   methods: {
     CertifySuccess() {
+      if (this.formInline.accountId === "") {
+        alert("请输入待认证的账号！");
+        return;
+      } else {
+        if (this.formInline.organization === "") {
+          alert("请输入待认证的用户的组织！");
+          return;
+        }
+      }
       let JsonCertifyReviewer = JSON.stringify(this.formInline);
       console.log(JsonCertifyReviewer);
       this.$store.commit("Certify");
-      sessionStorage.setItem("accountId", this.formInline.accountId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/certify/reviewer",
+        data: JsonCertifyReviewer,
+      }).then((res) => {
+        console.log(res);
+        if (res.date.success == true) {
+          this.$message({
+            showClose: true,
+            message: "认证审稿人成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
+      });
       window.location.href = "../reviewers";
-      alert("认证成功！");
     },
     Cancel() {
       window.location.href = "../reviewers";

@@ -36,12 +36,40 @@ export default {
   },
   methods: {
     onSubmit() {
+      if(this.formInline.articleId ===""){
+        alert("请输入文章编号！");
+        return;
+      }
+      else{
+        if(this.formInline.identifier ===""){
+          alert("请输入文章标识符！");
+          return;
+        }
+      }
       let JsonPublishArticle = JSON.stringify(this.formInline);
       console.log(JsonPublishArticle);
       this.$store.commit("publish");
-      sessionStorage.setItem("articleId", this.formInline.articleId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/publish",
+        data: JsonPublishArticle,
+      }).then((res) => {
+        console.log(res);
+        if (res.date.success == true) {
+          this.$message({
+            showClose: true,
+            message: "出版文章成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
+      });
       window.location.href = "../";
-      alert("出版成功！");
     },
   },
 };

@@ -32,16 +32,35 @@ export default {
   },
   methods: {
     cancel() {
+      if(this.formInline.reviewerId ===""){
+        alert("请输入审稿人编号！");
+        return;
+      }
+      let JsonCancelReviewerId = JSON.stringify(this.formInline);
+      console.log(JsonCancelReviewerId);
+      this.$store.commit("cancel");
+      sessionStorage.setItem("reviewerId", this.formInline.reviewerId);
       this.$axios({
         method: "post",
-        url: "/cancel/reviewer",
-        data: {
-          reviewerId: this.formInline.reviewerId,
-        },
+        url: "http://82.156.190.251:80/apis/editor/cancel/reviewer",
+        data: JsonCancelReviewerId,
       }).then((res) => {
         console.log(res);
+        if (res.date.success == true) {
+          this.$message({
+            showClose: true,
+            message: "撤销审稿人身份成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
       });
-      console.log("cancel!");
+      window.location.href = "../";
     },
   },
 };

@@ -92,10 +92,10 @@ html, body {
         adminLogin(){
             let JsonAdmin = JSON.stringify(this.adminMess);
             console.log(JsonAdmin);
-            this.$store.commit('adminLogin');
+            /*this.$store.commit('adminLogin');
             sessionStorage.setItem("adminPassword",this.adminMess.password);
-            window.location.href='../admin/home';
-            /*this.$axios({
+            window.location.href='../admin/home';*/
+            this.$axios({
                 method:'post',
                 url:'http://82.156.190.251:80/apis/admin/login',
                 data:JsonAdmin,
@@ -103,10 +103,10 @@ html, body {
             .then((res)=>{
                 console.log(res);
                 console.log(res.data.success);
-                if (res.data.success == true) 
+                if (res.data.success == true)
                     this.$store.commit('adminLogin')
                 else this.$store.commit('adminLogout');
-                if (sessionStorage.getItem("admin") == 'login') { 
+                if (sessionStorage.getItem("admin") == 'login') {
                     sessionStorage.setItem("adminPassword",this.adminMess.password);
                     window.location.href='../admin/home'
                 }
@@ -121,7 +121,7 @@ html, body {
                     });
                 }
             })
-            .catch(error => console.log(error))*/
+            .catch(error => console.log(error))
         }
     }
   }

@@ -31,6 +31,10 @@ export default {
   },
   methods: {
     cancel() {
+      if(this.formInline.authorId ===""){
+        alert("请输入作者编号！");
+        return;
+      }
       let JsonCancelAuthorId = JSON.stringify(this.formInline);
       console.log(JsonCancelAuthorId);
       this.$store.commit("cancel");
@@ -39,9 +43,23 @@ export default {
         method: "post",
         url: "http://82.156.190.251:80/apis/editor/cancel/author",
         data: JsonCancelAuthorId,
+      }).then((res) => {
+        console.log(res);
+        if (res.data.success == true) {
+          this.$message({
+            showClose: true,
+            message: "撤销作者身份成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
       });
-      alert("撤销成功！");
-      window.location.href = "../";
+      //window.location.href = "../";
     },
   },
 };
