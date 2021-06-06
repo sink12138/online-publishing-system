@@ -461,7 +461,6 @@ public class EditorController {
                 if (reviewerService.getReviewerById(reviewerId) == null) {
                     throw new ObjectNotFoundException();
                 }
-
             }
             reviewerService.assignReviewers(articleId, reviewerIds);
             map.put("success", true);
