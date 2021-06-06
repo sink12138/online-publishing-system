@@ -102,17 +102,19 @@ export default {
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/claim",
-        data: { articleId: articleId },
+        data: {"articleId":Number(articleId)},
       }).then((res) => {
         console.log(res);
       });
       console.log("submit!");
     },
     fetchdata() {
+      this.search = parent.search;
+      console.log(JSON.stringify(this.search));
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/search",
-        params: JSON.stringify(this.search),
+        params: this.search,
       }).then(
         (response) => {
           console.log(response);

@@ -35,7 +35,7 @@
         <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope"
-            ><el-select v-model="value" placeholder="是否通过">
+            ><el-select v-model="scope.row.value" placeholder="是否通过">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -52,6 +52,13 @@
             ></el-button>
             <el-button @click="open(scope.row)" type="text" size="small"
               >评价</el-button
+            >
+            <el-button
+              @click="submit(scope.row)"
+              type="text"
+              size="small"
+              v-if="scope.row.comments !== undefined && scope.row.comments !== ''"
+              >提交</el-button
             >
           </template>
         </el-table-column>
@@ -85,12 +92,14 @@ export default {
     return {
       tableData: [
         {
-          ID: 12345,
+          articleID: 12345,
           Name: "test",
           keyword: "test,abstract",
           firstAuthor: "abc",
           otherAuthors: "123,456",
           state: "审核中",
+          value: false,
+          comments: "",
         },
       ],
       options: [
@@ -103,8 +112,6 @@ export default {
           label: "不通过",
         },
       ],
-      value: false,
-      comments: "",
     };
   },
   created() {
@@ -115,7 +122,7 @@ export default {
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
-        params: JSON.stringify({ articleID: row.articleID }),
+        params: JSON.stringify({ articleID: Number(row.articleID) }),
       }).then(
         (response) => {
           console.log(response);
@@ -126,10 +133,33 @@ export default {
         }
       );
     },
+    submit(row) {
+      console.log(row.articleId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/reviewer/review/submit",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+          pass: row.value,
+          comments: row.comments,
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
+      location.reload();
+    },
     convert: function () {
-      this.$axios.get("http://82.156.190.251:80/apis/reviewer/articles").then((res) => {
-        this.tableData = res.data.slice(1);
-      });
+      this.$axios
+        .get("http://82.156.190.251:80/apis/reviewer/articles")
+        .then((res) => {
+          this.tableData = res.data.slice(1);
+          console.log(this.tableData);
+        });
     },
     open(row) {
       this.$prompt("请输入评论", "提示", {
@@ -141,9 +171,9 @@ export default {
         .then(({ value }) => {
           this.$message({
             type: "success",
-            message: "通过意见:" + this.value + ",你的评论是: " + value,
+            message: "通过意见:" + row.value + ",你的评论是: " + value,
           });
-          this.comments = value;
+          row.comments = value;
         })
         .catch(() => {
           this.$message({
@@ -152,22 +182,6 @@ export default {
           });
         });
       console.log(row);
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/reviewer/review/submit",
-        params: JSON.stringify({
-          articleID: row.articleID,
-          pass: this.value,
-          comments: this.comments,
-        }).then(
-          (response) => {
-            console.log(response);
-          },
-          (err) => {
-            alert(err);
-          }
-        ),
-      });
     },
   },
 };
