@@ -234,12 +234,15 @@ public class UserController {
     ArticleService articleService;
 
     @GetMapping("/article")
-    public Map<String, Object> article(@RequestBody Map<String, Object> request) {
+    public Map<String, Object> article(@RequestParam(value = "articleId", required = false) String idString) {
         Map<String, Object> map = new HashMap<>();
         Integer articleId;
         try {
+            if (idString == null) {
+                throw new ParameterFormatException();
+            }
             try {
-                articleId = (Integer) request.get("articleId");
+                articleId = Integer.parseInt(idString);
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
@@ -540,13 +543,16 @@ public class UserController {
     }
 
     @GetMapping("/infos")
-    public ArrayList<Map<String, Object>> infos(@RequestBody Map<String, Object> request) {
+    public ArrayList<Map<String, Object>> infos(@RequestParam(value = "authorId", required = false) String idString) {
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         Integer authorId;
         try {
+            if (idString == null) {
+                throw new ParameterFormatException();
+            }
             try {
-                authorId = (Integer) request.get("authorId");
+                authorId = Integer.parseInt(idString);
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
