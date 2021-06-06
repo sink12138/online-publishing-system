@@ -46,10 +46,10 @@ public class EmailServiceImpl implements EmailService {
         String subject;
         String action;
         if (accountId == null) {
-            subject = "注册OPS邮箱验证";
+            subject = "注册邮箱验证";
             action = "注册";
         } else {
-            subject = "更改OPS邮箱验证";
+            subject = "更改邮箱验证";
             action = "更改";
         }
         String code = generateCode(accountId, accountBufferId);
