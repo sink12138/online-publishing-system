@@ -185,7 +185,7 @@ public class EmailFactory {
             "申请撤稿提醒",
             "一名作者正在申请撤稿。",
             "尊敬的编辑 %s，您好！",
-            "作者 %s 于 %s 申请撤除已出版的文章《%s》，请您登录网站进行处理。如有疑问，请与该作者联系"
+            "作者 %s 于 %s 申请撤除已出版的文章《%s》，请您登录网站进行处理。如有疑问，请与该作者联系。"
     );
 
     public ReminderEmail makeWithdrawArticleEmail(String receiverName, String operatorName, String articleTitle) {
