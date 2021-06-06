@@ -4,7 +4,7 @@
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item label="文章ID">
-            <span>{{ props.row.articleID }}</span>
+            <span>{{ props.row.articleId }}</span>
           </el-form-item>
           <el-form-item label="文章标题">
             <span>{{ props.row.title }}</span>
@@ -24,7 +24,7 @@
         </el-form>
       </template>
     </el-table-column>
-    <el-table-column label="文章 ID" prop="articleID"> </el-table-column>
+    <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
     <el-table-column label="文章标题" prop="title"> </el-table-column>
     <el-table-column label="文章状态" prop="status"> </el-table-column>
     <el-table-column fixed="right" label="操作" width="400">
@@ -67,44 +67,7 @@ export default {
     return {
       article: 0,
       status: "",
-      tableData: [
-        {
-          articleID: 0,
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          status: "审核未通过",
-          authorized: false,
-        },
-        {
-          articleID: 123,
-          title: "a",
-          keywords: "abc",
-          firstAuthor: "12",
-          otherAuthors: "as",
-          status: "审核通过",
-          authorized: false,
-        },
-        {
-          articleID: 345,
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          status: "待接收",
-          authorized: false,
-        },
-        {
-          articleID: 13345,
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          status: "已出版",
-          authorized: false,
-        },
-      ],
+      tableData: [],
     };
   },
   created() {
@@ -112,10 +75,10 @@ export default {
   },
   methods: {
     submit(row) {
-      this.article = row.articleID;
+      this.article = row.articleId;
       this.status = row.status;
       this.$router.push(
-        "http://82.156.190.251:80/apis/author/submit?articleID=" + this.article + "&status=" + this.status
+        "/author/submit?articleId=" + this.article + "&status=" + this.status
       );
       console.log(row.articleID);
     },
@@ -127,15 +90,55 @@ export default {
       });
     },
     withdraw(row) {
-      this.$axios.post("http://82.156.190.251:80/apis/author/withdraw", Number(row.articleID));
-      console.log(row);
+      console.log(row.articleId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/author/withdraw",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
+      location.reload();
     },
     confirmDraft(row) {
-      this.$axios.post("http://82.156.190.251:80/apis/author/confirm/draft", Number(row.articleID));
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/author/confirm/draft",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
       console.log(row);
     },
     abort(row) {
-      this.$axios.post("http://82.156.190.251:80/apis/author/abort", Number(row.articleID));
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/author/abort",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
       console.log(row);
     },
   },

@@ -10,7 +10,7 @@
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="文章ID">
-                <span>{{ props.row.articleID }}</span>
+                <span>{{ props.row.articleId }}</span>
               </el-form-item>
               <el-form-item label="文章标题">
                 <span>{{ props.row.title }}</span>
@@ -30,7 +30,7 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="文章 ID" prop="articleID"> </el-table-column>
+        <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
@@ -57,7 +57,9 @@
               @click="submit(scope.row)"
               type="text"
               size="small"
-              v-if="scope.row.comments !== undefined && scope.row.comments !== ''"
+              v-if="
+                scope.row.comments !== undefined && scope.row.comments !== ''
+              "
               >提交</el-button
             >
           </template>
@@ -90,18 +92,7 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          articleID: 12345,
-          Name: "test",
-          keyword: "test,abstract",
-          firstAuthor: "abc",
-          otherAuthors: "123,456",
-          state: "审核中",
-          value: false,
-          comments: "",
-        },
-      ],
+      tableData: [],
       options: [
         {
           value: true,
@@ -122,16 +113,35 @@ export default {
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
-        params: JSON.stringify({ articleID: Number(row.articleID) }),
+        params: { articleId: row.articleId },
+        responseTpe: "blob",
       }).then(
         (response) => {
           console.log(response);
-          console.log("下载中");
+          const filename = decodeURIComponent(
+            response.headers["content-disposition"].split(";")[1].split("=")[1]
+          );
+          console.log(filename);
+          this.load(response.data, filename);
         },
         (err) => {
           alert(err);
         }
       );
+    },
+    load(data,filename){
+      if (! data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{ type:'application/force-download;charset=utf-8'}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.download = filename
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
     },
     submit(row) {
       console.log(row.articleId);

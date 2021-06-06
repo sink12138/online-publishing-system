@@ -66,6 +66,25 @@ export default {
       role: 0,
     };
   },
+  created: function () {
+    if (sessionStorage.getItem("isLogin") == undefined) sessionStorage.setItem("isLogin",false);
+    if (sessionStorage.getItem("role") == undefined) sessionStorage.setItem("role",0);
+    if (sessionStorage.getItem("isLogin") == true) this.$store.commit("login");
+    else if (sessionStorage.getItem("isLogin") == false){
+      this.$store.commit("logout");
+      sessionStorage.setItem("role",0);
+    }
+    if (sessionStorage.getItem("role") % 2 == 1)
+      this.$store.commit("setEditor");
+    if (
+      sessionStorage.getItem("role") == 2 ||
+      sessionStorage.getItem("role") == 3 ||
+      sessionStorage.getItem("role") == 6 ||
+      sessionStorage.getItem("role") == 7
+    )
+      this.$store.commit("setReviewer");
+    if (sessionStorage.getItem("role") >= 4) this.$store.commit("setWriter");
+  },
   methods: {
     Login() {
       this.$axios({

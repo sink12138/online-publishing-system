@@ -106,6 +106,19 @@
                 </template>
               </el-table-column>
               <el-table-column
+                label="操作"
+                align="center"
+                v-if="$store.state.isLogin == true"
+              >
+                <template slot-scope="scope" class="active">
+                  <el-button
+                    @click="article(scope.row.articleId)"
+                    type="text"
+                    icon="el-icon-info"
+                  ></el-button>
+                </template>
+              </el-table-column>
+              <el-table-column
                 label="认领"
                 align="center"
                 v-if="$store.state.role >= 4"
@@ -202,28 +215,41 @@ export default {
           keywords: "",
           firstAuthor: "",
         },
-      ],  //存放从后端传来的数据
+      ], //存放从后端传来的数据
     };
   },
   created: function () {
+    console.log(this.$store.state.role);
+    if (sessionStorage.getItem("isLogin") == undefined)
+      sessionStorage.setItem("isLogin", false);
+    if (sessionStorage.getItem("role") == undefined)
+      sessionStorage.setItem("role", 0);
     if (sessionStorage.getItem("isLogin") == true) this.$store.commit("login");
-    else if (sessionStorage.getItem("isLogin") == false)
+    else if (sessionStorage.getItem("isLogin") == false) {
       this.$store.commit("logout");
-    if (sessionStorage.getItem("role") % 2 == 1)
-      this.$store.commit("setEditor");
-    if (
-      sessionStorage.getItem("role") == 2 ||
-      sessionStorage.getItem("role") == 3 ||
-      sessionStorage.getItem("role") == 6 ||
-      sessionStorage.getItem("role") == 7
-    )
-      this.$store.commit("setReviewer");
-    if (sessionStorage.getItem("role") >= 4) this.$store.commit("setWriter");
+      sessionStorage.setItem("role", 0);
+    }
+    if (this.$store.state.role === 0) {
+      if (sessionStorage.getItem("role") % 2 == 1)
+        this.$store.commit("setEditor");
+      if (
+        sessionStorage.getItem("role") == 2 ||
+        sessionStorage.getItem("role") == 3 ||
+        sessionStorage.getItem("role") == 6 ||
+        sessionStorage.getItem("role") == 7
+      )
+        this.$store.commit("setReviewer");
+      if (sessionStorage.getItem("role") >= 4) this.$store.commit("setWriter");
+    }
+    console.log(this.$store.state.role);
   },
   mounted() {
     this.fetchdata();
   },
   methods: {
+    article(articleId) {
+      this.$router.push("/article?articleIds=" + this.article);
+    },
     searchArticle() {
       this.$axios({
         method: "get",
@@ -255,19 +281,41 @@ export default {
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
-        params:{
-          articleId:Number(articleId),
+        params: {
+          articleId: articleId,
         },
+        responseTpe: "blob",
       }).then((res) => {
         console.log(res);
+        const filename = decodeURIComponent(
+          res.headers["content-disposition"].split(";")[1].split("=")[1]
+        );
+        console.log(filename);
+        this.load(res.data, filename);
       });
       console.log("submit!");
+    },
+    load(data, filename) {
+      if (!data) {
+        return;
+      }
+      let url = window.URL.createObjectURL(
+        new Blob([data], { type: "application/force-download;charset=utf-8" })
+      );
+      let link = document.createElement("a");
+      link.style.display = "none";
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     },
     claim(articleId) {
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/author/claim",
-        data: {"articleId":Number(articleId)},
+        data: { articleId: Number(articleId) },
       }).then((res) => {
         console.log(res);
       });

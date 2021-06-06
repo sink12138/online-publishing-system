@@ -68,7 +68,7 @@ export default {
     };
   },
   created: function () {
-    this.articleBufferId = this.$route.query.articleID;
+    this.articleBufferId = this.$route.query.articleId;
     this.status = this.$route.query.status;
     if (this.articleBufferId == undefined) this.articleBufferId = 0;
     console.log(this.articleBufferId);
