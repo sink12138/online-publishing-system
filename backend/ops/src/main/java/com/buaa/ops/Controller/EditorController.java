@@ -491,7 +491,7 @@ public class EditorController {
     }
 
     @GetMapping("/reviews")
-    public ArrayList<Map<String, Object>> reviews(@RequestBody Map<String, Object> requestMap) {
+    public ArrayList<Map<String, Object>> reviews(@RequestParam(value = "articleId", required = false) String idString) {
         Map<String, Object> map = new HashMap<>();
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
         HttpSession session = httpServletRequest.getSession();
@@ -503,7 +503,7 @@ public class EditorController {
             }
             Integer articleId;
             try {
-                articleId = (Integer) requestMap.get("articleId");
+                articleId = Integer.parseInt(idString);
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
