@@ -163,7 +163,8 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ArrayList<Map<String, Object>> search(@RequestBody Map<String, Object> requestMap) {
+    public ArrayList<Map<String, Object>> search(@RequestParam(value = "searchType", required = false) Object typeObject,
+                                                 @RequestParam(value = "searchString", required = false) Object stringObject) {
         ArrayList<Map<String, Object>> maps = new ArrayList<>();
         Map<String, Object> statusMap = new HashMap<>();
         try {
@@ -171,12 +172,22 @@ public class UserController {
             String searchString;
             // Begin parameter format checks
             try {
+                searchType = (String) typeObject;
+                searchString = (String) stringObject;
+            }
+            catch (ClassCastException cce) {
+                throw new ParameterFormatException();
+            }
+            // TODO: 2021/6/6 Remove the comments if this goes well
+/*
+            try {
                 searchType = (String) requestMap.get("searchType");
                 searchString = (String) requestMap.get("searchString");
             }
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
             }
+*/
             if (searchType == null || searchString == null)
                 throw new ParameterFormatException();
             if (!searchType.equals("title") && !searchType.equals("keyword") && !searchType.equals("author"))
