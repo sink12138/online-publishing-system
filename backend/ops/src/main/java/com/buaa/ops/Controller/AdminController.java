@@ -505,7 +505,7 @@ public class AdminController {
             if (!checkAuthority())
                 throw new LoginVerificationException();
             httpServletResponse.setContentType("application/force-download");
-            httpServletResponse.addHeader("Content-Disposition","attachment; filename=\"log.txt\"");
+            httpServletResponse.addHeader("Content-Disposition","attachment; filename=log.txt");
             byte[] buffer = new byte[1024];
             fis = new FileInputStream(logFile);
             bis = new BufferedInputStream(fis);

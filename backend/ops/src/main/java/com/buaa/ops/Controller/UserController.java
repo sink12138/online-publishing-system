@@ -285,18 +285,18 @@ public class UserController {
     private String PASSWORD;
 
     @GetMapping("/download")
-    public void download(@RequestParam(value = "articleId", required = false) Object idObject) {
+    public void download(@RequestParam(value = "articleId", required = false) String idString) {
         FileInputStream fis = null;
         BufferedInputStream bis = null;
         try {
             int articleId;
             // Begin parameter format checks
-            if (idObject == null)
+            if (idString == null)
                 throw new ParameterFormatException();
             try {
-                articleId = Integer.parseInt(idObject.toString());
+                articleId = Integer.parseInt(idString);
             }
-            catch (ClassCastException cce) {
+            catch (Exception e) {
                 throw new ParameterFormatException();
             }
             if (articleId == 0)
@@ -371,8 +371,8 @@ public class UserController {
                 file = new File(articleBuffer.getFilePath());
             String fileName = file.getName();
             httpServletResponse.setContentType("application/force-download");
-            httpServletResponse.addHeader("Content-Disposition","attachment; filename=\""
-                    + fileName + "\";filename*=utf-8''" + URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20"));
+            httpServletResponse.addHeader("Content-Disposition","attachment; filename="
+                    + URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20"));
             byte[] buffer = new byte[1024];
             fis = new FileInputStream(file);
             bis = new BufferedInputStream(fis);
