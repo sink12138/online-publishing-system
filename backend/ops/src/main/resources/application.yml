@@ -42,7 +42,7 @@ admin:
 check:
   ip-address : http://82.156.190.251:8090
   valid-time: 600000
-  code-bits: 8
+  code-bits: 32
 
 file:
   articles-path: C:/ops/backend/storage
