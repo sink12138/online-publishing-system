@@ -28,7 +28,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   name: "authorinfo",
   data() {
@@ -69,11 +68,11 @@ export default {
   },
   methods: {
     convert: function () {
-      axios({
+      this.$axios({
         method: "get",
-        url: "/infos",
+        url: "http://82.156.190.251:80/apis/infos",
         data: {
-          authorId: this.authorId,
+          authorId: JSON.stringify(this.authorId),
         },
       }).then((res) => {
         var array = new Array();

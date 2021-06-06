@@ -7,7 +7,6 @@
 </template>
 
 <script>
-const axios = require('axios');
 export default {
   methods: {
     cancel() {
@@ -16,9 +15,9 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          axios({
+          this.$axios({
             method:"post",
-            url:"/author/cancel",
+            url:"http://82.156.190.251:80/apis/author/cancel",
           })
           .then((res)=>{
             console.log(res);

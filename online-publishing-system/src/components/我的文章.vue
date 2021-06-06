@@ -4,13 +4,13 @@
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item label="文章ID">
-            <span>{{ props.row.ID }}</span>
+            <span>{{ props.row.articleId }}</span>
           </el-form-item>
           <el-form-item label="文章标题">
-            <span>{{ props.row.Name }}</span>
+            <span>{{ props.row.title }}</span>
           </el-form-item>
           <el-form-item label="关键字">
-            <span>{{ props.row.keyword }}</span>
+            <span>{{ props.row.keywords }}</span>
           </el-form-item>
           <el-form-item label="第一作者">
             <span>{{ props.row.firstAuthor }}</span>
@@ -19,33 +19,26 @@
             <span>{{ props.row.otherAuthors }}</span>
           </el-form-item>
           <el-form-item label="文章状态">
-            <span>{{ props.row.state }}</span>
+            <span>{{ props.row.status }}</span>
           </el-form-item>
         </el-form>
       </template>
     </el-table-column>
-    <el-table-column label="文章 ID" prop="ID"> </el-table-column>
-    <el-table-column label="文章标题" prop="Name"> </el-table-column>
-    <el-table-column label="文章状态" prop="state"> </el-table-column>
+    <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
+    <el-table-column label="文章标题" prop="title"> </el-table-column>
+    <el-table-column label="文章状态" prop="status"> </el-table-column>
     <el-table-column fixed="right" label="操作" width="400">
       <template slot-scope="scope">
-        <router-link to="/author/upload"
-          ><el-button type="text" size="small" @click="upload(scope.row)"
-            >上传文件</el-button
-          ></router-link
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="submit(scope.row)"
+          >提交文章</el-button
         >
-        <router-link to="/author/submit"
-          ><el-button type="text" size="small" @click="submit(scope.row)"
-            >提交文章</el-button
-          ></router-link
-        >
-        <el-button type="text" size="small" @click="confirmDraft(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过')&&scope.row.authorized?false:true" @click="confirmDraft(scope.row)"
           >确认终稿</el-button
         >
-        <el-button type="text" size="small" @click="abort(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="abort(scope.row)"
           >中止出版</el-button
         >
-        <el-button type="text" size="small" @click="withdraw(scope.row)"
+        <el-button type="text" size="small" :disabled="(scope.row.status=='已出版')&&scope.row.authorized?false:true" @click="withdraw(scope.row)"
           >撤稿</el-button
         >
       </template>
@@ -69,65 +62,83 @@
 </style>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     return {
-      tableData: [
-        {
-          ID: "",
-          Name: "",
-          keyword: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          state: "",
-        },
-        {
-          ID: "123",
-          Name: "",
-          keyword: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          state: "",
-        },
-        {
-          ID: "345",
-          Name: "",
-          keyword: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          state: "",
-        },
-      ],
+      article: 0,
+      status: "",
+      tableData: [],
     };
   },
   created() {
     this.convert();
   },
   methods: {
-    upload(row) {
-      this.$router.push('/author/upload?ID=' + row.ID);
-      console.log(row);
-    },
     submit(row) {
-      this.$router.push('/author/submit?ID=' + row.ID);
-      console.log(row);
+      this.article = row.articleId;
+      this.status = row.status;
+      this.$router.push(
+        "/author/submit?articleId=" + this.article + "&status=" + this.status
+      );
+      console.log(row.articleID);
     },
     convert: function () {
-      axios.get("/author/articles").then((res) => {
-        this.tableData = res.data;
+      this.$axios.get("http://82.156.190.251:80/apis/author/articles").then((res) => {
+        var arraylist = new Array();
+        arraylist = res.data;
+        this.tableData = arraylist.slice(1);
       });
     },
     withdraw(row) {
-      axios.post("/author/withdraw", row.ID);
-      console.log(row);
+      console.log(row.articleId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/author/withdraw",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
+      location.reload();
     },
     confirmDraft(row) {
-      axios.post("/author/confirm/draft", row.ID);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/author/confirm/draft",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
       console.log(row);
     },
     abort(row) {
-      axios.post("/author/abort", row.ID);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/author/abort",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
       console.log(row);
     },
   },

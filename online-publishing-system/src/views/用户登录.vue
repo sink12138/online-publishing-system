@@ -25,9 +25,7 @@
           </el-form-item>
           <el-form-item>
             <router-linkF to="/"
-              ><el-button type="info"
-                >返回主页</el-button
-              ></router-linkF
+              ><el-button type="info">返回主页</el-button></router-linkF
             >
           </el-form-item>
         </div>
@@ -41,9 +39,7 @@
           </el-form-item>
           <el-form-item>
             <router-link to="/"
-              ><el-button type="info"
-                >返回主页</el-button
-              ></router-link
+              ><el-button type="info">返回主页</el-button></router-link
             >
           </el-form-item>
         </div>
@@ -52,9 +48,13 @@
   </div>
 </template>
 
-<script>
+<style>
+.Login {
+  background-color: #fff;
+}
+</style>
 
-const axios = require("axios");
+<script>
 export default {
   data() {
     return {
@@ -66,37 +66,65 @@ export default {
       role: 0,
     };
   },
+  created: function () {
+    if (sessionStorage.getItem("isLogin") == undefined) sessionStorage.setItem("isLogin",false);
+    if (sessionStorage.getItem("role") == undefined) sessionStorage.setItem("role",0);
+    if (sessionStorage.getItem("isLogin") == true) this.$store.commit("login");
+    else if (sessionStorage.getItem("isLogin") == false){
+      this.$store.commit("logout");
+      sessionStorage.setItem("role",0);
+    }
+    if (sessionStorage.getItem("role") % 2 == 1)
+      this.$store.commit("setEditor");
+    if (
+      sessionStorage.getItem("role") == 2 ||
+      sessionStorage.getItem("role") == 3 ||
+      sessionStorage.getItem("role") == 6 ||
+      sessionStorage.getItem("role") == 7
+    )
+      this.$store.commit("setReviewer");
+    if (sessionStorage.getItem("role") >= 4) this.$store.commit("setWriter");
+  },
   methods: {
     Login() {
-      axios({
-        Headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+      this.$axios({
         method: "post",
-        url: "/logout",
-        data: this.formInline,
+        url: "http://82.156.190.251:80/apis/login",
+        data: JSON.stringify(this.formInline),
       }).then((res) => {
-        this.role=res.role;
-        if(this.role % 2 == 1) this.$store.commit('setEditor');
-        if(this.role == 2 || this.role == 3 || this.role == 6 || this.role == 7) this.$store.commit('setReviewer');
-        if(this.role >= 4) this.$store.commit('setWriter');
+        if (res.data.success == true) {
+          this.role = res.data.role;
+          sessionStorage.setItem("role", this.role);
+          sessionStorage.setItem("isLogin", true);
+          /*if (this.role % 2 == 1) this.$store.commit("setEditor");
+          if (
+            this.role == 2 ||
+            this.role == 3 ||
+            this.role == 6 ||
+            this.role == 7
+          )
+            this.$store.commit("setReviewer");
+          if (this.role >= 4) this.$store.commit("setWriter");*/
+          console.log(this.formInline);
+          console.log(this.$store.state.role);
+          console.log("submit!");
+          this.$store.commit("login");
+          this.$message({
+            message: "登录成功！",
+            type: "success",
+          });
+        } else {
+          alert(res.data.message);
+        }
         console.log(res);
-      });
-      console.log(this.formInline);
-      console.log("submit!");
-      this.$store.commit("login");
-      this.$message({
-        message: "登录成功！",
-        type: "success",
       });
     },
     Logout() {
-      axios({
-        Headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+      sessionStorage.setItem("role", 0);
+      sessionStorage.setItem("isLogin", false);
+      this.$axios({
         method: "post",
-        url: "/logout",
+        url: "http://82.156.190.251:80/apis/logout",
       }).then((res) => {
         console.log(res);
       });

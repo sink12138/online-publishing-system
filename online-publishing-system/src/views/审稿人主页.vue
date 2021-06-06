@@ -10,13 +10,13 @@
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="文章ID">
-                <span>{{ props.row.ID }}</span>
+                <span>{{ props.row.articleId }}</span>
               </el-form-item>
               <el-form-item label="文章标题">
-                <span>{{ props.row.Name }}</span>
+                <span>{{ props.row.title }}</span>
               </el-form-item>
               <el-form-item label="关键字">
-                <span>{{ props.row.keyword }}</span>
+                <span>{{ props.row.keywords }}</span>
               </el-form-item>
               <el-form-item label="第一作者">
                 <span>{{ props.row.firstAuthor }}</span>
@@ -25,17 +25,17 @@
                 <span>{{ props.row.otherAuthors }}</span>
               </el-form-item>
               <el-form-item label="处理状态">
-                <span>{{ props.row.state }}</span>
+                <span>{{ props.row.status }}</span>
               </el-form-item>
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="文章 ID" prop="ID"> </el-table-column>
-        <el-table-column label="文章标题" prop="Name"> </el-table-column>
-        <el-table-column label="文章状态" prop="state"> </el-table-column>
+        <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
+        <el-table-column label="文章标题" prop="title"> </el-table-column>
+        <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope"
-            ><el-select v-model="value" placeholder="是否通过">
+            ><el-select v-model="scope.row.value" placeholder="是否通过">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -44,11 +44,23 @@
               >
               </el-option>
             </el-select>
-            <el-button type="text" size="small" @click="downloadarticle"
+            <el-button
+              type="text"
+              size="small"
+              @click="downloadarticle(scope.row)"
               >下载<i class="el-icon-download el-icon--right"></i
             ></el-button>
             <el-button @click="open(scope.row)" type="text" size="small"
               >评价</el-button
+            >
+            <el-button
+              @click="submit(scope.row)"
+              type="text"
+              size="small"
+              v-if="
+                scope.row.comments !== undefined && scope.row.comments !== ''
+              "
+              >提交</el-button
             >
           </template>
         </el-table-column>
@@ -58,6 +70,10 @@
 </template>
 
 <style>
+.Reviewer {
+  background-color: #fff;
+  opacity: 80%;
+}
 .demo-table-expand {
   font-size: 0;
 }
@@ -73,41 +89,87 @@
 </style>
 
 <script>
-const axios = require("axios");
 export default {
   data() {
     return {
-      tableData: [
+      tableData: [],
+      options: [
         {
-          ID: 12345,
-          Name: "test",
-          keyword: "test,abstract",
-          firstAuthor: "abc",
-          otherAuthors: "123,456",
-          state: "审核中",
+          value: true,
+          label: "通过",
+        },
+        {
+          value: false,
+          label: "不通过",
         },
       ],
-      options: [{
-          value: '选项1',
-          label: '通过'
-        }, {
-          value: '选项2',
-          label: '不通过'
-        }],
-        value: ''
     };
   },
   created() {
     this.convert();
   },
   methods: {
-    downloadarticle() {
-      alert("下载中");
+    downloadarticle(row) {
+      this.$axios({
+        method: "get",
+        url: "http://82.156.190.251:80/apis/download",
+        params: { articleId: row.articleId },
+        responseTpe: "blob",
+      }).then(
+        (response) => {
+          console.log(response);
+          const filename = decodeURIComponent(
+            response.headers["content-disposition"].split(";")[1].split("=")[1]
+          );
+          console.log(filename);
+          this.load(response.data, filename);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
+    },
+    load(data,filename){
+      if (! data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{ type:'application/force-download;charset=utf-8'}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.download = filename
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+    },
+    submit(row) {
+      console.log(row.articleId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/reviewer/review/submit",
+        data: JSON.stringify({
+          articleId: Number(row.articleId),
+          pass: row.value,
+          comments: row.comments,
+        }),
+      }).then(
+        (response) => {
+          console.log(response);
+        },
+        (err) => {
+          alert(err);
+        }
+      );
+      location.reload();
     },
     convert: function () {
-      axios.get("/reviewer/articles").then((res) => {
-        this.tableData = res.data;
-      });
+      this.$axios
+        .get("http://82.156.190.251:80/apis/reviewer/articles")
+        .then((res) => {
+          this.tableData = res.data.slice(1);
+          console.log(this.tableData);
+        });
     },
     open(row) {
       this.$prompt("请输入评论", "提示", {
@@ -119,8 +181,9 @@ export default {
         .then(({ value }) => {
           this.$message({
             type: "success",
-            message: "你的评论是: " + value,
+            message: "通过意见:" + row.value + ",你的评论是: " + value,
           });
+          row.comments = value;
         })
         .catch(() => {
           this.$message({
