@@ -178,16 +178,6 @@ public class UserController {
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
             }
-            // TODO: 2021/6/6 Remove the comments if this goes well
-/*
-            try {
-                searchType = (String) requestMap.get("searchType");
-                searchString = (String) requestMap.get("searchString");
-            }
-            catch (ClassCastException cce) {
-                throw new ParameterFormatException();
-            }
-*/
             if (searchType == null || searchString == null)
                 throw new ParameterFormatException();
             if (!searchType.equals("title") && !searchType.equals("keyword") && !searchType.equals("author"))
@@ -295,24 +285,25 @@ public class UserController {
     private String PASSWORD;
 
     @GetMapping("/download")
-    public void download(@RequestBody Map<String, Object> requestMap) {
+    public void download(@RequestParam(value = "articleId", required = false) Object idObject) {
         FileInputStream fis = null;
         BufferedInputStream bis = null;
         try {
-            Account account = accountService.getAccountBySession(httpServletRequest.getSession());
-            Integer articleId;
+            int articleId;
             // Begin parameter format checks
+            if (idObject == null)
+                throw new ParameterFormatException();
             try {
-                articleId = (Integer) requestMap.get("articleId");
+                articleId = Integer.parseInt(idObject.toString());
             }
             catch (ClassCastException cce) {
                 throw new ParameterFormatException();
             }
-            if (articleId == null || articleId == 0)
+            if (articleId == 0)
                 throw new ParameterFormatException();
             // End parameter format checks
             Article article = null;
-            ArticleBuffer articleBuffer= null;
+            ArticleBuffer articleBuffer = null;
             // Begin existence checks
             if (articleId > 0)
                 article = articleService.getArticleById(articleId);
@@ -322,50 +313,53 @@ public class UserController {
                 throw new ObjectNotFoundException();
             // End existence checks
             boolean authority = false;
-            Integer accountId = account.getAccountId();
-            Author author = authorService.getAuthorByAccountId(accountId);
-            Reviewer reviewer = reviewerService.getReviewerByAccountId(accountId);
-            Editor editor = editorService.getEditorByAccountId(accountId);
             // Begin authority checks
-            // User authority
-            if (article != null && article.getStatus().equals("已出版"))
-                // A published article is available for any user
+            // Admin authority
+            HttpSession session = httpServletRequest.getSession();
+            Object adminUsername = session.getAttribute("USERNAME");
+            Object adminPassword = session.getAttribute("PASSWORD");
+            if (adminUsername != null && adminPassword != null &&
+                    adminUsername.equals(USERNAME) && adminPassword.equals(PASSWORD))
+                // Any article is available for admin
                 authority = true;
-            if (!authority && author != null) { // Author authority
-                Integer authorId = author.getAuthorId();
-                // An unpublished article is available for its submitter
-                if (article != null && article.getSubmitterId().equals(authorId) && !article.getStatus().equals("编辑中"))
+            if (!authority) { // User authority
+                Account account = accountService.getAccountBySession(session);
+                Integer accountId = account.getAccountId();
+                Author author = authorService.getAuthorByAccountId(accountId);
+                Reviewer reviewer = reviewerService.getReviewerByAccountId(accountId);
+                Editor editor = editorService.getEditorByAccountId(accountId);
+                if (article != null && article.getStatus().equals("已出版"))
+                    // A published article is available for any user
                     authority = true;
-                else if (articleBuffer != null && articleBuffer.getSubmitterId().equals(authorId))
-                    authority = true;
-            }
-            if (!authority && reviewer != null) { // Reviewer authority
-                Integer reviewerId = reviewer.getReviewerId();
-                if (article != null && !article.getStatus().equals("编辑中")) {
-                    ArrayList<Reviewer> reviewers = reviewerService.getReviewersByArticleId(articleId);
-                    for (Reviewer r : reviewers) {
-                        if (r.getReviewerId().equals(reviewerId)) {
-                            // An unpublished article is available for its reviewers
-                            authority = true;
-                            break;
+                if (!authority && author != null) { // Author authority
+                    Integer authorId = author.getAuthorId();
+                    // An unpublished article is available for its submitter
+                    if (article != null && article.getSubmitterId().equals(authorId) && !article.getStatus().equals("编辑中"))
+                        authority = true;
+                    else if (articleBuffer != null && articleBuffer.getSubmitterId().equals(authorId))
+                        authority = true;
+                }
+                if (!authority && reviewer != null) { // Reviewer authority
+                    Integer reviewerId = reviewer.getReviewerId();
+                    if (article != null && !article.getStatus().equals("编辑中")) {
+                        ArrayList<Reviewer> reviewers = reviewerService.getReviewersByArticleId(articleId);
+                        for (Reviewer r : reviewers) {
+                            if (r.getReviewerId().equals(reviewerId)) {
+                                // An unpublished article is available for its reviewers
+                                authority = true;
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            if (!authority && editor != null) { // Editor authority
-                Integer editorId = editor.getEditorId();
-                // An unpublished article is available for its editor
-                if (article != null && article.getEditorId().equals(editorId))
-                    authority = true;
-                else if (articleBuffer != null && articleBuffer.getEditorId().equals(editorId))
-                    authority = true;
-            }
-            if (!authority) { // Admin authority
-                HttpSession session = httpServletRequest.getSession();
-                if (session.getAttribute("USERNAME").equals(USERNAME) &&
-                        session.getAttribute("PASSWORD").equals(PASSWORD))
-                    // Any article is available for admin
-                    authority = true;
+                if (!authority && editor != null) { // Editor authority
+                    Integer editorId = editor.getEditorId();
+                    // An unpublished article is available for its editor
+                    if (article != null && article.getEditorId().equals(editorId))
+                        authority = true;
+                    else if (articleBuffer != null && articleBuffer.getEditorId().equals(editorId))
+                        authority = true;
+                }
             }
             if (!authority)
                 throw new IllegalAuthorityException();
