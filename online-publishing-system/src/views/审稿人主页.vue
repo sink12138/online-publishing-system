@@ -2,7 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>您待审阅的文章如下</h1>
-      <router-link to="/">返回主页</router-link>
     </div>
     <div class="articles">
       <el-table :data="tableData" style="width: 100%">

@@ -29,13 +29,13 @@
             placeholder="关键词"
           ></el-input>
         </el-form-item>
-        <el-form-item label="第一作者">
+        <el-form-item label="第一作者" v-if="this.status != '审核通过' || this.status != '审核未通过'">
           <el-input
             v-model="formInline.firstAuthor"
             placeholder="第一作者"
           ></el-input>
         </el-form-item>
-        <el-form-item label="其他作者">
+        <el-form-item label="其他作者" v-if="this.status != '审核通过' || this.status != '审核未通过'">
           <el-input
             v-model="formInline.otherAuthors"
             placeholder="其他作者"
@@ -134,7 +134,7 @@ export default {
             articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
-            keywords: this.formInline.keywords,
+            keywords: this.formInline.keywords.split(','),
           }),
         }).then(
           (response) => {
