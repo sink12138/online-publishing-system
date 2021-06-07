@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>激活邮件</title>
+    <title>邮箱验证</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -87,9 +87,10 @@
 <body>
 <div class="container">
     <div class="header">
-        <h2>OPS<span th:text="${action}"></span>邮箱验证 </h2>
+        <h2>OPS <span th:text="${action}"></span>邮箱验证</h2>
     </div>
     <div class="content">
+        <p></p>
         <h2>请验证您的电子邮件地址。</h2>
         <p><b>亲爱的用户&nbsp;<span th:text="${email}"></span>，您好！</b></p>
         <p><b>您于&nbsp;<span th:text="${createTime}"></span>&nbsp;在本网站进行了邮箱<span th:text="${action}"></span>操作。请点击下方的按钮验证您的电子邮件地址。</b></p>

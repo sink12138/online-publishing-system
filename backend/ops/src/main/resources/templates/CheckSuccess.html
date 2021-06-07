@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>提醒邮件</title>
+    <title>邮箱验证成功</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -23,7 +23,7 @@
 
         .header {
             height: 80px;
-            background-color: #49bcff;
+            background-color: #198b00;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             padding-left: 30px;
@@ -50,6 +50,32 @@
             padding-top: 10px;
         }
 
+        .subtitle {
+            margin-top: -45px;
+            padding-left: 60px;
+        }
+
+        .correct {
+            display: inline-block;
+            width: 20px;
+            height: 6px;
+            margin: 40px 0 auto auto;
+            background: #008100;
+            line-height: 0;
+            font-size: 0;
+            vertical-align: middle;
+            -webkit-transform: rotate(45deg);
+        }
+
+        .correct:after {
+            content: '/';
+            display: block;
+            width: 40px;
+            height: 6px;
+            background: #008100;
+            -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);
+        }
+
         .footer {
             background-color: #fff;
             border-bottom-left-radius: 5px;
@@ -67,20 +93,20 @@
 <body>
 <div class="container">
     <div class="header">
-        <h2>OPS 提醒邮件</h2>
+        <h2>OPS 邮箱验证</h2>
     </div>
     <div class="content">
         <p></p>
-        <div>
-            <h2><span th:text="${title}"></span></h2>
+        <div class="correct"></div>
+        <div class="subtitle">
+            <h2>您的电子邮件地址验证成功。</h2>
         </div>
-        <p><b><span th:text="${greetings}"></span></b></p>
-        <p><b><span th:utext="${body}"></span></b></p>
+        <p><b>电子邮件地址&nbsp;<span th:text="${email}"></span>&nbsp;现已可用于登录。</b></p>
+        <p></p>
         <p>当您在使用本网站时，务必要遵守法律法规</p>
         <p>如果您有什么疑问可以联系管理员，Email: <b>3488997405@qq.com</b></p>
     </div>
     <div class="footer">
-        <p>此为系统邮件，请勿回复</p>
         <p>请保管好您的信息，避免被他人盗用</p>
         <p>©OPS 历史学会线上文章出版系统</p>
     </div>

@@ -6,6 +6,7 @@ import com.buaa.ops.Service.Exc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,18 +62,18 @@ public class UserController {
     }
 
     @GetMapping("/verify")
-    public Map<String, Object> verify(String code){
-        Map<String, Object> map = new HashMap<>();
+    public ModelAndView verify(String code){
         try {
             Map<String, Integer> Id = accountService.checkCode(code);
             Integer accountBufferId = Id.get("accountBufferId");
             Integer accountId = Id.get("accountId");
+            AccountBuffer accountBuffer;
             if (accountId == null) {
-                AccountBuffer accountBuffer = accountService.getAccountBufferById(accountBufferId);
+                accountBuffer = accountService.getAccountBufferById(accountBufferId);
                 Account account = new Account(accountBuffer.getEmail(), accountBuffer.getPassword(), null);
                 accountService.addAccount(account);
             } else {
-                AccountBuffer accountBuffer = accountService.getAccountBufferById(accountBufferId);
+                accountBuffer = accountService.getAccountBufferById(accountBufferId);
                 Account newInfo = accountService.getAccountByAccountId(accountId);
                 if (newInfo == null) {
                     throw new ObjectNotFoundException();
@@ -81,16 +82,14 @@ public class UserController {
                 accountService.modifyInfos(newInfo);
             }
             accountService.deleteAccountBufferById(accountBufferId);
-            map.put("success", true);
+            httpServletRequest.setAttribute("email", accountBuffer.getEmail());
+            return new ModelAndView("CheckSuccess");
         } catch (ObjectNotFoundException | RepetitiveOperationException e) {
-            map.put("success", false);
-            map.put("message", e.toString());
+            return new ModelAndView("CheckFailure");
         } catch (Exception otherException) {
-            map.put("success", false);
-            map.put("message", "操作失败");
             otherException.printStackTrace();
+            return new ModelAndView("CheckFailure");
         }
-        return map;
     }
 
     @Autowired
@@ -385,6 +384,9 @@ public class UserController {
                 os.write(buffer, 0, i);
                 i = bis.read(buffer);
             }
+        }
+        catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exc) {
+            System.out.println(exc);
         }
         catch (Exception e) {
             e.printStackTrace();

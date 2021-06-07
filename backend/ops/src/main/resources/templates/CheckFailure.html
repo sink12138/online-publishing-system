@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>提醒邮件</title>
+    <title>邮箱验证失败</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -23,7 +23,7 @@
 
         .header {
             height: 80px;
-            background-color: #49bcff;
+            background-color: #e30000;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             padding-left: 30px;
@@ -50,6 +50,38 @@
             padding-top: 10px;
         }
 
+        .subtitle {
+            margin-top: -14px;
+            padding-left: 60px;
+        }
+
+        .error {
+            width: 15px;
+            height: 15px;
+            position: relative;
+            margin: auto auto auto 24px;
+            vertical-align: middle;
+        }
+
+        .error:before,
+        .error:after {
+            content: "";
+            position: absolute;
+            height: 48px;
+            width: 7px;
+            top: 12px;
+            right: 15px;
+            background: #e30000;
+        }
+
+        .error:before {
+            transform: rotate(45deg);
+        }
+
+        .error:after {
+            transform: rotate(-45deg);
+        }
+
         .footer {
             background-color: #fff;
             border-bottom-left-radius: 5px;
@@ -67,20 +99,20 @@
 <body>
 <div class="container">
     <div class="header">
-        <h2>OPS 提醒邮件</h2>
+        <h2>OPS 邮箱验证</h2>
     </div>
     <div class="content">
         <p></p>
-        <div>
-            <h2><span th:text="${title}"></span></h2>
+        <div class="error"></div>
+        <div class="subtitle">
+            <h2>很抱歉，该验证链接已失效。</h2>
         </div>
-        <p><b><span th:text="${greetings}"></span></b></p>
-        <p><b><span th:utext="${body}"></span></b></p>
+        <p><b>该链接可能已被使用或已超时。若您还未完成邮箱验证，请重新申请注册或更改邮箱。</b></p>
+        <p></p>
         <p>当您在使用本网站时，务必要遵守法律法规</p>
         <p>如果您有什么疑问可以联系管理员，Email: <b>3488997405@qq.com</b></p>
     </div>
     <div class="footer">
-        <p>此为系统邮件，请勿回复</p>
         <p>请保管好您的信息，避免被他人盗用</p>
         <p>©OPS 历史学会线上文章出版系统</p>
     </div>
