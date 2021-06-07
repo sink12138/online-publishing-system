@@ -51,31 +51,31 @@
         <el-form-item label="password">
           <el-input
             v-model="formInline.password"
-            placeholder="Email"
+            placeholder="password"
           ></el-input>
         </el-form-item>
         <el-form-item label="realName">
           <el-input
             v-model="formInline.realName"
-            placeholder="Email"
+            placeholder="realName"
           ></el-input>
         </el-form-item>
         <el-form-item label="institution">
           <el-input
             v-model="formInline.institution"
-            placeholder="Email"
+            placeholder="institution"
           ></el-input>
         </el-form-item>
         <el-form-item label="researchInterests">
           <el-input
             v-model="formInline.researchInterests"
-            placeholder="Email"
+            placeholder="researchInterests"
           ></el-input>
         </el-form-item>
         <el-form-item label="organization">
           <el-input
             v-model="formInline.organization"
-            placeholder="Email"
+            placeholder="organization"
           ></el-input>
         </el-form-item>
         <el-form-item>

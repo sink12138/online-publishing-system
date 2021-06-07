@@ -12,7 +12,8 @@
         <el-form-item label="Password">
           <el-input
             v-model="formInline.password"
-            placeholder="Password"
+            prefix-icon="el-icon-lock"
+            show-password
           ></el-input>
         </el-form-item>
         <div v-if="this.$store.state.isLogin == true">
