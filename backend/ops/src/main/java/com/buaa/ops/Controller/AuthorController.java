@@ -193,6 +193,10 @@ public class AuthorController {
             ArticleBuffer articleBuffer = articleService.getArticleBufferById(articleBufferId);
             if (articleBuffer == null) // Article not found
                 throw new ObjectNotFoundException();
+            // Begin repetition checks
+            if (articleBuffer.getTitle() != null)
+                throw new RepetitiveOperationException();
+            // End repetition checks
             // Begin authority checks
             Author author = authorService.getAuthorByAccountId(account.getAccountId());
             if (author == null) // Poster is not an author
@@ -225,7 +229,8 @@ public class AuthorController {
             emailService.sendReminderEmail(editor.getEmail(), reminderEmail);
             map.put("success", true);
         }
-        catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exc) {
+        catch (LoginVerificationException | ParameterFormatException |
+                ObjectNotFoundException | RepetitiveOperationException | IllegalAuthorityException exc) {
             map.put("success", false);
             map.put("message", exc.toString());
         }
@@ -343,6 +348,10 @@ public class AuthorController {
             if (overwriteId == null || overwriteId == 0) // Not a valid revision
                 throw new ObjectNotFoundException();
             // End existence checks
+            // Begin repetition checks
+            if (articleBuffer.getTitle() != null)
+                throw new RepetitiveOperationException();
+            // End repetition checks
             // Begin authority checks
             Author author = authorService.getAuthorByAccountId(account.getAccountId());
             if (author == null) // Poster is not an author
@@ -375,7 +384,8 @@ public class AuthorController {
             emailService.sendReminderEmail(editor.getEmail(), reminderEmail);
             map.put("success", true);
         }
-        catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | IllegalAuthorityException exc) {
+        catch (LoginVerificationException | ParameterFormatException |
+                ObjectNotFoundException | RepetitiveOperationException | IllegalAuthorityException exc) {
             map.put("success", false);
             map.put("message", exc.toString());
         }

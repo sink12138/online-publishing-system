@@ -62,8 +62,11 @@ public class UserController {
     }
 
     @GetMapping("/verify")
-    public ModelAndView verify(String code){
+    public ModelAndView verify(String code) {
         try {
+            // FIXME: 2021/6/8 Check code with illegal tails may cause
+            //  NumberFormatException in accountService.checkCode,
+            //  or NullPointerException in line 76
             Map<String, Integer> Id = accountService.checkCode(code);
             Integer accountBufferId = Id.get("accountBufferId");
             Integer accountId = Id.get("accountId");

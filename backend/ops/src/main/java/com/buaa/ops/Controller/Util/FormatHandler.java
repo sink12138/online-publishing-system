@@ -12,8 +12,11 @@ public class FormatHandler {
         @SuppressWarnings("unchecked")
         ArrayList<Object> objectList = (ArrayList<Object>) object;
         ArrayList<String> stringList = new ArrayList<>();
-        for (Object obj : objectList)
-            stringList.add(obj.toString());
+        for (Object obj : objectList) {
+            String str = obj.toString();
+            if (!str.isEmpty())
+                stringList.add(obj.toString());
+        }
         return stringList;
     }
 

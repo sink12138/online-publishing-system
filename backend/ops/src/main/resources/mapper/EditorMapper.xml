@@ -21,8 +21,11 @@
                  ) + (
                      select count(*)
                      from Article
-                     where article_id not in (select overwrite from ArticleBuffer where title is not null)
-                       and Article.editor_id = E.editor_id
+                     where Article.editor_id = E.editor_id and not exists(
+                             select *
+                             from ArticleBuffer
+                             where overwrite = Article.article_id and title is not null
+                     )
                  ), editor_id
     </select>
     <select id="selectAll" resultType="Editor">
