@@ -54,6 +54,9 @@ public class EditorController {
                 throw new ParameterFormatException();
             }
             Author author = authorService.getAuthorByAuthorId(authorId);
+            if (author == null) {
+                throw new ObjectNotFoundException();
+            }
             Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
             authorService.removeAuthor(authorId);
             map.put("success", true);
