@@ -1,15 +1,15 @@
 <template>
   <div class="reviewer">
     <div>
-      <h1>所有审稿人名单</h1>
+      <h1>所有作者名单</h1>
     </div>
     <div class="table">
       <el-table
         :data="
-          articleData.slice((currentPage - 1) * pagesize, current * pagesize)
+          claimData.slice((currentPage - 1) * pagesize, current * pagesize)
         "
-        :header-cell-style="{ height: '60px' }"
-        style="height: 100%;width: 300%;padding-top:10px;scoped"
+        :header-cell-style="{ height: '0px' }"
+        style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column
           prop="articleId"
@@ -22,38 +22,31 @@
           align="center"
         ></el-table-column>
         <el-table-column
-          prop="keywords"
-          label="文章关键词"
+          prop="authorId"
+          label="申请者作者编号"
           align="center"
         ></el-table-column>
         <el-table-column
-          prop="firstAuthor"
-          label="第一作者姓名"
+          prop="realName"
+          label="申请者真实姓名"
           align="center"
         ></el-table-column>
         <el-table-column
-          prop="outherAuthors"
-          label="其他作者"
+          prop="email"
+          label="申请者邮箱"
           align="center"
         ></el-table-column>
         <el-table-column
-          prop="status"
-          label="文章状态"
+          prop="confirmed"
+          label="是否已确认"
           align="center"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
-          <template
-            ><el-button type="text" size="small" @click="downloadArticle"
-              >下载文章</el-button
-            >
-          </template>
-        </el-table-column>
         <div class="pagination">
           <el-pagination
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="7"
+            :page-size="6"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
@@ -87,7 +80,7 @@ export default {
   mounted: function () {
     this.$axios({
       method: "get",
-      url: "http://82.156.190.251:80/apis/editor/articles",
+      url: "http://82.156.190.251:80/apis/editor/reviews",
     })
       .then((response) => {
         console.log(response);
@@ -103,42 +96,23 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    downloadArticle() {
-      this.$axios({
-        method: "get",
-        url: "http://82.156.190.251:80/apis/download",
-        params: { articleId: this.formInline.articleId },
-        responseTpe: "blob",
-      }).then(
-        (response) => {
-          console.log(response);
-          const filename = decodeURIComponent(
-            response.headers["content-disposition"].split(";")[1].split("=")[1]
-          );
-          console.log(filename);
-          this.load(response.data, filename);
-        },
-        (err) => {
-          alert(err);
-        }
-      );
-    },
+    searchArticle() {},
   },
   data() {
     return {
       tableData: [
         {
-          articleid: 0,
+          articleId: 0,
           title: "",
-          keywords: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          status: "",
+          authorId: 0,
+          realName: "",
+          email: "",
+          confirmed:false,
         },
       ],
-      pagesize: 7,
+      pagesize: 56,
       currentPage: 1,
-      articleData: "",
+      authorData: "",
       total: 0,
     };
   },

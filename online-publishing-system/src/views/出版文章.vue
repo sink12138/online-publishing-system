@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       formInline: {
-        articleId: "",
+        articleId: 0,
         identifier: "",
       },
     };
@@ -46,7 +46,7 @@ export default {
           return;
         }
       }
-      let JsonPublishArticle = JSON.stringify(this.formInline);
+      let JsonPublishArticle = JSON.stringify({articleId:Number(this.formInline.articleId)},{identifier:this.formInline.identifier});
       console.log(JsonPublishArticle);
       this.$store.commit("publish");
       this.$axios({
@@ -55,7 +55,7 @@ export default {
         data: JsonPublishArticle,
       }).then((res) => {
         console.log(res);
-        if (res.date.success == true) {
+        if (res.data.success == true) {
           this.$message({
             showClose: true,
             message: "出版文章成功",

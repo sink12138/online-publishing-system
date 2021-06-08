@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       formInline: {
-        reviewerId: "",
+        reviewerId: 0,
       },
     };
   },
@@ -36,7 +36,7 @@ export default {
         alert("请输入审稿人编号！");
         return;
       }
-      let JsonCancelReviewerId = JSON.stringify(this.formInline);
+      let JsonCancelReviewerId = JSON.stringify({reviewerId:Number(this.formInline.reviewerId)});
       console.log(JsonCancelReviewerId);
       this.$store.commit("cancel");
       sessionStorage.setItem("reviewerId", this.formInline.reviewerId);
@@ -46,7 +46,7 @@ export default {
         data: JsonCancelReviewerId,
       }).then((res) => {
         console.log(res);
-        if (res.date.success == true) {
+        if (res.data.success == true) {
           this.$message({
             showClose: true,
             message: "撤销审稿人身份成功",

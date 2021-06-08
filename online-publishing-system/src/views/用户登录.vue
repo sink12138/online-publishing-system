@@ -25,13 +25,7 @@
           </el-form-item>
           <el-form-item>
             <router-linkF to="/"
-<<<<<<< HEAD
-              ><el-button type="info"
-                >返回主页</el-button
-              ></router-linkF
-=======
               ><el-button type="info">返回主页</el-button></router-linkF
->>>>>>> origin/frontend
             >
           </el-form-item>
         </div>
@@ -45,13 +39,7 @@
           </el-form-item>
           <el-form-item>
             <router-link to="/"
-<<<<<<< HEAD
-              ><el-button type="info"
-                >返回主页</el-button
-              ></router-link
-=======
               ><el-button type="info">返回主页</el-button></router-link
->>>>>>> origin/frontend
             >
           </el-form-item>
         </div>
@@ -60,15 +48,11 @@
   </div>
 </template>
 
-<<<<<<< HEAD
-<script>
-=======
 <style>
 .Login {
   background-color: #fff;
 }
 </style>
->>>>>>> origin/frontend
 
 <script>
 export default {

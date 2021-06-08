@@ -25,17 +25,17 @@ export default {
   data() {
     return {
       formInline: {
-        authorId: "",
+        authorId: 0,
       },
     };
   },
   methods: {
     cancel() {
-      if(this.formInline.authorId ===""){
+      if(this.formInline.authorId ===0){
         alert("请输入作者编号！");
         return;
       }
-      let JsonCancelAuthorId = JSON.stringify(this.formInline);
+      let JsonCancelAuthorId = JSON.stringify({authorId:Number(this.formInline.authorId)});
       console.log(JsonCancelAuthorId);
       this.$store.commit("cancel");
       sessionStorage.setItem("authorId", this.formInline.authorId);
@@ -59,7 +59,7 @@ export default {
           });
         }
       });
-      //window.location.href = "../";
+      window.location.href = "../";
     },
   },
 };

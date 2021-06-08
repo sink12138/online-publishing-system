@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       formInline: {
-        articleId: "",
+        articleId: 0,
         reviewersId: "",
       },
     };
@@ -43,7 +43,8 @@ export default {
           return;
         }
       }
-      let JsonAssignArticle = JSON.stringify(this.formInline);
+      this.formInline.reviewersId.split(',');
+      let JsonAssignArticle = JSON.stringify({articleId:Number(this.formInline.articleId),reviewersId:this.formInline.reviewersId.map(Number)});
       console.log(JsonAssignArticle);
       this.$store.commit("Assign");
       this.$axios({
@@ -52,7 +53,7 @@ export default {
         data: JsonAssignArticle,
       }).then((res) => {
         console.log(res);
-        if (res.date.success == true) {
+        if (res.data.success == true) {
           this.$message({
             showClose: true,
             message: "分配审稿人成功",

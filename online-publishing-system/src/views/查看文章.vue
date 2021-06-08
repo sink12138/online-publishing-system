@@ -19,19 +19,6 @@
           </el-button>
         </div>
         <div class="info-text">
-<<<<<<< HEAD
-          <p>文章编号：{{this.articleData.articleId}}</p>
-          <p>文章标题：{{this.articleData.title}}</p>
-          <p>摘要：{{this.articleData.articleAbstract}}</p>
-          <p>关键字：{{this.articleData.keywords}}</p>
-          <p>第一作者：{{this.articleData.firstAuthor}}</p>
-          <p>其他作者：{{this.articleData.otherAuthors}}</p>
-          <p>提交者作者编号：{{this.articleData.submitterId}}</p>
-          <p>责任编辑编号：{{this.articleData.editorId}}</p>
-          <p>文章出版状态：{{this.articleData.status}}</p>
-          <p>出版编号：{{this.articleData.identifier}}</p>
-          <p>出版日期: {{this.articleData.publishingDate}}</p>
-=======
           <p>文章编号：{{this.articleData[0].articleId}}</p>
           <p>文章标题：{{this.articleData[0].title}}</p>
           <p>摘要：{{this.articleData[0].articleAbstract}}</p>
@@ -43,7 +30,6 @@
           <p>文章出版状态：{{this.articleData[0].status}}</p>
           <p>出版编号：{{this.articleData[0].identifier}}</p>
           <p>出版日期: {{this.articleData[0].publishingDate}}</p>
->>>>>>> origin/frontend
         </div>
       </el-card>
     </div>

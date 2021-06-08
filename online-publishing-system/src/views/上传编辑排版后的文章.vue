@@ -1,48 +1,58 @@
 <template>
   <div class="upload">
-    <h1>上传文章</h1>
-    <div class="file">
-      <el-upload
-        class="upload-demo"
-        action="/author/new/upload/post/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="3"
-        :on-exceed="handleExceed"
-        :file-list="fileList"
+    <h1>提交文章</h1>
+    <div class="uploadArticle">
+      <h3>上传文件</h3>
+      <h5>请提交doc,docx,pdf,zip文件</h5>
+      <input
+        type="file"
+        class="file"
+        ref="file"
         accept=".doc,.docx,.pdf,.zip"
+      />
+      <el-input v-model="formInline.articleId" placeholder="authorId">
+      </el-input>
+      <el-button type="primary" size="mini" @click="getfile"
+        >提交文件</el-button
       >
-        <el-button size="small" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i
-      ></el-button>
-        <div slot="tip" class="el-upload__tip">
-          只能上传doc,docx,pdf,zip文件，且不超过20mb
-        </div>
-      </el-upload>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        fileList: []
-      };
-    },
-    methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+export default {
+  data() {
+    return {
+      hasfile: false,
+      articleId: 0,
+      formInline: {
+        articleId,
       },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
+      fileList: [],
+    };
+  },
+  methods: {
+    getfile() {
+      this.fileList = this.$refs.file.files;
+      console.log(this.fileList);
+      if (this.fileList[0].size > 20 * 1024 * 1024) {
+        alert("文件最大为20兆");
+        this.fileList = null;
+        this.hasfile = false;
       }
-    }
-  }
+      if (this.fileList != null) this.hasfile = true;
+      let formData = new FormData();
+      formData.append("file", this.fileList[0]);
+      formData.append("articleId", 0);
+      formData.append("overwrite",this.formInline.articleId);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/upload",
+        data: formData,
+      }).then(
+        console.log("上传完毕")
+      )
+    },
+  },
+};
+</script>

@@ -153,6 +153,11 @@ const routes = [
         component: () => import('../views/管理收到的文章.vue')
       },
       {
+        path: '/editor/reviews',
+        name: '查看文章评论',
+        component: () => import('../views/查看文章评论.vue')
+      },
+      {
         path: '/editor/upload',
         name: '上传编辑排版后的文章',
         component: () => import('../views/上传编辑排版后的文章.vue')
@@ -161,6 +166,11 @@ const routes = [
         path: '/editor/publish',
         name: '出版文章',
         component: () => import('../views/出版文章.vue')
+      },
+      {
+        path: '/editor/claims',
+        name: '查看文章认领申请',
+        component: () => import('../views/查看文章认领申请.vue')
       },
       {
         path: '/editor/confirm/claim',
