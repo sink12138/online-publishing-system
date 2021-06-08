@@ -98,10 +98,13 @@ public class EditorController {
             if (accountService.getAccountByAccountId(accountId) == null) {
                 throw new ObjectNotFoundException();
             }
+            if (reviewerService.getReviewerByAccountId(accountId) != null) {
+                throw new RepetitiveOperationException();
+            }
             Reviewer reviewer = new Reviewer(accountId, organization);
             reviewerService.addReviewer(reviewer);
             map.put("success", true);
-        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException exception) {
+        } catch (LoginVerificationException | ParameterFormatException | ObjectNotFoundException | RepetitiveOperationException exception) {
             map.put("success", false);
             map.put("message", exception.toString());
         } catch (Exception e) {

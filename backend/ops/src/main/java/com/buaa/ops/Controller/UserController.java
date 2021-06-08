@@ -64,19 +64,17 @@ public class UserController {
     @GetMapping("/verify")
     public ModelAndView verify(String code) {
         try {
-            // FIXME: 2021/6/8 Check code with illegal tails may cause
-            //  NumberFormatException in accountService.checkCode,
-            //  or NullPointerException in line 76
             Map<String, Integer> Id = accountService.checkCode(code);
             Integer accountBufferId = Id.get("accountBufferId");
             Integer accountId = Id.get("accountId");
-            AccountBuffer accountBuffer;
+            AccountBuffer accountBuffer = accountService.getAccountBufferById(accountBufferId);
+            if (accountBuffer == null) {
+                throw new ObjectNotFoundException();
+            }
             if (accountId == null) {
-                accountBuffer = accountService.getAccountBufferById(accountBufferId);
                 Account account = new Account(accountBuffer.getEmail(), accountBuffer.getPassword(), null);
                 accountService.addAccount(account);
             } else {
-                accountBuffer = accountService.getAccountBufferById(accountBufferId);
                 Account newInfo = accountService.getAccountByAccountId(accountId);
                 if (newInfo == null) {
                     throw new ObjectNotFoundException();
