@@ -24,11 +24,39 @@
           <el-input v-model="formInline.abstract" placeholder="摘要"></el-input>
         </el-form-item>
         <el-form-item label="关键词">
+          <el-tag
+            :key="tag"
+            v-for="tag in dynamicTags"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)"
+          >
+            {{ tag }}
+          </el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="inputValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+          >
+          </el-input>
+          <el-button
+            v-else
+            class="button-new-tag"
+            size="small"
+            @click="showInput"
+            >+ New Tag</el-button
+          >
+        </el-form-item>
+        <!-- <el-form-item label="关键词">
           <el-input
             v-model="formInline.keywords"
             placeholder="关键词"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item
           label="第一作者"
           v-if="this.status != '审核通过' || this.status != '审核未通过'"
@@ -42,11 +70,42 @@
           label="其他作者"
           v-if="this.status != '审核通过' || this.status != '审核未通过'"
         >
+          <el-tag
+            :key="tag"
+            v-for="tag in dynamicTags2"
+            closable
+            :disable-transitions="false"
+            @close="handleClose2(tag)"
+          >
+            {{ tag }}
+          </el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="inputVisible2"
+            v-model="inputValue2"
+            ref="saveTagInput2"
+            size="small"
+            @keyup.enter.native="handleInputConfirm2"
+            @blur="handleInputConfirm2"
+          >
+          </el-input>
+          <el-button
+            v-else
+            class="button-new-tag"
+            size="small"
+            @click="showInput2"
+            >+ New Tag</el-button
+          >
+        </el-form-item>
+        <!-- <el-form-item
+          label="其他作者"
+          v-if="this.status != '审核通过' || this.status != '审核未通过'"
+        >
           <el-input
             v-model="formInline.otherAuthors"
             placeholder="其他作者"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="onSubmit">提交</el-button>
         </el-form-item>
@@ -62,24 +121,31 @@
 export default {
   data() {
     return {
+      dynamicTags: [],
+      dynamicTags2: [],
+      inputVisible: false,
+      inputVisible2: false,
+      inputValue: "",
+      inputValue2: "",
       hasfile: false,
       articleBufferId: 0,
       status: "",
       formInline: {
         title: "",
         abstract: "",
-        keywords: "",
+        // keywords: "",
         firstAuthor: "",
-        otherAuthors: "",
+        // otherAuthors: null,
       },
       fileList: [],
+      returnId: 0,
     };
   },
   created: function () {
-    this.articleBufferId = this.$route.query.articleId;
+    this.returnId = this.$route.query.articleId;
     this.status = this.$route.query.status;
-    if (this.articleBufferId == undefined) this.articleBufferId = 0;
-    console.log(this.articleBufferId);
+    if (this.returnId == undefined) this.returnId = 0;
+    console.log(this.returnId);
     console.log(this.status);
   },
   methods: {
@@ -95,8 +161,8 @@ export default {
       if (this.status == "审核通过" || this.status == "审核未通过") {
         let formData = new FormData();
         formData.append("file", this.fileList[0]);
-        formData.append("articleBufferId", 0);
-        formData.append("overwrite", this.articleBufferId);
+        formData.append("articleBufferId", this.articleBufferId);
+        formData.append("overwrite", this.returnId);
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/revise/upload",
@@ -124,7 +190,7 @@ export default {
       } else {
         let formData = new FormData();
         formData.append("file", this.fileList[0]);
-        formData.append("articleBufferId", 0);
+        formData.append("articleBufferId", this.articleBufferId);
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/new/upload",
@@ -152,7 +218,6 @@ export default {
       }
     },
     onSubmit() {
-      alert("submit!");
       if (this.status == "审核通过" || this.status == "审核未通过") {
         this.$axios({
           method: "post",
@@ -161,7 +226,7 @@ export default {
             articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
-            keywords: this.formInline.keywords.split(","),
+            keywords: this.dynamicTags, // this.formInline.keywords.split(","),
           }),
         }).then(
           (response) => {
@@ -189,9 +254,9 @@ export default {
             articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
-            keywords: this.formInline.keywords.split(","),
+            keywords: this.dynamicTags, // this.formInline.keywords.split(","),
             firstAuthor: this.formInline.firstAuthor,
-            otherAuthors: this.formInline.otherAuthors.split(","),
+            otherAuthors: this.dynamicTags2, // this.formInline.otherAuthors.split(","),
           }),
         }).then(
           (response) => {
@@ -213,6 +278,63 @@ export default {
         );
       }
     },
+    handleClose(tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+    },
+
+    handleClose2(tag) {
+      this.dynamicTags2.splice(this.dynamicTags2.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    showInput2() {
+      this.inputVisible2 = true;
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput2.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      if (inputValue) {
+        this.dynamicTags.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
+    },
+
+    handleInputConfirm2() {
+      let inputValue = this.inputValue2;
+      if (inputValue) {
+        this.dynamicTags2.push(inputValue);
+      }
+      this.inputVisible2 = false;
+      this.inputValue2 = "";
+    },
   },
 };
 </script>
+
+<style>
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+</style>
