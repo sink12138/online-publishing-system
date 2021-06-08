@@ -51,6 +51,8 @@
         <el-form-item label="password">
           <el-input
             v-model="formInline.password"
+            prefix-icon="el-icon-lock"
+            show-password
             placeholder="password"
           ></el-input>
         </el-form-item>
@@ -144,10 +146,21 @@ export default {
           }),
         }).then((res) => {
           console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              message: "邮箱修改成功！",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.message,
+            });
+          }
         });
-        console.log("submit!");
       } else {
-        console.log("email cant be void!");
+        this.$message({
+          message: "邮箱不能为空！",
+        });
       }
     },
     submit2() {
@@ -173,10 +186,21 @@ export default {
           }),
         }).then((res) => {
           console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              message: "信息修改成功！",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.message,
+            });
+          }
         });
-        console.log("submit!");
       } else {
-        console.log("password cant be void!");
+        this.$message({
+          message: "密码不能为空！",
+        });
       }
     },
     convert: function () {

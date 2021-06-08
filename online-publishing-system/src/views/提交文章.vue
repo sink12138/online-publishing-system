@@ -29,13 +29,19 @@
             placeholder="关键词"
           ></el-input>
         </el-form-item>
-        <el-form-item label="第一作者" v-if="this.status != '审核通过' || this.status != '审核未通过'">
+        <el-form-item
+          label="第一作者"
+          v-if="this.status != '审核通过' || this.status != '审核未通过'"
+        >
           <el-input
             v-model="formInline.firstAuthor"
             placeholder="第一作者"
           ></el-input>
         </el-form-item>
-        <el-form-item label="其他作者" v-if="this.status != '审核通过' || this.status != '审核未通过'">
+        <el-form-item
+          label="其他作者"
+          v-if="this.status != '审核通过' || this.status != '审核未通过'"
+        >
           <el-input
             v-model="formInline.otherAuthors"
             placeholder="其他作者"
@@ -46,7 +52,9 @@
         </el-form-item>
       </el-form>
     </div>
-    <router-link to="/author"> <el-button type="primary"> 取消提交 </el-button> </router-link>
+    <router-link to="/author">
+      <el-button type="primary"> 取消提交 </el-button>
+    </router-link>
   </div>
 </template>
 
@@ -56,7 +64,7 @@ export default {
     return {
       hasfile: false,
       articleBufferId: 0,
-      status: '',
+      status: "",
       formInline: {
         title: "",
         abstract: "",
@@ -84,11 +92,11 @@ export default {
         this.hasfile = false;
       }
       if (this.fileList != null) this.hasfile = true;
-      if(this.status == '审核通过' || this.status == '审核未通过'){
+      if (this.status == "审核通过" || this.status == "审核未通过") {
         let formData = new FormData();
-        formData.append("file",this.fileList[0]);
-        formData.append("articleBufferId",0);
-        formData.append("overwrite",this.articleBufferId);
+        formData.append("file", this.fileList[0]);
+        formData.append("articleBufferId", 0);
+        formData.append("overwrite", this.articleBufferId);
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/revise/upload",
@@ -98,16 +106,25 @@ export default {
             this.articleBufferId = Number(response.data.articleBufferId);
             console.log(response);
             console.log(this.articleBufferId);
+            if (response.data.success == true) {
+              this.$message({
+                message: "修改文章上传成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
           }
         );
-      }
-      else {
+      } else {
         let formData = new FormData();
-        formData.append("file",this.fileList[0]);
-        formData.append("articleBufferId",0);
+        formData.append("file", this.fileList[0]);
+        formData.append("articleBufferId", 0);
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/new/upload",
@@ -117,6 +134,16 @@ export default {
             console.log(response);
             this.articleBufferId = Number(response.data.articleBufferId);
             console.log(this.articleBufferId);
+            if (response.data.success == true) {
+              this.$message({
+                message: "文章上传成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
@@ -126,7 +153,7 @@ export default {
     },
     onSubmit() {
       alert("submit!");
-      if(this.status == '审核通过' || this.status == '审核未通过'){
+      if (this.status == "审核通过" || this.status == "审核未通过") {
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/revise/submit",
@@ -134,18 +161,27 @@ export default {
             articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
-            keywords: this.formInline.keywords.split(','),
+            keywords: this.formInline.keywords.split(","),
           }),
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              this.$message({
+                message: "修改文章提交成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
           }
         );
-      }
-      else {
+      } else {
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/new/submit",
@@ -153,13 +189,23 @@ export default {
             articleBufferId: Number(this.articleBufferId),
             title: this.formInline.title,
             abstract: this.formInline.abstract,
-            keywords: this.formInline.keywords.split(','),
+            keywords: this.formInline.keywords.split(","),
             firstAuthor: this.formInline.firstAuthor,
-            otherAuthors: this.formInline.otherAuthors.split(','),
+            otherAuthors: this.formInline.otherAuthors.split(","),
           }),
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              this.$message({
+                message: "文章提交成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
