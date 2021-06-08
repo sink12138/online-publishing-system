@@ -1,7 +1,6 @@
 <template>
   <div class="authorinfo">
     <h1>作者信息页面</h1>
-    <router-link to="/">返回主页</router-link>
     <div class="authorform">
       <el-table
         :show-header="false"
@@ -72,7 +71,7 @@ export default {
         method: "get",
         url: "http://82.156.190.251:80/apis/infos",
         data: {
-          authorId: JSON.stringify(this.authorId),
+          authorId: JSON.stringify(sessionStorage.getItem('authorId')),
         },
       }).then((res) => {
         var array = new Array();

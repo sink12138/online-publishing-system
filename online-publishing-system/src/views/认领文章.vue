@@ -20,8 +20,7 @@
         @click="searchArticle"
         >搜索</el-button
       >
-      | <router-link to="/author">作者主页</router-link> |
-      <router-link to="/">主页</router-link>
+      | <router-link to="/author">作者主页</router-link>
     </div>
     <router-view />
     <div class="table">
@@ -48,7 +47,7 @@
             align="center"
           ></el-table-column>
           <el-table-column
-            label="操作"
+            label="下载"
             align="center"
             v-if="$store.state.isLogin == true"
           >
@@ -61,9 +60,22 @@
             </template>
           </el-table-column>
           <el-table-column
+            label="文章信息"
+            align="center"
+            v-if="$store.state.isLogin == true"
+          >
+            <template slot-scope="scope" class="active">
+              <el-button
+                @click="article(scope.row.articleId)"
+                type="text"
+                icon="el-icon-info"
+              ></el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
             label="认领"
             align="center"
-            v-if="$store.state.role >= 4"
+            v-if="$store.state.role >= 4 && $store.state.isLogin == true"
           >
             <template slot-scope="scope" class="active">
               <el-button
@@ -132,6 +144,10 @@ export default {
   },
   mounted() {},
   methods: {
+    article(articleId) {
+      sessionStorage.setItem("articleId", articleId);
+      window.location.href = "../article";
+    },
     submit() {
       var Js = { articleId: Number(this.formInline.articleId) };
       console.log(Js);

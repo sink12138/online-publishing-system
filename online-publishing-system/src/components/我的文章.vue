@@ -123,6 +123,7 @@ export default {
         }
       );
       console.log(row);
+      location.reload();
     },
     abort(row) {
       this.$axios({
@@ -140,6 +141,7 @@ export default {
         }
       );
       console.log(row);
+      location.reload();
     },
   },
 };

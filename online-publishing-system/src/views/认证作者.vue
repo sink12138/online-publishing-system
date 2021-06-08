@@ -21,10 +21,6 @@
         </el-form-item>
       </el-form>
     </div>
-    <div>
-      <br />
-      <router-link to="/">返回主页</router-link>
-    </div>
   </div>
 </template>
 

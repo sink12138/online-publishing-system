@@ -28,7 +28,7 @@ const routes = [
       {
         path: 'search',
         name: '搜索',
-        component: () => import('../components/搜索.vue')
+        component: () => import('../views/搜索.vue')
       },
       {
         path: '/login',

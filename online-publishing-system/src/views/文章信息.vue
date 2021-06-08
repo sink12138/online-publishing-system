@@ -4,31 +4,28 @@
       <h1>文章信息页面</h1>
     </div>
     <div class="articleinfo">
-      <el-table
-        :show-header="false"
-        :data="tableData"
-        :span-method="objectSpanMethod"
-        border
-        :cell-style="columnStyle"
-        style="width: 100%; margin-top: 20px"
-      >
-        <el-table-column prop="id" label="ID" width="240">
-          <template slot-scope="scope">
-            <div>
-              <img :src="scope.row.id | setPicUrl" />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column width="180" prop="name"></el-table-column>
-        <el-table-column prop="amount1"></el-table-column>
-        <el-table-column width="180" prop="amount2"></el-table-column>
-        <el-table-column prop="amount3"></el-table-column>
-      </el-table>
+      <el-card class="info-card">
+        <div slot="header" class="clearfix">
+          <span>文章信息</span>
+        </div>
+        <div class="info-text">
+          <p>文章标题：{{ this.articleData.title }}</p>
+          <p>摘要：{{ this.articleData.articleAbstract }}</p>
+          <p>关键字：{{ this.articleData.keywords }}</p>
+          <p>第一作者：{{ this.articleData.firstAuthor }}</p>
+          <p>其他作者：{{ this.articleData.otherAuthors }}</p>
+          <p>出版编号：{{ this.articleData.identifier }}</p>
+          <p>出版日期: {{ this.articleData.publishingDate }}</p>
+        </div>
+      </el-card>
     </div>
     <br />
-    <div class="download">
+    <div class="button">
       <el-button type="primary" @click="downloadarticle()"
         >点击下载本篇文章<i class="el-icon-download el-icon--right"></i
+      ></el-button>
+      <el-button type="primary" @click="firstAuthorInfo()"
+        >点击查看第一作者<i class="el-icon-info el-icon--right"></i
       ></el-button>
     </div>
   </div>
@@ -39,61 +36,24 @@ export default {
   name: "article",
   data() {
     return {
-      dataForm: {},
+      articleData: {},
     };
   },
-  computed: {
-    tableData() {
-      return [
-        {
-          id: this.dataForm.headImg,
-          name: "文章标题",
-          amount1: this.dataForm.title,
-          amount2: "文章摘要",
-          amount3: this.dataForm.articleAbstract,
-        },
-        {
-          id: this.dataForm.headImg,
-          name: "关键字",
-          amount1: this.dataForm.keywords,
-          amount2: "第一作者",
-          amount3: this.dataForm.firstAuthor,
-        },
-        {
-          id: this.dataForm.headImg,
-          name: "其他作者",
-          amount1: this.dataForm.otherAuthors,
-          amount2: "作者编号",
-          amount3: "",
-        },
-        {
-          id: this.dataForm.headImg,
-          name: "出版编号",
-          amount1: this.dataForm.identifier,
-          amount2: "出版日期",
-          amount3: this.dataForm.publishingDate,
-        },
-      ];
-    },
-  },
-  created() {
-    this.convert();
+  mounted: function () {
+    this.articleId = sessionStorage.getItem("articleId");
+    console.log(this.articleId);
+    this.$axios({
+      method: "get",
+      url: "http://82.156.190.251:80/apis/article",
+      params : {articleId:this.articleId},
+    }).then((res) => {
+      console.log(res.data);
+      var index = Number(sessionStorage.getItem("articleId"));
+      this.articleData = res.data;
+      console.log(this.articleData);
+    });
   },
   methods: {
-    convert() {
-      this.articleId = this.$route.query.articleIds;
-      console.log(this.articleId);
-      this.$axios({
-        method: "get",
-        url: "http://82.156.190.251:80/apis/article",
-        params: {
-          articleId: this.articleId,
-        },
-      }).then((res) => {
-        console.log(JSON.stringify(res));
-        this.dataForm = res.data;
-      });
-    },
     downloadarticle() {
       this.$axios({
         method: "get",
@@ -114,6 +74,13 @@ export default {
           alert(err);
         }
       );
+    },
+    firstAuthorInfo() {
+      sessionStorage.setItem(
+        "authorId",
+        this.dataForm.authorsMap.get(this.dataForm.firstAuthor)
+      );
+      window.location.href = "../infos";
     },
     load(data, filename) {
       if (!data) {

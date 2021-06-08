@@ -30,9 +30,6 @@
       <el-form-item>
         <el-button type="primary" @click="submitForm()">提交</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
-        <router-link to="/"
-          ><el-button type="primary">返回主页</el-button></router-link
-        >
       </el-form-item>
     </el-form>
   </div>

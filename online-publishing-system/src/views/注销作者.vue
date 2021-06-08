@@ -1,7 +1,6 @@
 <template>
   <div class="about">
     <h1>注销作者页面</h1>
-    <router-link to='/'>返回主页</router-link> 
     <el-button type="warning" plain @click="cancel">注销作者身份</el-button>
   </div>
 </template>
@@ -22,8 +21,7 @@ export default {
           .then((res)=>{
             console.log(res);
           });
-          console.log('submit!');
-          this.$store.commit("logout");
+          console.log('cancel submit!');
           this.$message({
             message: '注销成功！',
             type:'success'

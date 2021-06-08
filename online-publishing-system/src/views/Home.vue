@@ -4,7 +4,7 @@
       <el-header>
         <div class="link1">
           <router-link to="/">
-            <el-button type="info" plain>返回首页</el-button>
+            <el-button type="info" plain @click="convert()">返回首页</el-button>
           </router-link>
           <router-link to="/home">
             <el-button type="info" plain v-if="$store.state.isLogin"
@@ -12,7 +12,10 @@
             >
           </router-link>
           <router-link to="/author">
-            <el-button type="info" plain v-if="$store.state.role >= 4"
+            <el-button
+              type="info"
+              plain
+              v-if="$store.state.role >= 4 && $store.state.isLogin"
               >作者主页</el-button
             >
           </router-link>
@@ -21,16 +24,26 @@
               type="info"
               plain
               v-if="
-                $store.state.role == 2 ||
-                $store.state.role == 3 ||
-                $store.state.role == 6 ||
-                $store.state.role == 7
+                ($store.state.role == 2 ||
+                  $store.state.role == 3 ||
+                  $store.state.role == 6 ||
+                  $store.state.role == 7) &&
+                $store.state.isLogin
               "
               >审稿人主页
             </el-button>
           </router-link>
           <router-link to="/editor">
-            <el-button type="info" plain v-if="$store.state.role % 2 == 1"
+            <el-button
+              type="info"
+              plain
+              v-if="
+                ($store.state.role == 1 ||
+                  $store.state.role == 3 ||
+                  $store.state.role == 5 ||
+                  $store.state.role == 7) &&
+                $store.state.isLogin
+              "
               >编辑主页</el-button
             >
           </router-link>
@@ -48,8 +61,7 @@
         </div>
       </el-header>
       <el-main>
-        <router-view></router-view>
-        <div class="search" v-show="this.$route.path == '/'">
+        <div class="search" v-show="this.$route.path == '/' || this.$route.path == '/search'">
           <el-input v-model="search.searchString" size="large">
             <el-select
               v-model="search.searchType"
@@ -69,85 +81,7 @@
             </el-button>
           </el-input>
         </div>
-        <div class="table" v-show="this.$route.path == '/'">
-          <el-card class="box-card">
-            <el-table :data="tableData" border stripe style="width: 100%">
-              <el-table-column
-                prop="articleId"
-                label="文章ID"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                prop="title"
-                label="标题"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                prop="keywords"
-                label="关键词"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                prop="firstAuthor"
-                label="第一作者"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
-                v-if="$store.state.isLogin == true"
-              >
-                <template slot-scope="scope" class="active">
-                  <el-button
-                    @click="download(scope.row.articleId)"
-                    type="text"
-                    icon="el-icon-download"
-                  ></el-button>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
-                v-if="$store.state.isLogin == true"
-              >
-                <template slot-scope="scope" class="active">
-                  <el-button
-                    @click="article(scope.row.articleId)"
-                    type="text"
-                    icon="el-icon-info"
-                  ></el-button>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="认领"
-                align="center"
-                v-if="$store.state.role >= 4"
-              >
-                <template slot-scope="scope" class="active">
-                  <el-button
-                    @click="claim(scope.row.articleId)"
-                    type="text"
-                    icon="el-icon-success"
-                  ></el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-row :gutter="20">
-              <el-col :span="6" :offset="12">
-                <div class="block">
-                  <el-pagination
-                    background
-                    @current-change="handleCurrentChange"
-                    :current-page.sync="currentPage"
-                    :page-size="8"
-                    layout="total, prev, next, jumper, pager"
-                    :total="tableData.size - 1"
-                  ></el-pagination>
-                </div>
-              </el-col>
-            </el-row>
-          </el-card>
-        </div>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </div>
@@ -187,17 +121,6 @@
 </style>
 
 <script>
-/*new Vue({
-    id:"#article-shows",
-    data: {
-      Object: {
-        Title: 'Developmental bifurcation of human T follicular regulatory cells',
-        Author: 'Saumya Kumar',
-        Date: '28 May 2021',
-        Source: 'Science Immunology: Vol. 6, Issue 59'
-      }
-    }
-  })*/
 export default {
   name: "Search",
   data() {
@@ -206,141 +129,153 @@ export default {
         searchType: "title",
         searchString: "",
       },
-      currentPage: 1, //当前页数
-      pageSize: 10, //每页获取条数（页面大小）
-      tableData: [
-        {
-          articleId: "",
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-        },
-      ], //存放从后端传来的数据
     };
   },
-  created: function () {
-    console.log(this.$store.state.role);
-    if (sessionStorage.getItem("isLogin") == undefined)
-      sessionStorage.setItem("isLogin", false);
-    if (sessionStorage.getItem("role") == undefined)
-      sessionStorage.setItem("role", 0);
-    if (sessionStorage.getItem("isLogin") == true) this.$store.commit("login");
-    else if (sessionStorage.getItem("isLogin") == false) {
-      this.$store.commit("logout");
-      sessionStorage.setItem("role", 0);
-    }
-    if (this.$store.state.role === 0) {
-      if (sessionStorage.getItem("role") % 2 == 1)
-        this.$store.commit("setEditor");
-      if (
-        sessionStorage.getItem("role") == 2 ||
-        sessionStorage.getItem("role") == 3 ||
-        sessionStorage.getItem("role") == 6 ||
-        sessionStorage.getItem("role") == 7
-      )
-        this.$store.commit("setReviewer");
-      if (sessionStorage.getItem("role") >= 4) this.$store.commit("setWriter");
-    }
-    console.log(this.$store.state.role);
-  },
   mounted() {
-    this.fetchdata();
+    this.convert();
   },
   methods: {
-    article(articleId) {
-      this.$router.push("/article?articleIds=" + this.article);
+    convert() {
+      var logi = sessionStorage.getItem("isLogin");
+      var rol = sessionStorage.getItem("role");
+      console.log(
+        "用户角色 home",
+        this.$store.state.role,
+        this.$store.state.isLogin
+      );
+      console.log("logi,rol", logi, rol);
+      if (logi == undefined)
+        //初始化
+        sessionStorage.setItem("isLogin", false);
+      if (rol == undefined) sessionStorage.setItem("role", 0);
+      if (this.$store.state.role == 0 && rol != 0) {
+        //角色初始化
+        if (logi == "true") {
+          //登录初始化
+          this.$store.commit("logout");
+          this.$store.commit("login");
+          console.log("刷新登录");
+        } else if (logi == "false") {
+          this.$store.commit("logout");
+          sessionStorage.setItem("role", 0);
+          console.log("刷新退出登录");
+        }
+        if (rol == 1 || rol == 3 || rol == 5 || rol == 7)
+          this.$store.commit("setEditor");
+        if (rol == 2 || rol == 3 || rol == 6 || rol == 7)
+          this.$store.commit("setReviewer");
+        if (sessionStorage.getItem("role") >= 4)
+          this.$store.commit("setWriter");
+        console.log(
+          "用户角色更新",
+          this.$store.state.role,
+          this.$store.state.isLogin
+        );
+      }
     },
     searchArticle() {
-      this.$axios({
-        method: "get",
-        url: "http://82.156.190.251:80/apis/search",
-        params: this.search,
-      })
-        .then((response) => {
-          console.log(this.search);
-          console.log(response);
-          var arraylist = new Array();
-          arraylist = response.data;
-          this.success = arraylist[0].success;
-          if (this.success == true) {
-            this.results = arraylist[0].results;
-            this.tableData = arraylist.slice(1);
-            console.log(this.tableData);
-          }
-        })
-        .catch((err) => console.log(err));
-    },
-    parentFun() {
-      console.log("搜索");
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.currentPage = val;
-    },
-    download(articleId) {
-      this.$axios({
-        method: "get",
-        url: "http://82.156.190.251:80/apis/download",
-        params: {
-          articleId: articleId,
-        },
-        responseTpe: "blob",
-      }).then((res) => {
-        console.log(res);
-        const filename = decodeURIComponent(
-          res.headers["content-disposition"].split(";")[1].split("=")[1]
-        );
-        console.log(filename);
-        this.load(res.data, filename);
-      });
-      console.log("submit!");
-    },
-    load(data, filename) {
-      if (!data) {
-        return;
+      this.$router.push(
+        "/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
+      );
+      if(this.$route.path == '/search'){
+        this.$router.go(0);
       }
-      let url = window.URL.createObjectURL(
-        new Blob([data], { type: "application/force-download;charset=utf-8" })
-      );
-      let link = document.createElement("a");
-      link.style.display = "none";
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
     },
-    claim(articleId) {
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/author/claim",
-        data: { articleId: Number(articleId) },
-      }).then((res) => {
-        console.log(res);
-      });
-      console.log("submit!");
-    },
-    fetchdata() {
-      this.$axios({
-        method: "get",
-        url: "http://82.156.190.251:80/apis/search",
-        params: this.search,
-      }).then(
-        (response) => {
-          console.log(response);
-          var arraylist = new Array();
-          arraylist = response.data;
-          this.success = response.success;
-          if (this.success == true) {
-            this.tableData = arraylist.slice(1);
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    },
+    // article(articleId) {
+    //   sessionStorage.setItem("articleId", articleId);
+    //   window.location.href = "../article";
+    // },
+    // searchArticle() {
+    //   this.$axios({
+    //     method: "get",
+    //     url: "http://82.156.190.251:80/apis/search",
+    //     params: this.search,
+    //   })
+    //     .then((response) => {
+    //       console.log("搜索内容", this.search);
+    //       console.log(response);
+    //       var arraylist = new Array();
+    //       arraylist = response.data;
+    //       this.success = arraylist[0].success;
+    //       if (this.success == true) {
+    //         this.results = arraylist[0].results;
+    //         this.tableData = arraylist.slice(1);
+    //         console.log(this.tableData);
+    //       }
+    //     })
+    //     .catch((err) => console.log(err));
+    // },
+    // parentFun() {
+    //   console.log("搜索");
+    // },
+    // handleCurrentChange(val) {
+    //   console.log(`当前页: ${val}`);
+    //   this.currentPage = val;
+    // },
+    // download(articleId) {
+    //   this.$axios({
+    //     method: "get",
+    //     url: "http://82.156.190.251:80/apis/download",
+    //     params: {
+    //       articleId: articleId,
+    //     },
+    //     responseTpe: "blob",
+    //   }).then((res) => {
+    //     console.log(res);
+    //     const filename = decodeURIComponent(
+    //       res.headers["content-disposition"].split(";")[1].split("=")[1]
+    //     );
+    //     console.log(filename);
+    //     this.load(res.data, filename);
+    //   });
+    //   console.log("submit!");
+    // },
+    // load(data, filename) {
+    //   if (!data) {
+    //     return;
+    //   }
+    //   let url = window.URL.createObjectURL(
+    //     new Blob([data], { type: "application/force-download;charset=utf-8" })
+    //   );
+    //   let link = document.createElement("a");
+    //   link.style.display = "none";
+    //   link.href = url;
+    //   link.download = filename;
+    //   document.body.appendChild(link);
+    //   link.click();
+    //   document.body.removeChild(link);
+    //   window.URL.revokeObjectURL(url);
+    // },
+    // claim(articleId) {
+    //   this.$axios({
+    //     method: "post",
+    //     url: "http://82.156.190.251:80/apis/author/claim",
+    //     data: { articleId: Number(articleId) },
+    //   }).then((res) => {
+    //     console.log(res);
+    //   });
+    //   console.log("认领请求提交!");
+    // },
+    // fetchdata() {
+    //   this.$axios({
+    //     method: "get",
+    //     url: "http://82.156.190.251:80/apis/search",
+    //     params: this.search,
+    //   }).then(
+    //     (response) => {
+    //       console.log(response);
+    //       var arraylist = new Array();
+    //       arraylist = response.data;
+    //       this.success = response.success;
+    //       if (this.success == true) {
+    //         this.tableData = arraylist.slice(1);
+    //       }
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //     }
+    //   );
+    // },
   },
 };
 </script>

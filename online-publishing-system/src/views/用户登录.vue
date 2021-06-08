@@ -12,10 +12,11 @@
         <el-form-item label="Password">
           <el-input
             v-model="formInline.password"
-            placeholder="Password"
+            prefix-icon="el-icon-lock"
+            show-password
           ></el-input>
         </el-form-item>
-        <div v-if="$store.state.isLogin">
+        <div v-if="this.$store.state.isLogin == true">
           <el-form-item>
             <router-link to="/"
               ><el-button type="info" @click="Logout"
@@ -66,15 +67,25 @@ export default {
       role: 0,
     };
   },
-  created: function () {
-    if (sessionStorage.getItem("isLogin") == undefined) sessionStorage.setItem("isLogin",false);
-    if (sessionStorage.getItem("role") == undefined) sessionStorage.setItem("role",0);
-    if (sessionStorage.getItem("isLogin") == true) this.$store.commit("login");
-    else if (sessionStorage.getItem("isLogin") == false){
+  mounted: function () {
+    console.log("登录情况", this.$store.state.isLogin);
+    if (sessionStorage.getItem("isLogin") == undefined)
+      sessionStorage.setItem("isLogin", false);
+    if (sessionStorage.getItem("role") == undefined)
+      sessionStorage.setItem("role", 0);
+    if (sessionStorage.getItem("isLogin") == true) {
+      this.$store.commit("login");
+      console.log("登录更新");
+    } else if (sessionStorage.getItem("isLogin") == false) {
       this.$store.commit("logout");
-      sessionStorage.setItem("role",0);
+      sessionStorage.setItem("role", 0);
     }
-    if (sessionStorage.getItem("role") % 2 == 1)
+    if (
+      sessionStorage.getItem("role") == 1 ||
+      sessionStorage.getItem("role") == 3 ||
+      sessionStorage.getItem("role") == 5 ||
+      sessionStorage.getItem("role") == 7
+    )
       this.$store.commit("setEditor");
     if (
       sessionStorage.getItem("role") == 2 ||
@@ -96,7 +107,13 @@ export default {
           this.role = res.data.role;
           sessionStorage.setItem("role", this.role);
           sessionStorage.setItem("isLogin", true);
-          /*if (this.role % 2 == 1) this.$store.commit("setEditor");
+          if (
+            this.role == 1 ||
+            this.role == 3 ||
+            this.role == 5 ||
+            this.role == 7
+          )
+            this.$store.commit("setEditor");
           if (
             this.role == 2 ||
             this.role == 3 ||
@@ -104,15 +121,16 @@ export default {
             this.role == 7
           )
             this.$store.commit("setReviewer");
-          if (this.role >= 4) this.$store.commit("setWriter");*/
+          if (this.role >= 4) this.$store.commit("setWriter");
           console.log(this.formInline);
-          console.log(this.$store.state.role);
-          console.log("submit!");
+          console.log("登录页面用户角色", this.$store.state.role);
           this.$store.commit("login");
           this.$message({
             message: "登录成功！",
             type: "success",
           });
+          sessionStorage.setItem("email", this.formInline.email);
+          sessionStorage.setItem("password", this.formInline.password);
         } else {
           alert(res.data.message);
         }
@@ -128,7 +146,7 @@ export default {
       }).then((res) => {
         console.log(res);
       });
-      console.log("submit!");
+      console.log("logout submit!");
       this.$store.commit("logout");
       this.$message({
         message: "退出登录成功！",
