@@ -15,7 +15,6 @@ const 资源管理 = () => import("../views/资源管理.vue");
 const 查看文章 = () => import("../views/查看文章.vue");
 const 编号查找 = () => import("../views/编号查找.vue");
 const 关键字查找 = () => import("../views/关键字查找.vue");
-const 清除无效信息 = () => import("../views/清除无效信息.vue");
 const 网站设置 = () => import("../views/网站设置.vue");
 
 Vue.use(VueRouter)
@@ -200,14 +199,6 @@ const routes = [
         path:"/admin/documents/key-search",
         name:"关键字查找",
         component:关键字查找,
-        meta: {
-          adminLoginRequest: true
-        }
-      },
-      {
-        path:"/admin/clean",
-        name:"清除无效信息",
-        component:清除无效信息,
         meta: {
           adminLoginRequest: true
         }

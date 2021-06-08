@@ -52,10 +52,6 @@
                   <el-menu-item index="/admin/documents/key-search">关键字查找</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
-              <el-menu-item index="/admin/clean">
-                <i class="el-icon-delete"></i>
-                <span slot="title">删除信息</span>
-              </el-menu-item>
               <el-menu-item index="/admin/settings">
                 <i class="el-icon-setting"></i>
                 <span slot="title">网站设置</span>
