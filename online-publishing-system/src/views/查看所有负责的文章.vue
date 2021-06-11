@@ -53,7 +53,7 @@
           label="文章状态"
           align="center"
         ></el-table-column>
-        <el-table-column fixed="right" label="下载文章" width="100">
+        <el-table-column label="下载文章">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -64,7 +64,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="分配审稿人" width="100">
+        <el-table-column label="分配审稿人">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -75,7 +75,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="接收" width="100">
+        <el-table-column label="接收">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -89,7 +89,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="拒绝操作" width="100">
+        <el-table-column label="拒绝操作">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -103,7 +103,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="上传编辑稿" width="100">
+        <el-table-column label="上传编辑稿">
           <template slot-scope="scope">
             <router-link to="/editor/upload"
               ><el-button
@@ -115,7 +115,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="接受撤稿" width="100">
+        <el-table-column label="接受撤稿">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -126,7 +126,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="拒绝撤稿" width="100">
+        <el-table-column label="拒绝撤稿">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -212,7 +212,7 @@ export default {
         }
       );
     },
-    assignReviewer(row) {
+    assignReviewers(row) {
       this.$prompt(
         "请输入分配的审稿人序列",
         "两个审稿人编号请用英文逗号','进行分割",
@@ -259,7 +259,6 @@ export default {
             message: "取消输入",
           });
         });
-        location.reload();
     },
     acceptArticle(row) {
       this.$notify({

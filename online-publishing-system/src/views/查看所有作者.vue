@@ -39,9 +39,10 @@
           label="绑定的文章数量"
           align="center"
         ></el-table-column>
-        <el-table-column fixed="right" label="撤销作者身份" width="100">
+        <el-table-column  label="撤销作者身份">
           <template slot-scope="scope"
-            ><el-button
+            >
+            <el-button
               type="text"
               size="small"
               @click="cancelAuthor(scope.row)"

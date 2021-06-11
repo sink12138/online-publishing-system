@@ -44,7 +44,7 @@
           label="是否已确认"
           align="center"
         ></el-table-column>
-        <el-table-column fixed="right" label="申请操作" width="100">
+        <el-table-column label="申请操作">
           <template slot-scope="scope">
             <el-button
               type="text"
@@ -65,7 +65,7 @@
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="7"
+            :page-size="10"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
@@ -191,7 +191,7 @@ export default {
           confirmed: false,
         },
       ],
-      pagesize: 7,
+      pagesize: 10,
       currentPage: 1,
       total: 0,
     };

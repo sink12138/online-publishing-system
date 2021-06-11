@@ -32,7 +32,7 @@
           label="所属机构"
           align="center"
         ></el-table-column>
-         <el-table-column fixed="right" label="撤销审稿人身份" width="100">
+         <el-table-column label="撤销审稿人身份">
           <template slot-scope="scope"
             ><el-button
               type="text"
