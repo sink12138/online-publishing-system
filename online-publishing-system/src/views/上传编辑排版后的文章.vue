@@ -10,8 +10,7 @@
         ref="file"
         accept=".doc,.docx,.pdf,.zip"
       />
-      <el-input v-model="formInline.articleId" placeholder="authorId"
-        >文章编号
+      <el-input v-model="formInline.articleId" placeholder="对应的文章编号">
       </el-input>
       <el-button type="primary" size="mini" @click="getfile"
         >提交文件</el-button

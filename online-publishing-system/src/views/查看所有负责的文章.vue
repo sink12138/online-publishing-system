@@ -268,7 +268,7 @@ export default {
         type: "success",
       });
       let JsonConfirmArticleId = JSON.stringify({
-        articleBufferId: Number(row.articleId),
+        articleBufferId: Math.abs(Number(row.articleId)),
       });
       console.log(JsonConfirmArticleId);
       this.$store.commit("confirm");
@@ -292,6 +292,7 @@ export default {
           });
         }
       });
+      location.reload();
     },
     rejectArticle(row) {
       this.$notify({
@@ -300,7 +301,7 @@ export default {
         type: "success",
       });
       let JsonConfirmArticleId = JSON.stringify({
-        articleBufferId: Number(row.articleId),
+        articleBufferId: Math.abs(Number(row.articleId)),
       });
       console.log(JsonConfirmArticleId);
       this.$store.commit("confirm");
