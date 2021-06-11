@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       formInline: {
-        accountId: "",
+        accountId: 0,
         organization: "",
       },
     };
@@ -42,7 +42,10 @@ export default {
           return;
         }
       }
-      let JsonCertifyReviewer = JSON.stringify(this.formInline);
+      let JsonCertifyReviewer = JSON.stringify({
+        accountId: Number(this.formInline.accountId),
+        organization: this.formInline.organization,
+      });
       console.log(JsonCertifyReviewer);
       this.$store.commit("Certify");
       this.$axios({
@@ -51,7 +54,7 @@ export default {
         data: JsonCertifyReviewer,
       }).then((res) => {
         console.log(res);
-        if (res.date.success == true) {
+        if (res.data.success == true) {
           this.$message({
             showClose: true,
             message: "认证审稿人成功",
@@ -65,10 +68,10 @@ export default {
           });
         }
       });
-      window.location.href = "../reviewers";
+      window.location.href = "./editor/reviewers";
     },
-    Cancel() {
-      window.location.href = "../reviewers";
+    Return() {
+      window.location.href = "./editor/reviewers";
     },
   },
 };

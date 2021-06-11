@@ -4,12 +4,18 @@
       <h1>所有审稿人名单</h1>
     </div>
     <div class="table">
+      <template
+        ><router-link to="/editor/certify/reviewer"
+          ><el-button type="primary" >认证审稿人</el-button>
+        </router-link>
+        <el-button type="primary" @click="Return">返回</el-button>
+      </template>
       <el-table
         :data="
-          reviewerData.slice((currentPage - 1) * pagesize, current * pagesize)
+          tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
         :header-cell-style="{ height: '60px' }"
-        style="height: 100%;width: 300%;padding-top:10px;scoped"
+        style="width: 100%"
       >
         <el-table-column
           prop="reviewerId"
@@ -26,12 +32,22 @@
           label="所属机构"
           align="center"
         ></el-table-column>
+         <el-table-column fixed="right" label="撤销审稿人身份" width="100">
+          <template slot-scope="scope"
+            ><el-button
+              type="text"
+              size="small"
+              @click="cancelReviewer(scope.row)"
+              >撤销审稿人</el-button
+            >
+          </template>
+        </el-table-column>
         <div class="pagination">
           <el-pagination
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="3"
+            :page-size="10"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
@@ -81,7 +97,36 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    searchArticle() {},
+    cancelReviewer(row){
+      let JsonCancelReviewerId = JSON.stringify({
+        reviewerId: Number(row.reviewerId),
+      });
+      console.log(JsonCancelReviewerId);
+      this.$store.commit("cancel");
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/cancel/reviewer",
+        data: JsonCancelReviewerId,
+      }).then((res) => {
+        console.log(res);
+        if (res.data.success == true) {
+          this.$message({
+            showClose: true,
+            message: "撤销审稿人身份成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
+      });
+    },
+    Return(){
+      window.location.href="../editor"
+    }
   },
   data() {
     return {
@@ -92,7 +137,7 @@ export default {
           institution: "",
         },
       ],
-      pagesize: 3,
+      pagesize: 8,
       currentPage: 1,
       reviewerData: "",
       total: 0,

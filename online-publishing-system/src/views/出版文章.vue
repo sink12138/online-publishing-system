@@ -19,6 +19,9 @@
         <el-form-item>
           <el-button type="primary" @click="onSubmit">提交</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="Return">返回</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -36,17 +39,19 @@ export default {
   },
   methods: {
     onSubmit() {
-      if(this.formInline.articleId ===""){
+      if (this.formInline.articleId === "") {
         alert("请输入文章编号！");
         return;
-      }
-      else{
-        if(this.formInline.identifier ===""){
+      } else {
+        if (this.formInline.identifier === "") {
           alert("请输入文章标识符！");
           return;
         }
       }
-      let JsonPublishArticle = JSON.stringify({articleId:Number(this.formInline.articleId)},{identifier:this.formInline.identifier});
+      let JsonPublishArticle = JSON.stringify({
+        articleId: Number(this.formInline.articleId),
+        identifier: this.formInline.identifier,
+      });
       console.log(JsonPublishArticle);
       this.$store.commit("publish");
       this.$axios({
@@ -64,13 +69,16 @@ export default {
         } else {
           this.$message({
             showClose: true,
-            message: res.data.message,
+            message: "文章编号错误！",
             type: "error",
           });
         }
       });
-      window.location.href = "../";
+      window.location.href = "../editors/articles";
     },
+    Return(){
+      window.location.href="../editor/articles"
+    }
   },
 };
 </script>

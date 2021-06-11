@@ -3,10 +3,13 @@
     <div>
       <h1>所有作者名单</h1>
     </div>
+    <template>
+      <el-button type="primary" @click="Return">返回</el-button>
+    </template>
     <div class="table">
       <el-table
         :data="
-          authorData.slice((currentPage - 1) * pagesize, current * pagesize)
+          tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
         :header-cell-style="{ height: '0px' }"
         style="height: 100%;width: 100%;padding-top:10px;scoped"
@@ -36,6 +39,16 @@
           label="绑定的文章数量"
           align="center"
         ></el-table-column>
+        <el-table-column fixed="right" label="撤销作者身份" width="100">
+          <template slot-scope="scope"
+            ><el-button
+              type="text"
+              size="small"
+              @click="cancelAuthor(scope.row)"
+              >撤销作者</el-button
+            >
+          </template>
+        </el-table-column>
         <div class="pagination">
           <el-pagination
             background
@@ -91,7 +104,36 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    searchArticle() {},
+    cancelAuthor(row) {
+      let JsonCancelAuthorId = JSON.stringify({
+        authorId: Number(row.authorId),
+      });
+      console.log(JsonCancelAuthorId);
+      this.$store.commit("cancel");
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/cancel/author",
+        data: JsonCancelAuthorId,
+      }).then((res) => {
+        console.log(res);
+        if (res.data.success == true) {
+          this.$message({
+            showClose: true,
+            message: "撤销作者身份成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
+      });
+    },
+    Return(){
+      window.location.href="../editor";
+    }
   },
   data() {
     return {
@@ -104,7 +146,7 @@ export default {
           articleCount: 0,
         },
       ],
-      pagesize: 5,
+      pagesize: 10,
       currentPage: 1,
       authorData: "",
       total: 0,

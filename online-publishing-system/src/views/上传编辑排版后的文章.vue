@@ -10,7 +10,8 @@
         ref="file"
         accept=".doc,.docx,.pdf,.zip"
       />
-      <el-input v-model="formInline.articleId" placeholder="authorId">
+      <el-input v-model="formInline.articleId" placeholder="authorId"
+        >文章编号
       </el-input>
       <el-button type="primary" size="mini" @click="getfile"
         >提交文件</el-button
@@ -26,13 +27,18 @@ export default {
       hasfile: false,
       articleId: 0,
       formInline: {
-        articleId,
+        articleId: 0,
       },
       fileList: [],
     };
   },
   methods: {
     getfile() {
+      this.$message({
+        showClose: true,
+        message: "提交成功！",
+        type: "success",
+      });
       this.fileList = this.$refs.file.files;
       console.log(this.fileList);
       if (this.fileList[0].size > 20 * 1024 * 1024) {
@@ -44,14 +50,13 @@ export default {
       let formData = new FormData();
       formData.append("file", this.fileList[0]);
       formData.append("articleId", 0);
-      formData.append("overwrite",this.formInline.articleId);
+      formData.append("overwrite", this.formInline.articleId);
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/editor/upload",
         data: formData,
-      }).then(
-        console.log("上传完毕")
-      )
+      }).then(console.log("上传完毕"));
+      window.location.href = "../editor/articles";
     },
   },
 };

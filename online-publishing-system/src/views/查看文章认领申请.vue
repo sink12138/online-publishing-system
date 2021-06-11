@@ -1,15 +1,18 @@
 <template>
   <div class="reviewer">
     <div>
-      <h1>所有作者名单</h1>
+      <h1>所有文章认领申请</h1>
     </div>
+    <template>
+      <el-button type="primary" @click="Return">返回</el-button>
+    </template>
     <div class="table">
       <el-table
         :data="
-          claimData.slice((currentPage - 1) * pagesize, current * pagesize)
+          tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
         :header-cell-style="{ height: '0px' }"
-        style="height: 100%;width: 100%;padding-top:10px;scoped"
+        style="width: 100%"
       >
         <el-table-column
           prop="articleId"
@@ -41,12 +44,28 @@
           label="是否已确认"
           align="center"
         ></el-table-column>
+        <el-table-column fixed="right" label="申请操作" width="100">
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="confirmArticle(scope.row)"
+              >确认</el-button
+            >
+            <el-button
+              type="text"
+              size="small"
+              @click="refuseArticle(scope.row)"
+              >拒绝</el-button
+            >
+          </template>
+        </el-table-column>
         <div class="pagination">
           <el-pagination
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="6"
+            :page-size="7"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
@@ -80,7 +99,7 @@ export default {
   mounted: function () {
     this.$axios({
       method: "get",
-      url: "http://82.156.190.251:80/apis/editor/reviews",
+      url: "http://82.156.190.251:80/apis/editor/claims",
     })
       .then((response) => {
         console.log(response);
@@ -96,7 +115,69 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    searchArticle() {},
+    confirmArticle(row) {
+      let JsonConfirmArticleId = JSON.stringify({
+        authorId: Number(row.authorId),
+        articleId: Number(row.articleId),
+        confirm: true,
+      });
+      console.log(JsonConfirmArticleId);
+      this.$store.commit("confirm");
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/confirm/claim",
+        data: JsonConfirmArticleId,
+      }).then((res) => {
+        console.log(res);
+        if (res.data.success == true) {
+          this.$message({
+            showClose: true,
+            message: "接受文章成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
+      });
+      location.reload();
+    },
+    refuseArticle(row) {
+      let JsonRefuseArticleId = JSON.stringify({
+        articleId: Number(row.articleId),
+        authorId: Number(row.authorId),
+        confirm: false,
+      });
+      console.log(JsonRefuseArticleId);
+      this.$store.commit("refuse");
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/editor/confirm/claim",
+        data: JsonRefuseArticleId,
+      }).then((res) => {
+        console.log(res);
+        if (res.data.success == true) {
+          this.$message({
+            showClose: true,
+            message: "拒绝文章成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.message,
+            type: "error",
+          });
+        }
+      });
+      location.reload();
+    },
+    Return() {
+      window.location.href = "../editor/articles";
+    },
   },
   data() {
     return {
@@ -107,12 +188,11 @@ export default {
           authorId: 0,
           realName: "",
           email: "",
-          confirmed:false,
+          confirmed: false,
         },
       ],
-      pagesize: 56,
+      pagesize: 7,
       currentPage: 1,
-      authorData: "",
       total: 0,
     };
   },

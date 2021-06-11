@@ -99,58 +99,23 @@ const routes = [
       },
       {
         path: '/editor/authors',
-        name: '作者身份管理',
-        component: () => import('../views/作者身份管理.vue')
-      },
-      {
-        path: '/editor/reviewers',
-        name: '审稿人身份管理',
-        component: () => import('../views/审稿人身份管理.vue')
-      },
-      {
-        path: '/editor/articles',
-        name: '文章管理',
-        component: () => import('../views/文章管理.vue')
-      },
-      {
-        path:'/editor/cancel/authors',
-        name:'撤销作者身份',
-        component:() => import('../views/撤销作者身份.vue')
-      },
-      {
-        path: '/editor/check/authors',
         name: '查看所有作者',
         component: () => import('../views/查看所有作者.vue')
       },
       {
-        path:'/editor/cancel/reviewers',
-        name:'撤销审稿人身份',
-        component: () => import('../views/撤销审稿人身份.vue')
-      },
-      {
-        path: '/editor/check/reviewers',
+        path: '/editor/reviewers',
         name: '查看所有审稿人',
         component: () => import('../views/查看所有审稿人.vue')
       },
       {
-        path: '/editor/certify/reviewers',
-        name: '认证审稿人身份',
-        component: () => import('../views/认证审稿人身份.vue')
-      },
-      {
-        path: '/editor/check/articles',
-        name: '查看所有负责的身份',
+        path: '/editor/articles',
+        name: '查看所有负责的文章',
         component: () => import('../views/查看所有负责的文章.vue')
       },
       {
-        path: '/editor/assign',
-        name: '分配审稿人',
-        component: () => import('../views/分配审稿人.vue')
-      },
-      {
-        path: '/editor/manage/articles',
-        name: '管理收到的文章',
-        component: () => import('../views/管理收到的文章.vue')
+        path: '/editor/certify/reviewer',
+        name: '认证审稿人身份',
+        component: () => import('../views/认证审稿人身份.vue')
       },
       {
         path: '/editor/reviews',
@@ -172,16 +137,6 @@ const routes = [
         name: '查看文章认领申请',
         component: () => import('../views/查看文章认领申请.vue')
       },
-      {
-        path: '/editor/confirm/claim',
-        name: '确认文章认领申请',
-        component: () => import('../views/确认文章认领申请.vue')
-      },
-      {
-        path: '/editor/confirm/withdraw',
-        name: '确认撤稿申请',
-        component: () => import('../views/确认撤稿申请.vue')
-      }
     ]
   },
   {

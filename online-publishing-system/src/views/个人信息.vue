@@ -2,10 +2,6 @@
   <div class="myinfo">
     <h1>个人信息页面</h1>
     <div class="author">
-<<<<<<< HEAD
-      <router-link to="/author/certify">认证作者</router-link> |
-      <router-link to="/author/cancel">注销作者</router-link> |
-=======
       <router-link to="/author/certify" v-if="$store.state.role < 4"
         >认证作者</router-link
       >
@@ -14,7 +10,6 @@
         >注销作者</router-link
       >
       |
->>>>>>> origin/frontend
       <router-link to="/">返回主页</router-link>
     </div>
     <div class="articleinfo">

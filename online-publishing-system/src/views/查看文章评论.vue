@@ -3,10 +3,19 @@
     <div>
       <h1>文章评论如下</h1>
     </div>
+    <template>
+      <el-button type="primary" @click="Return">返回</el-button>
+    </template>
     <div>
-      <el-input v-model="articleId">查找的文章编号 </el-input>
+      <el-form :inline="true" :model="search" class="demo-form-inline">
+        <el-form-item label="文章编号">
+          <el-input v-model="search.articleId" placeholder="articleId"
+            >请输入需要查看评论的文章id
+          </el-input>
+        </el-form-item>
+      </el-form>
       <template
-        ><el-button type="text" size="small" @click="searchArticle"
+        ><el-button type="primary" @click="searchArticle"
           >查找</el-button
         >
       </template>
@@ -38,10 +47,17 @@ export default {
   },
   methods: {
     searchArticle() {
+      if (this.search.articleId === 0) {
+        alert("请输入文章编号！");
+      }
+      if (this.search.articleId <= 0) {
+        alert("请输入正确的文章编号！");
+      }
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/editor/reviews",
-        params: this.search,
+        params: { articleId: this.search.articleId },
+        responseTpe: "blob",
       })
         .then((response) => {
           console.log(this.search);
@@ -56,6 +72,9 @@ export default {
           }
         })
         .catch((err) => console.log(err));
+    },
+    Return() {
+      window.location.href = "../editor/articles";
     },
   },
 };
