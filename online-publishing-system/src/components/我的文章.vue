@@ -74,6 +74,7 @@ export default {
     this.convert();
   },
   methods: {
+
     submit(row) {
       this.article = row.articleId;
       this.status = row.status;
