@@ -52,13 +52,7 @@
             <el-button @click="open(scope.row)" type="text" size="small"
               >评价</el-button
             >
-            <el-button
-              @click="submit(scope.row)"
-              type="text"
-              size="small"
-              v-if="
-                scope.row.comments !== undefined && scope.row.comments !== ''
-              "
+            <el-button @click="submit(scope.row)" type="text" size="small"
               >提交</el-button
             >
           </template>
@@ -102,7 +96,7 @@ export default {
           label: "不通过",
         },
       ],
-      value: ''
+      value: "",
     };
   },
   created() {
@@ -129,39 +123,47 @@ export default {
         }
       );
     },
-    load(data,filename){
-      if (! data) {
-          return
-        }
-        let url = window.URL.createObjectURL(new Blob([data],{ type:'application/force-download;charset=utf-8'}))
-        let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = url
-        link.download = filename
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        window.URL.revokeObjectURL(url)
+    load(data, filename) {
+      if (!data) {
+        return;
+      }
+      let url = window.URL.createObjectURL(
+        new Blob([data], { type: "application/force-download;charset=utf-8" })
+      );
+      let link = document.createElement("a");
+      link.style.display = "none";
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     },
     submit(row) {
-      console.log(row.articleId);
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/reviewer/review/submit",
-        data: JSON.stringify({
-          articleId: Number(row.articleId),
-          pass: row.value,
-          comments: row.comments,
-        }),
-      }).then(
-        (response) => {
-          console.log(response);
-        },
-        (err) => {
-          alert(err);
-        }
-      );
-      location.reload();
+      if (row.comments !== undefined && row.comments !== "") {
+        console.log(row.articleId);
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/reviewer/review/submit",
+          data: JSON.stringify({
+            articleId: Number(row.articleId),
+            pass: row.value,
+            comments: row.comments,
+          }),
+        }).then(
+          (response) => {
+            console.log(response);
+          },
+          (err) => {
+            alert(err);
+          }
+        );
+        location.reload();
+      } else {
+        this.$message({
+            message: "请输入评论",
+          });
+      }
     },
     convert: function () {
       this.$axios

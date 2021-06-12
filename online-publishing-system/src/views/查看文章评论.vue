@@ -15,15 +15,18 @@
         </el-form-item>
       </el-form>
       <template
-        ><el-button type="primary" @click="searchArticle"
-          >查找</el-button
-        >
+        ><el-button type="primary" @click="searchArticle">查找</el-button>
       </template>
     </div>
     <div class="articles">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="评论内容" prop="comments"> </el-table-column>
-        <el-table-column label="是否通过" prop="pass"> </el-table-column>
+        <el-table-column label="是否通过" prop="pass">
+          <template slot-scope="scope">
+            <span v-if="scope.row.pass == true"> 通过 </span>
+            <span v-if="scope.row.pass == false"> 不通过 </span>
+          </template>
+        </el-table-column>
         <el-table-column label="评论时间" prop="date"> </el-table-column>
       </el-table>
     </div>
@@ -69,6 +72,13 @@ export default {
             this.results = arraylist[0].results;
             this.tableData = arraylist.slice(1);
             console.log(this.tableData);
+          }
+          if (this.success == false) {
+            this.$message({
+              showClose: true,
+              message: "请输入正确的文章编号！",
+              type: "error",
+            });
           }
         })
         .catch((err) => console.log(err));
