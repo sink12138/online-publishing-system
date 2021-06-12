@@ -102,14 +102,7 @@ export default {
           label: "不通过",
         },
       ],
-      options: [{
-          value: '选项1',
-          label: '通过'
-        }, {
-          value: '选项2',
-          label: '不通过'
-        }],
-        value: ''
+      value: ''
     };
   },
   created() {
