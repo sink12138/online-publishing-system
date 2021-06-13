@@ -59,7 +59,7 @@
         </el-form-item> -->
         <el-form-item
           label="第一作者"
-          v-if="this.status != '审核通过' || this.status != '审核未通过'"
+          v-if="this.status != '审核通过' && this.status != '审核未通过'"
         >
           <el-input
             v-model="formInline.firstAuthor"
@@ -68,7 +68,7 @@
         </el-form-item>
         <el-form-item
           label="其他作者"
-          v-if="this.status != '审核通过' || this.status != '审核未通过'"
+          v-if="this.status != '审核通过' && this.status != '审核未通过'"
         >
           <el-tag
             :key="tag"
@@ -96,6 +96,18 @@
             @click="showInput2"
             >+ New Tag</el-button
           >
+        </el-form-item>
+        <el-form-item
+          label="第一作者"
+          v-if="this.status == '审核通过' || this.status == '审核未通过'"
+        >
+          {{ this.firstAuthor }}
+        </el-form-item>
+        <el-form-item
+          label="其他作者"
+          v-if="this.status == '审核通过' || this.status == '审核未通过'"
+        >
+          {{ this.otherAuthors }}
         </el-form-item>
         <!-- <el-form-item
           label="其他作者"
@@ -139,11 +151,16 @@ export default {
       },
       fileList: [],
       returnId: 0,
+      firstAuthor: "",
+      otherAuthors: "",
     };
   },
   created: function () {
     this.returnId = this.$route.query.articleId;
     this.status = this.$route.query.status;
+    this.firstAuthor = this.$route.query.firstAuthor;
+    this.otherAuthors = this.$route.query.otherAuthors;
+    if (this.otherAuthors == "undefined") this.otherAuthors = "无";
     if (this.returnId == undefined) this.returnId = 0;
     console.log(this.returnId);
     console.log(this.status);
