@@ -12,7 +12,7 @@
         <div slot="header" class="clearfix">
           <span>文章信息</span>
           <el-button
-            @click="handleDelete(aritcleData.articleId)" 
+            @click="handleDelete(aritcleData.articleId)"
             plain
             icon="el-icon-delete"
             style="float:right;padding:5px 8px">
@@ -101,7 +101,7 @@
           this.$message({
             type: 'info',
             message: '取消删除'
-          });       
+          });
         });
       }
     },

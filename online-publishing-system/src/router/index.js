@@ -97,7 +97,47 @@ const routes = [
         path: '/editor',
         name: '编辑主页',
         component: () => import('../views/编辑主页.vue')
-      }
+      },
+      {
+        path: '/editor/authors',
+        name: '查看所有作者',
+        component: () => import('../views/查看所有作者.vue')
+      },
+      {
+        path: '/editor/reviewers',
+        name: '查看所有审稿人',
+        component: () => import('../views/查看所有审稿人.vue')
+      },
+      {
+        path: '/editor/articles',
+        name: '查看所有负责的文章',
+        component: () => import('../views/查看所有负责的文章.vue')
+      },
+      {
+        path: '/editor/certify/reviewer',
+        name: '认证审稿人身份',
+        component: () => import('../views/认证审稿人身份.vue')
+      },
+      {
+        path: '/editor/reviews',
+        name: '查看文章评论',
+        component: () => import('../views/查看文章评论.vue')
+      },
+      {
+        path: '/editor/upload',
+        name: '上传编辑排版后的文章',
+        component: () => import('../views/上传编辑排版后的文章.vue')
+      },
+      {
+        path: '/editor/publish',
+        name: '出版文章',
+        component: () => import('../views/出版文章.vue')
+      },
+      {
+        path: '/editor/claims',
+        name: '查看文章认领申请',
+        component: () => import('../views/查看文章认领申请.vue')
+      },
     ]
   },
   {

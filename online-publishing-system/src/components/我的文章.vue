@@ -74,11 +74,14 @@ export default {
     this.convert();
   },
   methods: {
+
     submit(row) {
       this.article = row.articleId;
       this.status = row.status;
+      this.firstAuthor = row.firstAuthor;
+      this.otherAuthors = row.otherAuthors;
       this.$router.push(
-        "/author/submit?articleId=" + this.article + "&status=" + this.status
+        "/author/submit?articleId=" + this.article + "&status=" + this.status + "&firstAuthor=" + this.firstAuthor + "&otherAuthors=" + this.otherAuthors
       );
       console.log(row.articleID);
     },

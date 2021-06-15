@@ -103,10 +103,10 @@ html, body {
             .then((res)=>{
                 console.log(res);
                 console.log(res.data.success);
-                if (res.data.success == true) 
+                if (res.data.success == true)
                     this.$store.commit('adminLogin')
                 else this.$store.commit('adminLogout');
-                if (sessionStorage.getItem("admin") == 'login') { 
+                if (sessionStorage.getItem("admin") == 'login') {
                     sessionStorage.setItem("adminPassword",this.adminMess.password);
                     window.location.href='../admin/home'
                 }
