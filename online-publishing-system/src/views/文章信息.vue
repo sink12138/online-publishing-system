@@ -21,10 +21,10 @@
     </div>
     <br />
     <div class="button">
-      <el-button type="primary" @click="downloadarticle()"
+      <el-button type="info" @click="downloadarticle()"
         >点击下载本篇文章<i class="el-icon-download el-icon--right"></i
       ></el-button>
-      <el-button type="primary" @click="firstAuthorInfo()"
+      <el-button type="info" @click="firstAuthorInfo()"
         >点击查看第一作者<i class="el-icon-info el-icon--right"></i
       ></el-button>
     </div>

@@ -4,22 +4,19 @@
       <h1>您负责的文章如下</h1>
     </div>
     <div class="table">
-      <template
-        ><router-link to="/editor/claims"
-          ><el-button type="primary">查看文章认领申请</el-button>|
+      <div class="reviewer-button">
+        <router-link to="/editor/claims">
+          <el-button type="info">查看文章认领申请</el-button>
         </router-link>
-        <router-link to="/editor/publish"
-          ><el-button type="primary">出版文章</el-button>|
+        <router-link to="/editor/publish">
+          <el-button type="info">出版文章</el-button>
         </router-link>
-        <router-link to="/editor/reviews"
-          ><el-button type="primary">查看评论</el-button>|
+        <router-link to="/editor/reviews">
+          <el-button type="info">查看评论</el-button>
         </router-link>
-        <el-button type="primary" @click="Return">返回</el-button>
-      </template>
+      </div>
       <el-table
-        :data="
-          tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
-        "
+        :data="tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)"
         :header-cell-style="{ height: '60px' }"
         style="width: 100%"
       >
@@ -154,13 +151,15 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .breadcrumb {
   position: relative;
   text-align: center;
 }
+.reviewer-button .el-button {
+  margin-right: 20px;
+}
 .table {
-  position: fixed;
   text-align: center;
 }
 .pagination {
@@ -409,9 +408,6 @@ export default {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     },
-    Return(){
-      window.location.href="../editor"
-    }
   },
   data() {
     return {

@@ -6,9 +6,8 @@
     <div class="table">
       <template
         ><router-link to="/editor/certify/reviewer"
-          ><el-button type="primary" >认证审稿人</el-button>
+          ><el-button type="info" >认证审稿人</el-button>
         </router-link>
-        <el-button type="primary" @click="Return">返回</el-button>
       </template>
       <el-table
         :data="
@@ -47,7 +46,7 @@
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="10"
+            :page-size="8"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
@@ -65,7 +64,6 @@
   text-align: center;
 }
 .table {
-  position: fixed;
   text-align: center;
 }
 .pagination {
@@ -124,9 +122,6 @@ export default {
         }
       });
     },
-    Return(){
-      window.location.href="../editor"
-    }
   },
   data() {
     return {

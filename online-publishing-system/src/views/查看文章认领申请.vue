@@ -2,10 +2,8 @@
   <div class="reviewer">
     <div>
       <h1>所有文章认领申请</h1>
+      <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     </div>
-    <template>
-      <el-button type="primary" @click="Return">返回</el-button>
-    </template>
     <div class="table">
       <el-table
         :data="
@@ -78,12 +76,12 @@
 </template>
 
 <style>
-.breadcrumb {
-  position: relative;
-  text-align: center;
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
 }
 .table {
-  position: fixed;
   text-align: center;
 }
 .pagination {

@@ -23,17 +23,20 @@
         <div class="user">
           <el-dropdown>
             <span class="el-dropdown-link">
-              <i class="el-icon-more" style="font-size:33px"></i>
+              <i class="el-icon-user-solid" style="font-size:33px"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <router-link to="/login">
+              <router-link to="/main">
+                <el-dropdown-item>主页</el-dropdown-item>
+              </router-link>
+              <router-link to="/login" v-if="this.$store.state.isLogin == false">
                 <el-dropdown-item>登录</el-dropdown-item>
+              </router-link>
+              <router-link to="/" v-if="this.$store.state.isLogin == true">
+                <el-dropdown-item @click="Logout">登出</el-dropdown-item>
               </router-link>
               <router-link to="/register">
                 <el-dropdown-item>注册</el-dropdown-item>
-              </router-link>
-              <router-link to="/admin">
-                <el-dropdown-item>Admin</el-dropdown-item>
               </router-link>
             </el-dropdown-menu>
           </el-dropdown>
@@ -88,13 +91,28 @@ export default {
     };
   },
   methods: {
-      searchArticle() {
+    searchArticle() {
       this.$router.push(
         "/main/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
       );
       if(this.$route.path == '/search'){
         this.$router.go(0);
       }
+    },
+    Logout() {
+      sessionStorage.setItem("role", 0);
+      sessionStorage.setItem("isLogin", false);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/logout",
+      }).then((res) => {
+        console.log(res);
+      });
+      console.log("logout submit!");
+      this.$store.commit("logout");
+      this.$message({
+        message: "退出登录成功！",
+      });
     },
   }
 }

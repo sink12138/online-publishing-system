@@ -1,89 +1,106 @@
 <template>
-  <div class="myinfo">
+  <div>
     <h1>个人信息页面</h1>
-    <div class="author">
-      <router-link to="/author/certify" v-if="$store.state.role < 4"
-        >认证作者</router-link
+    <div class="myinfo">
+      <el-tabs 
+        v-model="activeName" 
+        @tab-click="handleClick" 
+        tab-position="left" 
+        type="border-card"
       >
-      |
-      <router-link to="/author/cancel" v-if="$store.state.role >= 4"
-        >注销作者</router-link
-      >
-      |
-      <router-link to="/">返回主页</router-link>
-    </div>
-    <div class="articleinfo">
-      <el-table
-        :show-header="false"
-        :data="tableData"
-        :span-method="objectSpanMethod"
-        border
-        :cell-style="columnStyle"
-        style="width: 100%; margin-top: 20px"
-      >
-        <el-table-column prop="id" label="ID" width="200">
-          <template slot-scope="scope">
-            <div>
-              <img :src="scope.row.id | setPicUrl" />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column width="180" prop="name"></el-table-column>
-        <el-table-column prop="amount1"></el-table-column>
-        <el-table-column width="180" prop="amount2"></el-table-column>
-        <el-table-column prop="amount3"></el-table-column>
-      </el-table>
-    </div>
-    <br />
-    <hr />
-    <div class="modifyEmail">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="Email">
-          <el-input v-model="formInline.email" placeholder="Email"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submit()">提交修改</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <div class="modify">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="password">
-          <el-input
-            v-model="formInline.password"
-            prefix-icon="el-icon-lock"
-            show-password
-            placeholder="password"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="realName">
-          <el-input
-            v-model="formInline.realName"
-            placeholder="realName"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="institution">
-          <el-input
-            v-model="formInline.institution"
-            placeholder="institution"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="researchInterests">
-          <el-input
-            v-model="formInline.researchInterests"
-            placeholder="researchInterests"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="organization">
-          <el-input
-            v-model="formInline.organization"
-            placeholder="organization"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submit2()">提交修改</el-button>
-        </el-form-item>
-      </el-form>
+        <el-tab-pane label="个人信息" name="first">
+          <div class="author">
+            <router-link to="/author/certify" >
+              <el-button v-if="$store.state.role < 4">
+                认证作者
+              </el-button>
+            </router-link>
+            <router-link to="/author/cancel" >
+              <el-button v-if="$store.state.role >= 4">
+                注销作者
+              </el-button>
+            </router-link>
+            <router-link to="/main">
+              <el-button>
+                返回主页
+              </el-button>
+            </router-link>
+          </div>
+          <div class="articleinfo">
+            <el-table
+              :show-header="false"
+              :data="tableData"
+              border
+              :cell-style="columnStyle"
+              style="width: 100%; margin-top: 20px"
+            >
+              <el-table-column prop="id" label="ID" width="200">
+                <template slot-scope="scope">
+                  <div>
+                    <img :src="scope.row.id | setPicUrl" />
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column width="180px" prop="name"></el-table-column>
+              <el-table-column prop="amount1"></el-table-column>
+              <el-table-column width="180px" prop="amount2"></el-table-column>
+              <el-table-column prop="amount3"></el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="修改信息" name="second">
+          <div class="modifyEmail">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+              <el-form-item label="Email">
+                <el-input v-model="formInline.email" placeholder="Email"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="success" plain @click="submit()">提交修改</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+          <el-divider></el-divider>
+          <div class="modify">
+            <el-form ref="form" :model="form" class="modify-form" label-width="120px">
+              <el-form-item label="password">
+                <el-input
+                  v-model="formInline.password"
+                  prefix-icon="el-icon-lock"
+                  show-password
+                  placeholder="password"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="realName">
+                <el-input
+                  v-model="formInline.realName"
+                  placeholder="realName"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="institution">
+                <el-input
+                  v-model="formInline.institution"
+                  placeholder="institution"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="researchInterests">
+                <el-input
+                  v-model="formInline.researchInterests"
+                  placeholder="researchInterests"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="organization">
+                <el-input
+                  v-model="formInline.organization"
+                  placeholder="organization"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="success" plain @click="submit2()">提交修改</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -102,6 +119,7 @@ export default {
         organization: "",
       },
       dataForm: {},
+      activeName: 'first',
     };
   },
   computed: {
@@ -240,8 +258,43 @@ export default {
 </script>
 
 <style scoped>
+.el-tabs__item.is-active{
+  color:rgb(73,178,82);
+}
+.el-tabs__active-bar{
+background-color:rgb(73,178,82);
+}
+.myinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .author {
   text-align: right;
   margin-right: 10px;
+  text-decoration: none;
+}
+.el-tabs {
+  width: 1200px;
+}
+.el-table{
+  width: 60px;
+}
+.modify-form .el-form-item{
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+.el-input {
+  width: 400px;
+  height: 20px;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.router-link-active {
+  text-decoration: none;
+  color: yellow;
 }
 </style>

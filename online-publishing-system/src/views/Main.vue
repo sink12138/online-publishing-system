@@ -3,8 +3,8 @@
     <el-container style="height: 100%">
       <el-header>
         <div class="link1">
-          <router-link to="/">
-            <el-button type="info" plain @click="convert()">返回首页</el-button>
+          <router-link to="/main">
+            <el-button type="info" plain @click="convert()">返回主页</el-button>
           </router-link>
           <router-link to="/home">
             <el-button type="info" plain v-if="$store.state.isLogin"
@@ -49,14 +49,14 @@
           </router-link>
         </div>
         <div class="link2">
-          <router-link to="/login">
+          <router-link to="/login" v-if="this.$store.state.isLogin == false">
             <el-button type="info" plain>登录</el-button>
+          </router-link>
+          <router-link to="/main" v-if="this.$store.state.isLogin == true">
+            <el-button type="info" plain @click="Logout">登出</el-button>
           </router-link>
           <router-link to="/register">
             <el-button type="info" plain>注册</el-button>
-          </router-link>
-          <router-link to="/admin">
-            <el-button type="info" plain>Admin</el-button>
           </router-link>
         </div>
       </el-header>
@@ -97,11 +97,10 @@
 }
 .el-header {
   background-color: #909090;
-  opacity: 0.85;
 }
 .el-main {
   background-color: #fff;
-  opacity: 0.9;
+  opacity: 0.86;
 }
 .el-button {
   border-radius: 0 0 0 0;
@@ -110,6 +109,16 @@
   font-weight: 600;
   background-color: #cccccc;
 }
+.el-input {
+  width: 600px;
+  height: 50px;
+}
+.el-input >>> .el-input__inner{
+  height: 50px;
+}
+.el-select {
+  width: 100px;
+}
 .link1 {
   display: inline;
   float: left;
@@ -117,6 +126,9 @@
 .link2 {
   display: inline;
   float: right;
+}
+.search {
+  margin-top: 100px;
 }
 </style>
 
@@ -180,6 +192,21 @@ export default {
       if(this.$route.path == '/search'){
         this.$router.go(0);
       }
+    },
+    Logout() {
+      sessionStorage.setItem("role", 0);
+      sessionStorage.setItem("isLogin", false);
+      this.$axios({
+        method: "post",
+        url: "http://82.156.190.251:80/apis/logout",
+      }).then((res) => {
+        console.log(res);
+      });
+      console.log("logout submit!");
+      this.$store.commit("logout");
+      this.$message({
+        message: "退出登录成功！",
+      });
     },
     // article(articleId) {
     //   sessionStorage.setItem("articleId", articleId);

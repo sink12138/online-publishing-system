@@ -63,7 +63,7 @@ export default {
       })
       .then((res)=>{
           console.log(res);
-          if (res.date.success == true) {
+          if (res.data.success == true) {
             this.$message({
               showClose: true,
               message: '添加账号成功',

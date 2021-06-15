@@ -9,12 +9,13 @@
         placement="right"
         width="210"
         trigger="click">
-        <el-autocomplete
-          v-model="state"
-          :fetch-suggestions="querySearchAsync"
-          placeholder="请输入邮箱"
-          @select="handleSelect"
-        ></el-autocomplete>
+        <el-input placeholder="请输入邮箱" v-model="email">
+          <el-button 
+            slot="append" 
+            icon="el-icon-check" 
+            @click="handleEditor()">
+          </el-button>
+        </el-input>
         <el-button slot="reference">添加编辑</el-button>
       </el-popover>
     </div>
@@ -67,7 +68,7 @@
         background
         layout="prev, pager, next, jumper"
         :total="total"
-        :page-size="10"
+        :page-size="8"
         @current-change="handleCurrentChange"
         :current-page="currentPage">
         </el-pagination>
@@ -162,38 +163,9 @@
           });       
         });
       },
-      querySearchAsync(queryString, cb) {
-        clearTimeout(this.timeout);
-        var results = [];
-        if (queryString == '') {
-          cb(results);
-        } else {
-          this.$axios({
-            method:'get',
-            url:'http://82.156.190.251:80/apis/admin/select/accounts',
-          }).then(res => {
-            if (res.data.success == true) {
-              var result = res.data.slice(1)
-              for (let i = 0; i < result.length; i++) {
-                const element = result[i];
-                results.push({
-                  email: element.email,
-                  realName: element.realName
-                })
-                console.log(results)
-              }
-              cb(results);
-            } else {
-              results = []
-              cb(results);
-            }
-          }
-        );
-        }
-      },
-      handleSelect(item) {
-        console.log(item);
-        let JsonEmail = JSON.stringify(item.email);
+      handleEditor() {
+        console.log(this.email);
+        let JsonEmail = JSON.stringify(this.email);
         this.$axios({
             method:"post",
             url:'http://82.156.190.251:80/apis/admin/insert/editor',
@@ -221,16 +193,11 @@
     },
     data() {
       return {
-        pagesize:10,
+        pagesize:8,
         currentPage:1,
-        accountData:{
-          "email":"",
-          "realName":"",
-        },
         editorData:'',
         total:0,
         email:'',
-        timeout:null,
       }
     }
   }

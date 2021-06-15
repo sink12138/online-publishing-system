@@ -11,7 +11,7 @@
         >
           <el-table-column
             type="selection"
-            width="55"
+            width="100px"
             align="center"
           ></el-table-column>
           <el-table-column

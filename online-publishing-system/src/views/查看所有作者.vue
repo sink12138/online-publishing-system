@@ -3,9 +3,6 @@
     <div>
       <h1>所有作者名单</h1>
     </div>
-    <template>
-      <el-button type="primary" @click="Return">返回</el-button>
-    </template>
     <div class="table">
       <el-table
         :data="
@@ -55,7 +52,7 @@
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="10"
+            :page-size="8"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
@@ -73,13 +70,10 @@
   text-align: center;
 }
 .table {
-  position: fixed;
   text-align: center;
 }
 .pagination {
-  display: inline;
   position: fixed;
-  justify-content: center;
   bottom: 60px;
 }
 </style>
@@ -132,9 +126,6 @@ export default {
         }
       });
     },
-    Return(){
-      window.location.href="../editor";
-    }
   },
   data() {
     return {
@@ -147,7 +138,7 @@ export default {
           articleCount: 0,
         },
       ],
-      pagesize: 10,
+      pagesize: 8,
       currentPage: 1,
       authorData: "",
       total: 0,

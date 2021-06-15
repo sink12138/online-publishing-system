@@ -1,26 +1,28 @@
 <template>
   <div class="claim">
     <h1>认领文章</h1>
+    <router-link to="/author" class="back">
+      <el-button type="info" icon="el-icon-back"></el-button>
+    </router-link>
     <div class="search">
-      搜索类型：
-      <select v-model="search.searchType" style="height: 24px">
-        <option label="标题" value="title"></option>
-        <option label="关键词" value="keyword"></option>
-        <option label="作者" value="author"></option>
-      </select>
-      <input
-        type="text"
-        style="height: 20px; width: 400px"
-        v-model="search.searchString"
-      />
-      <el-button
-        type="primary"
-        icon="el-icon-search"
-        size="mini"
-        @click="searchArticle"
-        >搜索</el-button
-      >
-      | <router-link to="/author">作者主页</router-link>
+      <el-input v-model="search.searchString" size="large">
+        <el-select
+          v-model="search.searchType"
+          slot="prepend"
+          placeholder="搜索类型"
+        >
+          <el-option label="标题" value="title"></el-option>
+          <el-option label="关键词" value="keyword"></el-option>
+          <el-option label="作者" value="author"></el-option>
+        </el-select>
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          size="mini"
+          @click="searchArticle"
+        >
+        </el-button>
+      </el-input>
     </div>
     <router-view />
     <div class="table">
@@ -111,12 +113,36 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submit()">提交申请</el-button>
+          <el-button type="info" @click="submit()">提交申请</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
+
+<style scoped>
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
+}
+.search {
+  margin-bottom: 40px;
+}
+.search .el-input {
+  width: 600px;
+  height: 50px;
+}
+.search .el-input >>> .el-input__inner{
+  height: 50px;
+}
+.search .el-select {
+  width: 100px;
+}
+.claimArticle {
+  margin-top: 40px;
+}
+</style>
 
 <script>
 export default {

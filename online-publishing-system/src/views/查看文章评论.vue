@@ -2,21 +2,16 @@
   <div class="reviewer">
     <div>
       <h1>文章评论如下</h1>
+      <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     </div>
-    <template>
-      <el-button type="primary" @click="Return">返回</el-button>
-    </template>
     <div>
       <el-form :inline="true" :model="search" class="demo-form-inline">
         <el-form-item label="文章编号">
-          <el-input v-model="search.articleId" placeholder="articleId"
-            >请输入需要查看评论的文章id
+          <el-input placeholder="请输入需要查看评论的文章id" v-model="search.articleId">
+            <el-button slot="append" icon="el-icon-search" @click="searchArticle"></el-button>
           </el-input>
         </el-form-item>
       </el-form>
-      <template
-        ><el-button type="primary" @click="searchArticle">查找</el-button>
-      </template>
     </div>
     <div class="articles">
       <el-table :data="tableData" style="width: 100%">
@@ -32,6 +27,15 @@
     </div>
   </div>
 </template>
+
+<style>
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
+}
+</style>
+
 <script>
 export default {
   data() {

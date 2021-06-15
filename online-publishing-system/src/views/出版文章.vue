@@ -1,6 +1,7 @@
 <template>
   <div class="certify">
     <h1>出版文章页面</h1>
+    <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     <br />
     <div id="publish">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -17,15 +18,20 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">提交</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="Return">返回</el-button>
+          <el-button type="info" @click="onSubmit">提交</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
+
+<style scoped>
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
+}
+</style>
 
 <script>
 export default {

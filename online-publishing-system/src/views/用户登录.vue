@@ -18,28 +18,28 @@
         </el-form-item>
         <div v-if="this.$store.state.isLogin == true">
           <el-form-item>
-            <router-link to="/"
+            <router-link to="/main"
               ><el-button type="info" @click="Logout"
                 >退出登录</el-button
               ></router-link
             >
           </el-form-item>
           <el-form-item>
-            <router-linkF to="/"
+            <router-linkF to="/main"
               ><el-button type="info">返回主页</el-button></router-linkF
             >
           </el-form-item>
         </div>
         <div v-else>
           <el-form-item>
-            <router-link to="/"
-              ><el-button type="primary" @click="Login"
+            <router-link to="/main"
+              ><el-button type="info" @click="Login"
                 >登录</el-button
               ></router-link
             >
           </el-form-item>
           <el-form-item>
-            <router-link to="/"
+            <router-link to="/main"
               ><el-button type="info">返回主页</el-button></router-link
             >
           </el-form-item>
