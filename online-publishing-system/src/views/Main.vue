@@ -1,5 +1,5 @@
 <template>
-  <div class="home" style="height: 100%">
+  <div class="main" style="height: 100%">
     <el-container style="height: 100%">
       <el-header>
         <div class="link1">
@@ -61,7 +61,7 @@
         </div>
       </el-header>
       <el-main>
-        <div class="search" v-show="this.$route.path == '/' || this.$route.path == '/search'">
+        <div class="search" v-show="this.$route.path == '/main' || this.$route.path == 'main/search'">
           <el-input v-model="search.searchString" size="large">
             <el-select
               v-model="search.searchType"
@@ -88,7 +88,7 @@
 </template>
 
 <style scoped>
-.home {
+.main {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -175,7 +175,7 @@ export default {
     },
     searchArticle() {
       this.$router.push(
-        "/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
+        "/main/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
       );
       if(this.$route.path == '/search'){
         this.$router.go(0);
