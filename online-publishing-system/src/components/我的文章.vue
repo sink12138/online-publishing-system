@@ -38,6 +38,9 @@
         <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="abort(scope.row)"
           >中止出版</el-button
         >
+        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="reviews(scope.row)"
+          >查看评论</el-button
+        >
         <el-button type="text" size="small" :disabled="(scope.row.status=='已出版')&&scope.row.authorized?false:true" @click="withdraw(scope.row)"
           >撤稿</el-button
         >
@@ -127,6 +130,13 @@ export default {
       );
       console.log(row);
       location.reload();
+    },
+    reviews(row) {
+      this.article = row.articleId;
+      console.log(this.article);
+      this.$router.push(
+        "/editor/reviews?articleId=" + this.article
+      );
     },
     abort(row) {
       this.$axios({

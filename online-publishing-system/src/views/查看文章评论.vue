@@ -48,6 +48,12 @@ export default {
       ],
     };
   },
+  created: function () {
+    this.search.articleId = this.$route.query.articleId;
+    if (this.search.articleId == undefined) this.returnId = 0;
+    console.log(this.search.articleId);
+    this.searchArticle();
+  },
   methods: {
     searchArticle() {
       if (this.search.articleId === 0) {
