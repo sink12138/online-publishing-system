@@ -14,7 +14,7 @@ public interface EmailService {
      * @param email The email address of account
      * @throws MailException The Exceptions of mail sending
      */
-    void sendCheckEmail(Integer accountId, Integer accountBufferId, String email) throws MailException, MessagingException;
+    void sendCheckEmail(Integer accountId, Integer accountBufferId, String email) throws MailException;
 
     /**
      * Send an article to reviewer's Email
@@ -23,7 +23,7 @@ public interface EmailService {
      * @param reminderEmail Object of ReminderEmail contains the information of email
      * @throws MailException The Exceptions of mail sending and encoding
      */
-    void sendAttachmentEmail(String email, File file, ReminderEmail reminderEmail) throws MailException, MessagingException;
+    void sendAttachmentEmail(String email, File file, ReminderEmail reminderEmail) throws MailException;
 
     /**
      * Send a reminder Email to Account's Email
@@ -31,6 +31,6 @@ public interface EmailService {
      * @param reminderEmail Object of ReminderEmail contains the information of email
      * @throws MailException The Exceptions of mail sending
      */
-    void sendReminderEmail(String email, ReminderEmail reminderEmail) throws MailException, MessagingException;
+    void sendReminderEmail(String email, ReminderEmail reminderEmail) throws MailException;
 
 }
