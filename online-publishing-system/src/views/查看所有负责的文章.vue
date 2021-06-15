@@ -21,7 +21,7 @@
           tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
         :header-cell-style="{ height: '60px' }"
-        style="width: 100%"
+        style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column
           prop="articleId"
@@ -137,19 +137,19 @@
             >
           </template>
         </el-table-column>
-        <div class="pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, jumper"
-            :total="total"
-            :page-size="10"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-          >
-          </el-pagination>
-        </div>
-        <router-view></router-view>
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next, jumper"
+          :total="total"
+          :page-size="10"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+        >
+        </el-pagination>
+      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -409,9 +409,9 @@ export default {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     },
-    Return(){
-      window.location.href="../editor"
-    }
+    Return() {
+      window.location.href = "../editor";
+    },
   },
   data() {
     return {

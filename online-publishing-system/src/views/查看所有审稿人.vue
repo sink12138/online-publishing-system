@@ -6,7 +6,7 @@
     <div class="table">
       <template
         ><router-link to="/editor/certify/reviewer"
-          ><el-button type="primary" >认证审稿人</el-button>
+          ><el-button type="primary">认证审稿人</el-button>
         </router-link>
         <el-button type="primary" @click="Return">返回</el-button>
       </template>
@@ -15,7 +15,7 @@
           tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
         :header-cell-style="{ height: '60px' }"
-        style="width: 100%"
+        style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column
           prop="reviewerId"
@@ -32,7 +32,7 @@
           label="所属机构"
           align="center"
         ></el-table-column>
-         <el-table-column label="撤销审稿人身份">
+        <el-table-column label="撤销审稿人身份">
           <template slot-scope="scope"
             ><el-button
               type="text"
@@ -42,19 +42,19 @@
             >
           </template>
         </el-table-column>
-        <div class="pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, jumper"
-            :total="total"
-            :page-size="10"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-          >
-          </el-pagination>
-        </div>
-        <router-view></router-view>
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next, jumper"
+          :total="total"
+          :page-size="10"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+        >
+        </el-pagination>
+      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -97,7 +97,7 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    cancelReviewer(row){
+    cancelReviewer(row) {
       let JsonCancelReviewerId = JSON.stringify({
         reviewerId: Number(row.reviewerId),
       });
@@ -124,9 +124,9 @@ export default {
         }
       });
     },
-    Return(){
-      window.location.href="../editor"
-    }
+    Return() {
+      window.location.href = "../editor";
+    },
   },
   data() {
     return {

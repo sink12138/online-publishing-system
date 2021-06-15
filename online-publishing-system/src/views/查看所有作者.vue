@@ -11,7 +11,7 @@
         :data="
           tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
-        :header-cell-style="{ height: '0px' }"
+        :header-cell-style="{ height: '60px' }"
         style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column
@@ -39,30 +39,26 @@
           label="绑定的文章数量"
           align="center"
         ></el-table-column>
-        <el-table-column  label="撤销作者身份">
-          <template slot-scope="scope"
-            >
-            <el-button
-              type="text"
-              size="small"
-              @click="cancelAuthor(scope.row)"
+        <el-table-column label="撤销作者身份">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="cancelAuthor(scope.row)"
               >撤销作者</el-button
             >
           </template>
         </el-table-column>
-        <div class="pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, jumper"
-            :total="total"
-            :page-size="10"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-          >
-          </el-pagination>
-        </div>
-        <router-view></router-view>
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next, jumper"
+          :total="total"
+          :page-size="10"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+        >
+        </el-pagination>
+      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -132,9 +128,9 @@ export default {
         }
       });
     },
-    Return(){
-      window.location.href="../editor";
-    }
+    Return() {
+      window.location.href = "../editor";
+    },
   },
   data() {
     return {
