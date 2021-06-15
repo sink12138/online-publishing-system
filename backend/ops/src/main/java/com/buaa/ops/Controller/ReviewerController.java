@@ -44,11 +44,14 @@ public class ReviewerController {
             arrayList.add(map);
             for (Article article : articleArrayList) {
                 Map<String, Object> articleInfos = new HashMap<>();
-                articleInfos.put("articleId", article.getArticleId());
-                articleInfos.put("title", article.getTitle());
-                articleInfos.put("keywords", article.getKeywords().split(";"));
-                articleInfos.put("status", article.getStatus());
-                arrayList.add(articleInfos);
+                Integer articleId = article.getArticleId();
+                if (!reviewerService.hasReviewed(articleId, reviewer.getReviewerId())) {
+                    articleInfos.put("articleId", articleId);
+                    articleInfos.put("title", article.getTitle());
+                    articleInfos.put("keywords", article.getKeywords().split(";"));
+                    articleInfos.put("status", article.getStatus());
+                    arrayList.add(articleInfos);
+                }
             }
         } catch (LoginVerificationException | ObjectNotFoundException exception) {
             map.put("success", false);

@@ -522,6 +522,8 @@ public class EditorController {
             arrayList.add(map);
             for (Review review : reviews) {
                 Map<String, Object> infos = new HashMap<>();
+                Reviewer reviewer = reviewerService.getReviewerById(review.getReviewerId());
+                infos.put("realName", accountService.getAccountByAccountId(reviewer.getAccountId()).getRealName());
                 infos.put("comments", review.getComments());
                 infos.put("pass", review.getPass());
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");

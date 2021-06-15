@@ -37,6 +37,14 @@ public interface ReviewerService {
     ArrayList<Article> getReviewingArticles(Integer reviewerId) throws ObjectNotFoundException;
 
     /**
+     * Check if a reviewer has submitted comments on a specific article.
+     * @param articleId The id of the article
+     * @param reviewerId The id of the reviewer
+     * @return Whether the reviewer has reviewed that article (whether comments is not null)
+     */
+    Boolean hasReviewed(Integer articleId, Integer reviewerId);
+
+    /**
      * Submit the review of a reviewer to an article
      * @param review An instance of Review carrying all attributes except reviewId
      */
