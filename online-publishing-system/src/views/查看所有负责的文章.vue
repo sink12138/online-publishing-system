@@ -305,14 +305,14 @@ export default {
       this.$store.commit("confirm");
       this.$axios({
         method: "post",
-        url: "http://82.156.190.251:80/apis/editor/accept",
+        url: "http://82.156.190.251:80/apis/editor/reject",
         data: JsonConfirmArticleId,
       }).then((res) => {
         console.log(res);
         if (res.data.success == true) {
           this.$message({
             showClose: true,
-            message: "接受文章成功",
+            message: "拒绝文章成功",
             type: "success",
           });
         } else {
