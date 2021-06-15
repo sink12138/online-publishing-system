@@ -28,6 +28,8 @@
           </template>
         </el-table-column>
         <el-table-column label="评论时间" prop="date"> </el-table-column>
+        <el-table-column label="审稿人真实姓名" prop="realName">
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -52,7 +54,25 @@ export default {
     this.search.articleId = this.$route.query.articleId;
     if (this.search.articleId == undefined) this.returnId = 0;
     console.log(this.search.articleId);
-    this.searchArticle();
+    this.$axios({
+      method: "get",
+      url: "http://82.156.190.251:80/apis/editor/reviews",
+      params: { articleId: this.search.articleId },
+      responseTpe: "blob",
+    })
+      .then((response) => {
+        console.log(this.search);
+        console.log(response);
+        var arraylist = new Array();
+        arraylist = response.data;
+        this.success = arraylist[0].success;
+        if (this.success == true) {
+          this.results = arraylist[0].results;
+          this.tableData = arraylist.slice(1);
+          console.log(this.tableData);
+        }
+      })
+      .catch((err) => console.log(err));
   },
   methods: {
     searchArticle() {
