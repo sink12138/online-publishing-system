@@ -3,7 +3,7 @@
     <el-container style="height: 100%">
       <el-header>
         <div class="link1">
-          <router-link to="/main">
+          <router-link to="/">
             <el-button type="info" plain @click="convert()">返回主页</el-button>
           </router-link>
           <router-link to="/home">
@@ -52,7 +52,7 @@
           <router-link to="/login">
             <el-button type="info" plain v-if="$store.state.isLogin==false">登录</el-button>
           </router-link>
-          <router-link to="/main" v-if="this.$store.state.isLogin == true">
+          <router-link to="/" v-if="this.$store.state.isLogin == true">
             <el-button type="info" plain @click="Logout">登出</el-button>
           </router-link>
           <router-link to="/register">
@@ -61,7 +61,7 @@
         </div>
       </el-header>
       <el-main>
-        <div class="search" v-show="this.$route.path == '/main'">
+        <div class="search" v-show="this.$route.path == '/'">
           <el-input v-model="search.searchString" size="large">
             <el-select
               v-model="search.searchType"
