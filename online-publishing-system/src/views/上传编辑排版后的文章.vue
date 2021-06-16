@@ -10,10 +10,13 @@
         ref="file"
         accept=".doc,.docx,.pdf,.zip"
       />
-      <el-input v-model="formInline.articleId" placeholder="对应的文章编号">
+      <el-input v-model="formInline.articleId" placeholder="对应的文章编号">文章编号
       </el-input>
-      <el-button type="primary" size="mini" @click="getfile"
+      <el-button type="primary" @click="getfile" icon="el-icon-upload"
         >提交文件</el-button
+      >
+      <el-button type="primary" @click="Return" icon="el-icon-upload"
+        >返回</el-button
       >
     </div>
   </div>
@@ -28,7 +31,7 @@ export default {
       formInline: {
         articleId: 0,
       },
-      fileList: [],
+      uploadfile:''
     };
   },
   methods: {
@@ -38,25 +41,44 @@ export default {
         message: "提交成功！",
         type: "success",
       });
-      this.fileList = this.$refs.file.files;
-      console.log(this.fileList);
-      if (this.fileList[0].size > 20 * 1024 * 1024) {
+      let file = this.$refs.file.files[0];
+      this.uploadfile = file;
+      console.log(this.uploadfile);
+      if (this.uploadfile.size > 20 * 1024 * 1024) {
         alert("文件最大为20兆");
-        this.fileList = null;
         this.hasfile = false;
       }
-      if (this.fileList != null) this.hasfile = true;
+      if (this.uploadfile != "") this.hasfile = true;
+      console.log(this.hasfile);
       let formData = new FormData();
-      formData.append("file", this.fileList[0]);
-      formData.append("articleId", 0);
-      formData.append("overwrite", this.formInline.articleId);
+      formData.append("file", this.uploadfile);
+      formData.append("articleId", Number(this.formInline.articleId));
+      console.log(formData);
       this.$axios({
         method: "post",
         url: "http://82.156.190.251:80/apis/editor/upload",
         data: formData,
-      }).then(console.log("上传完毕"));
+      }).then((res) => {
+        console.log(res);
+        if (res.data.success == true) {
+          this.$message({
+            showClose: true,
+            message: "上传成功！",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: "上传错误！",
+            type: "error",
+          });
+        }
+      });
       window.location.href = "../editor/articles";
     },
+    Return(){
+      window.location.href="../editor/articles"
+    }
   },
 };
 </script>

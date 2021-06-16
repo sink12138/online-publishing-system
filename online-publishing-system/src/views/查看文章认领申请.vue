@@ -39,11 +39,6 @@
           label="申请者邮箱"
           align="center"
         ></el-table-column>
-        <el-table-column
-          prop="confirmed"
-          label="是否已确认"
-          align="center"
-        ></el-table-column>
         <el-table-column label="申请操作">
           <template slot-scope="scope">
             <el-button

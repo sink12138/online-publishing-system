@@ -33,8 +33,8 @@
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="200">
-          <template slot-scope="scope"
-            ><el-select v-model="scope.row.value" placeholder="是否通过">
+          <template slot-scope="scope">
+            <!-- <el-select v-model="scope.row.value" placeholder="是否通过">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -42,14 +42,23 @@
                 :value="item.value"
               >
               </el-option>
-            </el-select>
+            </el-select> -->
             <el-button
               type="text"
               size="small"
               @click="downloadarticle(scope.row)"
               >下载<i class="el-icon-download el-icon--right"></i
             ></el-button>
-            <el-button @click="open(scope.row)" type="text" size="small"
+            <!-- <el-button @click="open(scope.row)" type="text" size="small"
+              >评价</el-button
+            > -->
+            <el-button
+              @click="
+                dialogFormVisible = true;
+                handleEdit(scope.$index, scope.row);
+              "
+              type="text"
+              size="small"
               >评价</el-button
             >
             <el-button @click="submit(scope.row)" type="text" size="small"
@@ -59,6 +68,30 @@
         </el-table-column>
       </el-table>
     </div>
+    <el-dialog title="审核意见" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="评论" :label-width="formLabelWidth">
+          <el-input v-model="form.comments" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="是否通过" :label-width="formLabelWidth">
+          <el-select v-model="form.value" placeholder="是否通过">
+            <el-option label="通过" value=true></el-option>
+            <el-option label="不通过" value=false></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="
+            dialogFormVisible = false;
+            update(form.value, form.comments);
+          "
+          >确 定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -85,6 +118,9 @@
 export default {
   data() {
     return {
+      dialogFormVisible: false,
+      form: {},
+      formLabelWidth: "120px",
       tableData: [],
       options: [
         {
@@ -97,12 +133,25 @@ export default {
         },
       ],
       value: "",
+      index: 0,
     };
   },
   created() {
     this.convert();
   },
   methods: {
+    update(value, comments) {
+      if(value=="true")
+        this.tableData[this.index].value = true;
+      else
+        this.tableData[this.index].value = false;
+      this.tableData[this.index].comments = comments;
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+      this.form = row;
+      this.index = index;
+    },
     downloadarticle(row) {
       this.$axios({
         method: "get",
@@ -142,6 +191,8 @@ export default {
     submit(row) {
       if (row.comments !== undefined && row.comments !== "") {
         console.log(row.articleId);
+        console.log(row.value);
+        console.log(row.comments);
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/reviewer/review/submit",
@@ -153,16 +204,18 @@ export default {
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              location.reload();
+            }
           },
           (err) => {
             alert(err);
           }
         );
-        location.reload();
       } else {
         this.$message({
-            message: "请输入评论",
-          });
+          message: "请输入评论",
+        });
       }
     },
     convert: function () {

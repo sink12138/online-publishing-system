@@ -129,6 +129,9 @@ export default {
         }
       });
     },
+    Return() {
+      window.location.href = "../editor";
+    },
   },
   data() {
     return {

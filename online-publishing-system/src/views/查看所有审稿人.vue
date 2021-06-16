@@ -8,7 +8,7 @@
     </div>
     <div class="table">
       <template>
-        
+
       </template>
       <el-table
         :data="
@@ -147,6 +147,9 @@ export default {
           });
         }
       });
+    },
+    Return() {
+      window.location.href = "../editor";
     },
   },
   data() {

@@ -90,8 +90,7 @@
                   @current-change="handleCurrentChange"
                   :current-page.sync="currentPage"
                   :page-size="8"
-                  layout="total, prev, next, jumper, pager"
-                  :total="tableData.size"
+                  layout="prev, next, jumper, pager"
                 ></el-pagination>
               </div>
             </el-col>

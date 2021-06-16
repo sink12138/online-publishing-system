@@ -208,6 +208,7 @@ export default {
         let formData = new FormData();
         formData.append("file", this.fileList[0]);
         formData.append("articleBufferId", this.articleBufferId);
+        console.log(formData);
         this.$axios({
           method: "post",
           url: "http://82.156.190.251:80/apis/author/new/upload",

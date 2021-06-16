@@ -243,6 +243,8 @@ export default {
       this.$axios.get("http://82.156.190.251:80/apis/home").then((res) => {
         console.log(res);
         this.dataForm = res.data;
+        this.formInline.email = res.data.email;
+        this.formInline.password = res.data.password;
         this.formInline.realName = res.data.realName;
         this.formInline.institution = res.data.institution;
         this.formInline.researchInterests = res.data.researchInterests;
