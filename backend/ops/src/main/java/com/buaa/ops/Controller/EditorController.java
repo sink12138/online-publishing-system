@@ -819,5 +819,4 @@ public class EditorController {
         }
         return map;
     }
-
 }
