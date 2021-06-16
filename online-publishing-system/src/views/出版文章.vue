@@ -1,7 +1,9 @@
 <template>
   <div class="certify">
     <h1>出版文章页面</h1>
-    <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
+    <router-link to='/editor/articles'>
+      <el-button class="back" type="info" icon="el-icon-back"></el-button>
+    </router-link>
     <br />
     <div id="publish">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -18,7 +20,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" @click="onSubmit">提交</el-button>
+          <el-button type="success" plain @click="onSubmit">提交</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -29,7 +31,7 @@
 .back {
   position: fixed;
   left: 60px;
-  top: 100px;
+  top: 80px;
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="claim">
     <h1>认领文章</h1>
-    <router-link to="/author" class="back">
+    <router-link to="/author" class="back" v-show="this.$route.path == '/author/claim'">
       <el-button type="info" icon="el-icon-back"></el-button>
     </router-link>
     <div class="search">
@@ -113,7 +113,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" @click="submit()">提交申请</el-button>
+          <el-button type="success" plain @click="submit()">提交申请</el-button>
         </el-form-item>
       </el-form>
     </div>

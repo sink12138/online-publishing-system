@@ -2,47 +2,65 @@
   <div class="register">
     <h1>注册页面</h1>
     <br />
-    <el-form
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      ref="ruleForm"
-      label-width="100px"
-      class="ruleForm"
-    >
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="ruleForm.email"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="pass">
-        <el-input
-          type="password"
-          v-model="ruleForm.pass"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input
-          type="password"
-          v-model="ruleForm.checkPass"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm()">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-card class="box-card">
+      <el-form
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="ruleForm"
+      >
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="ruleForm.email"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="pass">
+          <el-input
+            type="password"
+            v-model="ruleForm.pass"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input
+            type="password"
+            v-model="ruleForm.checkPass"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <div class="button">
+            <el-button type="success" @click="submitForm()">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <style scoped>
-.el-form-item {
+.box-card {
+  background-color: #bebebe;
+  height: 400px;
   width: 600px;
+  text-align: center;
   margin: 0 auto;
+}
+.el-form-item {
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .el-input {
   width: 400px;
-  height: 80px;
+  height: 40px;
+}
+.button {
+  position: relative;
+  left: -30px;
+  top: 30px;
 }
 </style>
 

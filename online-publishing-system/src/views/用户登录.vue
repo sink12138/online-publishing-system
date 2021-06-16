@@ -5,53 +5,62 @@
       <br />
     </div>
     <div id="login">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="Email">
-          <el-input v-model="formInline.email" placeholder="Email"></el-input>
-        </el-form-item>
-        <el-form-item label="Password">
-          <el-input
-            v-model="formInline.password"
-            prefix-icon="el-icon-lock"
-            show-password
-          ></el-input>
-        </el-form-item>
-        <div v-if="this.$store.state.isLogin == true">
-          <el-form-item>
-            <router-link to="/main"
-              ><el-button type="info" @click="Logout"
-                >退出登录</el-button
-              ></router-link
-            >
+      <el-card class="box-card">
+        <el-form ref="form" :model="formInline" class="demo-form-inline" label-width="80px">
+          <el-form-item label="Email">
+            <el-input v-model="formInline.email" placeholder="Email"></el-input>
           </el-form-item>
-          <el-form-item>
-            <router-linkF to="/main"
-              ><el-button type="info">返回主页</el-button></router-linkF
-            >
+          <el-form-item label="Password">
+            <el-input
+              v-model="formInline.password"
+              prefix-icon="el-icon-lock"
+              show-password
+            ></el-input>
           </el-form-item>
-        </div>
-        <div v-else>
-          <el-form-item>
-            <router-link to="/main"
-              ><el-button type="primary" @click="Login"
-                >登录</el-button
-              ></router-link
-            >
-          </el-form-item>
-          <el-form-item>
-            <router-link to="/main"
-              ><el-button type="info">返回主页</el-button></router-link
-            >
-          </el-form-item>
-        </div>
-      </el-form>
+          <div v-if="this.$store.state.isLogin == true">
+            <el-form-item>
+              <router-link to="/main" class="button"
+                ><el-button type="danger" @click="Logout"
+                  >退出登录</el-button
+                ></router-link
+              >
+            </el-form-item>
+          </div>
+          <div v-else>
+            <el-form-item>
+              <router-link to="/main" class="button"
+                ><el-button type="success" @click="Login"
+                  >登录</el-button
+                ></router-link
+              >
+            </el-form-item>
+          </div>
+        </el-form>
+      </el-card>
     </div>
   </div>
 </template>
 
 <style>
-.Login {
-  background-color: #fff;
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  position: relative;
+  left: -30px;
+}
+.el-form-item {
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+.box-card {
+  background-color: #bebebe;
+  height: 400px;
+  width: 600px;
+  text-align: center;
+  margin: 0 auto;
 }
 </style>
 
