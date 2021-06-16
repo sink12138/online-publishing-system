@@ -138,7 +138,7 @@ export default {
       this.article = row.articleId;
       console.log(this.article);
       this.$router.push(
-        "/editor/reviews?articleId=" + this.article
+        "/author/reviews?articleId=" + this.article
       );
     },
     abort(row) {

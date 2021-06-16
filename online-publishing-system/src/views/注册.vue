@@ -129,10 +129,19 @@ export default {
             data: data1,
           })
             .then((res) => {
-              this.$message({
-                showClose: true,
-                message: res.data.message,
-              });
+              console.log(res);
+              if (res.data.success == false) {
+                this.$message({
+                  showClose: true,
+                  message: res.data.message,
+                });
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: "注册完毕，请查看邮箱验证账号",
+                  type: "success",
+                });
+              }
             })
             .catch((error) => {
               console.log(error);
