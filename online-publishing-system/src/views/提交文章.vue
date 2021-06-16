@@ -1,7 +1,7 @@
 <template>
   <div class="submit">
     <h1>提交文章</h1>
-    <router-link to="/author" class="back">
+    <router-link to="/author" class="back" v-show="this.$route.path == '/author/submit'">
       <el-button type="info" icon="el-icon-back"></el-button>
     </router-link>
     <div class="uploadArticle">

@@ -9,7 +9,7 @@
         placement="right"
         width="210"
         trigger="click">
-        <el-input placeholder="请输入邮箱" v-model="email">
+        <el-input placeholder="请输入邮箱" v-model="editorForm.email">
           <el-button 
             slot="append" 
             icon="el-icon-check" 
@@ -164,8 +164,9 @@
         });
       },
       handleEditor() {
-        console.log(this.email);
-        let JsonEmail = JSON.stringify(this.email);
+        console.log(this.editorForm);
+        let JsonEmail = JSON.stringify(this.editorForm);
+        console.log(JsonEmail);
         this.$axios({
             method:"post",
             url:'http://82.156.190.251:80/apis/admin/insert/editor',
@@ -173,7 +174,7 @@
         })
         .then((res)=>{
             console.log(res);
-            if (res.date.success == true) {
+            if (res.data.success == true) {
               this.$message({
                 showClose: true,
                 message: '添加编辑成功',
@@ -197,7 +198,9 @@
         currentPage:1,
         editorData:'',
         total:0,
-        email:'',
+        editorForm:{
+          email:'',
+        }
       }
     }
   }

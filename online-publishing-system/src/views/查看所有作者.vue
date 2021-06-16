@@ -2,6 +2,9 @@
   <div class="reviewer">
     <div>
       <h1>所有作者名单</h1>
+      <router-link to='/editor' v-show="this.$route.path == '/editor/authors'">
+        <el-button class="back" type="info" icon="el-icon-back"></el-button>
+      </router-link>
     </div>
     <div class="table">
       <el-table
@@ -61,15 +64,19 @@
 </template>
 
 <style>
-.breadcrumb {
-  position: relative;
-  text-align: center;
+.back {
+  position: fixed;
+  left: 60px;
+  top: 80px;
 }
 .table {
   text-align: center;
 }
 .pagination {
+  display: inline;
   position: fixed;
+  justify-content: center;
+  left: 700px;
   bottom: 60px;
 }
 </style>
@@ -122,9 +129,12 @@ export default {
         }
       });
     },
+<<<<<<< HEAD
     Return() {
       window.location.href = "../editor";
     },
+=======
+>>>>>>> cce6cd3a0d96cc56a5ca3e18873fab0023ca9c6c
   },
   data() {
     return {

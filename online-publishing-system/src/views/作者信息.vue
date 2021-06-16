@@ -23,6 +23,15 @@
         <el-table-column prop="amount3"></el-table-column>
       </el-table>
     </div>
+    <div>
+      <el-table class="myarticles" :data="tableData1" style="width: 100%">
+        <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
+        <el-table-column label="文章标题" prop="title"> </el-table-column>
+        <el-table-column label="第一作者" prop="firstAuthor"> </el-table-column>
+        <el-table-column label="其他作者" prop="otherAuthors">
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -33,6 +42,7 @@ export default {
     return {
       authorId: 0,
       dataForm: {},
+      tableData1: [],
     };
   },
   computed: {
@@ -52,13 +62,6 @@ export default {
           amount2: "研究方向",
           amount3: this.dataForm.researchInterests,
         },
-        {
-          id: this.dataForm.headImg,
-          name: "绑定文章数目",
-          amount1: this.dataForm.articleCount,
-          amount2: "",
-          amount3: "",
-        },
       ];
     },
   },
@@ -67,16 +70,19 @@ export default {
   },
   methods: {
     convert: function () {
+      console.log(sessionStorage.getItem("authorId"));
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/infos",
-        data: {
-          authorId: JSON.stringify(sessionStorage.getItem('authorId')),
+        params: {
+          authorId: sessionStorage.getItem("authorId"),
         },
       }).then((res) => {
+        console.log(res);
         var array = new Array();
         array = res.data;
         this.dataForm = array[0];
+        this.tableData1 = array.slice(1);
       });
     },
     columnStyle({ columnIndex }) {

@@ -1,15 +1,13 @@
 <template>
-  <div class="reviewer">
+  <div class="reviews">
     <div>
       <h1>文章评论如下</h1>
-      <router-link to='/editor/articles'>
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
+      <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     </div>
     <div>
       <el-form :inline="true" :model="search" class="demo-form-inline">
         <el-form-item label="文章编号">
-          <el-input placeholder="请输入文章ID" v-model="search.articleId">
+          <el-input placeholder="请输入需要查看评论的文章id" v-model="search.articleId">
             <el-button slot="append" icon="el-icon-search" @click="searchArticle"></el-button>
           </el-input>
         </el-form-item>
@@ -25,8 +23,6 @@
           </template>
         </el-table-column>
         <el-table-column label="评论时间" prop="date"> </el-table-column>
-        <el-table-column label="审稿人真实姓名" prop="realName">
-        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -36,7 +32,7 @@
 .back {
   position: fixed;
   left: 60px;
-  top: 80px;
+  top: 100px;
 }
 </style>
 
@@ -62,7 +58,7 @@ export default {
     console.log(this.search.articleId);
     this.$axios({
       method: "get",
-      url: "http://82.156.190.251:80/apis/editor/reviews",
+      url: "http://82.156.190.251:80/apis/author/reviews",
       params: { articleId: this.search.articleId },
       responseTpe: "blob",
     })
@@ -90,7 +86,7 @@ export default {
       }
       this.$axios({
         method: "get",
-        url: "http://82.156.190.251:80/apis/editor/reviews",
+        url: "http://82.156.190.251:80/apis/author/reviews",
         params: { articleId: this.search.articleId },
         responseTpe: "blob",
       })
@@ -116,7 +112,7 @@ export default {
         .catch((err) => console.log(err));
     },
     Return() {
-      window.location.href = "../editor/articles";
+      window.location.href = "../author/articles";
     },
   },
 };

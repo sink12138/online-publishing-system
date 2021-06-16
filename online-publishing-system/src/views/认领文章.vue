@@ -1,7 +1,7 @@
 <template>
   <div class="claim">
     <h1>认领文章</h1>
-    <router-link to="/author" class="back">
+    <router-link to="/author" class="back" v-show="this.$route.path == '/author/claim'">
       <el-button type="info" icon="el-icon-back"></el-button>
     </router-link>
     <div class="search">
@@ -27,7 +27,7 @@
     <router-view />
     <div class="table">
       <el-card class="box-card">
-        <el-table :data="tableData" border stripe style="width: 100%">
+        <el-table :data="tableData.slice((currentPage-1)*8,currentPage*8)" border stripe style="width: 100%">
           <el-table-column
             prop="articleId"
             label="文章ID"
@@ -113,7 +113,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" @click="submit()">提交申请</el-button>
+          <el-button type="success" plain @click="submit()">提交申请</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -153,11 +153,10 @@ export default {
         articleId: 0,
       },
       search: {
-        searchType: "",
+        searchType: "author",
         searchString: "",
       },
       currentPage: 1, //当前页数
-      pageSize: 10, //每页获取条数（页面大小）
       tableData: [
         {
           articleId: "",
@@ -170,6 +169,10 @@ export default {
   },
   mounted() {},
   methods: {
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
     article(articleId) {
       sessionStorage.setItem("articleId", articleId);
       window.location.href = "../article";
@@ -213,13 +216,38 @@ export default {
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
-        params: {
-          articleId: Number(articleId),
+        params: { articleId: articleId },
+        responseTpe: "blob",
+      }).then(
+        (response) => {
+          console.log(response);
+          const filename = decodeURIComponent(
+            response.headers["content-disposition"].split(";")[1].split("=")[1]
+          );
+          console.log(filename);
+          this.load(response.data, filename);
+          console.log("下载中");
         },
-      }).then((res) => {
-        console.log(res);
-      });
-      console.log("submit!");
+        (err) => {
+          alert(err);
+        }
+      );
+    },
+    load(data, filename) {
+      if (!data) {
+        return;
+      }
+      let url = window.URL.createObjectURL(
+        new Blob([data], { type: "application/force-download;charset=utf-8" })
+      );
+      let link = document.createElement("a");
+      link.style.display = "none";
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     },
     claim(articleId) {
       this.$axios({
@@ -228,6 +256,16 @@ export default {
         data: { articleId: Number(articleId) },
       }).then((res) => {
         console.log(res);
+        if (res.data.success == true) {
+              this.$message({
+                message: "认领成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: res.data.message,
+              });
+            }
       });
       console.log("submit!");
     },

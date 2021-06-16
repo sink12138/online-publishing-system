@@ -21,7 +21,7 @@
           </el-button>
         </el-input>
         <el-card class="box-card">
-          <el-table :data="tableData" border stripe style="width: 100%">
+          <el-table :data="tableData.slice((currentPage-1)*8,currentPage*8)" border stripe style="width: 100%">
             <el-table-column
               prop="articleId"
               label="文章ID"
@@ -91,7 +91,7 @@
                   :current-page.sync="currentPage"
                   :page-size="8"
                   layout="total, prev, next, jumper, pager"
-                  :total="tableData.size - 1"
+                  :total="tableData.size"
                 ></el-pagination>
               </div>
             </el-col>
@@ -112,7 +112,6 @@ export default {
         searchString: "",
       },
       currentPage: 1, //当前页数
-      pageSize: 10, //每页获取条数（页面大小）
       tableData: [
         {
           articleId: "",

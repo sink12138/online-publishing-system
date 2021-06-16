@@ -74,6 +74,11 @@ const routes = [
         component: () => import('../views/认证作者.vue')
       },
       {
+        path: '/author/reviews',
+        name: '查看评论',
+        component: () => import('../views/查看评论.vue')
+      },
+      {
         path: '/author/cancel',
         name: '作者注销',
         component: () => import('../views/注销作者.vue')

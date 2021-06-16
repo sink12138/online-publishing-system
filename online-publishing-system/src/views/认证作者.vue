@@ -47,6 +47,16 @@ export default {
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              this.$message({
+                message: "认证成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
@@ -70,6 +80,16 @@ export default {
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              this.$message({
+                message: "认证成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
@@ -93,6 +113,16 @@ export default {
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              this.$message({
+                message: "认证成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);
@@ -110,6 +140,16 @@ export default {
         }).then(
           (response) => {
             console.log(response);
+            if (response.data.success == true) {
+              this.$message({
+                message: "认证成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: response.data.message,
+              });
+            }
           },
           (err) => {
             alert(err);

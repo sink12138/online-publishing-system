@@ -49,19 +49,19 @@
           </router-link>
         </div>
         <div class="link2">
-          <router-link to="/login" v-if="this.$store.state.isLogin == false">
-            <el-button type="info" plain>登录</el-button>
+          <router-link to="/login">
+            <el-button type="info" plain v-if="$store.state.isLogin==false">登录</el-button>
           </router-link>
           <router-link to="/main" v-if="this.$store.state.isLogin == true">
             <el-button type="info" plain @click="Logout">登出</el-button>
           </router-link>
           <router-link to="/register">
-            <el-button type="info" plain>注册</el-button>
+            <el-button type="info" plain v-if="$store.state.isLogin==false">注册</el-button>
           </router-link>
         </div>
       </el-header>
       <el-main>
-        <div class="search" v-show="this.$route.path == '/main' || this.$route.path == 'main/search'">
+        <div class="search" v-show="this.$route.path == '/main'">
           <el-input v-model="search.searchString" size="large">
             <el-select
               v-model="search.searchType"
@@ -81,6 +81,13 @@
             </el-button>
           </el-input>
         </div>
+        <div class="articles" v-show="this.$route.path == '/main'">
+          <el-carousel type="card" trigger="click" height="400px" :interval="5000" arrow="always">
+            <el-carousel-item v-for="item in imgList" :key="item.name">
+              <img :src="item.src" style="height:100%;width:100%;" alt="picture" :title="item.title" />
+            </el-carousel-item>
+          </el-carousel>
+        </div>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -96,18 +103,20 @@
   background-size: cover;
 }
 .el-header {
-  background-color: #909090;
+  background-color: #1f1f1f;
+  height: 40px !important;
 }
 .el-main {
-  background-color: #fff;
-  opacity: 0.86;
+  background-color: #f8f8f8b0;
 }
 .el-button {
+  border: 0;
   border-radius: 0 0 0 0;
-  height: 60px;
-  font-size: 20px;
-  font-weight: 600;
-  background-color: #cccccc;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  background-color: #2f2f2f;
 }
 .el-input {
   width: 600px;
@@ -130,6 +139,12 @@
 .search {
   margin-top: 100px;
 }
+.articles {
+  margin: 0 auto;
+  margin-top: 40px;
+  width: 1200px;
+  position: relative;
+}
 </style>
 
 <script>
@@ -141,6 +156,38 @@ export default {
         searchType: "title",
         searchString: "",
       },
+      imgList: [
+        {
+          name: "logo",
+          src: require("../assets/logo.jpg"),
+          title: "Logo"
+        },
+        {
+          name: "bg1",
+          src: require("../assets/Canva - Green and Brown Mountains Under Blue Sky.jpg"),
+          title: "bg1"
+        },
+        {
+          name: "bg2",
+          src: require("../assets/Canva - Green Leafed Plant.jpg"),
+          title: "bg2"
+        },
+        {
+          name: "bg3",
+          src: require("../assets/Canva - Majestic Landscape.jpg"),
+          title: "bg3"
+        },
+        {
+          name: "bg4",
+          src: require("../assets/Canva - open Book Pages on Surface.jpg"),
+          title: "bg4"
+        },
+        {
+          name: "bg5",
+          src: require("../assets/Canva - Water Mill Near Body of Water.jpg"),
+          title: "bg5"
+        }
+      ],
     };
   },
   mounted() {
