@@ -2,46 +2,45 @@
   <div class="reviewer">
     <div>
       <h1>您负责的文章如下</h1>
-      <router-link to='/editor' v-show="this.$route.path == '/editor/articles'">
+      <router-link to="/editor" v-show="this.$route.path == '/editor/articles'">
         <el-button class="back" type="info" icon="el-icon-back"></el-button>
       </router-link>
     </div>
     <div class="table">
       <el-table
-        :data="tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)"
+        :data="
+          tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
+        "
         :header-cell-style="{ height: '60px' }"
         style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
-        <el-table-column
-          prop="articleId"
-          label="文章编号"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="title"
-          label="文章标题"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="keywords"
-          label="文章关键词"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="firstAuthor"
-          label="第一作者姓名"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="outherAuthors"
-          label="其他作者"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="status"
-          label="文章状态"
-          align="center"
-        ></el-table-column>
+        <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="文章ID">
+            <span>{{ props.row.articleId }}</span>
+          </el-form-item>
+          <el-form-item label="文章标题">
+            <span>{{ props.row.title }}</span>
+          </el-form-item>
+          <el-form-item label="关键字">
+            <span>{{ props.row.keywords }}</span>
+          </el-form-item>
+          <el-form-item label="第一作者">
+            <span>{{ props.row.firstAuthor }}</span>
+          </el-form-item>
+          <el-form-item label="其他作者">
+            <span>{{ props.row.otherAuthors }}</span>
+          </el-form-item>
+          <el-form-item label="文章状态">
+            <span>{{ props.row.status }}</span>
+          </el-form-item>
+        </el-form>
+      </template>
+    </el-table-column>
+    <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
+    <el-table-column label="文章标题" prop="title"> </el-table-column>
+    <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column label="下载文章">
           <template slot-scope="scope"
             ><el-button
@@ -190,7 +189,7 @@
   color: #000000;
 }
 .el-button--ops {
-  color: #FFF;
+  color: #fff;
   background: #000000;
   border-color: #000000;
   position: relative;
@@ -440,16 +439,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          articleid: 0,
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-          otherAuthors: "",
-          status: "",
-        },
-      ],
+      tableData: [],
       pagesize: 8,
       currentPage: 1,
       articleData: "",
