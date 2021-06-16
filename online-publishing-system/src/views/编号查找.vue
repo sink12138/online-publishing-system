@@ -182,11 +182,12 @@
     },
     computed: {
       items:function() {
-        var number = parseInt(this.input);
+        var number = this.input;
         if (number) {
+          var reg = new RegExp(number,'ig')
           return this.articleData.filter(function(e){
             return Object.keys(e).some(function(){
-              return e.articleId.is(number);
+              return e.articleId.toString().match(reg);
             })
           })
         }

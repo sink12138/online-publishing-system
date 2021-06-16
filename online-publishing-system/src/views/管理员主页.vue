@@ -38,14 +38,18 @@
   margin-top: 60px;
   width: 400px;
   height: 200px;
-  background-color: #ff8686;
+  background-color: #6fe2ff;
+  font-size: 35px;
+  font-weight: 600;
 }
 .articles {
   margin-left: 60px;
   margin-top: 60px;
   width: 400px;
   height: 200px;
-  background-color: #fff386;
+  background-color: #86fff5;
+  font-size: 35px;
+  font-weight: 600;
 }
 </style>
 
@@ -60,10 +64,26 @@ export default {
       authorNums: 0,
       reviewerNums: 0,
       editorNums: 0,
-      load: false,
+      chartData: [],
+      myChart: null,
+      canvas: null
     }
   },
+  watch:{
+    canvas: function () {
+      console.log('init')
+      this.initchart()
+    },
+    chartData: {
+      handler: function () { 
+        this.updatechart()
+      },
+      deep: true
+    },
+  },
   mounted() {
+    var el = document.getElementById('myChart');
+    this.canvas = el;
     this.$axios({
       method:'get',
       url: 'http://82.156.190.251:80/apis/admin/select/articles',
@@ -81,27 +101,34 @@ export default {
       url: 'http://82.156.190.251:80/apis/admin/select/authors',
     }).then(res =>{
       this.authorNums = res.data[0].results
+      this.chartData.push(this.authorNums)
     })
     this.$axios({
       method:'get',
       url: 'http://82.156.190.251:80/apis/admin/select/reviewers',
     }).then(res =>{
       this.reviewerNums = res.data[0].results
+      this.chartData.push(this.reviewerNums)
     })
     this.$axios({
       method:'get',
       url: 'http://82.156.190.251:80/apis/admin/select/editors',
     }).then(res =>{
       this.editorNums = res.data[0].results
+      this.chartData.push(this.editorNums)
     })
-    var ctx = document.getElementById('myChart');
-      var myChart = new Chart(ctx, {
+  },
+  methods: {
+    initchart:function() {
+      console.log(this.chartData)
+      var ctx = document.getElementById('myChart');
+      this.myChart = new Chart(ctx, {
         type: 'pie',
         data: {
           labels: ['作者','审稿人','编辑'],
           datasets: [{
             label: 'User Composition',
-            data: [15,13,14],
+            data: [],
             backgroundColor: [
               'rgba(57, 214, 175, 0.9)',
               'rgba(80, 238, 185, 0.9)',
@@ -112,6 +139,12 @@ export default {
           }],
         },
       })
-  },
+    },
+    updatechart:function() {
+      console.log(this.chartData)
+      this.myChart.data.datasets[0].data = this.chartData;
+      this.myChart.update()
+    }
+  }
 }
 </script>
