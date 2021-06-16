@@ -29,21 +29,60 @@
     <el-table-column label="文章状态" prop="status"> </el-table-column>
     <el-table-column fixed="right" label="操作" width="400">
       <template slot-scope="scope">
-        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized" @click="submit(scope.row)"
-          >提交文章</el-button
-        >
-        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过')&&scope.row.authorized" @click="confirmDraft(scope.row)"
-          >确认终稿</el-button
-        >
-        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized" @click="abort(scope.row)"
-          >终止出版</el-button
-        >
-        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized" @click="reviews(scope.row)"
-          >查看评论</el-button
-        >
-        <el-button type="text" size="small" v-if="(scope.row.status=='已出版')&&scope.row.authorized" @click="withdraw(scope.row)"
-          >撤稿</el-button
-        >
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            操作文章<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-button
+              type="text"
+              size="small"
+              v-if="
+                (scope.row.status == '审核通过' ||
+                  scope.row.status == '审核未通过') &&
+                scope.row.authorized
+              "
+              @click="submit(scope.row)"
+              >提交文章</el-button
+            >
+            <el-button
+              type="text"
+              size="small"
+              v-if="scope.row.status == '审核通过' && scope.row.authorized"
+              @click="confirmDraft(scope.row)"
+              >确认终稿</el-button
+            >
+            <el-button
+              type="text"
+              size="small"
+              v-if="
+                (scope.row.status == '审核通过' ||
+                  scope.row.status == '审核未通过') &&
+                scope.row.authorized
+              "
+              @click="abort(scope.row)"
+              >终止出版</el-button
+            >
+            <el-button
+              type="text"
+              size="small"
+              v-if="
+                (scope.row.status == '审核通过' ||
+                  scope.row.status == '审核未通过') &&
+                scope.row.authorized
+              "
+              @click="reviews(scope.row)"
+              >查看评论</el-button
+            >
+            <el-button
+              type="text"
+              size="small"
+              v-if="scope.row.status == '已出版' && scope.row.authorized"
+              @click="withdraw(scope.row)"
+              >撤稿</el-button
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
       </template>
     </el-table-column>
   </el-table>
@@ -80,23 +119,31 @@ export default {
     this.convert();
   },
   methods: {
-
     submit(row) {
       this.article = row.articleId;
       this.status = row.status;
       this.firstAuthor = row.firstAuthor;
       this.otherAuthors = row.otherAuthors;
       this.$router.push(
-        "/author/submit?articleId=" + this.article + "&status=" + this.status + "&firstAuthor=" + this.firstAuthor + "&otherAuthors=" + this.otherAuthors
+        "/author/submit?articleId=" +
+          this.article +
+          "&status=" +
+          this.status +
+          "&firstAuthor=" +
+          this.firstAuthor +
+          "&otherAuthors=" +
+          this.otherAuthors
       );
       console.log(row.articleID);
     },
     convert: function () {
-      this.$axios.get("http://82.156.190.251:80/apis/author/articles").then((res) => {
-        var arraylist = new Array();
-        arraylist = res.data;
-        this.tableData = arraylist.slice(1);
-      });
+      this.$axios
+        .get("http://82.156.190.251:80/apis/author/articles")
+        .then((res) => {
+          var arraylist = new Array();
+          arraylist = res.data;
+          this.tableData = arraylist.slice(1);
+        });
     },
     withdraw(row) {
       console.log(row.articleId);
@@ -137,9 +184,7 @@ export default {
     reviews(row) {
       this.article = row.articleId;
       console.log(this.article);
-      this.$router.push(
-        "/author/reviews?articleId=" + this.article
-      );
+      this.$router.push("/author/reviews?articleId=" + this.article);
     },
     abort(row) {
       this.$axios({
