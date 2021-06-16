@@ -29,19 +29,19 @@
     <el-table-column label="文章状态" prop="status"> </el-table-column>
     <el-table-column fixed="right" label="操作" width="400">
       <template slot-scope="scope">
-        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="submit(scope.row)"
+        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized" @click="submit(scope.row)"
           >提交文章</el-button
         >
-        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过')&&scope.row.authorized?false:true" @click="confirmDraft(scope.row)"
+        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过')&&scope.row.authorized" @click="confirmDraft(scope.row)"
           >确认终稿</el-button
         >
-        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="abort(scope.row)"
+        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized" @click="abort(scope.row)"
           >终止出版</el-button
         >
-        <el-button type="text" size="small" :disabled="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized?false:true" @click="reviews(scope.row)"
+        <el-button type="text" size="small" v-if="(scope.row.status=='审核通过'||scope.row.status=='审核未通过')&&scope.row.authorized" @click="reviews(scope.row)"
           >查看评论</el-button
         >
-        <el-button type="text" size="small" :disabled="(scope.row.status=='已出版')&&scope.row.authorized?false:true" @click="withdraw(scope.row)"
+        <el-button type="text" size="small" v-if="(scope.row.status=='已出版')&&scope.row.authorized" @click="withdraw(scope.row)"
           >撤稿</el-button
         >
       </template>
