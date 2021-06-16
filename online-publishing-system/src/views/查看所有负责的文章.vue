@@ -2,9 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>您负责的文章如下</h1>
-      <router-link to="/editor" v-show="this.$route.path == '/editor/articles'">
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
     </div>
     <div class="table">
       <el-table
@@ -154,15 +151,6 @@
 </template>
 
 <style scoped>
-.back {
-  position: fixed;
-  left: 60px;
-  top: 80px;
-}
-.breadcrumb {
-  position: relative;
-  text-align: center;
-}
 .reviewer-button .el-button {
   margin-right: 20px;
 }

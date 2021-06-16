@@ -38,6 +38,11 @@
               <router-link to="/register">
                 <el-dropdown-item>注册</el-dropdown-item>
               </router-link>
+              <router-link to="/home">
+                <el-button type="info" plain v-if="$store.state.isLogin">
+                  个人信息
+                </el-button>
+              </router-link>
             </el-dropdown-menu>
           </el-dropdown>
         </div>

@@ -6,58 +6,94 @@
           <router-link to="/">
             <el-button type="info" plain @click="convert()">返回主页</el-button>
           </router-link>
-          <router-link to="/home">
-            <el-button type="info" plain v-if="$store.state.isLogin"
-              >个人信息</el-button
-            >
-          </router-link>
-          <router-link to="/author">
-            <el-button
+          <el-dropdown>
+            <router-link to="/author">
+              <el-button
               type="info"
               plain
-              v-if="$store.state.role >= 4 && $store.state.isLogin"
-              >作者主页</el-button
-            >
-          </router-link>
-          <router-link to="/reviewer">
-            <el-button
+              v-if="$store.state.role >= 4 && $store.state.isLogin">
+                作者主页
+              </el-button>
+            </router-link>
+            <el-dropdown-menu>
+              <router-link to="/author">
+                <el-dropdown-item>我的文章</el-dropdown-item>
+              </router-link>
+              <router-link to="/author/submit">
+                <el-dropdown-item>提交文章</el-dropdown-item>
+              </router-link>
+              <router-link to="/author/claim">
+                <el-dropdown-item>认领文章</el-dropdown-item>
+              </router-link>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-dropdown>
+            <router-link to="/reviewer">
+              <el-button
               type="info"
               plain
               v-if="
                 ($store.state.role == 2 ||
-                  $store.state.role == 3 ||
-                  $store.state.role == 6 ||
-                  $store.state.role == 7) &&
+                $store.state.role == 3 ||
+                $store.state.role == 6 ||
+                $store.state.role == 7) &&
                 $store.state.isLogin
-              "
-              >审稿人主页
-            </el-button>
-          </router-link>
-          <router-link to="/editor">
-            <el-button
+              ">
+              审稿人主页
+              </el-button>
+            </router-link>
+          </el-dropdown>
+          <el-dropdown>
+            <router-link to="/editor">
+              <el-button
               type="info"
               plain
               v-if="
                 ($store.state.role == 1 ||
-                  $store.state.role == 3 ||
-                  $store.state.role == 5 ||
-                  $store.state.role == 7) &&
+                $store.state.role == 3 ||
+                $store.state.role == 5 ||
+                $store.state.role == 7) &&
                 $store.state.isLogin
-              "
-              >编辑主页</el-button
-            >
-          </router-link>
+              ">
+                编辑主页
+              </el-button>
+            </router-link>
+            <el-dropdown-menu>
+              <router-link to="/editor/authors">
+                <el-dropdown-item>作者管理</el-dropdown-item>
+              </router-link>
+              <router-link to="/editor/reviewers">
+                <el-dropdown-item>审稿人管理</el-dropdown-item>
+              </router-link>
+              <router-link to="/editor/articles">
+                <el-dropdown-item>文章管理</el-dropdown-item>
+              </router-link>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
         <div class="link2">
-          <router-link to="/login">
-            <el-button type="info" plain v-if="$store.state.isLogin==false">登录</el-button>
-          </router-link>
-          <router-link to="/" v-if="this.$store.state.isLogin == true">
-            <el-button type="info" plain @click="Logout">登出</el-button>
-          </router-link>
-          <router-link to="/register">
-            <el-button type="info" plain v-if="$store.state.isLogin==false">注册</el-button>
-          </router-link>
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              <i class="el-icon-user-solid" style="font-size:33px"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <router-link to="/main">
+                <el-dropdown-item>主页</el-dropdown-item>
+              </router-link>
+              <router-link to="/login" v-if="this.$store.state.isLogin == false">
+                <el-dropdown-item>登录</el-dropdown-item>
+              </router-link>
+              <router-link to="/" v-if="this.$store.state.isLogin == true">
+                <el-dropdown-item @click="Logout">登出</el-dropdown-item>
+              </router-link>
+              <router-link to="/register">
+                <el-dropdown-item>注册</el-dropdown-item>
+              </router-link>
+              <router-link to="/home">
+                <el-dropdown-item>个人信息</el-dropdown-item>
+              </router-link>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
       </el-header>
       <el-main>
@@ -108,6 +144,12 @@
 }
 .el-main {
   background-color: #f8f8f8b0;
+}
+a {
+  text-decoration: none;
+}
+.router-link-active {
+  text-decoration: none;
 }
 .el-button {
   border: 0;

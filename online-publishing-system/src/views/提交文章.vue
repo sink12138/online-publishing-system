@@ -1,13 +1,6 @@
 <template>
   <div class="submit">
     <h1>提交文章</h1>
-    <router-link
-      to="/author"
-      class="back"
-      v-show="this.$route.path == '/author/submit'"
-    >
-      <el-button type="info" icon="el-icon-back"></el-button>
-    </router-link>
     <div class="uploadArticle">
       <h3>上传文件</h3>
       <h5>请提交doc,docx,pdf,zip文件</h5>
@@ -349,11 +342,6 @@ export default {
 </script>
 
 <style>
-.back {
-  position: fixed;
-  left: 60px;
-  top: 100px;
-}
 .el-tag + .el-tag {
   margin-left: 10px;
 }

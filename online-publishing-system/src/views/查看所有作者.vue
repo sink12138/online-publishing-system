@@ -2,9 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>所有作者名单</h1>
-      <router-link to='/editor' v-show="this.$route.path == '/editor/authors'">
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
     </div>
     <div class="table">
       <el-table
@@ -64,10 +61,8 @@
 </template>
 
 <style>
-.back {
-  position: fixed;
-  left: 60px;
-  top: 80px;
+.reviewer {
+  opacity: 0.8;
 }
 .table {
   text-align: center;

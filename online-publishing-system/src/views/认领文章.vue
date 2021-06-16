@@ -1,9 +1,6 @@
 <template>
   <div class="claim">
     <h1>认领文章</h1>
-    <router-link to="/author" class="back" v-show="this.$route.path == '/author/claim'">
-      <el-button type="info" icon="el-icon-back"></el-button>
-    </router-link>
     <div class="search">
       <el-input v-model="search.searchString" size="large">
         <el-select
@@ -120,11 +117,6 @@
 </template>
 
 <style scoped>
-.back {
-  position: fixed;
-  left: 60px;
-  top: 100px;
-}
 .search {
   margin-bottom: 40px;
 }

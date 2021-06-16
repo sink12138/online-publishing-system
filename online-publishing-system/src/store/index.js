@@ -6,8 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state:  {
-    role: 0,
-    isLogin: false,
+    role: 7,
+    isLogin: true,
   },
   mutations: {
     adminLogin() {
