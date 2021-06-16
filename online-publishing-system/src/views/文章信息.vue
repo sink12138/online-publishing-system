@@ -27,6 +27,11 @@
       <el-button type="info" @click="firstAuthorInfo()"
         >点击查看第一作者<i class="el-icon-info el-icon--right"></i
       ></el-button>
+      <br />
+      <el-input class="input" v-model="otherAuthorName" size="middle" placeholder="请输入其他作者名称"></el-input>
+      <el-button type="info" @click="otherAuthorInfo()"
+        >点击查看其他作者<i class="el-icon-info el-icon--right"></i
+      ></el-button>
     </div>
   </div>
 </template>
@@ -37,6 +42,7 @@ export default {
   data() {
     return {
       articleData: {},
+      otherAuthorName: "",
     };
   },
   mounted: function () {
@@ -84,7 +90,14 @@ export default {
     firstAuthorInfo() {
       sessionStorage.setItem(
         "authorId",
-        this.dataForm.authorsMap.get(this.dataForm.firstAuthor)
+        this.dataForm.authorMap.get(this.dataForm.firstAuthor)
+      );
+      window.location.href = "../infos";
+    },
+    otherAuthorInfo() {
+      sessionStorage.setItem(
+        "authorId",
+        this.dataForm.authorMap.get(this.otherAuthorName)
       );
       window.location.href = "../infos";
     },

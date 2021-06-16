@@ -23,6 +23,14 @@
         <el-table-column prop="amount3"></el-table-column>
       </el-table>
     </div>
+    <div>
+      <el-table class="myarticles" :data="tableData1" style="width: 100%">
+        <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
+        <el-table-column label="文章标题" prop="title"> </el-table-column>
+        <el-table-column label="第一作者" prop="firstAuthor"> </el-table-column>
+        <el-table-column label="其他作者" prop="otherAuthors"> </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -33,6 +41,7 @@ export default {
     return {
       authorId: 0,
       dataForm: {},
+      tableData1: [],
     };
   },
   computed: {
@@ -64,12 +73,13 @@ export default {
         method: "get",
         url: "http://82.156.190.251:80/apis/infos",
         data: {
-          authorId: JSON.stringify(sessionStorage.getItem('authorId')),
+          authorId: JSON.stringify(sessionStorage.getItem("authorId")),
         },
       }).then((res) => {
         var array = new Array();
         array = res.data;
         this.dataForm = array[0];
+        this.tableData1 = array.slice(1);
       });
     },
     columnStyle({ columnIndex }) {
