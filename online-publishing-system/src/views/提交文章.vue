@@ -1,7 +1,11 @@
 <template>
   <div class="submit">
     <h1>提交文章</h1>
-    <router-link to="/author" class="back" v-show="this.$route.path == '/author/submit'">
+    <router-link
+      to="/author"
+      class="back"
+      v-show="this.$route.path == '/author/submit'"
+    >
       <el-button type="info" icon="el-icon-back"></el-button>
     </router-link>
     <div class="uploadArticle">
@@ -19,12 +23,17 @@
     </div>
     <div class="articleinfo" v-if="this.hasfile">
       <h3>文章信息</h3>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form class="article_info">
         <el-form-item label="标题">
           <el-input v-model="formInline.title" placeholder="标题"></el-input>
         </el-form-item>
         <el-form-item label="摘要">
-          <el-input v-model="formInline.abstract" placeholder="摘要"></el-input>
+          <el-input
+            type="textarea"
+            autosize
+            v-model="formInline.abstract"
+            placeholder="摘要"
+          ></el-input>
         </el-form-item>
         <el-form-item label="关键词">
           <el-tag
