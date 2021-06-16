@@ -2,6 +2,12 @@
   <div class="reviewer">
     <div>
       <h1>所有作者名单</h1>
+<<<<<<< HEAD
+=======
+      <router-link to="/editor" v-show="this.$route.path == '/editor/authors'">
+        <el-button class="back" type="info" icon="el-icon-back"></el-button>
+      </router-link>
+>>>>>>> gtr
     </div>
     <div class="table">
       <el-table
@@ -98,30 +104,42 @@ export default {
   },
   methods: {
     cancelAuthor(row) {
-      let JsonCancelAuthorId = JSON.stringify({
-        authorId: Number(row.authorId),
-      });
-      console.log(JsonCancelAuthorId);
-      this.$store.commit("cancel");
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/editor/cancel/author",
-        data: JsonCancelAuthorId,
-      }).then((res) => {
-        console.log(res);
-        if (res.data.success == true) {
-          this.$message({
-            showClose: true,
-            message: "撤销作者身份成功",
-            type: "success",
-          });
-        } else {
-          this.$message({
-            showClose: true,
-            message: res.data.message,
-            type: "error",
-          });
+      this.$confirm(
+        "您正撤销编号为",
+        row.authorId,
+        "的作者的身份，是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }
+      ).then(() => {
+        let JsonCancelAuthorId = JSON.stringify({
+          authorId: Number(row.authorId),
+        });
+        console.log(JsonCancelAuthorId);
+        this.$store.commit("cancel");
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/editor/cancel/author",
+          data: JsonCancelAuthorId,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              showClose: true,
+              message: "撤销作者身份成功！",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: "请先撤销该作者的文章后撤销该作者！",
+              type: "error",
+            });
+          }
+        });
       });
     },
     Return() {

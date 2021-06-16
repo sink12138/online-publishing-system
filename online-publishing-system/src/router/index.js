@@ -133,11 +133,6 @@ const routes = [
         component: () => import('../views/上传编辑排版后的文章.vue')
       },
       {
-        path: '/editor/publish',
-        name: '出版文章',
-        component: () => import('../views/出版文章.vue')
-      },
-      {
         path: '/editor/claims',
         name: '查看文章认领申请',
         component: () => import('../views/查看文章认领申请.vue')
