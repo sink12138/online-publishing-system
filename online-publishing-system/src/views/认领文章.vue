@@ -256,6 +256,16 @@ export default {
         data: { articleId: Number(articleId) },
       }).then((res) => {
         console.log(res);
+        if (res.data.success == true) {
+              this.$message({
+                message: "认领成功！",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: res.data.message,
+              });
+            }
       });
       console.log("submit!");
     },
