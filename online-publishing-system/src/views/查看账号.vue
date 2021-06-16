@@ -58,7 +58,7 @@
         background
         layout="prev, pager, next, jumper"
         :total="total"
-        :page-size="8"
+        :page-size="9"
         @current-change="handleCurrentChange"
         :current-page="currentPage">
         </el-pagination>
@@ -164,7 +164,7 @@
     },
     data() {
       return {
-        pagesize:8,
+        pagesize:9,
         currentPage:1,
         accountData:'',
         total:0,

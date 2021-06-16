@@ -82,6 +82,13 @@
             </el-button>
           </el-input>
         </div>
+        <div class="articles" v-show="this.$route.path == '/main'">
+          <el-carousel type="card" trigger="click" height="400px" :interval="5000" arrow="always">
+            <el-carousel-item v-for="item in imgList" :key="item.name">
+              <img :src="item.src" style="height:100%;width:100%;" alt="picture" :title="item.title" />
+            </el-carousel-item>
+          </el-carousel>
+        </div>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -97,12 +104,11 @@
   background-size: cover;
 }
 .el-header {
-  background-color: #2f2f2f;
+  background-color: #1f1f1f;
   height: 40px !important;
 }
 .el-main {
-  background-color: #f8f8f8;
-  opacity: 0.9;
+  background-color: #f8f8f8b0;
 }
 .el-button {
   border: 0;
@@ -134,6 +140,12 @@
 .search {
   margin-top: 100px;
 }
+.articles {
+  margin: 0 auto;
+  margin-top: 40px;
+  width: 1200px;
+  position: relative;
+}
 </style>
 
 <script>
@@ -145,6 +157,38 @@ export default {
         searchType: "title",
         searchString: "",
       },
+      imgList: [
+        {
+          name: "logo",
+          src: require("../assets/logo.jpg"),
+          title: "Logo"
+        },
+        {
+          name: "bg1",
+          src: require("../assets/Canva - Green and Brown Mountains Under Blue Sky.jpg"),
+          title: "bg1"
+        },
+        {
+          name: "bg2",
+          src: require("../assets/Canva - Green Leafed Plant.jpg"),
+          title: "bg2"
+        },
+        {
+          name: "bg3",
+          src: require("../assets/Canva - Majestic Landscape.jpg"),
+          title: "bg3"
+        },
+        {
+          name: "bg4",
+          src: require("../assets/Canva - open Book Pages on Surface.jpg"),
+          title: "bg4"
+        },
+        {
+          name: "bg5",
+          src: require("../assets/Canva - Water Mill Near Body of Water.jpg"),
+          title: "bg5"
+        }
+      ],
     };
   },
   mounted() {
