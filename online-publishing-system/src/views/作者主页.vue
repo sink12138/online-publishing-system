@@ -24,7 +24,7 @@
     <el-button type="info" plain @click="dialogTableVisible = true">
       查看编辑
     </el-button>
-    <el-dialog title="编辑信息" :visible.sync="dialogTableVisible">
+    <el-dialog title="编辑信息" :visible.sync="dialogTableVisible" :modal-append-to-body='false'>
       <el-table :data="gridData">
         <el-table-column
           property="name"

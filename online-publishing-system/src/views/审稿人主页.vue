@@ -62,7 +62,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="审核意见" :visible.sync="dialogFormVisible">
+    <el-dialog title="审核意见" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="form">
         <el-form-item label="评论" :label-width="formLabelWidth">
           <el-input v-model="form.comments" auto-complete="off"></el-input>
