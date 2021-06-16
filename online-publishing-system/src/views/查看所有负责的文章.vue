@@ -437,9 +437,6 @@ export default {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     },
-    Return() {
-      window.location.href = "../editor";
-    },
   },
   data() {
     return {
