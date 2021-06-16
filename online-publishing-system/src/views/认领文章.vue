@@ -27,7 +27,7 @@
     <router-view />
     <div class="table">
       <el-card class="box-card">
-        <el-table :data="tableData" border stripe style="width: 100%">
+        <el-table :data="tableData.slice((currentPage-1)*8,currentPage*8)" border stripe style="width: 100%">
           <el-table-column
             prop="articleId"
             label="文章ID"
@@ -157,7 +157,6 @@ export default {
         searchString: "",
       },
       currentPage: 1, //当前页数
-      pageSize: 10, //每页获取条数（页面大小）
       tableData: [
         {
           articleId: "",
@@ -170,6 +169,10 @@ export default {
   },
   mounted() {},
   methods: {
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
     article(articleId) {
       sessionStorage.setItem("articleId", articleId);
       window.location.href = "../article";

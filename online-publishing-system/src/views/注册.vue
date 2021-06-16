@@ -138,7 +138,7 @@ export default {
               } else {
                 this.$message({
                   showClose: true,
-                  message: "注册成功",
+                  message: "注册完毕，请查看邮箱验证账号",
                   type: "success",
                 });
               }

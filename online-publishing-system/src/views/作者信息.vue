@@ -52,13 +52,6 @@ export default {
           amount2: "研究方向",
           amount3: this.dataForm.researchInterests,
         },
-        {
-          id: this.dataForm.headImg,
-          name: "绑定文章数目",
-          amount1: this.dataForm.articleCount,
-          amount2: "",
-          amount3: "",
-        },
       ];
     },
   },
