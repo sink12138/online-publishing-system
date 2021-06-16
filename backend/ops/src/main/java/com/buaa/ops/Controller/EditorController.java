@@ -667,23 +667,23 @@ public class EditorController {
                 statusMap.put("results", results.size());
                 maps.add(statusMap);
                 for (Write write : results) {
-                    Integer articleId = write.getArticleId();
-                    Article article = articleService.getArticleById(articleId);
-                    String title = article.getTitle();
-                    Integer authorId = write.getAuthorId();
-                    Author author = authorService.getAuthorByAuthorId(authorId);
-                    Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
-                    String realName = authorAccount.getRealName();
-                    String email = authorAccount.getEmail();
-                    Boolean confirmed = write.getConfirmed();
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("articleId", articleId);
-                    map.put("title", title);
-                    map.put("authorId", authorId);
-                    map.put("realName", realName);
-                    map.put("email", email);
-                    map.put("confirmed", confirmed);
-                    maps.add(map);
+                    if (!write.getConfirmed()) {
+                        Integer articleId = write.getArticleId();
+                        Article article = articleService.getArticleById(articleId);
+                        String title = article.getTitle();
+                        Integer authorId = write.getAuthorId();
+                        Author author = authorService.getAuthorByAuthorId(authorId);
+                        Account authorAccount = accountService.getAccountByAccountId(author.getAccountId());
+                        String realName = authorAccount.getRealName();
+                        String email = authorAccount.getEmail();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("articleId", articleId);
+                        map.put("title", title);
+                        map.put("authorId", authorId);
+                        map.put("realName", realName);
+                        map.put("email", email);
+                        maps.add(map);
+                    }
                 }
             }
         }
