@@ -2,14 +2,15 @@
   <div class="reviewer">
     <div>
       <h1>所有审稿人名单</h1>
-      <router-link to='/editor' v-show="this.$route.path == '/editor/reviewers'">
+      <router-link
+        to="/editor"
+        v-show="this.$route.path == '/editor/reviewers'"
+      >
         <el-button class="back" type="info" icon="el-icon-back"></el-button>
       </router-link>
     </div>
     <div class="table">
-      <template>
-
-      </template>
+      <template> </template>
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
@@ -45,7 +46,7 @@
       </el-table>
       <div class="pagination">
         <router-link to="/editor/certify/reviewer">
-          <el-button type="ops" >认证审稿人</el-button>
+          <el-button type="ops">认证审稿人</el-button>
         </router-link>
         <el-pagination
           background
@@ -91,7 +92,7 @@
   color: #000000;
 }
 .el-button--ops {
-  color: #FFF;
+  color: #fff;
   background: #000000;
   border-color: #000000;
   position: relative;
@@ -122,30 +123,42 @@ export default {
   },
   methods: {
     cancelReviewer(row) {
-      let JsonCancelReviewerId = JSON.stringify({
-        reviewerId: Number(row.reviewerId),
-      });
-      console.log(JsonCancelReviewerId);
-      this.$store.commit("cancel");
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/editor/cancel/reviewer",
-        data: JsonCancelReviewerId,
-      }).then((res) => {
-        console.log(res);
-        if (res.data.success == true) {
-          this.$message({
-            showClose: true,
-            message: "撤销审稿人身份成功",
-            type: "success",
-          });
-        } else {
-          this.$message({
-            showClose: true,
-            message: res.data.message,
-            type: "error",
-          });
+      this.$confirm(
+        "您正撤销编号为",
+        row.reviewerId,
+        "的审稿人的身份，是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }
+      ).then(() => {
+        let JsonCancelReviewerId = JSON.stringify({
+          reviewerId: Number(row.reviewerId),
+        });
+        console.log(JsonCancelReviewerId);
+        this.$store.commit("cancel");
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/editor/cancel/reviewer",
+          data: JsonCancelReviewerId,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              showClose: true,
+              message: "撤销审稿人身份成功",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: res.data.message,
+              type: "error",
+            });
+          }
+        });
       });
     },
     Return() {

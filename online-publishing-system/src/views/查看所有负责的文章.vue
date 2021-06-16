@@ -15,114 +15,119 @@
         style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="文章ID">
-            <span>{{ props.row.articleId }}</span>
-          </el-form-item>
-          <el-form-item label="文章标题">
-            <span>{{ props.row.title }}</span>
-          </el-form-item>
-          <el-form-item label="关键字">
-            <span>{{ props.row.keywords }}</span>
-          </el-form-item>
-          <el-form-item label="第一作者">
-            <span>{{ props.row.firstAuthor }}</span>
-          </el-form-item>
-          <el-form-item label="其他作者">
-            <span>{{ props.row.otherAuthors }}</span>
-          </el-form-item>
-          <el-form-item label="文章状态">
-            <span>{{ props.row.status }}</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
-    <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
-    <el-table-column label="文章标题" prop="title"> </el-table-column>
-    <el-table-column label="文章状态" prop="status"> </el-table-column>
-        <el-table-column label="下载文章">
-          <template slot-scope="scope"
-            ><el-button
-              type="text"
-              size="small"
-              :disabled="scope.row.status == '待撤稿'"
-              @click="downloadArticle(scope.row)"
-              >下载</el-button
-            >
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="文章ID">
+                <span>{{ props.row.articleId }}</span>
+              </el-form-item>
+              <el-form-item label="文章标题">
+                <span>{{ props.row.title }}</span>
+              </el-form-item>
+              <el-form-item label="关键字">
+                <span>{{ props.row.keywords }}</span>
+              </el-form-item>
+              <el-form-item label="第一作者">
+                <span>{{ props.row.firstAuthor }}</span>
+              </el-form-item>
+              <el-form-item label="其他作者">
+                <span>{{ props.row.otherAuthors }}</span>
+              </el-form-item>
+              <el-form-item label="文章状态">
+                <span>{{ props.row.status }}</span>
+              </el-form-item>
+            </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="分配审稿人">
-          <template slot-scope="scope"
-            ><el-button
-              type="text"
-              size="small"
-              :disabled="scope.row.status != '待审核'"
-              @click="assignReviewers(scope.row)"
-              >分配审稿人</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="接收">
-          <template slot-scope="scope"
-            ><el-button
-              type="text"
-              size="small"
-              :disabled="
-                scope.row.status != '待接收' &&
-                scope.row.status != '修改稿待接收'
-              "
-              @click="acceptArticle(scope.row)"
-              >接收</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="拒绝操作">
-          <template slot-scope="scope"
-            ><el-button
-              type="text"
-              size="small"
-              :disabled="
-                scope.row.status != '待接收' &&
-                scope.row.status != '修改稿待接收'
-              "
-              @click="rejectArticle(scope.row)"
-              >拒绝</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="上传编辑稿">
+        <el-table-column label="文章编号" prop="articleId"> </el-table-column>
+        <el-table-column label="文章标题" prop="title"> </el-table-column>
+        <el-table-column label="文章状态" prop="status"> </el-table-column>
+        <el-table-column label="文章操作">
           <template slot-scope="scope">
-            <router-link to="/editor/upload"
-              ><el-button
-                type="text"
-                size="small"
-                :disabled="scope.row.status != '编辑中'"
-                >上传编辑稿</el-button
-              ></router-link
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="接受撤稿">
-          <template slot-scope="scope"
-            ><el-button
-              type="text"
-              size="small"
-              :disabled="scope.row.status != '待撤稿'"
-              @click="acceptWithdraw(scope.row)"
-              >接受撤稿</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="拒绝撤稿">
-          <template slot-scope="scope"
-            ><el-button
-              type="text"
-              size="small"
-              :disabled="scope.row.status != '待撤稿'"
-              @click="rejectWithdraw(scope.row)"
-              >拒绝撤稿</el-button
-            >
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              可执行操作<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item
+                ><el-button
+                    type="text"
+                    size="small"
+                    v-if="scope.row.status != '待撤稿'"
+                    @click="downloadArticle(scope.row)"
+                    >下载</el-button
+                  ></el-dropdown-item
+              >
+              <el-dropdown-item
+                ><template slot-scope="scope"
+                  ><el-button
+                    type="text"
+                    size="small"
+                    v-if="scope.row.status == '待审核'"
+                    @click="assignReviewers(scope.row)"
+                    >分配审稿人</el-button
+                  >
+                </template></el-dropdown-item
+              >
+              <el-dropdown-item
+                ><el-button
+                    type="text"
+                    size="small"
+                    v-if="
+                      scope.row.status == '待接收' ||
+                      scope.row.status == '修改稿待接收'
+                    "
+                    @click="acceptArticle(scope.row)"
+                    >接收</el-button
+                  ></el-dropdown-item
+              >
+              <el-dropdown-item
+                ><el-button
+                    type="text"
+                    size="small"
+                    v-if="
+                      scope.row.status == '待接收' ||
+                      scope.row.status == '修改稿待接收'
+                    "
+                    @click="rejectArticle(scope.row)"
+                    >拒绝</el-button
+                  ></el-dropdown-item
+              >
+              <el-dropdown-item
+                  <router-link to="/editor/upload"
+                    ><el-button
+                      type="text"
+                      size="small"
+                      v-if="scope.row.status == '编辑中'"
+                      >上传编辑稿</el-button
+                    ></router-link
+                  ></el-dropdown-item
+              >
+              <el-dropdown-item><el-button
+                    type="text"
+                    size="small"
+                    v-if="scope.row.status == '待撤稿'"
+                    @click="acceptWithdraw(scope.row)"
+                    >接受撤稿</el-button
+                  ></el-dropdown-item
+              >
+              <el-dropdown-item><el-button
+                    type="text"
+                    size="small"
+                    v-if="scope.row.status == '待撤稿'"
+                    @click="rejectWithdraw(scope.row)"
+                    >拒绝撤稿</el-button
+                  ></el-dropdown-item
+              >
+              <el-dropdown-item><el-button
+                    type="text"
+                    size="small"
+                    v-if="scope.row.status == '编辑中'"
+                    @click="publishArticle(scope.row)"
+                    >出版文章</el-button
+                  ></el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
@@ -130,9 +135,6 @@
         <div class="reviewer-button">
           <router-link to="/editor/claims">
             <el-button type="ops">查看文章认领申请</el-button>
-          </router-link>
-          <router-link to="/editor/publish">
-            <el-button type="ops">出版文章</el-button>
           </router-link>
           <router-link to="/editor/reviews">
             <el-button type="ops">查看评论</el-button>
@@ -196,6 +198,13 @@
   left: -550px;
   top: 30px;
 }
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>
 
 <script>
@@ -238,6 +247,47 @@ export default {
           alert(err);
         }
       );
+    },
+    publishArticle(row) {
+      this.$prompt("请输入该文章的文献标识符", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+      })
+        .then(({ value }) => {
+          let JsonPublishArticle = JSON.stringify({
+            articleId: Number(row.articleId),
+            identifier: value,
+          });
+          console.log(JsonPublishArticle);
+          this.$store.commit("Assign");
+          this.$axios({
+            method: "post",
+            url: "http://82.156.190.251:80/apis/editor/publish",
+            data: JsonPublishArticle,
+          }).then((res) => {
+            console.log(res);
+            if (res.data.success == true) {
+              this.$message({
+                showClose: true,
+                message: "出版成功！",
+                type: "success",
+              });
+              window.location.href = "../editor/articles";
+            } else {
+              this.$message({
+                showClose: true,
+                message: res.data.message,
+                type: "error",
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消输入",
+          });
+        });
     },
     assignReviewers(row) {
       this.$prompt(
@@ -288,137 +338,166 @@ export default {
         });
     },
     acceptArticle(row) {
-      this.$notify({
-        title: "确认成功",
-        message: "您已成功接收该文章",
-        type: "success",
-      });
-      let JsonConfirmArticleId = JSON.stringify({
-        articleBufferId: Math.abs(Number(row.articleId)),
-      });
-      console.log(JsonConfirmArticleId);
-      this.$store.commit("confirm");
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/editor/accept",
-        data: JsonConfirmArticleId,
-      }).then((res) => {
-        console.log(res);
-        if (res.data.success == true) {
-          this.$message({
-            showClose: true,
-            message: "接受文章成功",
-            type: "success",
-          });
-        } else {
-          this.$message({
-            showClose: true,
-            message: res.data.message,
-            type: "error",
-          });
+      this.$confirm(
+        "您正要接受编号为",
+        row.articleId,
+        "的文章，是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }
+      ).then(() => {
+        let JsonConfirmArticleId = JSON.stringify({
+          articleBufferId: Math.abs(Number(row.articleId)),
+        });
+        console.log(JsonConfirmArticleId);
+        this.$store.commit("confirm");
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/editor/accept",
+          data: JsonConfirmArticleId,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              showClose: true,
+              message: "接受文章成功",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: res.data.message,
+              type: "error",
+            });
+          }
+        });
+        location.reload();
       });
-      location.reload();
     },
     rejectArticle(row) {
-      this.$notify({
-        title: "拒绝成功",
-        message: "您已成功拒绝该文章",
-        type: "success",
-      });
-      let JsonConfirmArticleId = JSON.stringify({
-        articleBufferId: Math.abs(Number(row.articleId)),
-      });
-      console.log(JsonConfirmArticleId);
-      this.$store.commit("confirm");
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/editor/reject",
-        data: JsonConfirmArticleId,
-      }).then((res) => {
-        console.log(res);
-        if (res.data.success == true) {
-          this.$message({
-            showClose: true,
-            message: "拒绝文章成功",
-            type: "success",
-          });
-        } else {
-          this.$message({
-            showClose: true,
-            message: res.data.message,
-            type: "error",
-          });
+      this.$confirm(
+        "您正要拒绝编号为",
+        row.articleId,
+        "的文章，是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }
+      ).then(() => {
+        let JsonConfirmArticleId = JSON.stringify({
+          articleBufferId: Math.abs(Number(row.articleId)),
+        });
+        console.log(JsonConfirmArticleId);
+        this.$store.commit("confirm");
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/editor/reject",
+          data: JsonConfirmArticleId,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              showClose: true,
+              message: "拒绝文章成功",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: res.data.message,
+              type: "error",
+            });
+          }
+        });
+        location.reload();
       });
-      location.reload();
     },
     acceptWithdraw(row) {
-      this.$notify({
-        title: "确认成功",
-        message: "您已成功接收该文章",
-        type: "success",
-      });
-      let JsonConfirmArticleId = JSON.stringify({
-        articleId: Number(row.articleId),
-        confirm: true,
-      });
-      console.log(JsonConfirmArticleId);
-      this.$store.commit("confirm");
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/editor/confirm/withdraw",
-        data: JsonConfirmArticleId,
-      }).then((res) => {
-        console.log(res);
-        if (res.data.success == true) {
-          this.$message({
-            showClose: true,
-            message: "接受文章成功",
-            type: "success",
-          });
-        } else {
-          this.$message({
-            showClose: true,
-            message: res.data.message,
-            type: "error",
-          });
+      this.$confirm(
+        "您正要接受编号为",
+        row.articleId,
+        "的文章，是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }
+      ).then(() => {
+        let JsonConfirmArticleId = JSON.stringify({
+          articleId: Number(row.articleId),
+          confirm: true,
+        });
+        console.log(JsonConfirmArticleId);
+        this.$store.commit("confirm");
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/editor/confirm/withdraw",
+          data: JsonConfirmArticleId,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              showClose: true,
+              message: "接受文章成功",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: res.data.message,
+              type: "error",
+            });
+          }
+        });
+        location.reload();
       });
-      location.reload();
     },
     rejectWithdraw(row) {
-      this.$notify.info({
-        title: "拒绝成功",
-        message: "您已成功拒绝该文章",
-      });
-      let JsonRefuseArticleId = JSON.stringify({
-        articleId: Number(row.articleId),
-        confirm: false,
-      });
-      console.log(JsonRefuseArticleId);
-      this.$store.commit("refuse");
-      this.$axios({
-        method: "post",
-        url: "http://82.156.190.251:80/apis/editor/confirm/withdraw",
-        data: JsonRefuseArticleId,
-      }).then((res) => {
-        console.log(res);
-        if (res.data.success == true) {
-          this.$message({
-            showClose: true,
-            message: "拒绝文章成功",
-            type: "success",
-          });
-        } else {
-          this.$message({
-            showClose: true,
-            message: res.data.message,
-            type: "error",
-          });
+      this.$confirm(
+        "您正要拒绝编号为",
+        row.articleId,
+        "的文章，是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         }
+      ).then(() => {
+        let JsonRefuseArticleId = JSON.stringify({
+          articleId: Number(row.articleId),
+          confirm: false,
+        });
+        console.log(JsonRefuseArticleId);
+        this.$store.commit("refuse");
+        this.$axios({
+          method: "post",
+          url: "http://82.156.190.251:80/apis/editor/confirm/withdraw",
+          data: JsonRefuseArticleId,
+        }).then((res) => {
+          console.log(res);
+          if (res.data.success == true) {
+            this.$message({
+              showClose: true,
+              message: "拒绝文章成功",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: res.data.message,
+              type: "error",
+            });
+          }
+        });
+        location.reload();
       });
-      location.reload();
     },
     load(data, filename) {
       if (!data) {
