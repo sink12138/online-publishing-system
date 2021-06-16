@@ -17,12 +17,6 @@
               <el-form-item label="关键字">
                 <span>{{ props.row.keywords }}</span>
               </el-form-item>
-              <el-form-item label="第一作者">
-                <span>{{ props.row.firstAuthor }}</span>
-              </el-form-item>
-              <el-form-item label="其他作者">
-                <span>{{ props.row.otherAuthors }}</span>
-              </el-form-item>
               <el-form-item label="处理状态">
                 <span>{{ props.row.status }}</span>
               </el-form-item>
@@ -68,7 +62,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="审核意见" :visible.sync="dialogFormVisible">
+    <el-dialog title="审核意见" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="form">
         <el-form-item label="评论" :label-width="formLabelWidth">
           <el-input v-model="form.comments" auto-complete="off"></el-input>

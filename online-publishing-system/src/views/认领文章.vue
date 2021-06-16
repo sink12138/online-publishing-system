@@ -157,12 +157,12 @@ export default {
       },
       currentPage: 1, //当前页数
       tableData: [
-        {
-          articleId: "",
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-        },
+        // {
+        //   articleId: "",
+        //   title: "",
+        //   keywords: "",
+        //   firstAuthor: "",
+        // },
       ], //存放从后端传来的数据
     };
   },

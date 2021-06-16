@@ -21,7 +21,7 @@
     </div>
     <br />
     <div class="button">
-      <el-button type="info" @click="downloadarticle()"
+      <el-button type="info" @click="downloadarticle()" v-if="this.$store.state.isLogin"
         >点击下载本篇文章<i class="el-icon-download el-icon--right"></i
       ></el-button>
     </div>

@@ -36,11 +36,6 @@ export default {
   },
   methods: {
     getfile() {
-      this.$message({
-        showClose: true,
-        message: "提交成功！",
-        type: "success",
-      });
       let file = this.$refs.file.files[0];
       this.uploadfile = file;
       console.log(this.uploadfile);
@@ -63,7 +58,7 @@ export default {
         if (res.data.success == true) {
           this.$message({
             showClose: true,
-            message: "上传成功！",
+            message: "上传成功！请点击返回按钮返回！",
             type: "success",
           });
         } else {
@@ -74,7 +69,6 @@ export default {
           });
         }
       });
-      window.location.href = "../editor/articles";
     },
     Return(){
       window.location.href="../editor/articles"
