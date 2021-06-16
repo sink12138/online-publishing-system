@@ -60,7 +60,7 @@
             class="button-new-tag"
             size="small"
             @click="showInput"
-            >+ New Tag</el-button
+            >+ 关键词</el-button
           >
         </el-form-item>
         <!-- <el-form-item label="关键词">
@@ -106,7 +106,7 @@
             class="button-new-tag"
             size="small"
             @click="showInput2"
-            >+ New Tag</el-button
+            >+ 作者</el-button
           >
         </el-form-item>
         <el-form-item
