@@ -129,12 +129,9 @@ export default {
         }
       });
     },
-<<<<<<< HEAD
     Return() {
       window.location.href = "../editor";
     },
-=======
->>>>>>> cce6cd3a0d96cc56a5ca3e18873fab0023ca9c6c
   },
   data() {
     return {
