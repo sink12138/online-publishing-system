@@ -49,8 +49,9 @@
           </router-link>
         </div>
         <div class="link2">
-          <router-link to="/login" v-if="this.$store.state.isLogin == false">
-            <el-button type="info" plain>登录</el-button>
+          <router-link to="/login">
+            <el-button type="info" plain v-if="$store.state.isLogin==false">登录</el-button>
+            <el-button type="info" plain v-if="$store.state.isLogin==true">登出</el-button>
           </router-link>
           <router-link to="/main" v-if="this.$store.state.isLogin == true">
             <el-button type="info" plain @click="Logout">登出</el-button>

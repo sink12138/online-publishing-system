@@ -129,6 +129,12 @@ export default {
         }
       });
     },
+<<<<<<< HEAD
+=======
+    Return() {
+      window.location.href = "../editor";
+    },
+>>>>>>> b36b891f80458bb3fe365f83dd7ac6288d498ec2
   },
   data() {
     return {
