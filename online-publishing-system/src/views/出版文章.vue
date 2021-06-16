@@ -80,7 +80,7 @@ export default {
           });
         }
       });
-      window.location.href = "../editors/articles";
+      window.location.href = "../editor/articles";
     },
     Return(){
       window.location.href="../editor/articles"

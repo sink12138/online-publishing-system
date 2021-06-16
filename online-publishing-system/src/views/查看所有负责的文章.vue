@@ -408,12 +408,6 @@ export default {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     },
-<<<<<<< HEAD
-=======
-    Return() {
-      window.location.href = "../editor";
-    },
->>>>>>> gtr
   },
   data() {
     return {
