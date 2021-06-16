@@ -526,8 +526,10 @@ public class EditorController {
                 infos.put("realName", accountService.getAccountByAccountId(reviewer.getAccountId()).getRealName());
                 infos.put("comments", review.getComments());
                 infos.put("pass", review.getPass());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-                infos.put("date", simpleDateFormat.format(review.getReviewingDate()));
+                if (review.getReviewingDate() != null) {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+                    infos.put("date", simpleDateFormat.format(review.getReviewingDate()));
+                }
                 arrayList.add(infos);
             }
         } catch (LoginVerificationException | IllegalAuthorityException | ParameterFormatException | ObjectNotFoundException exception) {
