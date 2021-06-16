@@ -182,7 +182,7 @@
     },
     computed: {
       items:function() {
-        var number = this.input;
+        var number = parseInt(this.input);
         if (number) {
           return this.articleData.filter(function(e){
             return Object.keys(e).some(function(){
