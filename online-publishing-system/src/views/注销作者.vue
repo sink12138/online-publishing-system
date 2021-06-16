@@ -9,27 +9,35 @@
 export default {
   methods: {
     cancel() {
-      this.$confirm('此操作将注销作者身份, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      this.$confirm("此操作将注销作者身份, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
           this.$axios({
-            method:"post",
-            url:"http://82.156.190.251:80/apis/author/cancel",
-          })
-          .then((res)=>{
+            method: "post",
+            url: "http://82.156.190.251:80/apis/author/cancel",
+          }).then((res) => {
             console.log(res);
-            this.$message({
-              message: res.data.message,
-            });
+            if (res.data.success == false) {
+              this.$message({
+                message: res.data.message,
+              });
+            } else {
+              this.$message({
+                message: "注销成功",
+                type: "success",
+              });
+            }
           });
-          console.log('cancel submit!');
-        }).catch(() => {
+          console.log("cancel submit!");
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消注销'
-          });          
+            type: "info",
+            message: "已取消注销",
+          });
         });
     },
   },

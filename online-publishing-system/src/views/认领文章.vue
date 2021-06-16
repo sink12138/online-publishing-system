@@ -153,7 +153,7 @@ export default {
         articleId: 0,
       },
       search: {
-        searchType: "",
+        searchType: "author",
         searchString: "",
       },
       currentPage: 1, //当前页数
@@ -213,13 +213,38 @@ export default {
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/download",
-        params: {
-          articleId: Number(articleId),
+        params: { articleId: articleId },
+        responseTpe: "blob",
+      }).then(
+        (response) => {
+          console.log(response);
+          const filename = decodeURIComponent(
+            response.headers["content-disposition"].split(";")[1].split("=")[1]
+          );
+          console.log(filename);
+          this.load(response.data, filename);
+          console.log("下载中");
         },
-      }).then((res) => {
-        console.log(res);
-      });
-      console.log("submit!");
+        (err) => {
+          alert(err);
+        }
+      );
+    },
+    load(data, filename) {
+      if (!data) {
+        return;
+      }
+      let url = window.URL.createObjectURL(
+        new Blob([data], { type: "application/force-download;charset=utf-8" })
+      );
+      let link = document.createElement("a");
+      link.style.display = "none";
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     },
     claim(articleId) {
       this.$axios({

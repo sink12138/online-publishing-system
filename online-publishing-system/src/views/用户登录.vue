@@ -33,7 +33,7 @@
         <div v-else>
           <el-form-item>
             <router-link to="/main"
-              ><el-button type="info" @click="Login"
+              ><el-button type="primary" @click="Login"
                 >登录</el-button
               ></router-link
             >
