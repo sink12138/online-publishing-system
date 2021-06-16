@@ -2,21 +2,16 @@
   <div class="reviewer">
     <div>
       <h1>文章评论如下</h1>
+      <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     </div>
-    <template>
-      <el-button type="primary" @click="Return">返回</el-button>
-    </template>
     <div>
       <el-form :inline="true" :model="search" class="demo-form-inline">
         <el-form-item label="文章编号">
-          <el-input v-model="search.articleId" placeholder="articleId"
-            >请输入需要查看评论的文章id
+          <el-input placeholder="请输入需要查看评论的文章id" v-model="search.articleId">
+            <el-button slot="append" icon="el-icon-search" @click="searchArticle"></el-button>
           </el-input>
         </el-form-item>
       </el-form>
-      <template
-        ><el-button type="primary" @click="searchArticle">查找</el-button>
-      </template>
     </div>
     <div class="articles">
       <el-table :data="tableData" style="width: 100%">
@@ -28,10 +23,21 @@
           </template>
         </el-table-column>
         <el-table-column label="评论时间" prop="date"> </el-table-column>
+        <el-table-column label="审稿人真实姓名" prop="realName">
+        </el-table-column>
       </el-table>
     </div>
   </div>
 </template>
+
+<style>
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
+}
+</style>
+
 <script>
 export default {
   data() {
@@ -52,7 +58,25 @@ export default {
     this.search.articleId = this.$route.query.articleId;
     if (this.search.articleId == undefined) this.returnId = 0;
     console.log(this.search.articleId);
-    this.searchArticle();
+    this.$axios({
+      method: "get",
+      url: "http://82.156.190.251:80/apis/editor/reviews",
+      params: { articleId: this.search.articleId },
+      responseTpe: "blob",
+    })
+      .then((response) => {
+        console.log(this.search);
+        console.log(response);
+        var arraylist = new Array();
+        arraylist = response.data;
+        this.success = arraylist[0].success;
+        if (this.success == true) {
+          this.results = arraylist[0].results;
+          this.tableData = arraylist.slice(1);
+          console.log(this.tableData);
+        }
+      })
+      .catch((err) => console.log(err));
   },
   methods: {
     searchArticle() {

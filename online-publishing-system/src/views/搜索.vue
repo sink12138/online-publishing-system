@@ -2,6 +2,24 @@
   <div class="Search">
     <div class="table">
       <el-main>
+        <el-input class="input" v-model="search.searchString" size="large">
+          <el-select
+            v-model="search.searchType"
+            slot="prepend"
+            placeholder="搜索类型"
+          >
+            <el-option label="标题" value="title"></el-option>
+            <el-option label="关键词" value="keyword"></el-option>
+            <el-option label="作者" value="author"></el-option>
+          </el-select>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            size="mini"
+            @click="searchArticle"
+          >
+          </el-button>
+        </el-input>
         <el-card class="box-card">
           <el-table :data="tableData" border stripe style="width: 100%">
             <el-table-column
@@ -215,4 +233,31 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.Search {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+.input {
+  margin-bottom: 40px;
+}
+.box-card {
+  width: 1000px;
+}
+.el-input {
+  width: 600px;
+  height: 50px;
+}
+.el-input >>> .el-input__inner{
+  height: 50px;
+}
+.el-select {
+  width: 100px;
+}
 </style>

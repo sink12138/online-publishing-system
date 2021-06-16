@@ -35,6 +35,17 @@
   </div>
 </template>
 
+<style scoped>
+.el-form-item {
+  width: 600px;
+  margin: 0 auto;
+}
+.el-input {
+  width: 400px;
+  height: 80px;
+}
+</style>
+
 <script>
 export default {
   data() {

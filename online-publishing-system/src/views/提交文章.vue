@@ -1,6 +1,9 @@
 <template>
   <div class="submit">
     <h1>提交文章</h1>
+    <router-link to="/author" class="back">
+      <el-button type="info" icon="el-icon-back"></el-button>
+    </router-link>
     <div class="uploadArticle">
       <h3>上传文件</h3>
       <h5>请提交doc,docx,pdf,zip文件</h5>
@@ -10,7 +13,7 @@
         ref="file"
         accept=".doc,.docx,.pdf,.zip"
       />
-      <el-button type="primary" size="mini" @click="getfile"
+      <el-button type="primary" @click="getfile" icon="el-icon-upload"
         >提交文件</el-button
       >
     </div>
@@ -123,9 +126,6 @@
         </el-form-item>
       </el-form>
     </div>
-    <router-link to="/author">
-      <el-button type="primary"> 取消提交 </el-button>
-    </router-link>
   </div>
 </template>
 
@@ -339,6 +339,11 @@ export default {
 </script>
 
 <style>
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
+}
 .el-tag + .el-tag {
   margin-left: 10px;
 }

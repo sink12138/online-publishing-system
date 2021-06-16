@@ -18,13 +18,6 @@
         下载Log
       </el-button>
     </div>
-    <div class="download">
-      <el-button
-        plain
-        @click="handleDown">
-        下载
-      </el-button>
-    </div>
     <router-view/>
   </div>
 </template>
@@ -86,7 +79,7 @@
           this.download(res.data, filename)
         }).catch(err => console.log(err))
       },
-      handleDown() {
+      /*handleDown() {
         var data = {
           articleId : this.articleId
         }
@@ -115,7 +108,7 @@
         link.click()
         document.body.removeChild(link)
         window.URL.revokeObjectURL(url)
-      }
+      }*/
     }
   }
 </script>

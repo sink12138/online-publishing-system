@@ -3,15 +3,12 @@
     <div>
       <h1>所有作者名单</h1>
     </div>
-    <template>
-      <el-button type="primary" @click="Return">返回</el-button>
-    </template>
     <div class="table">
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
-        :header-cell-style="{ height: '0px' }"
+        :header-cell-style="{ height: '60px' }"
         style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column
@@ -39,30 +36,41 @@
           label="绑定的文章数量"
           align="center"
         ></el-table-column>
-        <el-table-column  label="撤销作者身份">
-          <template slot-scope="scope"
-            >
-            <el-button
-              type="text"
-              size="small"
-              @click="cancelAuthor(scope.row)"
+        <el-table-column label="撤销作者身份">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="cancelAuthor(scope.row)"
               >撤销作者</el-button
             >
           </template>
         </el-table-column>
+<<<<<<< HEAD
         <div class="pagination">
           <el-pagination
             background
             layout="prev, pager, next, jumper"
             :total="total"
-            :page-size="10"
+            :page-size="8"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
           >
           </el-pagination>
         </div>
         <router-view></router-view>
+=======
+>>>>>>> gtr
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next, jumper"
+          :total="total"
+          :page-size="10"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+        >
+        </el-pagination>
+      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -73,13 +81,10 @@
   text-align: center;
 }
 .table {
-  position: fixed;
   text-align: center;
 }
 .pagination {
-  display: inline;
   position: fixed;
-  justify-content: center;
   bottom: 60px;
 }
 </style>
@@ -132,9 +137,12 @@ export default {
         }
       });
     },
-    Return(){
-      window.location.href="../editor";
-    }
+<<<<<<< HEAD
+=======
+    Return() {
+      window.location.href = "../editor";
+    },
+>>>>>>> gtr
   },
   data() {
     return {
@@ -147,7 +155,7 @@ export default {
           articleCount: 0,
         },
       ],
-      pagesize: 10,
+      pagesize: 8,
       currentPage: 1,
       authorData: "",
       total: 0,

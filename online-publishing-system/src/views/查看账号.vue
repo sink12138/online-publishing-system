@@ -58,7 +58,7 @@
         background
         layout="prev, pager, next, jumper"
         :total="total"
-        :page-size="10"
+        :page-size="8"
         @current-change="handleCurrentChange"
         :current-page="currentPage">
         </el-pagination>

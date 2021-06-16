@@ -2,17 +2,15 @@
   <div class="reviewer">
     <div>
       <h1>所有文章认领申请</h1>
+      <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     </div>
-    <template>
-      <el-button type="primary" @click="Return">返回</el-button>
-    </template>
     <div class="table">
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)
         "
-        :header-cell-style="{ height: '0px' }"
-        style="width: 100%"
+        :header-cell-style="{ height: '60px' }"
+        style="height: 100%;width: 100%;padding-top:10px;scoped"
       >
         <el-table-column
           prop="articleId"
@@ -60,30 +58,30 @@
             >
           </template>
         </el-table-column>
-        <div class="pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, jumper"
-            :total="total"
-            :page-size="10"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-          >
-          </el-pagination>
-        </div>
-        <router-view></router-view>
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next, jumper"
+          :total="total"
+          :page-size="10"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+        >
+        </el-pagination>
+      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <style>
-.breadcrumb {
-  position: relative;
-  text-align: center;
+.back {
+  position: fixed;
+  left: 60px;
+  top: 100px;
 }
 .table {
-  position: fixed;
   text-align: center;
 }
 .pagination {

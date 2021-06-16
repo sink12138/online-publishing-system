@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <el-table class="myarticles" :data="tableData" style="width: 100%">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
@@ -50,6 +50,9 @@
 </template>
 
 <style>
+.myarticles {
+  width: 600px;
+}
 .demo-table-expand {
   font-size: 0;
 }
