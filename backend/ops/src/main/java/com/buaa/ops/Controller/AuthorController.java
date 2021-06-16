@@ -205,6 +205,20 @@ public class AuthorController {
             if (!authorId.equals(articleBuffer.getSubmitterId()))
                 // Poster is not submitter of the article
                 throw new IllegalAuthorityException();
+            String realName = account.getRealName();
+            if (!realName.equals(firstAuthor) && otherAuthors != null) {
+                // If the submitter is not the first author, begin checks of other authors
+                boolean repeat = false;
+                for (String otherAuthor : otherAuthors) {
+                    if (otherAuthor.equals(realName)) {
+                        repeat = true;
+                        break;
+                    }
+                }
+                if (!repeat)
+                    // None of the authors matches real name of the submitter
+                    throw new IllegalAuthorityException();
+            }
             // End authority checks
             // Create a new article
             ArticleBuffer newArticle = new ArticleBuffer(
