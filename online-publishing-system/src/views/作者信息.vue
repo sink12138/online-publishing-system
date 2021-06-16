@@ -28,7 +28,8 @@
         <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="第一作者" prop="firstAuthor"> </el-table-column>
-        <el-table-column label="其他作者" prop="otherAuthors"> </el-table-column>
+        <el-table-column label="其他作者" prop="otherAuthors">
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -69,13 +70,15 @@ export default {
   },
   methods: {
     convert: function () {
+      console.log(sessionStorage.getItem("authorId"));
       this.$axios({
         method: "get",
         url: "http://82.156.190.251:80/apis/infos",
-        data: {
-          authorId: JSON.stringify(sessionStorage.getItem("authorId")),
+        params: {
+          authorId: sessionStorage.getItem("authorId"),
         },
       }).then((res) => {
+        console.log(res);
         var array = new Array();
         array = res.data;
         this.dataForm = array[0];
