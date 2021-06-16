@@ -93,6 +93,9 @@ export default {
       },
     };
   },
+  created: function(){
+    console.log(this.$store.state.isLogin);
+  },
   methods: {
     searchArticle() {
       this.$router.push(

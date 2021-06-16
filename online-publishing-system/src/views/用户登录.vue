@@ -7,10 +7,10 @@
     <div id="login">
       <el-card class="box-card">
         <el-form ref="form" :model="formInline" class="demo-form-inline" label-width="80px">
-          <el-form-item label="Email">
+          <el-form-item label="邮箱">
             <el-input v-model="formInline.email" placeholder="Email"></el-input>
           </el-form-item>
-          <el-form-item label="Password">
+          <el-form-item label="密码">
             <el-input
               v-model="formInline.password"
               prefix-icon="el-icon-lock"

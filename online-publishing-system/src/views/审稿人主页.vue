@@ -17,12 +17,6 @@
               <el-form-item label="关键字">
                 <span>{{ props.row.keywords }}</span>
               </el-form-item>
-              <el-form-item label="第一作者">
-                <span>{{ props.row.firstAuthor }}</span>
-              </el-form-item>
-              <el-form-item label="其他作者">
-                <span>{{ props.row.otherAuthors }}</span>
-              </el-form-item>
               <el-form-item label="处理状态">
                 <span>{{ props.row.status }}</span>
               </el-form-item>

@@ -184,7 +184,7 @@ export default {
           console.log(res);
           if (res.data.success == true) {
             this.$message({
-              message: "邮箱修改成功！",
+              message: "邮箱修改成功，请登录邮箱验证!",
               type: "success",
             });
           } else {
