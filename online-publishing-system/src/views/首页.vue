@@ -50,11 +50,14 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background-image: url("../assets/Canva - Majestic Landscape.jpg");
+  background-image: url("../assets/Canva - open Book Pages on Surface.jpg");
   background-size: cover;
   display: flex;
   justify-content: center;
-  align-items: center;
+}
+.search {
+  position: fixed;
+  top: 200px;
 }
 .user {
   position: fixed;

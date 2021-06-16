@@ -2,16 +2,13 @@
   <div class="reviewer">
     <div>
       <h1>所有审稿人名单</h1>
+      <router-link to='/editor' v-show="this.$route.path == '/editor/reviewers'">
+        <el-button class="back" type="info" icon="el-icon-back"></el-button>
+      </router-link>
     </div>
     <div class="table">
-      <template
-        ><router-link to="/editor/certify/reviewer"
-<<<<<<< HEAD
-          ><el-button type="info" >认证审稿人</el-button>
-=======
-          ><el-button type="primary">认证审稿人</el-button>
->>>>>>> gtr
-        </router-link>
+      <template>
+        
       </template>
       <el-table
         :data="
@@ -45,23 +42,11 @@
             >
           </template>
         </el-table-column>
-<<<<<<< HEAD
-        <div class="pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, jumper"
-            :total="total"
-            :page-size="8"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-          >
-          </el-pagination>
-        </div>
-        <router-view></router-view>
-=======
->>>>>>> gtr
       </el-table>
       <div class="pagination">
+        <router-link to="/editor/certify/reviewer">
+          <el-button type="ops" >认证审稿人</el-button>
+        </router-link>
         <el-pagination
           background
           layout="prev, pager, next, jumper"
@@ -78,9 +63,10 @@
 </template>
 
 <style>
-.breadcrumb {
-  position: relative;
-  text-align: center;
+.back {
+  position: fixed;
+  left: 60px;
+  top: 80px;
 }
 .table {
   text-align: center;
@@ -89,7 +75,28 @@
   display: inline;
   position: fixed;
   justify-content: center;
+  left: 700px;
   bottom: 60px;
+}
+.el-button--ops.is-active,
+.el-button--ops:active {
+  background: #000000;
+  border-color: #000000;
+  color: #fff;
+}
+.el-button--ops:focus,
+.el-button--ops:hover {
+  background: #ababab;
+  border-color: #ababab;
+  color: #000000;
+}
+.el-button--ops {
+  color: #FFF;
+  background: #000000;
+  border-color: #000000;
+  position: relative;
+  left: -620px;
+  top: 30px;
 }
 </style>
 
@@ -141,12 +148,6 @@ export default {
         }
       });
     },
-<<<<<<< HEAD
-=======
-    Return() {
-      window.location.href = "../editor";
-    },
->>>>>>> gtr
   },
   data() {
     return {

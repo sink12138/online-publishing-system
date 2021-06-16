@@ -166,6 +166,7 @@
       handleEditor() {
         console.log(this.email);
         let JsonEmail = JSON.stringify(this.email);
+        console.log(JsonEmail);
         this.$axios({
             method:"post",
             url:'http://82.156.190.251:80/apis/admin/insert/editor',

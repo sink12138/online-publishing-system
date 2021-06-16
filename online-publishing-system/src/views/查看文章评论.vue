@@ -2,12 +2,14 @@
   <div class="reviewer">
     <div>
       <h1>文章评论如下</h1>
-      <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
+      <router-link to='/editor/articles'>
+        <el-button class="back" type="info" icon="el-icon-back"></el-button>
+      </router-link>
     </div>
     <div>
       <el-form :inline="true" :model="search" class="demo-form-inline">
         <el-form-item label="文章编号">
-          <el-input placeholder="请输入需要查看评论的文章id" v-model="search.articleId">
+          <el-input placeholder="请输入文章ID" v-model="search.articleId">
             <el-button slot="append" icon="el-icon-search" @click="searchArticle"></el-button>
           </el-input>
         </el-form-item>
@@ -34,7 +36,7 @@
 .back {
   position: fixed;
   left: 60px;
-  top: 100px;
+  top: 80px;
 }
 </style>
 

@@ -2,6 +2,9 @@
   <div class="reviewer">
     <div>
       <h1>所有作者名单</h1>
+      <router-link to='/editor' v-show="this.$route.path == '/editor/authors'">
+        <el-button class="back" type="info" icon="el-icon-back"></el-button>
+      </router-link>
     </div>
     <div class="table">
       <el-table
@@ -43,21 +46,6 @@
             >
           </template>
         </el-table-column>
-<<<<<<< HEAD
-        <div class="pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, jumper"
-            :total="total"
-            :page-size="8"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-          >
-          </el-pagination>
-        </div>
-        <router-view></router-view>
-=======
->>>>>>> gtr
       </el-table>
       <div class="pagination">
         <el-pagination
@@ -76,15 +64,19 @@
 </template>
 
 <style>
-.breadcrumb {
-  position: relative;
-  text-align: center;
+.back {
+  position: fixed;
+  left: 60px;
+  top: 80px;
 }
 .table {
   text-align: center;
 }
 .pagination {
+  display: inline;
   position: fixed;
+  justify-content: center;
+  left: 700px;
   bottom: 60px;
 }
 </style>
@@ -137,12 +129,6 @@ export default {
         }
       });
     },
-<<<<<<< HEAD
-=======
-    Return() {
-      window.location.href = "../editor";
-    },
->>>>>>> gtr
   },
   data() {
     return {

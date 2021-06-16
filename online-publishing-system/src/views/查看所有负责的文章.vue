@@ -2,19 +2,11 @@
   <div class="reviewer">
     <div>
       <h1>您负责的文章如下</h1>
+      <router-link to='/editor' v-show="this.$route.path == '/editor/articles'">
+        <el-button class="back" type="info" icon="el-icon-back"></el-button>
+      </router-link>
     </div>
     <div class="table">
-      <div class="reviewer-button">
-        <router-link to="/editor/claims">
-          <el-button type="info">查看文章认领申请</el-button>
-        </router-link>
-        <router-link to="/editor/publish">
-          <el-button type="info">出版文章</el-button>
-        </router-link>
-        <router-link to="/editor/reviews">
-          <el-button type="info">查看评论</el-button>
-        </router-link>
-      </div>
       <el-table
         :data="tableData.slice((currentPage - 1) * pagesize, currentPage * pagesize)"
         :header-cell-style="{ height: '60px' }"
@@ -136,6 +128,17 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
+        <div class="reviewer-button">
+          <router-link to="/editor/claims">
+            <el-button type="ops">查看文章认领申请</el-button>
+          </router-link>
+          <router-link to="/editor/publish">
+            <el-button type="ops">出版文章</el-button>
+          </router-link>
+          <router-link to="/editor/reviews">
+            <el-button type="ops">查看评论</el-button>
+          </router-link>
+        </div>
         <el-pagination
           background
           layout="prev, pager, next, jumper"
@@ -152,6 +155,11 @@
 </template>
 
 <style scoped>
+.back {
+  position: fixed;
+  left: 60px;
+  top: 80px;
+}
 .breadcrumb {
   position: relative;
   text-align: center;
@@ -166,7 +174,28 @@
   display: inline;
   position: fixed;
   justify-content: center;
+  left: 700px;
   bottom: 60px;
+}
+.el-button--ops.is-active,
+.el-button--ops:active {
+  background: #000000;
+  border-color: #000000;
+  color: #fff;
+}
+.el-button--ops:focus,
+.el-button--ops:hover {
+  background: #ababab;
+  border-color: #ababab;
+  color: #000000;
+}
+.el-button--ops {
+  color: #FFF;
+  background: #000000;
+  border-color: #000000;
+  position: relative;
+  left: -550px;
+  top: 30px;
 }
 </style>
 
@@ -408,12 +437,6 @@ export default {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     },
-<<<<<<< HEAD
-=======
-    Return() {
-      window.location.href = "../editor";
-    },
->>>>>>> gtr
   },
   data() {
     return {

@@ -61,7 +61,7 @@
         </div>
       </el-header>
       <el-main>
-        <div class="search" v-show="this.$route.path == '/main' || this.$route.path == 'main/search'">
+        <div class="search" v-show="this.$route.path == '/main'">
           <el-input v-model="search.searchString" size="large">
             <el-select
               v-model="search.searchType"
@@ -96,18 +96,21 @@
   background-size: cover;
 }
 .el-header {
-  background-color: #909090;
+  background-color: #2f2f2f;
+  height: 40px !important;
 }
 .el-main {
-  background-color: #fff;
-  opacity: 0.86;
+  background-color: #f8f8f8;
+  opacity: 0.9;
 }
 .el-button {
+  border: 0;
   border-radius: 0 0 0 0;
-  height: 60px;
-  font-size: 20px;
-  font-weight: 600;
-  background-color: #cccccc;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  background-color: #2f2f2f;
 }
 .el-input {
   width: 600px;
