@@ -20,12 +20,11 @@ export default {
           })
           .then((res)=>{
             console.log(res);
+            this.$message({
+              message: res.data.message,
+            });
           });
           console.log('cancel submit!');
-          this.$message({
-            message: '注销成功！',
-            type:'success'
-          });
         }).catch(() => {
           this.$message({
             type: 'info',

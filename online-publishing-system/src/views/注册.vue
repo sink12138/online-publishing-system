@@ -100,8 +100,10 @@ export default {
             data: data1,
           })
             .then((res) => {
-              console.log(res);
-              if (res.success == true) alert("注册成功!");
+              this.$message({
+                showClose: true,
+                message: res.data.message,
+              });
             })
             .catch((error) => {
               console.log(error);
