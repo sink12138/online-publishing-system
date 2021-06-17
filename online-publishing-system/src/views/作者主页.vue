@@ -2,7 +2,7 @@
   <div class="about">
     <h1>我的文章</h1>
     <Article class="article"></Article>
-    <el-button type="info" plain @click="dialogTableVisible = true">
+    <el-button type="ops" plain @click="dialogTableVisible = true">
       查看编辑
     </el-button>
     <el-dialog title="编辑信息" :visible.sync="dialogTableVisible" :modal-append-to-body='false'>

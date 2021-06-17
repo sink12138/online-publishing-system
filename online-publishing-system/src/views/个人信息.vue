@@ -15,7 +15,7 @@
             <router-link to="/author/cancel">
               <el-button v-if="$store.state.role >= 4"> 注销作者 </el-button>
             </router-link>
-            <router-link to="/main">
+            <router-link to="/">
               <el-button> 返回主页 </el-button>
             </router-link>
           </div>
