@@ -26,11 +26,6 @@
       <el-card class="box-card">
         <el-table :data="tableData.slice((currentPage-1)*8,currentPage*8)" border stripe style="width: 100%">
           <el-table-column
-            prop="articleId"
-            label="文章ID"
-            align="center"
-          ></el-table-column>
-          <el-table-column
             prop="title"
             label="标题"
             align="center"
