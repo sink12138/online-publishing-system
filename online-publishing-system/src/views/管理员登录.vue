@@ -92,10 +92,10 @@ html, body {
         adminLogin(){
             let JsonAdmin = JSON.stringify(this.adminMess);
             console.log(JsonAdmin);
-            this.$store.commit('adminLogin');
+            /*this.$store.commit('adminLogin');
             sessionStorage.setItem("adminPassword",this.adminMess.password);
-            window.location.href='../admin/home';
-            /*this.$axios({
+            window.location.href='../admin/home';*/
+            this.$axios({
                 method:'post',
                 url:'http://82.156.190.251:80/apis/admin/login',
                 data:JsonAdmin,
@@ -121,7 +121,7 @@ html, body {
                     });
                 }
             })
-            .catch(error => console.log(error))*/
+            .catch(error => console.log(error))
         }
     }
   }
