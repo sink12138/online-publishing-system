@@ -35,7 +35,7 @@
           height="10"
         >
         </el-table-column>
-        <el-table-column prop="email" label="账号邮箱" width="180">
+        <el-table-column prop="email" label="账号邮箱" width="250">
         </el-table-column>
         <el-table-column prop="password" label="账号密码" width="100">
         </el-table-column>

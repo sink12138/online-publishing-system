@@ -41,8 +41,8 @@
   background: #000000;
   border-color: #000000;
   position: absolute;
-  bottom: 60px;
-  left: 150px;
+  bottom: 62px;
+  left: 146px;
   margin-right: 20px;
 }
 </style>
