@@ -1,5 +1,5 @@
 <template>
-  <el-table class="myarticles" :data="tableData" style="width: 100%">
+  <el-table class="myarticles" :data="tableData">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
@@ -24,7 +24,7 @@
     <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
     <el-table-column label="文章标题" prop="title"> </el-table-column>
     <el-table-column label="文章状态" prop="status"> </el-table-column>
-    <el-table-column fixed="right" label="操作" width="400">
+    <el-table-column fixed="right" label="操作" width="200">
       <template slot-scope="scope">
         <el-dropdown>
           <span class="el-dropdown-link">
@@ -93,7 +93,8 @@
 
 <style>
 .myarticles {
-  width: 600px;
+  width: 1200px;
+  margin: 0 auto;
 }
 .demo-table-expand {
   font-size: 0;

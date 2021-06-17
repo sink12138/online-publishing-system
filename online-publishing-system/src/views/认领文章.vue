@@ -120,6 +120,10 @@
 .claim {
   opacity: 0.7;
 }
+.table {
+  width: 1200px;
+  margin: 0 auto;
+}
 .search {
   margin-bottom: 40px;
 }
