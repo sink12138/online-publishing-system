@@ -24,7 +24,12 @@
     <router-view />
     <div class="table">
       <el-card class="box-card">
-        <el-table :data="tableData.slice((currentPage-1)*8,currentPage*8)" border stripe style="width: 100%">
+        <el-table
+          :data="tableData.slice((currentPage - 1) * 8, currentPage * 8)"
+          border
+          stripe
+          style="width: 100%"
+        >
           <el-table-column
             prop="title"
             label="标题"
@@ -126,7 +131,7 @@
   width: 600px;
   height: 50px;
 }
-.search .el-input >>> .el-input__inner{
+.search .el-input >>> .el-input__inner {
   height: 50px;
 }
 .search .el-select {
@@ -160,7 +165,12 @@ export default {
       ], //存放从后端传来的数据
     };
   },
-  mounted() {},
+  mounted() {
+    this.$axios.get("http://82.156.190.251:80/apis/home").then((res) => {
+      this.search.searchString = res.data.realName;
+    });
+    this.searchArticle();
+  },
   methods: {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
@@ -250,15 +260,15 @@ export default {
       }).then((res) => {
         console.log(res);
         if (res.data.success == true) {
-              this.$message({
-                message: "认领成功！",
-                type: "success",
-              });
-            } else {
-              this.$message({
-                message: res.data.message,
-              });
-            }
+          this.$message({
+            message: "认领成功！",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            message: res.data.message,
+          });
+        }
       });
       console.log("submit!");
     },

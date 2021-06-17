@@ -21,15 +21,33 @@
           </el-button>
         </el-input>
         <el-card class="box-card">
-          <el-table :data="tableData.slice((currentPage-1)*8,currentPage*8)" border stripe style="width: 100%">
+          <el-table
+            :data="tableData.slice((currentPage - 1) * 8, currentPage * 8)"
+            border
+            stripe
+            style="width: 100%"
+          >
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="文章标题">
+                    <span>{{ props.row.title }}</span>
+                  </el-form-item>
+                  <el-form-item label="关键字">
+                    <span>{{ props.row.keywords }}</span>
+                  </el-form-item>
+                  <el-form-item label="第一作者">
+                    <span>{{ props.row.firstAuthor }}</span>
+                  </el-form-item>
+                  <el-form-item label="其他作者">
+                    <span>{{ props.row.otherAuthors }}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
             <el-table-column
               prop="title"
               label="标题"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="keywords"
-              label="关键词"
               align="center"
             ></el-table-column>
             <el-table-column
@@ -50,11 +68,7 @@
                 ></el-button>
               </template>
             </el-table-column>
-            <el-table-column
-              label="文章信息"
-              align="center"
-              v-if="$store.state.isLogin == true"
-            >
+            <el-table-column label="文章信息" align="center">
               <template slot-scope="scope" class="active">
                 <el-button
                   @click="article(scope.row.articleId)"
@@ -89,7 +103,7 @@
                 ></el-pagination>
               </div>
             </el-col>
-          </el-row> 
+          </el-row>
         </el-card>
       </el-main>
     </div>
@@ -106,14 +120,7 @@ export default {
         searchString: "",
       },
       currentPage: 1, //当前页数
-      tableData: [
-        {
-          articleId: "",
-          title: "",
-          keywords: "",
-          firstAuthor: "",
-        },
-      ], //存放从后端传来的数据
+      tableData: [], //存放从后端传来的数据
     };
   },
   props: ["table"],
@@ -247,7 +254,7 @@ export default {
   width: 600px;
   height: 50px;
 }
-.el-input >>> .el-input__inner{
+.el-input >>> .el-input__inner {
   height: 50px;
 }
 .el-select {
