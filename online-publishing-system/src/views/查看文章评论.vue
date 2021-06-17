@@ -3,6 +3,7 @@
     <div>
       <h1>文章评论如下</h1>
     </div>
+    <el-button class="back" type="info" icon="el-icon-back" @click="Return"></el-button>
     <div>
       <el-form :inline="true" :model="search" class="demo-form-inline">
         <el-form-item label="文章编号">
