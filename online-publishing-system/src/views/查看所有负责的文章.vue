@@ -115,6 +115,19 @@
                   ><el-button
                     type="text"
                     size="small"
+                    v-if="
+                      scope.row.status == '审核通过' ||
+                      scope.row.status == '审核中' ||
+                      scope.row.status == '审核未通过'
+                    "
+                    @click="reviews(scope.row)"
+                    >查看评论</el-button
+                  ></el-dropdown-item
+                >
+                <el-dropdown-item
+                  ><el-button
+                    type="text"
+                    size="small"
                     v-if="scope.row.status == '编辑中'"
                     @click="publishArticle(scope.row)"
                     >出版文章</el-button
@@ -126,11 +139,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <div class="reviewer-button">
-          <router-link to="/editor/reviews">
-            <el-button type="ops">查看评论</el-button>
-          </router-link>
-        </div>
+        <div class="reviewer-button"></div>
         <el-pagination
           background
           layout="prev, pager, next, jumper"
