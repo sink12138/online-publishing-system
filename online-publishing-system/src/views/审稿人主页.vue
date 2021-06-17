@@ -8,9 +8,6 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="文章ID">
-                <span>{{ props.row.articleId }}</span>
-              </el-form-item>
               <el-form-item label="文章标题">
                 <span>{{ props.row.title }}</span>
               </el-form-item>

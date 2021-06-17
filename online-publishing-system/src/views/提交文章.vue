@@ -56,12 +56,6 @@
             >+ 关键词</el-button
           >
         </el-form-item>
-        <!-- <el-form-item label="关键词">
-          <el-input
-            v-model="formInline.keywords"
-            placeholder="关键词"
-          ></el-input>
-        </el-form-item> -->
         <el-form-item
           label="第一作者"
           v-if="this.status != '审核通过' && this.status != '审核未通过'"
@@ -114,15 +108,6 @@
         >
           {{ this.otherAuthors }}
         </el-form-item>
-        <!-- <el-form-item
-          label="其他作者"
-          v-if="this.status != '审核通过' || this.status != '审核未通过'"
-        >
-          <el-input
-            v-model="formInline.otherAuthors"
-            placeholder="其他作者"
-          ></el-input>
-        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="onSubmit">提交</el-button>
         </el-form-item>
@@ -356,5 +341,27 @@ export default {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+}
+.submit {
+  text-align: center;
+}
+.button-new-tag {
+  position: absolute;
+  left: 60px;
+  top: 5px;
+}
+.input-new-tag {
+  position: absolute;
+  left: 60px;
+  top: 5px;
+}
+.articleinfo {
+  background-color: #fff;
+  opacity: 0.7;
+  width: 800px;
+  margin: 0 auto;
+}
+.el-form-item {
+  margin: 20px;
 }
 </style>
