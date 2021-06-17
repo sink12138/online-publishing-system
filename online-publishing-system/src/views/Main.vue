@@ -284,7 +284,7 @@ export default {
     },
     searchArticle() {
       this.$router.push(
-        "/main/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
+        "/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
       );
       if(this.$route.path == '/search'){
         this.$router.go(0);
@@ -301,6 +301,7 @@ export default {
       });
       console.log("logout submit!");
       this.$store.commit("logout");
+      window.reload();
       this.$message({
         message: "退出登录成功！",
       });
