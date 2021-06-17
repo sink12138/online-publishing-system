@@ -130,9 +130,6 @@
       </el-table>
       <div class="pagination">
         <div class="reviewer-button">
-          <router-link to="/editor/claims">
-            <el-button type="ops">查看文章认领申请</el-button>
-          </router-link>
           <router-link to="/editor/reviews">
             <el-button type="ops">查看评论</el-button>
           </router-link>
@@ -168,14 +165,14 @@
 }
 .el-button--ops.is-active,
 .el-button--ops:active {
-  background: #000000;
+  background: #ffffff;
   border-color: #000000;
   color: #fff;
 }
 .el-button--ops:focus,
 .el-button--ops:hover {
-  background: #ababab;
-  border-color: #ababab;
+  background: #ffffff;
+  border-color: #ffffff;
   color: #000000;
 }
 .el-button--ops {

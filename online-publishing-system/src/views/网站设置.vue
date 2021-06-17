@@ -4,41 +4,13 @@
       <el-breadcrumb-item :to="{ path: '/admin/home' }">后台首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/admin/settings' }">网站设置</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="clean">
-      <el-button
-        plain
-        @click="handleClean">
-        清除无效信息
-      </el-button>
-    </div>
-    <div class="log">
-      <el-button
-        plain
-        @click="handleLog">
-        下载Log
-      </el-button>
-    </div>
+    
     <router-view/>
   </div>
 </template>
 
 <style scoped>
-.clean {
-  position: fixed;
-  top: 180px;
-  left: 400px;
-}
-.log {
-  position: fixed;
-  top: 360px;
-  left: 400px;
-}
-.el-button {
-  background-color: #79b6fb;
-  height: 50px;
-  width: 160px;
-  font-size: 18px;
-}
+
 </style>
 
 <script>
@@ -49,36 +21,7 @@
       }
     },
     methods: {
-      handleClean() {
-        this.$axios.post('http://82.156.190.251:80/apis/admin/clean')
-        .then((res) =>{
-          if (res.data.success == true) {
-            this.$notify.success({
-              title: '成功',
-              message: '清除无效信息成功',
-              showClose: false
-            });
-          } else {
-            this.$notify.warning({
-              title: '请重试',
-              message: res.data.message,
-              showClose: false
-            });
-          }
-        })
-      },
-      handleLog() {
-        this.$axios({
-          method: 'get',
-          url: 'http://82.156.190.251:80/apis/admin/logs',
-          responseType: 'blob',
-        }).then(res => {
-          console.log(res)
-          const filename = decodeURI(res.headers['content-disposition'].split(';')[1].split('=')[1]);
-          console.log(filename)
-          this.download(res.data, filename)
-        }).catch(err => console.log(err))
-      },
+      
       /*handleDown() {
         var data = {
           articleId : this.articleId

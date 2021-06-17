@@ -2,9 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>文章评论如下</h1>
-      <router-link to='/editor/articles'>
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
     </div>
     <div>
       <el-form :inline="true" :model="search" class="demo-form-inline">
@@ -31,14 +28,6 @@
     </div>
   </div>
 </template>
-
-<style>
-.back {
-  position: fixed;
-  left: 60px;
-  top: 80px;
-}
-</style>
 
 <script>
 export default {

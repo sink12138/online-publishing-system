@@ -21,6 +21,24 @@
     <div class="chart">
       <canvas id="myChart"></canvas>
     </div>
+    <div class="clean">
+      <el-popconfirm
+        @confirm="handleClean" 
+        confirm-button-text='确认'
+        cancel-button-text='取消'
+        title="确认删除信息？">
+        <el-button plain slot="reference">
+        清除无效信息
+        </el-button>
+      </el-popconfirm>
+    </div>
+    <div class="log">
+      <el-button
+        plain
+        @click="handleLog">
+        下载Log
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -50,6 +68,22 @@
   background-color: #86fff5;
   font-size: 35px;
   font-weight: 600;
+}
+.clean {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+}
+.log {
+  position: fixed;
+  bottom: 70px;
+  right: 80px;
+}
+.el-button {
+  background-color: #79b6fb;
+  height: 40px;
+  width: 140px;
+  font-size: 16px;
 }
 </style>
 
@@ -144,7 +178,37 @@ export default {
       console.log(this.chartData)
       this.myChart.data.datasets[0].data = this.chartData;
       this.myChart.update()
-    }
+    },
+    handleClean() {
+      this.$axios.post('http://82.156.190.251:80/apis/admin/clean')
+      .then((res) =>{
+        if (res.data.success == true) {
+          this.$notify.success({
+            title: '成功',
+            message: '清除无效信息成功',
+            showClose: false
+          });
+        } else {
+          this.$notify.warning({
+            title: '请重试',
+            message: res.data.message,
+            showClose: false
+          });
+        }
+      })
+    },
+    handleLog() {
+      this.$axios({
+        method: 'get',
+        url: 'http://82.156.190.251:80/apis/admin/logs',
+        responseType: 'blob',
+      }).then(res => {
+        console.log(res)
+        const filename = decodeURI(res.headers['content-disposition'].split(';')[1].split('=')[1]);
+        console.log(filename)
+        this.download(res.data, filename)
+      }).catch(err => console.log(err))
+    },
   }
 }
 </script>
