@@ -2,11 +2,7 @@
   <div>
     <h1>个人信息页面</h1>
     <div class="myinfo">
-      <el-tabs
-        v-model="activeName"
-        @tab-click="handleClick"
-        type="border-card"
-      >
+      <el-tabs v-model="activeName" @tab-click="handleClick" type="border-card">
         <el-tab-pane label="个人信息" name="first">
           <div class="author">
             <router-link to="/author/certify">
@@ -65,7 +61,8 @@
           <div class="modify">
             <el-form
               ref="form"
-              :model="form"
+              :model="ruleForm"
+              :rules="rules"
               class="modify-form"
               label-width="120px"
             >
@@ -94,7 +91,6 @@
                 <el-input
                   v-model="formInline.researchInterests"
                   placeholder="研究方向"
-                  
                 ></el-input>
               </el-form-item>
               <el-form-item label="organization">
@@ -126,6 +122,23 @@
 export default {
   name: "myinfo",
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (value.length < 6 || value.length > 20) {
+          callback(new Error("请输入六至二十位"));
+        }
+        var regx = /^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,20}$/;
+        if (!this.ruleForm.pass.match(regx)) {
+          callback(new Error("请同时包含字母数字"));
+        }
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.ruleForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
     return {
       formInline: {
         email: "",
@@ -137,6 +150,9 @@ export default {
       },
       dataForm: {},
       activeName: "first",
+      rules: {
+        password: [{ validator: validatePass, trigger: "blur" }],
+      },
     };
   },
   computed: {
@@ -199,44 +215,48 @@ export default {
       }
     },
     submit2() {
-      console.log(
-        JSON.stringify({
-          password: this.formInline.password,
-          realName: this.formInline.realName,
-          institution: this.formInline.institution,
-          researchInterests: this.formInline.researchInterests,
-          organization: this.formInline.organization,
-        })
-      );
-      if (this.formInline.password !== "") {
-        this.$axios({
-          method: "post",
-          url: "http://82.156.190.251:80/apis/home/modify",
-          data: JSON.stringify({
-            password: this.formInline.password,
-            realName: this.formInline.realName,
-            institution: this.formInline.institution,
-            researchInterests: this.formInline.researchInterests,
-            organization: this.formInline.organization,
-          }),
-        }).then((res) => {
-          console.log(res);
-          if (res.data.success == true) {
-            this.$message({
-              message: "信息修改成功！",
-              type: "success",
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          console.log(
+            JSON.stringify({
+              password: this.formInline.password,
+              realName: this.formInline.realName,
+              institution: this.formInline.institution,
+              researchInterests: this.formInline.researchInterests,
+              organization: this.formInline.organization,
+            })
+          );
+          if (this.formInline.password !== "") {
+            this.$axios({
+              method: "post",
+              url: "http://82.156.190.251:80/apis/home/modify",
+              data: JSON.stringify({
+                password: this.formInline.password,
+                realName: this.formInline.realName,
+                institution: this.formInline.institution,
+                researchInterests: this.formInline.researchInterests,
+                organization: this.formInline.organization,
+              }),
+            }).then((res) => {
+              console.log(res);
+              if (res.data.success == true) {
+                this.$message({
+                  message: "信息修改成功！",
+                  type: "success",
+                });
+              } else {
+                this.$message({
+                  message: res.data.message,
+                });
+              }
             });
           } else {
             this.$message({
-              message: res.data.message,
+              message: "密码不能为空！",
             });
           }
-        });
-      } else {
-        this.$message({
-          message: "密码不能为空！",
-        });
-      }
+        }
+      });
     },
     convert: function () {
       this.$axios.get("http://82.156.190.251:80/apis/home").then((res) => {
