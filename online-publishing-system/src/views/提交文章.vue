@@ -21,7 +21,7 @@
       </el-card>
     </div>
     <div class="articleinfo" v-if="this.hasfile">
-      <h3>文章信息</h3>
+      <div class="text">文章信息</div>
       <el-form class="article_info">
         <el-form-item label="标题">
           <el-input v-model="formInline.title" placeholder="标题"></el-input>
@@ -335,6 +335,12 @@ export default {
 </script>
 
 <style scoped>
+.text {
+  margin-top: 20px;
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
 .box-card {
   width: 500px;
   margin: 0 auto;
