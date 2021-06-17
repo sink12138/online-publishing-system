@@ -2,19 +2,21 @@
   <div class="about">
     <h1>我的文章</h1>
     <Article class="article"></Article>
-    <el-button type="ops" plain @click="dialogTableVisible = true">
-      查看编辑
-    </el-button>
-    <el-dialog title="编辑信息" :visible.sync="dialogTableVisible" :modal-append-to-body='false'>
-      <el-table :data="gridData">
-        <el-table-column
-          property="name"
-          label="姓名"
-          width="200"
-        ></el-table-column>
-        <el-table-column property="email" label="邮箱"></el-table-column>
-      </el-table>
-    </el-dialog>
+    <div class="pagination">
+      <el-button type="ops" plain @click="dialogTableVisible = true">
+        查看编辑
+      </el-button>
+      <el-dialog title="编辑信息" :visible.sync="dialogTableVisible" :modal-append-to-body='false'>
+        <el-table :data="gridData">
+          <el-table-column
+            property="name"
+            label="姓名"
+            width="200"
+          ></el-table-column>
+          <el-table-column property="email" label="邮箱"></el-table-column>
+        </el-table>
+      </el-dialog>
+    </div>
     <br />
     <router-view></router-view>
   </div>
@@ -23,6 +25,13 @@
 <style scoped>
 .about {
   opacity: 0.7;
+}
+.pagination {
+  display: inline;
+  position: fixed;
+  justify-content: center;
+  left: 700px;
+  bottom: 60px;
 }
 .el-button--ops.is-active,
 .el-button--ops:active {
@@ -40,10 +49,9 @@
   color: #fff;
   background: #000000;
   border-color: #000000;
-  position: absolute;
-  bottom: 62px;
-  left: 146px;
-  margin-right: 20px;
+  position: relative;
+  left: -552px;
+  top: -2px;
 }
 </style>
 
