@@ -110,7 +110,7 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background-image: url("../assets/Background.png");
+  background-image: url("../assets/Background.jpg");
   background-size: cover;
 }
 .el-header {
