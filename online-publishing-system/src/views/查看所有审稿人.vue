@@ -2,12 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>所有审稿人名单</h1>
-      <router-link
-        to="/editor"
-        v-show="this.$route.path == '/editor/reviewers'"
-      >
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
     </div>
     <div class="table">
       <template> </template>
@@ -119,8 +113,8 @@ export default {
   methods: {
     cancelReviewer(row) {
       this.$confirm(
-        "您正撤销编号为",
-        row.reviewerId,
+        "您正撤销编号为"+
+        row.reviewerId+
         "的审稿人的身份，是否继续?",
         "提示",
         {
