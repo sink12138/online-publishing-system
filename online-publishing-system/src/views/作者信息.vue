@@ -25,7 +25,6 @@
     </div>
     <div>
       <el-table class="myarticles" :data="tableData1" style="width: 100%">
-        <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="第一作者" prop="firstAuthor"> </el-table-column>
         <el-table-column label="其他作者" prop="otherAuthors">
