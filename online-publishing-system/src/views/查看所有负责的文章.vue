@@ -327,8 +327,8 @@ export default {
     },
     acceptArticle(row) {
       this.$confirm(
-        "您正要接受编号为",
-        row.articleId,
+        "您正要接受编号为"+
+        row.articleId+
         "的文章，是否继续?",
         "提示",
         {
@@ -367,8 +367,8 @@ export default {
     },
     rejectArticle(row) {
       this.$confirm(
-        "您正要拒绝编号为",
-        row.articleId,
+        "您正要拒绝编号为"+
+        row.articleId+
         "的文章，是否继续?",
         "提示",
         {
@@ -407,8 +407,8 @@ export default {
     },
     acceptWithdraw(row) {
       this.$confirm(
-        "您正要接受编号为",
-        row.articleId,
+        "您正要接受编号为"+
+        row.articleId+
         "的文章，是否继续?",
         "提示",
         {
@@ -448,8 +448,8 @@ export default {
     },
     rejectWithdraw(row) {
       this.$confirm(
-        "您正要拒绝编号为",
-        row.articleId,
+        "您正要拒绝编号为"+
+        row.articleId+
         "的文章，是否继续?",
         "提示",
         {
