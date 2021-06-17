@@ -2,15 +2,12 @@
   <div class="reviewer">
     <div>
       <h1>所有审稿人名单</h1>
-<<<<<<< HEAD
-=======
       <router-link
         to="/editor"
         v-show="this.$route.path == '/editor/reviewers'"
       >
         <el-button class="back" type="info" icon="el-icon-back"></el-button>
       </router-link>
->>>>>>> gtr
     </div>
     <div class="table">
       <template> </template>
