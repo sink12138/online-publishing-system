@@ -18,16 +18,18 @@
     </div>
     <div class="articles">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="审稿人真实姓名" prop="realName">
-          <el-table-column label="评论内容" prop="comments"> </el-table-column>
-          <el-table-column label="是否通过" prop="pass">
-            <template slot-scope="scope">
-              <span v-if="scope.row.pass == true"> 通过 </span>
-              <span v-if="scope.row.pass == false"> 不通过 </span>
-            </template>
-          </el-table-column>
-          <el-table-column label="评论时间" prop="date"> </el-table-column>
+        <el-table-column
+          label="审稿人真实姓名"
+          prop="realName"
+        ></el-table-column>
+        <el-table-column label="评论内容" prop="comments"> </el-table-column>
+        <el-table-column label="是否通过" prop="pass">
+          <template slot-scope="scope">
+            <span v-if="scope.row.pass == true"> 通过 </span>
+            <span v-if="scope.row.pass == false"> 不通过 </span>
+          </template>
         </el-table-column>
+        <el-table-column label="评论时间" prop="date"> </el-table-column>
       </el-table>
     </div>
   </div>
@@ -40,13 +42,7 @@ export default {
       search: {
         articleId: 0,
       },
-      tableData: [
-        {
-          comments: "",
-          pass: "",
-          date: "",
-        },
-      ],
+      tableData: [],
     };
   },
   created: function () {
