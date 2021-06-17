@@ -21,6 +21,9 @@
 </template>
 
 <style scoped>
+.about {
+  opacity: 0.7;
+}
 .el-button--ops.is-active,
 .el-button--ops:active {
   background: #000000;
@@ -37,7 +40,9 @@
   color: #fff;
   background: #000000;
   border-color: #000000;
-  position: relative;
+  position: absolute;
+  bottom: 60px;
+  left: 150px;
   margin-right: 20px;
 }
 </style>
