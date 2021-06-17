@@ -71,9 +71,6 @@
               <router-link to="/editor/claims">
                 <el-dropdown-item>文章认领申请</el-dropdown-item>
               </router-link>
-              <router-link to="/editor/certify/reviewer">
-                <el-dropdown-item>认证审稿人</el-dropdown-item>
-              </router-link>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
