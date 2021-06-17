@@ -271,6 +271,7 @@ export default {
             message: "取消输入",
           });
         });
+        window.location.href="../editor/articles";
     },
     assignReviewers(row) {
       this.$prompt(
@@ -319,6 +320,7 @@ export default {
             message: "取消输入",
           });
         });
+        window.location.href="../editor/articles";
     },
     acceptArticle(row) {
       this.$confirm(
@@ -357,7 +359,7 @@ export default {
             });
           }
         });
-        location.reload();
+        window.location.href="../editor/articles";
       });
     },
     rejectArticle(row) {
@@ -397,7 +399,7 @@ export default {
             });
           }
         });
-        location.reload();
+        window.location.href="../editor/articles";
       });
     },
     acceptWithdraw(row) {
