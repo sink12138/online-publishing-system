@@ -34,52 +34,58 @@
             操作文章<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-button
-              type="text"
-              size="small"
-              v-if="
-                (scope.row.status == '审核通过' ||
-                  scope.row.status == '审核未通过') &&
-                scope.row.authorized
-              "
-              @click="submit(scope.row)"
-              >提交文章</el-button
-            >
-            <el-button
-              type="text"
-              size="small"
-              v-if="scope.row.status == '审核通过' && scope.row.authorized"
-              @click="confirmDraft(scope.row)"
-              >确认终稿</el-button
-            >
-            <el-button
-              type="text"
-              size="small"
-              v-if="
-                (scope.row.status == '审核通过' ||
-                  scope.row.status == '审核未通过') &&
-                scope.row.authorized
-              "
-              @click="abort(scope.row)"
-              >终止出版</el-button
-            >
-            <el-button
-              type="text"
-              size="small"
-              v-if="
-                (scope.row.status == '审核通过' ||
-                  scope.row.status == '审核未通过') &&
-                scope.row.authorized
-              "
-              @click="reviews(scope.row)"
-              >查看评论</el-button
-            >
-            <el-button
-              type="text"
-              size="small"
-              v-if="scope.row.status == '已出版' && scope.row.authorized"
-              @click="withdraw(scope.row)"
-              >撤稿</el-button
+            <el-dropdown-item>
+              <el-button
+                type="text"
+                size="small"
+                v-if="
+                  (scope.row.status == '审核通过' ||
+                    scope.row.status == '审核未通过') &&
+                  scope.row.authorized
+                "
+                @click="submit(scope.row)"
+                >提交文章</el-button
+              ></el-dropdown-item
+            ><el-dropdown-item>
+              <el-button
+                type="text"
+                size="small"
+                v-if="scope.row.status == '审核通过' && scope.row.authorized"
+                @click="confirmDraft(scope.row)"
+                >确认终稿</el-button
+              ></el-dropdown-item
+            ><el-dropdown-item>
+              <el-button
+                type="text"
+                size="small"
+                v-if="
+                  (scope.row.status == '审核通过' ||
+                    scope.row.status == '审核未通过') &&
+                  scope.row.authorized
+                "
+                @click="abort(scope.row)"
+                >终止出版</el-button
+              ></el-dropdown-item
+            ><el-dropdown-item>
+              <el-button
+                type="text"
+                size="small"
+                v-if="
+                  (scope.row.status == '审核通过' ||
+                    scope.row.status == '审核未通过') &&
+                  scope.row.authorized
+                "
+                @click="reviews(scope.row)"
+                >查看评论</el-button
+              ></el-dropdown-item
+            ><el-dropdown-item>
+              <el-button
+                type="text"
+                size="small"
+                v-if="scope.row.status == '已出版' && scope.row.authorized"
+                @click="withdraw(scope.row)"
+                >撤稿</el-button
+              ></el-dropdown-item
             >
           </el-dropdown-menu>
         </el-dropdown>
