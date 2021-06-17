@@ -58,15 +58,13 @@
                   ></el-dropdown-item
               >
               <el-dropdown-item
-                ><template slot-scope="scope"
-                  ><el-button
+                ><el-button
                     type="text"
                     size="small"
                     v-if="scope.row.status == '待审核'"
                     @click="assignReviewers(scope.row)"
                     >分配审稿人</el-button
-                  >
-                </template></el-dropdown-item
+                  ></el-dropdown-item
               >
               <el-dropdown-item
                 ><el-button

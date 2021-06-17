@@ -138,6 +138,11 @@ const routes = [
         name: '查看文章认领申请',
         component: () => import('../views/查看文章认领申请.vue')
       },
+      {
+        path:'/editor/assign/:id',
+        name:'分配审稿人',
+        component:() => import("../views/分配审稿人.vue")
+      }
     ]
   },
   {
