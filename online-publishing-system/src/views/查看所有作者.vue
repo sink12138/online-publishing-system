@@ -96,8 +96,8 @@ export default {
   methods: {
     cancelAuthor(row) {
       this.$confirm(
-        "您正撤销编号为",
-        row.authorId,
+        "您正撤销编号为"+
+        row.authorId+
         "的作者的身份，是否继续?",
         "提示",
         {
@@ -126,7 +126,7 @@ export default {
           } else {
             this.$message({
               showClose: true,
-              message: "请先撤销该作者的文章后撤销该作者！",
+              message: res.data.message,
               type: "error",
             });
           }

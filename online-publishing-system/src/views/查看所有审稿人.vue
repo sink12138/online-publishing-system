@@ -113,8 +113,8 @@ export default {
   methods: {
     cancelReviewer(row) {
       this.$confirm(
-        "您正撤销编号为",
-        row.reviewerId,
+        "您正撤销编号为"+
+        row.reviewerId+
         "的审稿人的身份，是否继续?",
         "提示",
         {
