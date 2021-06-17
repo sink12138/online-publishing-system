@@ -282,6 +282,7 @@ export default {
           }
         );
       }
+      this.$router.push("/author");
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
