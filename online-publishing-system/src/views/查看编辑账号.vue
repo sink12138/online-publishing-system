@@ -12,7 +12,7 @@
         <el-input placeholder="请输入邮箱" v-model="editorForm.email">
           <el-button 
             slot="append" 
-            icon="el-icon-check" 
+            icon="el-icon-circle-plus-outline"
             @click="handleEditor()">
           </el-button>
         </el-input>
@@ -87,8 +87,15 @@
   position: fixed;
   left: 240px;
   bottom: 40px;
-  height: 50px;
-  width: 100px;
+  height: 60px;
+  width: 60px;
+  font-size: 40px;
+  background-color: #A3D0C3;
+}
+.editors-add .el-button i{
+  position: relative;
+  left: -11px;
+  top: -3px;
 }
 .table {
   position: fixed;

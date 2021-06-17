@@ -50,6 +50,7 @@
   margin-left: 200px;
   height: 600px;
   width: 600px;
+  top: 40px;
 }
 .accounts {
   margin-left: 60px;
@@ -72,12 +73,12 @@
 .clean {
   position: fixed;
   bottom: 20px;
-  right: 80px;
+  left: 80px;
 }
 .log {
   position: fixed;
   bottom: 70px;
-  right: 80px;
+  left: 80px;
 }
 .el-button {
   background-color: #79b6fb;
@@ -197,7 +198,7 @@ export default {
         }
       })
     },
-    handleLog() {
+    handleLog:function() {
       this.$axios({
         method: 'get',
         url: 'http://82.156.190.251:80/apis/admin/logs',
