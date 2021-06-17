@@ -261,6 +261,7 @@ export default {
                 message: res.data.message,
                 type: "error",
               });
+              window.location.href = "../editor/articles";
             }
           });
         })
@@ -303,12 +304,14 @@ export default {
                 message: "分配审稿人成功",
                 type: "success",
               });
+              window.location.href = "../editor/articles";
             } else {
               this.$message({
                 showClose: true,
                 message: res.data.message,
                 type: "error",
               });
+              window.location.href = "../editor/articles";
             }
           });
         })
@@ -348,12 +351,14 @@ export default {
               message: "接受文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
       });
@@ -387,12 +392,14 @@ export default {
               message: "拒绝文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
       });
@@ -427,12 +434,14 @@ export default {
               message: "接受文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
       });
@@ -467,12 +476,14 @@ export default {
               message: "拒绝文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
       });
