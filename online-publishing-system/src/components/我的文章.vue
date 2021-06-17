@@ -21,7 +21,6 @@
         </el-form>
       </template>
     </el-table-column>
-    <el-table-column label="文章 ID" prop="articleId"> </el-table-column>
     <el-table-column label="文章标题" prop="title"> </el-table-column>
     <el-table-column label="文章状态" prop="status"> </el-table-column>
     <el-table-column fixed="right" label="操作" width="200">
