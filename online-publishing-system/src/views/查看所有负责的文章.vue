@@ -14,9 +14,6 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="文章ID">
-                <span>{{ props.row.articleId }}</span>
-              </el-form-item>
               <el-form-item label="文章标题">
                 <span>{{ props.row.title }}</span>
               </el-form-item>
@@ -35,7 +32,6 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="文章编号" prop="articleId"> </el-table-column>
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column label="文章操作">
