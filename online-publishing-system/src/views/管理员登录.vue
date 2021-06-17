@@ -44,7 +44,7 @@ html, body {
     height: 100%;
     width: 100%;
     margin: 0;
-    background:url('../assets/Canva - Green Leafed Plant.jpg');
+    background:url('../assets/Admin-login.jpg');
     background-size:cover;
     background-position: top center;
 }

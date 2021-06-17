@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const 主页 = () => import("../views/Main.vue")
+
+const Main = () => import("../views/Main.vue")
 const Admin = () => import("../views/Admin.vue");
+const 首页 = () => import("../views/首页.vue")
 const 管理员登录 = () => import("../views/管理员登录.vue");
 const 管理员主页 = () => import("../views/管理员主页.vue");
 const 查看账号 = () => import("../views/查看账号.vue");
@@ -21,12 +23,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: 主页,
+    path: '/main',
+    name: 'Main',
+    component: Main,
     children:[
       {
-        path: 'search',
+        path: '/search',
         name: '搜索',
         component: () => import('../views/搜索.vue')
       },
@@ -252,6 +254,11 @@ const routes = [
         }
       },
     ]
+  },
+  {
+    path:"/",
+    name:"首页",
+    component:首页,
   },
   {
     path:"/admin/login",

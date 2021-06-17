@@ -2,9 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>所有文章认领申请</h1>
-      <router-link to='/editor/articles'>
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
     </div>
     <div class="table">
       <el-table
@@ -73,11 +70,6 @@
 </template>
 
 <style>
-.back {
-  position: fixed;
-  left: 60px;
-  top: 80px;
-}
 .table {
   text-align: center;
 }
