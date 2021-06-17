@@ -58,6 +58,9 @@
 </template>
 
 <style>
+.reviewer {
+  opacity: 0.7;
+}
 .table {
   text-align: center;
 }

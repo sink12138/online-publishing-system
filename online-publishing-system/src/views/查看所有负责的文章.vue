@@ -148,6 +148,9 @@
 </template>
 
 <style scoped>
+.reviewer {
+  opacity: 0.7;
+}
 .reviewer-button .el-button {
   margin-right: 20px;
 }
@@ -178,7 +181,7 @@
   background: #000000;
   border-color: #000000;
   position: relative;
-  left: -620px;
+  left: -619px;
   top: 30px;
 }
 .el-dropdown-link {

@@ -24,7 +24,7 @@
         <el-table-column
           prop="email"
           label="账号邮箱"
-          width="180">
+          width="250">
         </el-table-column>
         <el-table-column
           prop="password"
