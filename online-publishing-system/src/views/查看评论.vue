@@ -112,7 +112,7 @@ export default {
         .catch((err) => console.log(err));
     },
     Return() {
-      window.location.href = "../author/articles";
+      window.location.href = "../author";
     },
   },
 };
