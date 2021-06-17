@@ -29,6 +29,10 @@
               active-text-color="#FFF"
               router
               style="height: 100%">
+              <el-menu-item index="/admin/home">
+                <i class="el-icon-setting"></i>
+                <span slot="title">后台首页</span>
+              </el-menu-item>
               <el-submenu index="1">
                 <template slot="title">
                   <i class="el-icon-user"></i>
@@ -52,10 +56,6 @@
                   <el-menu-item index="/admin/documents/key-search">关键字查找</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
-              <el-menu-item index="/admin/settings">
-                <i class="el-icon-setting"></i>
-                <span slot="title">网站设置</span>
-              </el-menu-item>
             </el-menu>
           </el-col>
         </el-row>
