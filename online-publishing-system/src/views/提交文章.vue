@@ -34,7 +34,7 @@
             placeholder="摘要"
           ></el-input>
         </el-form-item>
-        <el-form-item label="关键词">
+        <el-form-item label="关键词" class="tag">
           <el-tag
             :key="tag"
             v-for="tag in dynamicTags"
@@ -56,8 +56,8 @@
           </el-input>
           <el-button
             v-else
-            class="button-new-tag"
             size="small"
+            class="button-new-tag"
             @click="showInput"
             >+ 关键词</el-button
           >
@@ -73,6 +73,7 @@
         </el-form-item>
         <el-form-item
           label="其他作者"
+          class="tag"
           v-if="this.status != '审核通过' && this.status != '审核未通过'"
         >
           <el-tag
@@ -88,8 +89,8 @@
             class="input-new-tag"
             v-if="inputVisible2"
             v-model="inputValue2"
-            ref="saveTagInput2"
             size="small"
+            ref="saveTagInput2"
             @keyup.enter.native="handleInputConfirm2"
             @blur="handleInputConfirm2"
           >
@@ -344,36 +345,35 @@ export default {
 .el-tag + .el-tag {
   margin-left: 10px;
 }
+.tag {
+  text-align: left;
+}
 .button-new-tag {
   margin-left: 10px;
   height: 32px;
   line-height: 30px;
   padding-top: 0;
   padding-bottom: 0;
+  position: relative;
+  left: 0;
 }
 .input-new-tag {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+  position: relative;
+  left: 0;
 }
 .submit {
   text-align: center;
 }
-.button-new-tag {
-  position: absolute;
-  left: 60px;
-  top: 5px;
-}
-.input-new-tag {
-  position: absolute;
-  left: 60px;
-  top: 5px;
-}
 .articleinfo {
   background-color: #fff;
-  opacity: 0.7;
   width: 800px;
   margin: 0 auto;
+}
+.articleinfo .el-button {
+  margin-bottom: 10px;
 }
 .el-form-item {
   margin: 20px;
