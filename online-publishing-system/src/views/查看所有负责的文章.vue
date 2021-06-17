@@ -14,9 +14,6 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="文章ID">
-                <span>{{ props.row.articleId }}</span>
-              </el-form-item>
               <el-form-item label="文章标题">
                 <span>{{ props.row.title }}</span>
               </el-form-item>
@@ -35,7 +32,6 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="文章编号" prop="articleId"> </el-table-column>
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column label="文章操作">
@@ -267,6 +263,7 @@ export default {
                 message: res.data.message,
                 type: "error",
               });
+              window.location.href = "../editor/articles";
             }
           });
         })
@@ -309,12 +306,14 @@ export default {
                 message: "分配审稿人成功",
                 type: "success",
               });
+              window.location.href = "../editor/articles";
             } else {
               this.$message({
                 showClose: true,
                 message: res.data.message,
                 type: "error",
               });
+              window.location.href = "../editor/articles";
             }
           });
         })
@@ -354,15 +353,16 @@ export default {
               message: "接受文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
-        location.reload();
       });
     },
     rejectArticle(row) {
@@ -394,15 +394,16 @@ export default {
               message: "拒绝文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
-        location.reload();
       });
     },
     acceptWithdraw(row) {
@@ -435,15 +436,16 @@ export default {
               message: "接受文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
-        location.reload();
       });
     },
     rejectWithdraw(row) {
@@ -476,15 +478,16 @@ export default {
               message: "拒绝文章成功",
               type: "success",
             });
+            window.location.href = "../editor/articles";
           } else {
             this.$message({
               showClose: true,
               message: res.data.message,
               type: "error",
             });
+            window.location.href = "../editor/articles";
           }
         });
-        location.reload();
       });
     },
     load(data, filename) {

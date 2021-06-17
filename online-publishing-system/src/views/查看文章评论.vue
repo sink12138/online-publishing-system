@@ -7,23 +7,29 @@
       <el-form :inline="true" :model="search" class="demo-form-inline">
         <el-form-item label="文章编号">
           <el-input placeholder="请输入文章ID" v-model="search.articleId">
-            <el-button slot="append" icon="el-icon-search" @click="searchArticle"></el-button>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="searchArticle"
+            ></el-button>
           </el-input>
         </el-form-item>
       </el-form>
     </div>
     <div class="articles">
-      <el-table :data="tableData">
-        <el-table-column label="评论内容" prop="comments" style="text-align:center"> </el-table-column>
-        <el-table-column label="是否通过" prop="pass" width="200">
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column
+          label="审稿人真实姓名"
+          prop="realName"
+        ></el-table-column>
+        <el-table-column label="评论内容" prop="comments"> </el-table-column>
+        <el-table-column label="是否通过" prop="pass">
           <template slot-scope="scope">
             <span v-if="scope.row.pass == true"> 通过 </span>
             <span v-if="scope.row.pass == false"> 不通过 </span>
           </template>
         </el-table-column>
-        <el-table-column label="评论时间" prop="date" width="200"> </el-table-column>
-        <el-table-column label="审稿人真实姓名" prop="realName" width="200">
-        </el-table-column>
+        <el-table-column label="评论时间" prop="date"> </el-table-column>
       </el-table>
     </div>
   </div>
@@ -46,13 +52,7 @@ export default {
       search: {
         articleId: 0,
       },
-      tableData: [
-        {
-          comments: "",
-          pass: "",
-          date: "",
-        },
-      ],
+      tableData: [],
     };
   },
   created: function () {

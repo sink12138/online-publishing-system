@@ -33,7 +33,7 @@
         ></el-table-column>
         <el-table-column
           prop="articleCount"
-          label="绑定的文章数量"
+          label="已出版的文章数量"
           align="center"
         ></el-table-column>
         <el-table-column label="撤销作者身份">
@@ -128,7 +128,7 @@ export default {
           } else {
             this.$message({
               showClose: true,
-              message: res.data.message,
+              message: "该作者仍有提交过的文章！请撤销文章后撤销该作者！",
               type: "error",
             });
           }
