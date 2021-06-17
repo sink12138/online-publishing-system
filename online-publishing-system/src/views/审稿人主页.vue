@@ -90,9 +90,8 @@
 </template>
 
 <style>
-.Reviewer {
-  background-color: #fff;
-  opacity: 80%;
+.reviewer {
+  opacity: 0.7;
 }
 .demo-table-expand {
   font-size: 0;

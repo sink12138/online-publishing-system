@@ -117,6 +117,9 @@
 </template>
 
 <style scoped>
+.claim {
+  opacity: 0.7;
+}
 .search {
   margin-bottom: 40px;
 }

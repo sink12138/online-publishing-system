@@ -11,23 +11,25 @@
         label-width="100px"
         class="ruleForm"
       >
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="ruleForm.email"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
+        <div class="inputForm">
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="ruleForm.email"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="pass">
+            <el-input
+              type="password"
+              v-model="ruleForm.pass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input
+              type="password"
+              v-model="ruleForm.checkPass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+        </div>
         <el-form-item>
           <div class="button">
             <el-button type="success" @click="submitForm()">提交</el-button>
@@ -41,11 +43,17 @@
 
 <style scoped>
 .box-card {
-  background-color: #bebebe;
-  height: 400px;
+  background-color: #ececec;
+  height: 350px;
   width: 600px;
   text-align: center;
   margin: 0 auto;
+  opacity: 0.8;
+  border: 0;
+}
+.inputForm {
+  position: relative;
+  left: -40px;
 }
 .el-form-item {
   width: 500px;
