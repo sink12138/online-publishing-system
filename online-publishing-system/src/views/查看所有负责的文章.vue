@@ -178,7 +178,7 @@
   background: #000000;
   border-color: #000000;
   position: relative;
-  left: -550px;
+  left: -620px;
   top: 30px;
 }
 .el-dropdown-link {

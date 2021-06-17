@@ -48,7 +48,7 @@
               :model="formInline"
               class="demo-form-inline"
             >
-              <el-form-item label="Email">
+              <el-form-item label="邮箱">
                 <el-input
                   v-model="formInline.email"
                   placeholder="Email"
@@ -69,7 +69,7 @@
               class="modify-form"
               label-width="120px"
             >
-              <el-form-item label="password">
+              <el-form-item label="新密码">
                 <el-input
                   v-model="formInline.password"
                   prefix-icon="el-icon-lock"
@@ -77,27 +77,27 @@
                   placeholder="password"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="realName">
+              <el-form-item label="真实姓名">
                 <el-input
                   v-model="formInline.realName"
                   placeholder="realName"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="institution">
+              <el-form-item label="研究机构">
                 <el-input
                   v-model="formInline.institution"
                   placeholder="研究机构"
                   v-if="$store.state.role >= 4"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="researchInterests">
+              <el-form-item label="研究方向">
                 <el-input
                   v-model="formInline.researchInterests"
                   placeholder="研究方向"
                   
                 ></el-input>
               </el-form-item>
-              <el-form-item label="organization">
+              <el-form-item label="学术组织">
                 <el-input
                   v-model="formInline.organization"
                   placeholder="学术组织"
