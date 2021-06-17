@@ -2,17 +2,23 @@
   <div class="submit">
     <h1>提交文章</h1>
     <div class="uploadArticle">
-      <h3>上传文件</h3>
-      <h5>请提交doc,docx,pdf,zip文件</h5>
-      <input
-        type="file"
-        class="file"
-        ref="file"
-        accept=".doc,.docx,.pdf,.zip"
-      />
-      <el-button type="primary" @click="getfile" icon="el-icon-upload"
-        >提交文件</el-button
-      >
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>上传文件</span>
+          <h5>请提交doc,docx,pdf,zip文件</h5>
+        </div>
+        <div class="text item">
+          <input
+            type="file"
+            class="file"
+            ref="file"
+            accept=".doc,.docx,.pdf,.zip"
+          />
+          <el-button type="primary" @click="getfile" icon="el-icon-upload"
+            >提交文件</el-button
+          >
+        </div>
+      </el-card>
     </div>
     <div class="articleinfo" v-if="this.hasfile">
       <h3>文章信息</h3>
@@ -327,6 +333,13 @@ export default {
 </script>
 
 <style>
+.box-card {
+  width: 500px;
+  margin: 0 auto;
+}
+.submit {
+  opacity: 0.7;
+}
 .el-tag + .el-tag {
   margin-left: 10px;
 }
