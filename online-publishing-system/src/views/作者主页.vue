@@ -21,14 +21,6 @@
 </template>
 
 <style scoped>
-.come-to {
-  position: fixed;
-}
-.button {
-  position: fixed;
-  left: 60px;
-  bottom: 60px;
-}
 .el-button--ops.is-active,
 .el-button--ops:active {
   background: #000000;

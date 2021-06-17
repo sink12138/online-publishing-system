@@ -5,7 +5,6 @@
       <el-tabs
         v-model="activeName"
         @tab-click="handleClick"
-        tab-position="left"
         type="border-card"
       >
         <el-tab-pane label="个人信息" name="first">
@@ -288,6 +287,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.8;
 }
 .author {
   text-align: right;

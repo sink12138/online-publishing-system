@@ -19,7 +19,7 @@
           </el-form-item>
           <div v-if="this.$store.state.isLogin == true">
             <el-form-item>
-              <router-link to="/main" class="button"
+              <router-link to="/" class="button"
                 ><el-button type="danger" @click="Logout"
                   >退出登录</el-button
                 ></router-link
@@ -28,7 +28,7 @@
           </div>
           <div v-else>
             <el-form-item>
-              <router-link to="/main" class="button"
+              <router-link to="/" class="button"
                 ><el-button type="success" @click="Login"
                   >登录</el-button
                 ></router-link
@@ -41,26 +41,31 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.button {
-  position: relative;
-  left: -30px;
+.el-input {
+  width: 300px;
 }
 .el-form-item {
   margin-top: 20px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+}
+.demo-form-inline {
+  position: relative;
+  left: -40px;
 }
 .box-card {
-  background-color: #bebebe;
-  height: 400px;
-  width: 600px;
+  background-color: #ececec;
+  height: 260px;
+  width: 450px;
   text-align: center;
   margin: 0 auto;
+  opacity: 0.8;
+  border: 0;
 }
 </style>
 

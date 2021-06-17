@@ -73,11 +73,10 @@
         </div>
         <div class="link2">
           <el-dropdown>
-            <span class="el-dropdown-link">
-              <i class="el-icon-user-solid" style="font-size:33px"></i>
-            </span>
+            <el-button class="user" icon="el-icon-user-solid" style="font-size:25px">
+            </el-button>
             <el-dropdown-menu slot="dropdown">
-              <router-link to="/main">
+              <router-link to="/">
                 <el-dropdown-item>主页</el-dropdown-item>
               </router-link>
               <router-link to="/login" v-if="this.$store.state.isLogin == false">
@@ -117,13 +116,13 @@
             </el-button>
           </el-input>
         </div>
-        <div class="articles" v-show="this.$route.path == '/main'">
+        <!--<div class="articles" v-show="this.$route.path == '/main'">
           <el-carousel type="card" trigger="click" height="400px" :interval="5000" arrow="always">
             <el-carousel-item v-for="item in imgList" :key="item.name">
               <img :src="item.src" style="height:100%;width:100%;" alt="picture" :title="item.title" />
             </el-carousel-item>
           </el-carousel>
-        </div>
+        </div>-->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -155,10 +154,15 @@ a {
   border: 0;
   border-radius: 0 0 0 0;
   height: 40px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: #fff;
   background-color: #2f2f2f;
+}
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .el-input {
   width: 600px;
@@ -173,10 +177,14 @@ a {
 .link1 {
   display: inline;
   float: left;
+  position: relative;
+  left: 40px;
 }
 .link2 {
   display: inline;
   float: right;
+  position: relative;
+  left: -40px;
 }
 .search {
   margin-top: 100px;
@@ -198,7 +206,7 @@ export default {
         searchType: "title",
         searchString: "",
       },
-      imgList: [
+      /*imgList: [
         {
           name: "logo",
           src: require("../assets/logo.jpg"),
@@ -229,7 +237,7 @@ export default {
           src: require("../assets/Canva - Water Mill Near Body of Water.jpg"),
           title: "bg5"
         }
-      ],
+      ],*/
     };
   },
   mounted() {
@@ -276,7 +284,7 @@ export default {
     },
     searchArticle() {
       this.$router.push(
-        "/main/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
+        "/search?searchType=" + this.search.searchType + "&searchString=" + this.search.searchString
       );
       if(this.$route.path == '/search'){
         this.$router.go(0);
@@ -293,6 +301,7 @@ export default {
       });
       console.log("logout submit!");
       this.$store.commit("logout");
+      window.reload();
       this.$message({
         message: "退出登录成功！",
       });
