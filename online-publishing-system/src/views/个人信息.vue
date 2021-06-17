@@ -94,7 +94,7 @@
                 <el-input
                   v-model="formInline.researchInterests"
                   placeholder="研究方向"
-                  
+                  v-if="$store.state.role >= 4"
                 ></el-input>
               </el-form-item>
               <el-form-item label="学术组织">
