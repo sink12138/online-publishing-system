@@ -2,12 +2,6 @@
   <div class="reviewer">
     <div>
       <h1>所有作者名单</h1>
-<<<<<<< HEAD
-=======
-      <router-link to="/editor" v-show="this.$route.path == '/editor/authors'">
-        <el-button class="back" type="info" icon="el-icon-back"></el-button>
-      </router-link>
->>>>>>> gtr
     </div>
     <div class="table">
       <el-table
