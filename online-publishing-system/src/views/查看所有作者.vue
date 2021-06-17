@@ -67,9 +67,6 @@
 </template>
 
 <style>
-.reviewer {
-  opacity: 0.8;
-}
 .table {
   text-align: center;
 }

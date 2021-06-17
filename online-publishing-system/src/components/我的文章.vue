@@ -91,6 +91,7 @@
 <style>
 .myarticles {
   width: 600px;
+  opacity: 0.7;
 }
 .demo-table-expand {
   font-size: 0;

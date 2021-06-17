@@ -6,7 +6,7 @@
                         <form action="#!" method="post">
                             <div class="text-center">
                                 <h1 style="margin:0">后台登录系统</h1>
-                                <router-link to="/"> <img alt="home" src="../assets/logo.jpg"> </router-link>
+                                <router-link to="/"> <img alt="home" src="../assets/logo.png" style="width:250px;height:250px"> </router-link>
                             </div>
                             <div class="login-text">
                                 <el-input
