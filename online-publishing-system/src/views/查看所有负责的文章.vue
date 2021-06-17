@@ -271,7 +271,6 @@ export default {
             message: "取消输入",
           });
         });
-        window.location.href="../editor/articles";
     },
     assignReviewers(row) {
       this.$prompt(
@@ -320,7 +319,6 @@ export default {
             message: "取消输入",
           });
         });
-        window.location.href="../editor/articles";
     },
     acceptArticle(row) {
       this.$confirm(
@@ -359,7 +357,6 @@ export default {
             });
           }
         });
-        window.location.href="../editor/articles";
       });
     },
     rejectArticle(row) {
@@ -399,7 +396,6 @@ export default {
             });
           }
         });
-        window.location.href="../editor/articles";
       });
     },
     acceptWithdraw(row) {
@@ -440,7 +436,6 @@ export default {
             });
           }
         });
-        location.reload();
       });
     },
     rejectWithdraw(row) {
@@ -481,7 +476,6 @@ export default {
             });
           }
         });
-        location.reload();
       });
     },
     load(data, filename) {
