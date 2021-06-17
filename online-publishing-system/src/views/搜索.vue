@@ -243,6 +243,7 @@ export default {
   justify-content: center;
   align-content: center;
   width: 100%;
+  opacity: 0.7;
 }
 .input {
   margin-bottom: 40px;
