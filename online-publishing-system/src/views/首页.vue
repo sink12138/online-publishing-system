@@ -116,13 +116,6 @@
             </el-button>
           </el-input>
         </div>
-        <!--<div class="articles" v-show="this.$route.path == '/main'">
-          <el-carousel type="card" trigger="click" height="400px" :interval="5000" arrow="always">
-            <el-carousel-item v-for="item in imgList" :key="item.name">
-              <img :src="item.src" style="height:100%;width:100%;" alt="picture" :title="item.title" />
-            </el-carousel-item>
-          </el-carousel>
-        </div>-->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -167,7 +160,7 @@ a {
   justify-content: center;
 }
 .el-input {
-  width: 600px;
+  width: 800px;
   height: 50px;
 }
 .el-input >>> .el-input__inner{
@@ -190,12 +183,6 @@ a {
 }
 .search {
   margin-top: 100px;
-}
-.articles {
-  margin: 0 auto;
-  margin-top: 40px;
-  width: 1200px;
-  position: relative;
 }
 </style>
 
