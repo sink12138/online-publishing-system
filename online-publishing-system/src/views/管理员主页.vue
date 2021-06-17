@@ -50,6 +50,7 @@
   margin-left: 200px;
   height: 600px;
   width: 600px;
+  position: relative;
   top: 40px;
 }
 .accounts {
@@ -73,12 +74,12 @@
 .clean {
   position: fixed;
   bottom: 20px;
-  left: 80px;
+  left: 380px;
 }
 .log {
   position: fixed;
   bottom: 70px;
-  left: 80px;
+  left: 380px;
 }
 .el-button {
   background-color: #79b6fb;
@@ -206,10 +207,24 @@ export default {
       }).then(res => {
         console.log(res)
         const filename = decodeURI(res.headers['content-disposition'].split(';')[1].split('=')[1]);
-        console.log(filename)
+        console.log(filename);
         this.download(res.data, filename)
       }).catch(err => console.log(err))
     },
+    download (data, filename) {
+        if (! data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{ type:'application/force-download;charset=utf-8'}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.download = filename
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+      }
   }
 }
 </script>

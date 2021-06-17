@@ -12,11 +12,11 @@
         <el-input placeholder="请输入邮箱" v-model="editorForm.email">
           <el-button 
             slot="append" 
-            icon="el-icon-circle-plus-outline"
+            icon="el-icon-check" 
             @click="handleEditor()">
           </el-button>
         </el-input>
-        <el-button slot="reference">添加编辑</el-button>
+        <el-button slot="reference" icon="el-icon-circle-plus-outline"></el-button>
       </el-popover>
     </div>
     <div class="table">
