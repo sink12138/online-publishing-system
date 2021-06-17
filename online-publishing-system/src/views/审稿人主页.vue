@@ -90,6 +90,10 @@
 .reviewer {
   opacity: 0.7;
 }
+.articles {
+  width: 1200px;
+  margin: 0 auto;
+}
 .demo-table-expand {
   font-size: 0;
 }
