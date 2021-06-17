@@ -35,6 +35,16 @@
   </div>
 </template>
 
+<style scoped>
+.reviewer {
+  opacity: 0.7;
+}
+.articles {
+  width: 1200px;
+  margin: 0 auto;
+}
+</style>
+
 <script>
 export default {
   data() {
