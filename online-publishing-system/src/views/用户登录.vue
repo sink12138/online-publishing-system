@@ -6,11 +6,11 @@
     </div>
     <div id="login">
       <el-card class="box-card">
-        <el-form ref="form" :model="formInline" class="demo-form-inline" label-width="80px">
-          <el-form-item label="邮箱">
+        <el-form ref="form" label-position="top" :model="formInline" class="demo-form-inline" label-width="auto">
+          <el-form-item label="邮箱" class="item">
             <el-input v-model="formInline.email" placeholder="Email"></el-input>
           </el-form-item>
-          <el-form-item label="密码">
+          <el-form-item label="密码" class="item">
             <el-input
               v-model="formInline.password"
               prefix-icon="el-icon-lock"
@@ -42,30 +42,31 @@
 </template>
 
 <style scoped>
-.login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .el-input {
   width: 300px;
 }
-.el-form-item {
-  margin-top: 20px;
-  margin-bottom: 40px;
-}
 .demo-form-inline {
   position: relative;
-  left: -40px;
+  margin: 0;
+  padding: 0;
+}
+.item >>> .el-form-item__label{
+  padding: 0;
+}
+.el-form-item {
+  margin-top: 5px;
 }
 .box-card {
-  background-color: #ececec;
-  height: 260px;
+  background-color: #f5f5f5;
+  height: 300px;
   width: 450px;
   text-align: center;
   margin: 0 auto;
   opacity: 0.8;
   border: 0;
+}
+.el-button {
+  margin-top: 10px;
 }
 </style>
 

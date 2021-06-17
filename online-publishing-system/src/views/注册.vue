@@ -6,23 +6,24 @@
       <el-form
         :model="ruleForm"
         status-icon
+        label-position="top"
         :rules="rules"
         ref="ruleForm"
         label-width="100px"
         class="ruleForm"
       >
         <div class="inputForm">
-          <el-form-item label="邮箱" prop="email">
+          <el-form-item label="邮箱" prop="email" class="item">
             <el-input v-model="ruleForm.email"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="pass">
+          <el-form-item label="密码" prop="pass" class="item">
             <el-input
               type="password"
               v-model="ruleForm.pass"
               autocomplete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="确认密码" prop="checkPass">
+          <el-form-item label="确认密码" prop="checkPass" class="item">
             <el-input
               type="password"
               v-model="ruleForm.checkPass"
@@ -43,23 +44,21 @@
 
 <style scoped>
 .box-card {
-  background-color: #ececec;
-  height: 350px;
-  width: 600px;
+  background-color: #f5f5f5;
+  height: 380px;
+  width: 550px;
   text-align: center;
   margin: 0 auto;
   opacity: 0.8;
   border: 0;
 }
-.inputForm {
-  position: relative;
-  left: -40px;
+.item >>> .el-form-item__label{
+  padding: 0;
 }
 .el-form-item {
   width: 500px;
   margin: 0 auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 5px;
 }
 .el-input {
   width: 400px;
@@ -67,7 +66,6 @@
 }
 .button {
   position: relative;
-  left: -30px;
   top: 30px;
 }
 </style>

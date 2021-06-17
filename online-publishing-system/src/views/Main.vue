@@ -3,8 +3,8 @@
     <el-container style="height: 100%">
       <el-header>
         <div class="link1">
-          <router-link to="/">
-            <el-button type="info" plain @click="convert()">返回主页</el-button>
+          <router-link to="/" v-on:click="convert()">
+            <img alt="logo" style="width: 27px;height: 27px; margin-top:6px;" src="../assets/logo_black.png">
           </router-link>
           <el-dropdown>
             <router-link to="/author">
@@ -73,7 +73,7 @@
         </div>
         <div class="link2">
           <el-dropdown>
-            <el-button class="user" icon="el-icon-user-solid" style="font-size:25px">
+            <el-button class="user" icon="el-icon-user-solid" style="font-size:30px">
             </el-button>
             <el-dropdown-menu slot="dropdown">
               <router-link to="/">
@@ -82,13 +82,13 @@
               <router-link to="/login" v-if="this.$store.state.isLogin == false">
                 <el-dropdown-item>登录</el-dropdown-item>
               </router-link>
-              <router-link to="/" v-if="this.$store.state.isLogin == true">
-                <el-dropdown-item @click="Logout">登出</el-dropdown-item>
-              </router-link>
-              <router-link to="/register">
+              <div v-if="this.$store.state.isLogin == true">
+                <el-dropdown-item @click.native="Logout()">登出</el-dropdown-item>
+              </div>
+              <router-link to="/register" v-if="this.$store.state.isLogin == false">
                 <el-dropdown-item>注册</el-dropdown-item>
               </router-link>
-              <router-link to="/home">
+              <router-link to="/home" v-if="this.$store.state.isLogin == true">
                 <el-dropdown-item>个人信息</el-dropdown-item>
               </router-link>
             </el-dropdown-menu>
@@ -96,33 +96,6 @@
         </div>
       </el-header>
       <el-main>
-        <div class="search" v-show="this.$route.path == '/'">
-          <el-input v-model="search.searchString" size="large">
-            <el-select
-              v-model="search.searchType"
-              slot="prepend"
-              placeholder="搜索类型"
-            >
-              <el-option label="标题" value="title"></el-option>
-              <el-option label="关键词" value="keyword"></el-option>
-              <el-option label="作者" value="author"></el-option>
-            </el-select>
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              size="mini"
-              @click="searchArticle"
-            >
-            </el-button>
-          </el-input>
-        </div>
-        <!--<div class="articles" v-show="this.$route.path == '/main'">
-          <el-carousel type="card" trigger="click" height="400px" :interval="5000" arrow="always">
-            <el-carousel-item v-for="item in imgList" :key="item.name">
-              <img :src="item.src" style="height:100%;width:100%;" alt="picture" :title="item.title" />
-            </el-carousel-item>
-          </el-carousel>
-        </div>-->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -134,15 +107,16 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background-image: url("../assets/Canva - Water Mill Near Body of Water.jpg");
+  background-image: url("../assets/Background.png");
   background-size: cover;
 }
 .el-header {
-  background-color: #1f1f1f;
+  background-color: #ffffff;
+  opacity: 0.9;
   height: 40px !important;
 }
 .el-main {
-  background-color: #f8f8f8b0;
+  background-color: #f8f8f863;
 }
 a {
   text-decoration: none;
@@ -156,8 +130,13 @@ a {
   height: 40px;
   font-size: 16px;
   font-weight: 400;
-  color: #fff;
-  background-color: #2f2f2f;
+  color: #000;
+  background-color: #fff;
+}
+.link1 .el-button {
+  position: relative;
+  top: -7.5px;
+  left: 20px;
 }
 .user {
   display: flex;
@@ -301,10 +280,10 @@ export default {
       });
       console.log("logout submit!");
       this.$store.commit("logout");
-      window.reload();
       this.$message({
         message: "退出登录成功！",
       });
+      window.location.href='/';
     },
     // article(articleId) {
     //   sessionStorage.setItem("articleId", articleId);
