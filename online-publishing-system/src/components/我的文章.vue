@@ -28,7 +28,7 @@
       <template slot-scope="scope">
         <el-dropdown>
           <span class="el-dropdown-link">
-            操作文章<i class="el-icon-arrow-down el-icon--right"></i>
+            可执行操作<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
@@ -94,7 +94,6 @@
 <style>
 .myarticles {
   width: 600px;
-  opacity: 0.7;
 }
 .demo-table-expand {
   font-size: 0;
