@@ -1,9 +1,9 @@
 <template>
   <el-form :inline="true" :model="formInline" class="demo-form-inline">
-    <el-form-item label="待认证审稿人的账号">
+    <el-form-item label="待认证审稿人的邮箱">
       <el-input
-        v-model="formInline.accountId"
-        placeholder="待认证审稿人的账号"
+        v-model="formInline.email"
+        placeholder="待认证审稿人的邮箱"
       ></el-input>
     </el-form-item>
     <el-form-item label="审稿人所属组织">
@@ -26,15 +26,15 @@ export default {
   data() {
     return {
       formInline: {
-        accountId: 0,
+        email:"",
         organization: "",
       },
     };
   },
   methods: {
     CertifySuccess() {
-      if (this.formInline.accountId === "") {
-        alert("请输入待认证的账号！");
+      if (this.formInline.email === "") {
+        alert("请输入待认证的邮箱！");
         return;
       } else {
         if (this.formInline.organization === "") {
@@ -43,7 +43,7 @@ export default {
         }
       }
       let JsonCertifyReviewer = JSON.stringify({
-        accountId: Number(this.formInline.accountId),
+        email: this.formInline.accountId,
         organization: this.formInline.organization,
       });
       console.log(JsonCertifyReviewer);
