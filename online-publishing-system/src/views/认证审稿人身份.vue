@@ -43,7 +43,7 @@ export default {
         }
       }
       let JsonCertifyReviewer = JSON.stringify({
-        email: this.formInline.accountId,
+        email: this.formInline.email,
         organization: this.formInline.organization,
       });
       console.log(JsonCertifyReviewer);
