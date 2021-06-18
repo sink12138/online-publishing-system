@@ -90,17 +90,19 @@ public class EditorController {
             if (editor == null) {
                 throw new IllegalAuthorityException();
             }
-            Integer accountId;
+            String email;
             String organization;
             try {
-                accountId = (Integer) request.get("accountId");
+                email = (String) request.get("email");
                 organization = (String) request.get("organization");
             } catch (Exception e) {
                 throw new ParameterFormatException();
             }
-            if (accountService.getAccountByAccountId(accountId) == null) {
+            Account reviewerAccount = accountService.getAccountByEmail(email);
+            if (reviewerAccount == null) {
                 throw new ObjectNotFoundException();
             }
+            Integer accountId = reviewerAccount.getAccountId();
             if (reviewerService.getReviewerByAccountId(accountId) != null) {
                 throw new RepetitiveOperationException();
             }
