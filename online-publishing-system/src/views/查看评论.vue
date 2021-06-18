@@ -43,13 +43,7 @@ export default {
       search: {
         articleId: 0,
       },
-      tableData: [
-        {
-          comments: "",
-          pass: "",
-          date: "",
-        },
-      ],
+      tableData: [],
     };
   },
   created: function () {

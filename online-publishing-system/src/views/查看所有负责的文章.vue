@@ -34,7 +34,7 @@
         </el-table-column>
         <el-table-column label="文章标题" prop="title"> </el-table-column>
         <el-table-column label="文章状态" prop="status"> </el-table-column>
-        <el-table-column label="文章操作">
+        <el-table-column label="文章操作" width="200">
           <template slot-scope="scope">
             <el-dropdown>
               <span class="el-dropdown-link">
