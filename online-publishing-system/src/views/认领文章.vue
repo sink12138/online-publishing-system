@@ -29,7 +29,11 @@
           border
           stripe
           style="width: 100%"
-        >
+          ><el-table-column
+            prop="articleId"
+            label="文章ID"
+            align="center"
+          ></el-table-column>
           <el-table-column
             prop="title"
             label="标题"
