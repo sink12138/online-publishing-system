@@ -68,7 +68,7 @@ export default {
           });
         }
       });
-      //window.location.href = "../reviewers";
+      window.location.href = "../reviewers";
     },
     Return() {
       window.location.href = "../reviewers";
