@@ -13,7 +13,7 @@
     <select id="selectByArticleId" parameterType="Integer" resultType="Author">
         select Author.author_id, account_id, institution, research_interests
         from Author join Write W on Author.author_id = W.author_id
-        where article_id = #{articleId}
+        where article_id = #{articleId} and confirmed = 1
     </select>
     <insert id="insert" parameterType="Author" useGeneratedKeys="true" keyProperty="authorId">
         insert into Author values (#{accountId}, #{institution}, #{researchInterests})
