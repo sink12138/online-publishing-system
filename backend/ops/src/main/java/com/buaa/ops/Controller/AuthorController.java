@@ -803,6 +803,7 @@ public class AuthorController {
         } catch (Exception e) {
             map.clear();
             arrayList.clear();
+            e.printStackTrace();
             map.put("success", false);
             map.put("message", "操作失败");
             arrayList.add(map);
