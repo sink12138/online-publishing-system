@@ -41,6 +41,12 @@
   </div>
 </template>
 
+<style scoped>
+.article {
+  opacity: 0.7;
+}
+</style>
+
 <script>
 export default {
   name: "article",
