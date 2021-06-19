@@ -36,31 +36,31 @@
         <el-table-column label="文章状态" prop="status"> </el-table-column>
         <el-table-column label="文章操作" width="200">
           <template slot-scope="scope">
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              可执行操作<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                ><el-button
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                可执行操作<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="scope.row.status != '待撤稿'"
                     @click="downloadArticle(scope.row)"
                     >下载</el-button
                   ></el-dropdown-item
-              >
-              <el-dropdown-item
-                ><el-button
+                >
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="scope.row.status == '待审核'"
                     @click="assignReviewers(scope.row)"
                     >分配审稿人</el-button
                   ></el-dropdown-item
-              >
-              <el-dropdown-item
-                ><el-button
+                >
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="
@@ -70,9 +70,9 @@
                     @click="acceptArticle(scope.row)"
                     >接收</el-button
                   ></el-dropdown-item
-              >
-              <el-dropdown-item
-                ><el-button
+                >
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="
@@ -82,8 +82,8 @@
                     @click="rejectArticle(scope.row)"
                     >拒绝</el-button
                   ></el-dropdown-item
-              >
-              <el-dropdown-item>
+                >
+                <el-dropdown-item>
                   <router-link to="/editor/upload"
                     ><el-button
                       type="text"
@@ -92,42 +92,54 @@
                       >上传编辑稿</el-button
                     ></router-link
                   ></el-dropdown-item
-              >
-              <el-dropdown-item><el-button
+                >
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="scope.row.status == '待撤稿'"
                     @click="acceptWithdraw(scope.row)"
                     >接受撤稿</el-button
                   ></el-dropdown-item
-              >
-              <el-dropdown-item><el-button
+                >
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="scope.row.status == '待撤稿'"
                     @click="rejectWithdraw(scope.row)"
                     >拒绝撤稿</el-button
                   ></el-dropdown-item
-              >
-              <el-dropdown-item><el-button
+                >
+                <el-dropdown-item
+                  ><el-button
+                    type="text"
+                    size="small"
+                    v-if="
+                      scope.row.status == '审核通过' ||
+                      scope.row.status == '审核中' ||
+                      scope.row.status == '审核未通过'
+                    "
+                    @click="reviews(scope.row)"
+                    >查看评论</el-button
+                  ></el-dropdown-item
+                >
+                <el-dropdown-item
+                  ><el-button
                     type="text"
                     size="small"
                     v-if="scope.row.status == '编辑中'"
                     @click="publishArticle(scope.row)"
                     >出版文章</el-button
                   ></el-dropdown-item
-              >
-            </el-dropdown-menu>
-          </el-dropdown>
+                >
+              </el-dropdown-menu>
+            </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <div class="reviewer-button">
-          <router-link to="/editor/reviews">
-            <el-button type="ops">查看评论</el-button>
-          </router-link>
-        </div>
+        <div class="reviewer-button"></div>
         <el-pagination
           background
           layout="prev, pager, next, jumper"
@@ -232,6 +244,11 @@ export default {
         }
       );
     },
+    reviews(row) {
+      this.article = row.articleId;
+      console.log(this.article);
+      this.$router.push("/editor/reviews?articleId=" + this.article);
+    },
     publishArticle(row) {
       this.$prompt("请输入该文章的文献标识符", {
         confirmButtonText: "确定",
@@ -326,9 +343,7 @@ export default {
     },
     acceptArticle(row) {
       this.$confirm(
-        "您正要接受编号为"+
-        row.articleId+
-        "的文章，是否继续?",
+        "您正要接受编号为" + row.articleId + "的文章，是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
@@ -367,9 +382,7 @@ export default {
     },
     rejectArticle(row) {
       this.$confirm(
-        "您正要拒绝编号为"+
-        row.articleId+
-        "的文章，是否继续?",
+        "您正要拒绝编号为" + row.articleId + "的文章，是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
@@ -408,9 +421,7 @@ export default {
     },
     acceptWithdraw(row) {
       this.$confirm(
-        "您正要接受编号为"+
-        row.articleId+
-        "的文章，是否继续?",
+        "您正要接受编号为" + row.articleId + "的文章，是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
@@ -450,9 +461,7 @@ export default {
     },
     rejectWithdraw(row) {
       this.$confirm(
-        "您正要拒绝编号为"+
-        row.articleId+
-        "的文章，是否继续?",
+        "您正要拒绝编号为" + row.articleId + "的文章，是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
